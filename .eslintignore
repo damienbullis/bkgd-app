@@ -1,0 +1,6 @@
+
+# Ignore Config Files
+
+# Ignore all files that start with a dot.
+.*
+
