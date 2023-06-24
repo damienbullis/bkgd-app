@@ -1,23 +1,27 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useSearch, useNavigate } from '@tanstack/router'
 import './App.css'
 
 const DownloadButton = () => {
-  return <button onClick={() => console.log('clicked!')}>Test</button>
+  const nav = useNavigate({ from: '/' })
+  return (
+    <button
+      onClick={() =>
+        nav({ search: { bkgd: (Math.random() * 100).toFixed(0) } })
+      }
+    >
+      TEST
+    </button>
+  )
 }
 
 function App() {
+  const { bkgd } = useSearch({
+    from: '/',
+  })
+  console.log({ bkgd })
   return (
     <>
-      <div id="test">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <h1 style={{ color: 'red', filter: 'blur(10px)' }}>TEst</h1>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
+      <div id="test">{bkgd}</div>
       <DownloadButton />
     </>
   )
