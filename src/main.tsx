@@ -5,6 +5,7 @@ import { z } from 'zod'
 import App from './App.tsx'
 import './index.css'
 
+// TODO: move code split router and routes into separate files
 const rootRoute = new RootRoute()
 
 const bkgdSchema = z.object({
@@ -20,6 +21,12 @@ const indexRoute = new Route({
   validateSearch: (search) => bkgdSchema.parse(search),
   component: App,
 })
+// TODO: MAIN ROUTE /[?]
+// TODO: add a route for the 404 page
+// TODO: /help
+// TODO: /about
+// TODO: /settings
+// TODO: /<username>/<bkgd_id> -> redirects to /<username>/[?]
 
 const routeTree = rootRoute.addChildren([indexRoute])
 

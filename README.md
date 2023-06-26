@@ -2,17 +2,20 @@
 
 ## TODO's
 
-- [X] Finish `readme.md`
+- [x] Finish `readme.md`
+- [ ] Using these libraries
+  - [ ] Framer Motion
+  - [ ] Tanstack Router
+  - [ ] React
+  - [ ] Zod
 - [ ] Create the APP
-    - [ ] What technologies will be used?
+  - [ ] Add scaffolding
+  - [ ] Add noise
+  - [ ] Add background
+  - [ ] Add gradient
+  - [ ] Add controls
 - [ ] Deploy to `vercel`
 - [ ] Create a roadmap
-
-<br>
-
-> Do we need a roadmap? 🤔
-> Do we need testing? 🤔
-> Do we need a CI/CD? 🤔
 
 <br>
 
