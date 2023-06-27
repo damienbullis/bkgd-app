@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { RootRoute, Route, Router, RouterProvider } from '@tanstack/router'
 import { z } from 'zod'
 import App from './App.tsx'
-import './index.css'
+import './global.css'
 
 // TODO: move code split router and routes into separate files
 const rootRoute = new RootRoute()

@@ -1,4 +1,6 @@
 import { useSearch, useNavigate } from '@tanstack/router'
+import { AppNav, LayerNav } from './navs'
+import { Bkgd } from './bkgd'
 import './App.css'
 
 // const DownloadButton = () => {
@@ -31,20 +33,20 @@ const Temp = ({ title }: { title: string }) => {
   return <h1>{title}</h1>
 }
 
+// Layout
 function App() {
   return (
     // ROOT
     <main>
-      <section>
-        <Temp title="AppNav" />
-        <Temp title="LayerNav" />
-        <Temp title="Details" />
-        <Temp title="Bkgd" />
-        <Temp title="Help" />
-        <Temp title="Spotlight**" />
-        <Temp title="Footer" />
-        <Temp title="Splash" />
-      </section>
+      <Bkgd />
+      <Temp title="Footer" />
+      <Temp title="Details" />
+      <LayerNav />
+      <AppNav />
+      <Temp title="AppNav" />
+      <Temp title="Help" />
+      <Temp title="Spotlight**" />
+      <Temp title="Splash" />
     </main>
   )
 }
