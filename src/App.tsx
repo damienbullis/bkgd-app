@@ -1,7 +1,11 @@
-import { useSearch, useNavigate } from '@tanstack/router'
-import { AppNav, LayerNav } from './navs'
-import { Bkgd } from './bkgd'
+// import { useSearch, useNavigate } from '@tanstack/router'
+import Layers from './components/Layers'
+import Nav from './components/Nav'
+import Bkgd from './components/Bkgd'
+import Footer from './components/Footer'
+import Controls from './components/Controls'
 import './App.css'
+import Layout from './components/Layout'
 
 // const DownloadButton = () => {
 //   const nav = useNavigate({ from: '/' })
@@ -36,18 +40,20 @@ const Temp = ({ title }: { title: string }) => {
 // Layout
 function App() {
   return (
-    // ROOT
-    <main>
+    <Layout>
       <Bkgd />
-      <Temp title="Footer" />
-      <Temp title="Details" />
-      <LayerNav />
-      <AppNav />
-      <Temp title="AppNav" />
-      <Temp title="Help" />
+      <Footer />
+      <Controls />
+      <Layers />
+      <Nav />
+      {/**
+       * absolute position relative to the <Layout>
+       */}
+
+      {/* <Temp title="Help" />
       <Temp title="Spotlight**" />
-      <Temp title="Splash" />
-    </main>
+      <Temp title="Splash" /> */}
+    </Layout>
   )
 }
 

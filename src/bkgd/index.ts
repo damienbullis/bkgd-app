@@ -1,1 +1,0 @@
-export { default as Bkgd } from './Bkgd';
