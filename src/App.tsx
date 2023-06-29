@@ -4,7 +4,6 @@ import Nav from './components/Nav'
 import Bkgd from './components/Bkgd'
 import Footer from './components/Footer'
 import Controls from './components/Controls'
-import './App.css'
 import Layout from './components/Layout'
 
 // const DownloadButton = () => {
