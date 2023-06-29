@@ -9,7 +9,7 @@ import './global.css'
 const rootRoute = new RootRoute()
 
 const bkgdSchema = z.object({
-  bkgd: z.union([z.string(), z.number()]).catch((err) => {
+  bkgd: z.union([z.string(), z.number(), z.undefined()]).catch((err) => {
     console.error({ err })
     return ''
   }),

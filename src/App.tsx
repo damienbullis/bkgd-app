@@ -46,13 +46,13 @@ function App() {
       <Controls />
       <Layers />
       <Nav />
-      {/**
-       * absolute position relative to the <Layout>
-       */}
 
-      {/* <Temp title="Help" />
+      {/* 
+      Absolute Layers
+      <Temp title="Help" />
       <Temp title="Spotlight**" />
-      <Temp title="Splash" /> */}
+      <Temp title="Splash" /> 
+      */}
     </Layout>
   )
 }
