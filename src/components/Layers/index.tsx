@@ -1,7 +1,9 @@
+import styles from './_.module.css'
+
 export default function Layers() {
   return (
-    <section className="wrap">
-      <h2>Layer Nav</h2>
+    <section id="layers" className={styles.wrap}>
+      <p>Layer Nav</p>
     </section>
   )
 }

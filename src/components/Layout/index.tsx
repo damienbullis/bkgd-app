@@ -1,5 +1,5 @@
-import styles from './_.module.css'
+import './_.css'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <main className={styles.wrap}>{children}</main>
+  return <main className="layout">{children}</main>
 }

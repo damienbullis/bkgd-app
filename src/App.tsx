@@ -32,15 +32,14 @@ import Layout from './components/Layout'
 //   )
 // }
 
-const Temp = ({ title }: { title: string }) => {
-  return <h1 className="test">{title}</h1>
-}
-
-// Layout
-function App() {
+export default function App() {
   return (
     <Layout>
       <Bkgd />
+      {/* <section id="footer"></section>
+      <section id="bkgd"></section>
+      <section id="bkgd"></section>
+      <section id="bkgd"></section> */}
       <Footer />
       <Controls />
       <Layers />
@@ -48,12 +47,11 @@ function App() {
 
       {/* 
       Absolute Layers
-      <Temp title="Help" />
-      <Temp title="Spotlight**" />
-      <Temp title="Splash" /> 
+
+      Help Layer
+      Spotlight Layer
+      Splash Layer
       */}
     </Layout>
   )
 }
-
-export default App

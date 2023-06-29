@@ -1,7 +1,7 @@
 export default function Controls() {
   return (
-    <section className="wrap">
-      <h2>Controls</h2>
+    <section id="controls">
+      <h2 style={{ textAlign: 'right' }}>Controls</h2>
     </section>
   )
 }
