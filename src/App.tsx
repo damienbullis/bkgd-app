@@ -30,7 +30,7 @@ import './App.css'
 // }
 
 const Temp = ({ title }: { title: string }) => {
-  return <h1>{title}</h1>
+  return <h1 className="test">{title}</h1>
 }
 
 // Layout

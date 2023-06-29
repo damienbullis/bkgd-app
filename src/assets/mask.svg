@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500">
+  <!-- Probably going to remove this... -->
+  <defs>
+    <linearGradient
+      id="gradient"
+      x1="0%"
+      y1="0%"
+      x2="100%"
+      y2="0%"
+      spreadMethod="pad"
+    >
+      <stop offset="0%" stop-color="#FFF" stop-opacity="1" />
+      <stop offset="100%" stop-color="#000" stop-opacity="1" />
+    </linearGradient>
+    <mask id="mask">
+      <rect width="500" height="500" fill="url(#gradient)" />
+    </mask>
+  </defs>
+  <rect width="500" height="500" style="mask: url(#mask)" opacity="1" />
+</svg>

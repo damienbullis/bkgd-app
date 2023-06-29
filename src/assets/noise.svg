@@ -6,7 +6,7 @@
       numOctaves="3"
       stitchTiles="stitch"
     />
-    <feBlend mode="darken" />
+    <!-- <feBlend mode="soft-light" /> -->
   </filter>
-  <rect width="500" height="500" filter="url(#noise)" opacity="0.5" />
+  <rect width="500" height="500" filter="url(#noise)" opacity="1" />
 </svg>
