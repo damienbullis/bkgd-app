@@ -1,7 +1,14 @@
+import { useState } from 'react'
+
 export default function Bkgd() {
+  // Main App Logic Here
+  const [layers, setLayers] = useState([])
+
   return (
     <section id="bkgd">
-      <h2>Bkgd</h2>
+      {layers.map((layer) => {
+        return <div className="layer" />
+      })}
     </section>
   )
 }
