@@ -7,6 +7,7 @@
   grid-template: 1fr 0fr / 1fr;
   transition: var(--transition);
   > p {
+    cursor: pointer;
     padding: 0.5rem;
     margin: 0;
     font-size: 0.8rem;

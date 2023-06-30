@@ -1,7 +1,13 @@
+import { useState } from 'react'
+
+type Mode = 'tools' | 'edit'
+
 export default function Controls() {
+  const [mode, setMode] = useState<Mode>('tools')
   return (
     <section id="controls">
-      <h2 style={{ textAlign: 'right' }}>Controls</h2>
+      {mode === 'tools' && <div>Tools</div>}
+      {mode === 'edit' && <div>Edit</div>}
     </section>
   )
 }

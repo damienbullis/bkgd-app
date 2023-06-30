@@ -36,10 +36,6 @@ export default function App() {
   return (
     <Layout>
       <Bkgd />
-      {/* <section id="footer"></section>
-      <section id="bkgd"></section>
-      <section id="bkgd"></section>
-      <section id="bkgd"></section> */}
       <Footer />
       <Controls />
       <Layers />
