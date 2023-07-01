@@ -1,23 +1,26 @@
-import { useEffect, useRef, useState } from 'react'
+import { ButtonHTMLAttributes } from 'react'
 import styles from './_.module.css'
+import { FloppyDisk, UserCircle } from '@phosphor-icons/react'
 
-const Shine = ({ text }: { text: string }) => {
-  const el = useRef<HTMLParagraphElement>(null)
-  const [finished, setFinished] = useState(false)
-
-  useEffect(() => {
-    if (el.current && !finished) {
-      const styleSheet = document.styleSheets[0]
-      const pseudoElementRule = `.shine::after { content: "${text}"; }`
-      styleSheet.insertRule(pseudoElementRule)
-      setFinished(true)
-    }
-  }, [el, text, finished])
-
+// NEXT: code split
+const Shine = ({ children }: { children: string }) => {
   return (
-    <p ref={el} className="shine">
-      {text}
+    <p className="shine">
+      {children}
+      <span>{children}</span>
     </p>
+  )
+}
+// NEXT: code split
+const NavButton = ({
+  children,
+  className,
+  ...rest
+}: ButtonHTMLAttributes<HTMLButtonElement>) => {
+  return (
+    <button className={className ? className + ' ' : '' + 'clr'} {...rest}>
+      {children}
+    </button>
   )
 }
 
@@ -26,14 +29,22 @@ export default function Nav() {
     <nav id="nav" className={styles.wrap}>
       <span>
         <a href="/" className={`${styles.logo}`}>
-          <Shine text="BKGD" />
+          <Shine>BKGD</Shine>
         </a>
       </span>
       <ul className="clr">
-        <li className="clr">Home</li>
+        <li className="clr">
+          <NavButton disabled>
+            <FloppyDisk size={32} />
+          </NavButton>
+        </li>
       </ul>
       <ul className="clr">
-        <li className="clr">Account</li>
+        <li className="clr">
+          <NavButton disabled>
+            <UserCircle size={32} />
+          </NavButton>
+        </li>
       </ul>
     </nav>
   )

@@ -3,21 +3,42 @@
   display: inline-grid;
   grid-template: auto 1fr auto / auto;
   align-content: center;
-  overflow: visible;
   > ul {
+    display: inline-grid;
     padding: var(--padding);
     gap: var(--padding);
+    justify-items: center;
+    align-items: start;
     > li {
-      /* display: inline-block; */
-      padding: var(--padding);
-      margin: var(--padding);
-      border-radius: 0.5rem;
-      background-color: transparent;
-      font-family: 'Roboto Mono', monospace;
-      transition: all 0.2s ease-in-out;
+      display: inline-grid;
+      place-content: center;
 
-      &:hover {
-        background-color: #222;
+      > button {
+        padding: var(--padding);
+        margin: var(--padding);
+        border-radius: 0.5rem;
+        background-color: transparent;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        &:has(> svg) {
+          line-height: 0.5em;
+        }
+
+        &:hover {
+          background-color: #222;
+          transform: scale(1.05);
+        }
+
+        &:active {
+          transform: scale(0.95);
+        }
+
+        &:disabled {
+          transform: scale(1);
+          color: #999;
+          background-color: transparent;
+          cursor: not-allowed;
+        }
       }
     }
   }
@@ -27,7 +48,7 @@
   text-decoration: none;
 
   > p {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin: 0;
     padding: 0rem 1rem;
     font-family: 'Impact', Haettenschweiler, 'Arial Narrow Bold', sans-serif,

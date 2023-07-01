@@ -36,21 +36,39 @@ html {
 
 .shine {
   position: relative;
-}
-.shine::after {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  visibility: hidden;
-  color: transparent;
-  padding: inherit;
-  margin: inherit;
-  width: inherit;
-  height: inherit;
-  letter-spacing: inherit;
-  /* content: ''; */
+  > span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    visibility: hidden;
+    color: transparent;
+    padding: inherit;
+    margin: inherit;
+    width: inherit;
+    height: inherit;
+    letter-spacing: inherit;
+    /* content: ''; */
+  }
+
+  &:hover {
+    > span {
+      visibility: visible;
+      background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 60%
+      );
+      background-size: 400% 400%;
+      animation: gradient 4s ease-in infinite;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      mix-blend-mode: luminosity;
+    }
+  }
 }
 
 @keyframes gradient {
@@ -71,19 +89,6 @@ html {
   }
 }
 .shine:hover::after {
-  visibility: visible;
-  background: linear-gradient(
-    to bottom right,
-    rgba(255, 255, 255, 0) 40%,
-    rgba(255, 255, 255, 0.5) 50%,
-    rgba(255, 255, 255, 0) 60%
-  );
-  background-size: 400% 400%;
-  animation: gradient 4s ease-in infinite;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  mix-blend-mode: luminosity;
 }
 
 /* #test {
