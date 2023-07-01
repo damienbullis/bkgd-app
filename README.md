@@ -1,23 +1,38 @@
 # BKGD
 
-## TODO's
+## ROADMAP
 
-- [x] Finish `readme.md`
+- [ ] Finish `readme.md`
 - [x] Using these libraries
   - [x] Framer Motion
   - [x] Tanstack Router
   - [x] React
   - [x] Zod
-- [ ] Create the APP
-  - [x] Add scaffolding
+- [x] Scaffold App
   - [x] Add noise
-  - [ ] Add background
-  - [ ] Add gradient
-  - [ ] Add controls
+  - [x] Add background
+  - [x] Add gradient
+  - [x] Add controls
 - [ ] Deploy to `vercel`
-- [ ] Create a roadmap
 
 <br>
 
 > At some point we will want switch to `astro` and possible `solidjs`???
 > Then we can add some additional pages and features to the website besides the app.
+
+## TODOs
+
+- [ ] Sections
+  - [ ] NEXT: Nav
+  - [ ] Layers
+  - [ ] Controls
+  - [ ] Bkgd
+  - [x] Footer
+- [ ] Tools
+  - [ ] Noise
+  - [ ] Gradient
+  - [ ] Solid
+  - [ ] Text
+  - [ ] Patterns
+  - [ ] Shaders\*
+  - [ ] Blend Modes

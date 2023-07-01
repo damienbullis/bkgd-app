@@ -1,3 +1,42 @@
 .wrap {
-  background-color: #ffffff40;
+  --padding: 0.5rem;
+  display: inline-grid;
+  grid-template: auto 1fr auto / auto;
+  align-content: center;
+  overflow: visible;
+  > ul {
+    padding: var(--padding);
+    gap: var(--padding);
+    > li {
+      /* display: inline-block; */
+      padding: var(--padding);
+      margin: var(--padding);
+      border-radius: 0.5rem;
+      background-color: transparent;
+      font-family: 'Roboto Mono', monospace;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        background-color: #222;
+      }
+    }
+  }
+}
+
+.logo {
+  text-decoration: none;
+
+  > p {
+    font-size: 2.5rem;
+    margin: 0;
+    padding: 0rem 1rem;
+    font-family: 'Impact', Haettenschweiler, 'Arial Narrow Bold', sans-serif,
+      sans-serif;
+    letter-spacing: -0.1em;
+    text-align: center;
+    background: linear-gradient(to bottom right, #ff9b9b 30%, #cbffa9 110%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
