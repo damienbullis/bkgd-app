@@ -6,7 +6,7 @@ const Button = ({
   ...rest
 }: ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (
-    <button className={className ? className + ' ' : '' + 'clr'} {...rest}>
+    <button className={(className ? className + ' ' : '') + 'clr'} {...rest}>
       {children}
     </button>
   )

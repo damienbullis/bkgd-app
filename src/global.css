@@ -20,6 +20,12 @@ html {
   margin: 0;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .clr {
   margin: 0;
   padding: 0;
@@ -30,6 +36,9 @@ html {
   background: transparent;
   text-decoration: none;
   list-style: none;
+  &:is(button) {
+    cursor: pointer;
+  }
 }
 
 /* ANIMATIONS */
