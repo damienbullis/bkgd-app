@@ -1,1 +1,2 @@
-export const temp = "temp"
+export {default as Shine} from './Shine';
+export {default as Button} from './Button';

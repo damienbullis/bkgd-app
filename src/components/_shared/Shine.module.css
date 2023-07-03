@@ -1,0 +1,55 @@
+@keyframes gradient {
+  0% {
+    background-position: 100% 50%;
+  }
+  15% {
+    background-position: 0% 50%;
+  }
+  33% {
+    background-position: 0% 50%;
+  }
+  /* 66% {
+    background-position: 0% 50%;
+  } */
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.wrap {
+  position: relative;
+
+  > span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    visibility: hidden;
+    color: transparent;
+    padding: inherit;
+    margin: inherit;
+    width: inherit;
+    height: inherit;
+    letter-spacing: inherit;
+    /* content: ''; */
+  }
+
+  &:hover {
+    > span {
+      visibility: visible;
+      background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 60%
+      );
+      background-size: 400% 400%;
+      animation: gradient 4s ease-in infinite;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      mix-blend-mode: luminosity;
+    }
+  }
+}
