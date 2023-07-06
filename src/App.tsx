@@ -6,6 +6,13 @@ import Footer from './components/Footer'
 import Controls from './components/Controls'
 import Layout from './components/Layout'
 
+const PointerProvider = ({ children }: { children: React.ReactNode }) => {
+  // TODO: add context for pointer
+  // This will be used for the dynamic behavior
+  // when dragging elements from layers to controls
+  return <>{children}</>
+}
+
 // const DownloadButton = () => {
 //   const nav = useNavigate({ from: '/' })
 //   return (
@@ -37,8 +44,10 @@ export default function App() {
     <Layout>
       <Bkgd />
       <Footer />
-      <Controls />
-      <Layers />
+      <PointerProvider>
+        <Controls />
+        <Layers />
+      </PointerProvider>
       <Nav />
 
       {/* 
