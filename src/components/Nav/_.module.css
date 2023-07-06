@@ -3,6 +3,7 @@
   display: inline-grid;
   grid-template: auto 1fr auto / auto;
   align-content: center;
+  user-select: none;
 
   /* Nav Menu */
   > ul {
