@@ -56,13 +56,12 @@
     }
   }
   > ._content {
-    > ._head {
-    }
+    /* > ._head {
+    } */
 
     > ._content {
       background-color: blueviolet;
       border-radius: 0.5rem;
-      margin: 0 1rem 1rem;
       padding: 1rem;
       display: grid;
       grid-template-columns: auto auto auto;

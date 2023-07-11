@@ -9,6 +9,7 @@ import {
   Gradient,
   Palette,
   Rainbow,
+  SlidersHorizontal,
   Stack,
   Toolbox,
 } from '@phosphor-icons/react'
@@ -37,7 +38,7 @@ const Tools = ({
           className={mode === 'edit' ? styles.active : ''}
           onClick={() => setMode((prev) => (prev === 'edit' ? prev : 'edit'))}
         >
-          <Gear size="1.618rem" />
+          <SlidersHorizontal size="1.618rem" />
         </Button>
       </div>
       <div className={styles._content}>

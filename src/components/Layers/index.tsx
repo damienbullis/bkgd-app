@@ -1,12 +1,20 @@
 import styles from './_.module.css'
 import { Button, List } from '../_shared'
 import { useState } from 'react'
-import { LayerButtons } from './LayerButton'
-import { Plus, Trash } from '@phosphor-icons/react'
+import { LayerButtons } from './LayerButtons'
+import {
+  Clipboard,
+  DownloadSimple,
+  Eye,
+  EyeClosed,
+  Plus,
+  Trash,
+} from '@phosphor-icons/react'
 import { LayerType, randomLayer } from './_helpers'
 
 export default function Layers() {
   const [layers, setLayers] = useState<LayerType[]>([])
+  const [hide, setHide] = useState(false)
 
   const addLayer = () => {
     setLayers((prev) => [...prev, randomLayer()])
@@ -24,6 +32,16 @@ export default function Layers() {
     <aside id="layers" className={styles.wrap}>
       <List>
         <li>
+          <Button>
+            <DownloadSimple size={'1.618rem'} />
+          </Button>
+        </li>
+        <li>
+          <Button>
+            <Clipboard size={'1.618rem'} />
+          </Button>
+        </li>
+        <li>
           <Button onClick={() => addLayer()}>
             <Plus size={'1.618rem'} />
           </Button>
@@ -31,6 +49,11 @@ export default function Layers() {
         <li>
           <Button onClick={() => removeLayer(0)}>
             <Trash size={'1.618rem'} />
+          </Button>
+        </li>
+        <li>
+          <Button onClick={() => setHide((prev) => !prev)}>
+            {hide ? <EyeClosed size={'1.618rem'} /> : <Eye size={'1.618rem'} />}
           </Button>
         </li>
       </List>
