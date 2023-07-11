@@ -7,26 +7,26 @@ import {
   DownloadSimple,
   Eye,
   EyeClosed,
-  Plus,
-  Trash,
+  // Plus,
+  // Trash,
 } from '@phosphor-icons/react'
 import { LayerType, randomLayer } from './_helpers'
 
 export default function Layers() {
-  const [layers, setLayers] = useState<LayerType[]>([])
+  const [layers, setLayers] = useState<LayerType[]>([randomLayer()])
   const [hide, setHide] = useState(false)
 
-  const addLayer = () => {
-    setLayers((prev) => [...prev, randomLayer()])
-  }
+  // const addLayer = () => {
+  //   setLayers((prev) => [...prev, randomLayer()])
+  // }
 
-  const removeLayer = (index: number) => {
-    setLayers((prev) => {
-      const next = [...prev]
-      prev.splice(index, 1)
-      return next
-    })
-  }
+  // const removeLayer = (index: number) => {
+  //   setLayers((prev) => {
+  //     const next = [...prev]
+  //     prev.splice(index, 1)
+  //     return next
+  //   })
+  // }
 
   return (
     <aside id="layers" className={styles.wrap}>
@@ -41,7 +41,7 @@ export default function Layers() {
             <Clipboard size={'1.618rem'} />
           </Button>
         </li>
-        <li>
+        {/* <li>
           <Button onClick={() => addLayer()}>
             <Plus size={'1.618rem'} />
           </Button>
@@ -50,7 +50,7 @@ export default function Layers() {
           <Button onClick={() => removeLayer(0)}>
             <Trash size={'1.618rem'} />
           </Button>
-        </li>
+        </li> */}
         <li>
           <Button onClick={() => setHide((prev) => !prev)}>
             {hide ? <EyeClosed size={'1.618rem'} /> : <Eye size={'1.618rem'} />}

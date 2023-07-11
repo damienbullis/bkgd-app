@@ -25,7 +25,7 @@
   width: 100%;
   & button {
     width: 100%;
-    padding: 0rem 1rem;
+    padding: 0.5rem 1rem;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -34,12 +34,13 @@
     border: #ffffff90 1px solid;
     border-radius: 0.5rem;
     & p {
+      margin: 0;
       max-width: 75%;
       text-transform: uppercase;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      font-size: smaller;
+      font-size: calc(1em / var(--scalar));
     }
   }
 }

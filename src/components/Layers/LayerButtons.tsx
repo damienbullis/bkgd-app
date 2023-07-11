@@ -5,8 +5,8 @@ import styles from './_.module.css'
 const LayerButton = ({ layer }: { layer: LayerType }) => {
   const Icon = LAYER_TYPES[layer]
   return (
-    <Button>
-      <Icon size={'1.618rem'} />
+    <Button className="md">
+      <Icon size={'1em'} />
       <p>{layer}</p>
     </Button>
   )
