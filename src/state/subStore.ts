@@ -1,27 +1,33 @@
-// Define the store class
 class SubStore<StoreT, CallbackT extends (args: StoreT) => void> {
-  constructor(private store: StoreT) {}
-  subscribers: CallbackT[] = [];
+  private store: StoreT
+  private subscribers: CallbackT[] = []
+  constructor(store: StoreT) {
+    this.store = store
+  }
 
   subscribe(callback: CallbackT) {
-    this.subscribers.push(callback);
-    return [this.store, this.unsubscribe.bind(this, callback)];
+    this.subscribers.push(callback)
+    return () => {
+      this.unsubscribe(callback)
+    }
   }
 
-  unsubscribe(callback: CallbackT) {
-    this.subscribers = this.subscribers.filter(subscriber => subscriber !== callback);
+  private unsubscribe(callback: CallbackT) {
+    this.subscribers = this.subscribers.filter(
+      (subscriber) => subscriber !== callback
+    )
   }
 
-  state() {
-    return this.store;
+  getState() {
+    return this.store
   }
 
   setState(data: StoreT) {
     for (const callback of this.subscribers) {
-      callback(data);
+      callback(data)
     }
-    this.store = data;
+    this.store = data
   }
 }
 
-export default SubStore;
+export default SubStore

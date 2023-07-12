@@ -12,9 +12,17 @@ import {
 } from '@phosphor-icons/react'
 import { LayerType, randomLayer } from './_helpers'
 
+const VisibilityButton = () => {
+  const [hide, setHide] = useState(false)
+  return (
+    <Button onClick={() => setHide((prev) => !prev)}>
+      {hide ? <EyeClosed size={'1.618rem'} /> : <Eye size={'1.618rem'} />}
+    </Button>
+  )
+}
+
 export default function Layers() {
   const [layers, setLayers] = useState<LayerType[]>([randomLayer()])
-  const [hide, setHide] = useState(false)
 
   // const addLayer = () => {
   //   setLayers((prev) => [...prev, randomLayer()])
@@ -52,9 +60,7 @@ export default function Layers() {
           </Button>
         </li> */}
         <li>
-          <Button onClick={() => setHide((prev) => !prev)}>
-            {hide ? <EyeClosed size={'1.618rem'} /> : <Eye size={'1.618rem'} />}
-          </Button>
+          <VisibilityButton />
         </li>
       </List>
       <LayerButtons layers={layers} />
