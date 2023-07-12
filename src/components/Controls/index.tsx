@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
+import { SlidersHorizontal, Toolbox } from '@phosphor-icons/react'
+import { SelectedLayerID } from '@state/global'
+import { Button } from '@shared'
+
 import styles from './_.module.css'
 import Tools from './Tools'
-import { SelectedLayerID } from '../../state/global'
-import { Button } from '../_shared'
-import { SlidersHorizontal, Toolbox } from '@phosphor-icons/react'
 
 type Mode = 'tools' | 'edit'
 

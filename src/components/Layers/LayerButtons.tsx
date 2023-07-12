@@ -1,8 +1,8 @@
-import { Button, List } from '../_shared'
+import { Button, List } from '@shared'
+import { SelectedLayerID } from '@state/global'
 import { LAYER_TYPES, LayerType } from './_helpers'
 import styles from './_.module.css'
 import { useEffect, useState } from 'react'
-import { SelectedLayerID } from '../../state/global'
 
 const LayerButton = ({ layer }: { layer: LayerType }) => {
   const Icon = LAYER_TYPES[layer]
