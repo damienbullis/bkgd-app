@@ -10,7 +10,7 @@ import {
   Rainbow,
   Stack,
 } from '@phosphor-icons/react'
-import { Button } from '../_shared'
+import { Button } from '@shared'
 import styles from './_.module.css'
 
 const Tools = () => {

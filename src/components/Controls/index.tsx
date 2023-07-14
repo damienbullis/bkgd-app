@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { SlidersHorizontal, Toolbox } from '@phosphor-icons/react'
 import { SelectedLayerID } from '@state/global'
 import { Button } from '@shared'
 
 import styles from './_.module.css'
 import Tools from './Tools'
+import LayerProperties from './LayerProperties'
 
 type Mode = 'tools' | 'edit'
 
@@ -26,7 +28,7 @@ export default function Controls() {
 
   return (
     <section id="controls" className={styles.wrap}>
-      <div className={styles._content}>
+      <div className={styles.layer}>
         <div className={styles._head}>
           <Button
             className={mode === 'tools' ? styles.active : ''}
@@ -43,10 +45,37 @@ export default function Controls() {
             <SlidersHorizontal size="1.618rem" />
           </Button>
         </div>
-        <Tools />
-        <div className={styles._foot}></div>
+        <div className={styles.card}>
+          <div className={styles._head}>
+            <h3>{mode}</h3>
+          </div>
+          <AnimatePresence initial={false} mode="wait">
+            {mode === 'tools' && (
+              <motion.div
+                key="tools"
+                transition={{ duration: 0.1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <Tools />
+              </motion.div>
+            )}
+            {mode === 'edit' && (
+              <motion.div
+                key="edit"
+                transition={{ duration: 0.1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <LayerProperties />
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <div className={styles._foot}></div>
+        </div>
       </div>
-      {mode === 'edit' && <div>Edit</div>}
     </section>
   )
 }
