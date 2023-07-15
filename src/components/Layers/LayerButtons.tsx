@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react'
 import { LayerType } from './LayerTypes'
 import { CircleHalf, Gradient, Icon, Palette } from '@phosphor-icons/react'
 
+const { ActiveLayerID } = Layer
+
 const LAYER_TYPES: {
   [key in LayerType]: Icon
 } = {
@@ -14,11 +16,11 @@ const LAYER_TYPES: {
   solid: Palette,
 }
 
-const LayerButton = ({ layer }: { layer: LayerType }) => {
+const LayerButton = ({ layer, id }: { layer: LayerType; id: string }) => {
   const Icon = LAYER_TYPES[layer]
   const [isActive, setActive] = useState(false)
   useEffect(() => {
-    const [unsubscribe, initial] = Layer.ActiveLayerID.subscribe((id) => {
+    const [unsubscribe, initial] = ActiveLayerID.subscribe((id) => {
       setActive(id === layer)
     })
     setActive(initial === layer)
@@ -30,11 +32,7 @@ const LayerButton = ({ layer }: { layer: LayerType }) => {
   return (
     <Button
       className={`${isActive ? styles.active + ' ' : ''}md`}
-      onClick={() =>
-        Layer.ActiveLayerID.publish(
-          Layer.ActiveLayerID.value() === layer ? '' : layer
-        )
-      }
+      onClick={() => ActiveLayerID.publish(isActive ? '' : id)}
     >
       <Icon size={'1em'} />
       <p>{layer}</p>
@@ -47,7 +45,7 @@ const LayerButtons = ({ layers }: { layers: LayerType[] }) => {
     <List className={styles.layers}>
       {layers.map((layer, i) => (
         <li key={i}>
-          <LayerButton layer={layer} />
+          <LayerButton layer={layer} id={layer} />
         </li>
       ))}
     </List>
