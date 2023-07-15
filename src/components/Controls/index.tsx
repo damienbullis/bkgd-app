@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { SlidersHorizontal, Toolbox } from '@phosphor-icons/react'
-import { SelectedLayerID } from '@state/global'
+import { Layer } from '@state/global'
 import { Button } from '@shared'
 
 import styles from './_.module.css'
@@ -11,16 +11,21 @@ import LayerControls from './LayerControls'
 type Mode = 'tools' | 'edit'
 
 export default function Controls() {
-  const [mode, setMode] = useState<Mode>('tools')
+  const [mode, setMode] = useState<Mode | null>(null)
 
   useEffect(() => {
-    const unsub = SelectedLayerID.subscribe((id) => {
+    const [unsub, initial] = Layer.ActiveLayerID.subscribe((id) => {
       if (id) {
         setMode((prev) => (prev === 'tools' ? 'edit' : prev))
       } else {
         setMode((prev) => (prev === 'edit' ? 'tools' : prev))
       }
     })
+    setMode((prev) => {
+      if (prev === null) return initial ? 'edit' : 'tools'
+      return prev
+    })
+
     return () => {
       unsub()
     }

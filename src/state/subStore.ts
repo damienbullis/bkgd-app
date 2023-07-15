@@ -7,9 +7,7 @@ class SubStore<StoreT, CallbackT extends (args: StoreT) => void> {
 
   subscribe(callback: CallbackT) {
     this.subscribers.push(callback)
-    return () => {
-      this.unsubscribe(callback)
-    }
+    return [this.unsubscribe.bind(this, callback), this.store] as const
   }
 
   private unsubscribe(callback: CallbackT) {
@@ -18,11 +16,11 @@ class SubStore<StoreT, CallbackT extends (args: StoreT) => void> {
     )
   }
 
-  getState() {
+  value() {
     return this.store
   }
 
-  setState(data: StoreT) {
+  publish(data: StoreT) {
     for (const callback of this.subscribers) {
       callback(data)
     }

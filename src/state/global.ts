@@ -1,7 +1,15 @@
 import SubStore from './subStore'
 
-const SelectedLayerID = new SubStore('')
+const ActiveLayerID = new SubStore('')
 
-const UIVisible = new SubStore(true)
+const Visible = new SubStore(true)
 
-export { SelectedLayerID, UIVisible }
+const Layer = {
+  ActiveLayerID,
+}
+
+const UI = {
+  Visible,
+}
+
+export { Layer, UI }

@@ -1,5 +1,5 @@
 import { Button, List } from '@shared'
-import { SelectedLayerID } from '@state/global'
+import { Layer } from '@state/global'
 
 import styles from './_.module.css'
 import { useEffect, useState } from 'react'
@@ -16,11 +16,12 @@ const LAYER_TYPES: {
 
 const LayerButton = ({ layer }: { layer: LayerType }) => {
   const Icon = LAYER_TYPES[layer]
-  const [isActive, setActive] = useState(SelectedLayerID.getState() === layer)
+  const [isActive, setActive] = useState(false)
   useEffect(() => {
-    const unsubscribe = SelectedLayerID.subscribe((id) => {
+    const [unsubscribe, initial] = Layer.ActiveLayerID.subscribe((id) => {
       setActive(id === layer)
     })
+    setActive(initial === layer)
     return () => {
       unsubscribe()
     }
@@ -30,8 +31,8 @@ const LayerButton = ({ layer }: { layer: LayerType }) => {
     <Button
       className={`${isActive ? styles.active + ' ' : ''}md`}
       onClick={() =>
-        SelectedLayerID.setState(
-          SelectedLayerID.getState() === layer ? '' : layer
+        Layer.ActiveLayerID.publish(
+          Layer.ActiveLayerID.value() === layer ? '' : layer
         )
       }
     >
