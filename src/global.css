@@ -56,7 +56,6 @@
   --duration-long: 0.6s;
   --transition-timing: var(--transform-bounce);
   --transition-duration: var(--duration-short);
-  --transition: all var(--transition-duration) var(--transform-timing);
 
   --scalar: 1.618;
   --color-text-black: 0, 0, 0;

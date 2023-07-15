@@ -6,7 +6,7 @@ import { Button } from '@shared'
 
 import styles from './_.module.css'
 import Tools from './Tools'
-import LayerProperties from './LayerProperties'
+import LayerControls from './LayerControls'
 
 type Mode = 'tools' | 'edit'
 
@@ -69,7 +69,7 @@ export default function Controls() {
               animate={{ opacity: 1, left: 0 }}
               exit={{ opacity: 0, left: '100%' }}
             >
-              <LayerProperties />
+              <LayerControls />
             </motion.div>
           )}
         </AnimatePresence>

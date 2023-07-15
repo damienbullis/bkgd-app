@@ -60,7 +60,7 @@
   background-color: blueviolet;
   border-radius: 0.5rem;
   padding: 1rem;
-  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: var(--transition);
   > ._head {
     border-bottom: 1px solid #ffffff20;
     margin-bottom: 0.5rem;
@@ -102,12 +102,38 @@
   }
 }
 
-.properties {
+.layerControls {
   display: grid;
-  grid-auto-rows: auto;
+  grid-auto-flow: row;
   gap: 0.5rem;
-  & h5 {
-    margin: 0.5rem 0 0.25rem;
+
+  > ._section {
+    display: grid;
+    grid-auto-flow: row;
+    gap: 0.5rem;
+
+    > h5 {
+      margin: 0.5rem 0 0.25rem;
+      padding: 0;
+    }
+  }
+}
+
+.inputWrap {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  > label {
+    font-size: calc(1em / var(--scalar));
+    margin: 0;
     padding: 0;
+    color: #ffffff90;
+
+    &.full {
+      width: 100%;
+    }
   }
 }
