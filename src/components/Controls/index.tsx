@@ -45,36 +45,34 @@ export default function Controls() {
             <SlidersHorizontal size="1.618rem" />
           </Button>
         </div>
-        <div className={styles.card}>
-          <div className={styles._head}>
-            <h3>{mode}</h3>
-          </div>
-          <AnimatePresence initial={false} mode="wait">
-            {mode === 'tools' && (
-              <motion.div
-                key="tools"
-                transition={{ duration: 0.1 }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <Tools />
-              </motion.div>
-            )}
-            {mode === 'edit' && (
-              <motion.div
-                key="edit"
-                transition={{ duration: 0.1 }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <LayerProperties />
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <div className={styles._foot}></div>
-        </div>
+        <AnimatePresence initial={false} mode="wait">
+          {mode === 'tools' && (
+            <motion.div
+              key="tools"
+              className={styles.card}
+              transition={{ duration: 0.2 }}
+              style={{ position: 'relative' }}
+              initial={{ opacity: 0, left: '-100%' }}
+              animate={{ opacity: 1, left: 0 }}
+              exit={{ opacity: 0, left: '-100%' }}
+            >
+              <Tools />
+            </motion.div>
+          )}
+          {mode === 'edit' && (
+            <motion.div
+              key="edit"
+              className={styles.card}
+              transition={{ duration: 0.2 }}
+              style={{ position: 'relative' }}
+              initial={{ opacity: 0, left: '100%' }}
+              animate={{ opacity: 1, left: 0 }}
+              exit={{ opacity: 0, left: '100%' }}
+            >
+              <LayerProperties />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   )

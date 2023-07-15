@@ -4,18 +4,14 @@ const LayerProperties = () => {
   return (
     <div className={styles.properties}>
       <div className={styles._section}>
-        <h5>Layer Properties</h5>
+        <h5 className="txt-7">Properties</h5>
         <div className={styles._row}>
           <label htmlFor="solid_color">Solid Color</label>
           <input type="color" id="solid_color" />
         </div>
-        <div className={styles._row}>
-          <label htmlFor="solid_noise">Solid Opacity</label>
-          <input type="checkbox" id="solid_noise" />
-        </div>
       </div>
       <div className={styles._section}>
-        <h5>Blending</h5>
+        <h5 className="txt-7">Blending</h5>
         <div className={styles._row}>
           <label htmlFor="opacity">Opacity</label>
           <input type="range" id="opacity" defaultValue="1" min="0" max="1" />
