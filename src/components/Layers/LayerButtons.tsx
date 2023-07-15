@@ -1,8 +1,18 @@
 import { Button, List } from '@shared'
 import { SelectedLayerID } from '@state/global'
-import { LAYER_TYPES, LayerType } from './_helpers'
+
 import styles from './_.module.css'
 import { useEffect, useState } from 'react'
+import { LayerType } from './LayerTypes'
+import { CircleHalf, Gradient, Icon, Palette } from '@phosphor-icons/react'
+
+const LAYER_TYPES: {
+  [key in LayerType]: Icon
+} = {
+  gradient: CircleHalf,
+  noise: Gradient,
+  solid: Palette,
+}
 
 const LayerButton = ({ layer }: { layer: LayerType }) => {
   const Icon = LAYER_TYPES[layer]

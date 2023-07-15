@@ -1,6 +1,8 @@
+import { LayerPropsType, LayerType } from '../Layers/LayerTypes'
 import styles from './_.module.css'
 
-const LayerProperties = () => {
+const LayerProperties = <T extends LayerType>(layer: LayerPropsType<T>) => {
+  console.log(layer.id, layer.type, layer.props)
   return (
     <div className={styles._section}>
       <h5 className="txt-8">Properties</h5>
@@ -51,12 +53,21 @@ const LayerAdjustments = () => {
     </div>
   )
 }
-// TODO: Define Layer Type
+const TEST_LAYER = {
+  id: 'test',
+  type: 'solid',
+  props: {
+    color: '#000000',
+    opacity: 100,
+    backgroundBlend: false,
+    blendMode: 'normal',
+  },
+} satisfies LayerPropsType<'solid'>
 
 const LayerControls = () => {
   return (
     <div className={styles.layerControls}>
-      <LayerProperties />
+      <LayerProperties {...TEST_LAYER} />
       <LayerAdjustments />
     </div>
   )
