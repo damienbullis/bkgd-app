@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { SlidersHorizontal, Toolbox } from '@phosphor-icons/react'
+import { SlidersHorizontal, Stack } from '@phosphor-icons/react'
 import { Layer } from '@state/global'
 import { Button } from '@shared'
 
@@ -41,7 +41,7 @@ export default function Controls() {
               setMode((prev) => (prev === 'tools' ? prev : 'tools'))
             }
           >
-            <Toolbox size="1.618rem" />
+            <Stack size="1.618rem" />
           </Button>
           <Button
             className={mode === 'edit' ? styles.active : ''}
