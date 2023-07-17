@@ -10,7 +10,7 @@ import {
   // Plus,
   // Trash,
 } from '@phosphor-icons/react'
-import { LayerPropsType, LayerType } from './LayerTypes'
+import { LayerPropsType, LayerEnum } from '@types'
 
 const VisibilityButton = () => {
   const [hide, setHide] = useState(false)
@@ -22,9 +22,9 @@ const VisibilityButton = () => {
 }
 
 export default function Layers() {
-  const [layers, setLayers] = useState<LayerPropsType<LayerType>[]>([])
+  const [layers, setLayers] = useState<LayerPropsType<LayerEnum>[]>([])
 
-  const layersList = ['solid'] satisfies LayerType[]
+  const layersList = ['solid'] satisfies LayerEnum[]
 
   // const addLayer = () => {
   //   setLayers((prev) => [...prev, randomLayer()])

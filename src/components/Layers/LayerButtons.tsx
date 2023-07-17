@@ -3,7 +3,7 @@ import { Layer } from '@state/global'
 
 import styles from './_.module.css'
 import { useEffect, useState } from 'react'
-import { LayerType } from './LayerTypes'
+import { LayerType } from './LayerTypeSchema'
 import { CircleHalf, Gradient, Icon, Palette } from '@phosphor-icons/react'
 
 const { ActiveLayerID } = Layer

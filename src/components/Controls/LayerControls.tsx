@@ -1,4 +1,4 @@
-import { LayerPropsType, LayerType } from '../Layers/LayerTypes'
+import { LayerPropsType, LayerType } from '../Layers/LayerTypeSchema'
 import styles from './_.module.css'
 
 const LayerProperties = <T extends LayerType>(layer: LayerPropsType<T>) => {
