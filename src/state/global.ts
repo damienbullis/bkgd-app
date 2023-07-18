@@ -36,9 +36,11 @@ const useLayer = <
 >(
   selector: T
 ) => {
-  const [_state, setState] = useState(Layer[selector].value())
+  const [_state, setState] = useState<V>(Layer[selector].value() as V)
   useEffect(() => {
-    const [unsubscribe] = Layer[selector].subscribe((state) => setState(state))
+    const [unsubscribe] = Layer[selector].subscribe((state) =>
+      setState(state as V)
+    )
     return () => unsubscribe()
   }, [selector])
 
