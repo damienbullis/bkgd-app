@@ -7,17 +7,26 @@ const ColorPropsSchema = z.union([
 ])
 
 const SolidPropsSchema = z.object({
-  color: ColorPropsSchema,
+  type: z.literal('solid'),
+  props: z.object({
+    color: ColorPropsSchema,
+  }),
 })
 
 const GradientPropsSchema = z.object({
-  gradient: z.array(z.tuple([ColorPropsSchema, z.number()])),
-  type: z.enum(['linear', 'radial', 'conic']),
+  type: z.literal('gradient'),
+  props: z.object({
+    gradient: z.array(z.tuple([ColorPropsSchema, z.number()])),
+    type: z.enum(['linear', 'radial', 'conic']),
+  }),
 })
 
 const NoisePropsSchema = z.object({
-  noise: z.number(),
-  type: z.enum(['turbulence', 'perlin']),
+  type: z.literal('noise'),
+  props: z.object({
+    noise: z.number(),
+    type: z.enum(['turbulence', 'perlin']),
+  }),
 })
 
 const LayerPropsSchema = z.union([
@@ -27,33 +36,32 @@ const LayerPropsSchema = z.union([
 ])
 
 const SharedLayerPropsSchema = z.object({
-  opacity: z.number(),
-  backgroundBlend: z.boolean(),
-  blendMode: z.enum([
-    'normal',
-    'multiply',
-    'screen',
-    'overlay',
-    'darken',
-    'lighten',
-    'color-dodge',
-    'color-burn',
-    'hard-light',
-    'soft-light',
-    'difference',
-    'exclusion',
-    'hue',
-    'saturation',
-    'color',
-    'luminosity',
-  ]),
+  id: z.string(),
+  opacity: z.number().default(100),
+  backgroundBlend: z.boolean().default(false),
+  blendMode: z
+    .enum([
+      'normal',
+      'multiply',
+      'screen',
+      'overlay',
+      'darken',
+      'lighten',
+      'color-dodge',
+      'color-burn',
+      'hard-light',
+      'soft-light',
+      'difference',
+      'exclusion',
+      'hue',
+      'saturation',
+      'color',
+      'luminosity',
+    ])
+    .default('normal'),
 })
 
-const LayerPropsTypeSchema = z.object({
-  id: z.string(),
-  type: z.enum(['solid', 'gradient', 'noise']),
-  props: z.intersection(LayerPropsSchema, SharedLayerPropsSchema),
-})
+const LayerTypeSchema = z.intersection(LayerPropsSchema, SharedLayerPropsSchema)
 
 const LayerSchema = z.object({
   layerStack: z
@@ -64,7 +72,7 @@ const LayerSchema = z.object({
     })
     .default([]),
   layerData: z
-    .array(LayerPropsTypeSchema)
+    .array(LayerTypeSchema)
     .catch((err) => {
       console.warn(err.error.issues)
       return []

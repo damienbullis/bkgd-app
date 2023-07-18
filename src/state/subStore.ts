@@ -1,4 +1,7 @@
-class SubStore<StoreT, CallbackT extends (args: StoreT) => void> {
+class SubStore<
+  StoreT,
+  CallbackT extends (data: StoreT) => void = (data: StoreT) => void
+> {
   private store: StoreT
   private subscribers: CallbackT[] = []
   constructor(store: StoreT) {
