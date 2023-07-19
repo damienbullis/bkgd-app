@@ -1,7 +1,8 @@
-import { LayerPropsType, LayerType } from '../Layers/LayerTypeSchema'
+import { LayerEnum, LayerPropsType } from '../../types/LayerType'
+
 import styles from './_.module.css'
 
-const LayerProperties = <T extends LayerType>(layer: LayerPropsType<T>) => {
+const LayerProperties = <T extends LayerEnum>(layer: LayerPropsType<T>) => {
   console.log(layer.id, layer.type, layer.props)
   return (
     <div className={styles._section}>
@@ -58,10 +59,10 @@ const TEST_LAYER = {
   type: 'solid',
   props: {
     color: '#000000',
-    opacity: 100,
-    backgroundBlend: false,
-    blendMode: 'normal',
   },
+  opacity: 100,
+  backgroundBlend: false,
+  blendMode: 'normal',
 } satisfies LayerPropsType<'solid'>
 
 const LayerControls = () => {
