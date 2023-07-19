@@ -1,15 +1,22 @@
-import { useCallback, useMemo, useSyncExternalStore } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import SubStore from './subStore'
 
-const globalStore: { [key: string]: SubStore<unknown> } = {}
+const globalStore: SubStore<unknown>[] = []
 
-const createStore = <T>({ name, data }: { name: string; data: T }) => {
-  globalStore[name] = new SubStore(data)
+const createStore = <T>(data: T) => {
+  globalStore.push(new SubStore(data))
 
-  return () => {
-    const store = useMemo(() => globalStore[name] as SubStore<T>, [])
+  return function () {
+    const store = useMemo(
+      () => globalStore[globalStore.length - 1] as SubStore<T>,
+      []
+    )
 
-    const state = useSyncExternalStore<T>(store.subscribe2, store.value)
+    const [state, setState] = useState(store.value())
+    useEffect(() => {
+      const unsubscribe = store.subscribe(setState)
+      return () => unsubscribe()
+    }, [store])
 
     const setter = useCallback<(state: T) => void>(
       (state) => store.publish(state),
@@ -20,10 +27,8 @@ const createStore = <T>({ name, data }: { name: string; data: T }) => {
   }
 }
 
-const useVisible = createStore({
-  name: 'Visible',
-  data: false,
-})
+const useVisible = createStore(false)
+const useSelectedLayer = createStore('')
 
-export { useLayer } from './Layer'
+export { useVisible, useSelectedLayer }
 export { UI, useUI } from './UI'

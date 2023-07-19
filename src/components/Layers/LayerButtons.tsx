@@ -1,38 +1,33 @@
 import { Button, List } from '@shared'
-import { Layer } from '@state/global'
 
 import styles from './_.module.css'
-import { useEffect, useState } from 'react'
-import { LayerType } from './LayerTypeSchema'
-import { CircleHalf, Gradient, Icon, Palette } from '@phosphor-icons/react'
+import { useMemo } from 'react'
 
-const { ActiveLayerID } = Layer
+import { CircleHalf, Gradient, Icon, Palette } from '@phosphor-icons/react'
+import { LayerEnum } from '../../types/LayerType'
+import { useSelectedLayer } from '@state/global'
 
 const LAYER_TYPES: {
-  [key in LayerType]: Icon
+  [key in LayerEnum]: Icon
 } = {
   gradient: CircleHalf,
   noise: Gradient,
   solid: Palette,
 }
 
-const LayerButton = ({ layer, id }: { layer: LayerType; id: string }) => {
+const LayerButton = ({ layer, id }: { layer: LayerEnum; id: string }) => {
   const Icon = LAYER_TYPES[layer]
-  const [isActive, setActive] = useState(false)
-  useEffect(() => {
-    const [unsubscribe, initial] = ActiveLayerID.subscribe((id) => {
-      setActive(id === layer)
-    })
-    setActive(initial === layer)
-    return () => {
-      unsubscribe()
-    }
-  }, [layer])
+  const [selectedLayer, setSelectedLayer] = useSelectedLayer()
+  const isActive = useMemo(
+    () => selectedLayer === layer,
+    [selectedLayer, layer]
+  )
+  console.log({ selectedLayer, layer, isActive })
 
   return (
     <Button
       className={`${isActive ? styles.active + ' ' : ''}md`}
-      onClick={() => ActiveLayerID.publish(isActive ? '' : id)}
+      onClick={() => setSelectedLayer(isActive ? '' : id)}
     >
       <Icon size={'1em'} />
       <p>{layer}</p>
@@ -40,7 +35,7 @@ const LayerButton = ({ layer, id }: { layer: LayerType; id: string }) => {
   )
 }
 
-const LayerButtons = ({ layers }: { layers: LayerType[] }) => {
+const LayerButtons = ({ layers }: { layers: LayerEnum[] }) => {
   return (
     <List className={styles.layers}>
       {layers.map((layer, i) => (

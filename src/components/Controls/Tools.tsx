@@ -1,10 +1,10 @@
 import { CircleHalf, Gradient, Palette } from '@phosphor-icons/react'
 import { Button } from '@shared'
 import styles from './_.module.css'
-import { useLayer } from '@state/global'
+import { useSelectedLayer } from '@state/global'
 
 const Tools = () => {
-  const [layerId, setLayerId] = useLayer('ActiveLayerID')
+  const [layerId, setLayerId] = useSelectedLayer()
   console.log(layerId)
   return (
     <div className={styles.tools}>
