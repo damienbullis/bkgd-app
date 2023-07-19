@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { SlidersHorizontal, Stack } from '@phosphor-icons/react'
-import { Layer } from '@state/global'
 import { Button } from '@shared'
 
 import styles from './_.module.css'
@@ -12,24 +11,6 @@ type Mode = 'tools' | 'edit'
 
 export default function Controls() {
   const [mode, setMode] = useState<Mode | null>(null)
-
-  useEffect(() => {
-    const [unsub, initial] = Layer.ActiveLayerID.subscribe((id) => {
-      if (id) {
-        setMode((prev) => (prev === 'tools' ? 'edit' : prev))
-      } else {
-        setMode((prev) => (prev === 'edit' ? 'tools' : prev))
-      }
-    })
-    setMode((prev) => {
-      if (prev === null) return initial ? 'edit' : 'tools'
-      return prev
-    })
-
-    return () => {
-      unsub()
-    }
-  }, [])
 
   return (
     <section id="controls" className={styles.wrap}>

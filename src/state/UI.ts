@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import SubStore from './subStore'
 
-const ActiveLayerID = new SubStore('')
+const Visible = new SubStore(true)
 
-const Layer = {
-  ActiveLayerID,
+const UI = {
+  Visible,
 } as const
 
-type Layer = typeof Layer
-type LayerStore<T extends keyof Layer> = Layer[T]
+type UI = typeof UI
+type UIStore<T extends keyof UI> = UI[T]
 
-const useLayer = <Key extends keyof Layer>(selector: Key) => {
-  const store = useMemo(() => Layer[selector], [selector])
+const useUI = <Key extends keyof UI>(selector: Key) => {
+  const store = useMemo(() => UI[selector], [selector])
 
   const [_state, setState] = useState(store.value())
 
@@ -20,7 +20,7 @@ const useLayer = <Key extends keyof Layer>(selector: Key) => {
     return () => unsubscribe()
   }, [selector, store])
 
-  const setter = useCallback<LayerStore<Key>['publish']>(
+  const setter = useCallback<UIStore<Key>['publish']>(
     (state) => store.publish(state),
     [store]
   )
@@ -28,4 +28,4 @@ const useLayer = <Key extends keyof Layer>(selector: Key) => {
   return [_state, setter] as const
 }
 
-export { useLayer }
+export { UI, useUI }

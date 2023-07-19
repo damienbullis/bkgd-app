@@ -12,6 +12,10 @@ class SubStore<
     this.subscribers.push(callback)
     return [this.unsubscribe.bind(this, callback), this.store] as const
   }
+  subscribe2(callback: CallbackT) {
+    this.subscribers.push(callback)
+    return this.unsubscribe.bind(this, callback)
+  }
 
   private unsubscribe(callback: CallbackT) {
     this.subscribers = this.subscribers.filter(
