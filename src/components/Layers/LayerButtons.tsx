@@ -22,7 +22,6 @@ const LayerButton = ({ layer, id }: { layer: LayerEnum; id: string }) => {
     () => selectedLayer === layer,
     [selectedLayer, layer]
   )
-  console.log({ selectedLayer, layer, isActive })
 
   return (
     <Button

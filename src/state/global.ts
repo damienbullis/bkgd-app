@@ -31,4 +31,3 @@ const useVisible = createStore(false)
 const useSelectedLayer = createStore('')
 
 export { useVisible, useSelectedLayer }
-export { UI, useUI } from './UI'

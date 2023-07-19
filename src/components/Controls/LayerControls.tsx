@@ -3,7 +3,6 @@ import { LayerEnum, LayerPropsType } from '../../types/LayerType'
 import styles from './_.module.css'
 
 const LayerProperties = <T extends LayerEnum>(layer: LayerPropsType<T>) => {
-  console.log(layer.id, layer.type, layer.props)
   return (
     <div className={styles._section}>
       <h5 className="txt-8">Properties</h5>

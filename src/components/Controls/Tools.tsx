@@ -5,7 +5,6 @@ import { useSelectedLayer } from '@state/global'
 
 const Tools = () => {
   const [layerId, setLayerId] = useSelectedLayer()
-  console.log(layerId)
   return (
     <div className={styles.tools}>
       <Button onClick={() => setLayerId('palette')}>
