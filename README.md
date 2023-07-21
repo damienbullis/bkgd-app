@@ -29,35 +29,34 @@
   - [ ] Add Layer
   - [ ] Remove Layer
   - [ ] Move Layer
-  - [ ] Layer State
-  - [ ] Layer Type
+  - [x] Layer State
+  - [x] Layer Type
 - [ ] Controls
   - [ ] Layer Types
-    - [ ] Solid
+    - [x] Solid
     - [ ] Gradient
     - [ ] Noise
-  - [ ] Opacity
-  - [ ] Blend Modes
-  - [ ] Background Blend Mode
+  - [x] Opacity
+  - [x] Blend Modes
+  - [x] Background Blend Mode
 - [ ] Bkgd Controller
 - [x] Footer
 
 ### Additional Features
 
-- [ ] State
+- [x] State
   - [x] Global State
-  - [ ] Persistant State
-  - [ ] Transient State
+  - [x] Persistant State
+  - [x] Transient State
+- [ ] Layer Components
+  - [x] Solid
+  - [ ] Gradient
+  - [ ] Noise
 - [ ] Input Components
-  - [ ] Color Picker
-  - [ ] Gradient Picker
-  - [ ] Noise Picker
+  - [ ] Text
   - [ ] Range Slider
   - [ ] Dropdown
   - [ ] Checkbox
-  - [ ] `Other`
-    - [ ] Pattern Picker
-    - [ ] Shader Picker\*
 - [ ] Export/Save
   - [ ] Image
   - [ ] Code
@@ -73,3 +72,17 @@
 - [ ] Shaders\*
 
 <br>
+
+## Other notes
+
+### Add Changesets to project
+
+### Add CI/CD to project
+
+### Add testing to project
+
+<br>
+
+> How do we figure out gathering metrics for usage?
+
+> How do we add commit hash on build to the app?

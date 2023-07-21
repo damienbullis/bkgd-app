@@ -3,6 +3,13 @@ import { FloppyDisk, UserCircle } from '@phosphor-icons/react'
 import { Button, Shine } from '../_shared'
 
 export default function Nav() {
+  /**
+   * TODO: Save / Load Backgrounds
+   *
+   * We need to be able to save and load backgrounds
+   * this will be handled by local storage, no need for a backend
+   */
+
   return (
     <nav id="nav" className={styles.wrap}>
       <span>

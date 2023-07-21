@@ -3,6 +3,13 @@ import styles from './_.module.css'
 
 export default function Footer() {
   const [open, setOpen] = useState(false)
+
+  /**
+   * TODO: Add a git commit hash to footer
+   * and link to that hash on github.
+   * this will be handled by ENV variables and the build step
+   */
+
   return (
     <footer
       id="footer"
