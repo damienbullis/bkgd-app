@@ -48,6 +48,7 @@
   - [x] Global State
   - [x] Persistant State
   - [x] Transient State
+  - [x] URL State
 - [ ] Layer Components
   - [x] Solid
   - [ ] Gradient
