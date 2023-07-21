@@ -26,6 +26,18 @@ const LayerAdjustments = <T extends LayerEnum>({
   backgroundBlend,
 }: Pick<LayerPropsType<T>, 'opacity' | 'blendMode' | 'backgroundBlend'>) => {
   console.log('LayerAdjustments', { opacity, blendMode, backgroundBlend })
+
+  /**
+   * TODO: Add some additional controls
+   *
+   * - Background Size
+   * - Background Position
+   * - Background Origin
+   * - Background Attachment**
+   * - Background Repeat**
+   * - Background Clip**
+   */
+
   return (
     <div className={styles._section}>
       <h5 className="txt-8">Adjustments</h5>
