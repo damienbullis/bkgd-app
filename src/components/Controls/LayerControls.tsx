@@ -1,8 +1,15 @@
+import { useSearch } from '@tanstack/router'
+import { Range } from '@shared'
 import { LayerEnum, LayerPropsType } from '../../types/LayerType'
 
 import styles from './_.module.css'
+import { useSelectedLayer } from '@state/global'
 
-const LayerProperties = <T extends LayerEnum>(layer: LayerPropsType<T>) => {
+const LayerProperties = <T extends LayerEnum>({
+  type,
+  props,
+}: Pick<LayerPropsType<T>, 'type' | 'props'>) => {
+  console.log('LayerProperties', { type, props })
   return (
     <div className={styles._section}>
       <h5 className="txt-8">Properties</h5>
@@ -10,23 +17,19 @@ const LayerProperties = <T extends LayerEnum>(layer: LayerPropsType<T>) => {
         <label htmlFor="color">Color</label>
         <input type="color" id="color" onChange={(e) => console.log(e)} />
       </div>
-      <div className={styles.inputWrap}>
-        <label htmlFor="optimize">Optimize</label>
-        <input type="checkbox" id="optimize" />
-      </div>
     </div>
   )
 }
-const LayerAdjustments = () => {
+const LayerAdjustments = <T extends LayerEnum>({
+  opacity,
+  blendMode,
+  backgroundBlend,
+}: Pick<LayerPropsType<T>, 'opacity' | 'blendMode' | 'backgroundBlend'>) => {
+  console.log('LayerAdjustments', { opacity, blendMode, backgroundBlend })
   return (
     <div className={styles._section}>
       <h5 className="txt-8">Adjustments</h5>
-      <div className={styles.inputWrap}>
-        <label htmlFor="opacity" className={styles.full}>
-          Opacity
-        </label>
-        <input type="range" id="opacity" defaultValue="100" min="0" max="100" />
-      </div>
+      <Range label="Opacity" />
       <div className={styles.inputWrap}>
         <label htmlFor="blendMode" className={styles.full}>
           Blend Mode
@@ -65,10 +68,22 @@ const TEST_LAYER = {
 } satisfies LayerPropsType<'solid'>
 
 const LayerControls = () => {
+  const [selectedLayer] = useSelectedLayer()
+  const { layerData } = useSearch({ from: '/' })
+
+  const layer =
+    layerData.find((layer) => layer.id === selectedLayer) || TEST_LAYER
+  const { type } = layer
+  console.log({ layer, type })
+
   return (
     <div className={styles.layerControls}>
-      <LayerProperties {...TEST_LAYER} />
-      <LayerAdjustments />
+      <LayerProperties type={layer.type} props={layer.props} />
+      <LayerAdjustments
+        opacity={layer.opacity}
+        backgroundBlend={layer.backgroundBlend}
+        blendMode={layer.blendMode}
+      />
     </div>
   )
 }

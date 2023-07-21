@@ -6,7 +6,7 @@ const globalStore: SubStore<unknown>[] = []
 const createStore = <T>(data: T) => {
   globalStore.push(new SubStore(data))
 
-  return function () {
+  return () => {
     const store = useMemo(
       () => globalStore[globalStore.length - 1] as SubStore<T>,
       []

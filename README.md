@@ -22,17 +22,54 @@
 
 ## TODOs
 
-- [ ] Sections
-  - [ ] NEXT: Nav
-  - [ ] Layers
-  - [ ] Controls
-  - [ ] Bkgd
-  - [x] Footer
-- [ ] Tools
-  - [ ] Noise
-  - [ ] Gradient
-  - [ ] Solid
-  - [ ] Text
-  - [ ] Patterns
-  - [ ] Shaders\*
+### Sections
+
+- [x] Nav
+- [ ] Layers
+  - [ ] Add Layer
+  - [ ] Remove Layer
+  - [ ] Move Layer
+  - [ ] Layer State
+  - [ ] Layer Type
+- [ ] Controls
+  - [ ] Layer Types
+    - [ ] Solid
+    - [ ] Gradient
+    - [ ] Noise
+  - [ ] Opacity
   - [ ] Blend Modes
+  - [ ] Background Blend Mode
+- [ ] Bkgd Controller
+- [x] Footer
+
+### Additional Features
+
+- [ ] State
+  - [x] Global State
+  - [ ] Persistant State
+  - [ ] Transient State
+- [ ] Input Components
+  - [ ] Color Picker
+  - [ ] Gradient Picker
+  - [ ] Noise Picker
+  - [ ] Range Slider
+  - [ ] Dropdown
+  - [ ] Checkbox
+  - [ ] `Other`
+    - [ ] Pattern Picker
+    - [ ] Shader Picker\*
+- [ ] Export/Save
+  - [ ] Image
+  - [ ] Code
+  - [ ] Share
+  - [ ] `Explore different ways to do this`
+
+### Additional Layer Types\*\*\*
+
+> Do we want to add these?
+
+- [ ] Text
+- [ ] Patterns
+- [ ] Shaders\*
+
+<br>

@@ -47,6 +47,7 @@ export default function Controls() {
           </Button>
         </div>
         <AnimatePresence initial={false} mode="wait">
+          {/* TODO: Move these motion.div's inside inner components instead */}
           {mode === 'tools' && (
             <motion.div
               key="tools"
