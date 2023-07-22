@@ -1,0 +1,24 @@
+.wrap {
+  color: #ffffff90;
+  padding: 0.5rem;
+  line-height: 0.5;
+  box-sizing: content-box;
+  &.active {
+    color: #f8f8f8;
+    position: relative;
+  }
+  > svg {
+    transition: scale 0.15s var(--transform-bounce);
+  }
+  &:hover {
+    color: #fff;
+    > svg {
+      scale: 1.03;
+    }
+  }
+  &:active {
+    > svg {
+      scale: 0.97;
+    }
+  }
+}

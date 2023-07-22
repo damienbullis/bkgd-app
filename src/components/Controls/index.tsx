@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 import { SlidersHorizontal, Stack } from '@phosphor-icons/react'
 import { Button } from '@shared'
 
@@ -49,30 +49,30 @@ export default function Controls() {
         <AnimatePresence initial={false} mode="wait">
           {/* TODO: Move these motion.div's inside inner components instead */}
           {mode === 'tools' && (
-            <motion.div
-              key="tools"
-              className={styles.card}
-              transition={{ duration: 0.2 }}
-              style={{ position: 'relative' }}
-              initial={{ opacity: 0, left: '-100%' }}
-              animate={{ opacity: 1, left: 0 }}
-              exit={{ opacity: 0, left: '-100%' }}
-            >
-              <Tools />
-            </motion.div>
+            // <motion.div
+            //   key="tools"
+            //   className={styles.card}
+            //   transition={{ duration: 0.2 }}
+            //   style={{ position: 'relative' }}
+            //   initial={{ opacity: 0, left: '-100%' }}
+            //   animate={{ opacity: 1, left: 0 }}
+            //   exit={{ opacity: 0, left: '-100%' }}
+            // >
+            <Tools />
+            // </motion.div>
           )}
           {mode === 'edit' && (
-            <motion.div
-              key="edit"
-              className={styles.card}
-              transition={{ duration: 0.2 }}
-              style={{ position: 'relative' }}
-              initial={{ opacity: 0, left: '100%' }}
-              animate={{ opacity: 1, left: 0 }}
-              exit={{ opacity: 0, left: '100%' }}
-            >
-              <LayerControls />
-            </motion.div>
+            // <motion.div
+            //   key="edit"
+            //   className={styles.card}
+            //   transition={{ duration: 0.2 }}
+            //   style={{ position: 'relative' }}
+            //   initial={{ opacity: 0, left: '100%' }}
+            //   animate={{ opacity: 1, left: 0 }}
+            //   exit={{ opacity: 0, left: '100%' }}
+            // >
+            <LayerControls />
+            // </motion.div>
           )}
         </AnimatePresence>
       </div>
