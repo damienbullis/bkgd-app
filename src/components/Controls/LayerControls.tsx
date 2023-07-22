@@ -86,7 +86,6 @@ const LayerControls = () => {
   const layer =
     layerData.find((layer) => layer.id === selectedLayer) || TEST_LAYER
   const { type } = layer
-  console.log({ layer, type })
 
   return (
     <div className={styles.layerControls}>

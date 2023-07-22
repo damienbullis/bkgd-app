@@ -63,6 +63,21 @@
   --color-text: var(--color-text-white);
 }
 
+.clr {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  /* font-size: 100%; */
+  vertical-align: baseline;
+  background: transparent;
+  text-decoration: none;
+  list-style: none;
+  &:is(button) {
+    cursor: pointer;
+  }
+}
+
 .txt {
   color: color(display-p3 var(--color-text) / 1);
 }
@@ -122,19 +137,10 @@ button > p {
   font-size: calc(calc(1rem * var(--scalar)) * var(--scalar));
 }
 
-.clr {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  /* font-size: 100%; */
-  vertical-align: baseline;
-  background: transparent;
-  text-decoration: none;
-  list-style: none;
-  &:is(button) {
-    cursor: pointer;
-  }
+.xl {
+  font-size: calc(
+    calc(calc(1rem * var(--scalar)) * var(--scalar)) * var(--scalar)
+  );
 }
 
 /* ANIMATIONS */

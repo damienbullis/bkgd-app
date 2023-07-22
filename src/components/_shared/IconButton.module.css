@@ -1,24 +1,30 @@
 .wrap {
-  color: #ffffff90;
+  opacity: 0.9;
   padding: 0.5rem;
   line-height: 0.5;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
   box-sizing: content-box;
+  cursor: pointer;
   &.active {
-    color: #f8f8f8;
-    position: relative;
+    opacity: 1;
   }
   > svg {
-    transition: scale 0.15s var(--transform-bounce);
+    transition: scale var(--transition-duration) var(--transition-timing);
   }
   &:hover {
+    opacity: 1;
     color: #fff;
     > svg {
-      scale: 1.03;
+      scale: 1.05;
     }
   }
   &:active {
+    opacity: 1;
     > svg {
-      scale: 0.97;
+      scale: 0.95;
     }
   }
 }
