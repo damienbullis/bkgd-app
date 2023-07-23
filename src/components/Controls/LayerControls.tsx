@@ -6,7 +6,7 @@ import styles from './_.module.css'
 import { useSelectedLayer } from '@state/global'
 import { Checkbox, Input, Select } from '../_shared/Input'
 
-const blendModes = [
+const blendModesOptions = [
   'normal',
   'multiply',
   'screen',
@@ -24,32 +24,6 @@ const blendModes = [
   'color',
   'luminosity',
 ]
-
-const LayerTypeProperties = <T extends LayerEnum>({ type }: { type: T }) => {
-  return (
-    <div className={styles._section}>
-      <h5 className="txt-8">Properties</h5>
-      {type === 'solid' && (
-        <div className={styles.inputWrap}>
-          <label htmlFor="color">Color</label>
-          <input type="color" id="color" onChange={(e) => console.log(e)} />
-        </div>
-      )}
-      {type === 'gradient' && (
-        <div className={styles.inputWrap}>
-          <label htmlFor="gradient">Gradient</label>
-          <input type="color" id="gradient" onChange={(e) => console.log(e)} />
-        </div>
-      )}
-      {type === 'noise' && (
-        <div className={styles.inputWrap}>
-          <label htmlFor="noise">Noise</label>
-          <input type="color" id="noise" onChange={(e) => console.log(e)} />
-        </div>
-      )}
-    </div>
-  )
-}
 
 const TEST_LAYER = {
   id: 'test',
@@ -72,18 +46,34 @@ const LayerControls = () => {
 
   return (
     <div className={styles.layerControls}>
-      <div className={styles._section}>
-        <LayerTypeProperties type={type} />
-      </div>
-      <div className={styles._section}>
-        <h5 className="txt-8">Adjustments</h5>
-        <Range label="Opacity" />
-        <Select label="Blend Mode" options={blendModes} />
-        <Checkbox label="Background Blend" id="backgroundBlend" />
-        <Input label="Background Size" />
-        <Input label="Background Position" />
-        <Input label="Background Origin" />
-      </div>
+      <h5 className="txt-8">Properties</h5>
+      {type === 'solid' && (
+        <div className={styles.inputWrap}>
+          <label htmlFor="color">Color</label>
+          <input type="color" id="color" onChange={(e) => console.log(e)} />
+        </div>
+      )}
+      {type === 'gradient' && (
+        <div className={styles.inputWrap}>
+          <label htmlFor="gradient">Gradient</label>
+          <input type="color" id="gradient" onChange={(e) => console.log(e)} />
+        </div>
+      )}
+      {type === 'noise' && (
+        <div className={styles.inputWrap}>
+          <label htmlFor="noise">Noise</label>
+          <input type="color" id="noise" onChange={(e) => console.log(e)} />
+        </div>
+      )}
+      <br />
+
+      <h5 className="txt-8">Adjustments</h5>
+      <Range label="Opacity" />
+      <Select label="Blend Mode" options={blendModesOptions} />
+      <Checkbox label="Background Blend" id="backgroundBlend" />
+      <Input label="Background Size" />
+      <Input label="Background Origin" />
+      <Input label="Background Position" />
     </div>
   )
 }

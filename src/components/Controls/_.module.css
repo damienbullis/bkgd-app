@@ -96,14 +96,8 @@
   grid-auto-flow: row;
   gap: 0.5rem;
 
-  > ._section {
-    display: grid;
-    grid-auto-flow: row;
-    gap: 0.5rem;
-
-    > h5 {
-      margin: 0.5rem 0 0.25rem;
-      padding: 0;
-    }
+  > h5 {
+    margin: 0.25rem 0;
+    padding: 0;
   }
 }
