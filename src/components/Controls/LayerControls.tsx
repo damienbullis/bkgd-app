@@ -5,69 +5,38 @@ import { LayerEnum, LayerPropsType } from '../../types/LayerType'
 import styles from './_.module.css'
 import { useSelectedLayer } from '@state/global'
 
-const LayerProperties = <T extends LayerEnum>({
-  type,
-  props,
-}: Pick<LayerPropsType<T>, 'type' | 'props'>) => {
-  console.log('LayerProperties', { type, props })
+const PlaceholderInput = () => (
+  <input type="text" placeholder="Coming Soon" disabled />
+)
+
+const LayerTypeProperties = <T extends LayerEnum>({ type }: { type: T }) => {
+  console.log('LayerTypeProperties', { type })
+
   return (
     <div className={styles._section}>
       <h5 className="txt-8">Properties</h5>
-      <div className={styles.inputWrap}>
-        <label htmlFor="color">Color</label>
-        <input type="color" id="color" onChange={(e) => console.log(e)} />
-      </div>
+      {type === 'solid' && (
+        <div className={styles.inputWrap}>
+          <label htmlFor="color">Color</label>
+          <input type="color" id="color" onChange={(e) => console.log(e)} />
+        </div>
+      )}
+      {type === 'gradient' && (
+        <div className={styles.inputWrap}>
+          <label htmlFor="gradient">Gradient</label>
+          <input type="color" id="gradient" onChange={(e) => console.log(e)} />
+        </div>
+      )}
+      {type === 'noise' && (
+        <div className={styles.inputWrap}>
+          <label htmlFor="noise">Noise</label>
+          <input type="color" id="noise" onChange={(e) => console.log(e)} />
+        </div>
+      )}
     </div>
   )
 }
-const LayerAdjustments = <T extends LayerEnum>({
-  opacity,
-  blendMode,
-  backgroundBlend,
-}: Pick<LayerPropsType<T>, 'opacity' | 'blendMode' | 'backgroundBlend'>) => {
-  console.log('LayerAdjustments', { opacity, blendMode, backgroundBlend })
 
-  /**
-   * TODO: Add some additional controls
-   *
-   * - Background Size
-   * - Background Position
-   * - Background Origin
-   * - Background Attachment**
-   * - Background Repeat**
-   * - Background Clip**
-   */
-
-  return (
-    <div className={styles._section}>
-      <h5 className="txt-8">Adjustments</h5>
-      <Range label="Opacity" />
-      <div className={styles.inputWrap}>
-        <label htmlFor="blendMode" className={styles.full}>
-          Blend Mode
-        </label>
-        <select id="blendMode">
-          <option value="normal">Normal</option>
-          <option value="multiply">Multiply</option>
-          <option value="screen">Screen</option>
-          <option value="overlay">Overlay</option>
-          <option value="darken">Darken</option>
-          <option value="lighten">Lighten</option>
-          <option value="color-dodge">Color Dodge</option>
-          <option value="color-burn">Color Burn</option>
-          <option value="hard-light">Hard Light</option>
-          <option value="soft-light">Soft Light</option>
-          <option value="difference">Difference</option>
-          <option value="exclusion">Exclusion</option>
-          <option value="hue">Hue</option>
-          <option value="saturation">Saturation</option>
-          <option value="color">Color</option>
-          <option value="luminosity">Luminosity</option>
-        </select>
-      </div>
-    </div>
-  )
-}
 const TEST_LAYER = {
   id: 'test',
   type: 'solid',
@@ -89,12 +58,60 @@ const LayerControls = () => {
 
   return (
     <div className={styles.layerControls}>
-      <LayerProperties type={layer.type} props={layer.props} />
-      <LayerAdjustments
-        opacity={layer.opacity}
-        backgroundBlend={layer.backgroundBlend}
-        blendMode={layer.blendMode}
-      />
+      <div className={styles._section}>
+        <LayerTypeProperties type={type} />
+      </div>
+      <div className={styles._section}>
+        <h5 className="txt-8">Adjustments</h5>
+        <Range label="Opacity" />
+
+        <div className={styles.inputWrap}>
+          <label htmlFor="blendMode" className={styles.full}>
+            Blend Mode
+          </label>
+          <select id="blendMode">
+            <option value="normal">Normal</option>
+            <option value="multiply">Multiply</option>
+            <option value="screen">Screen</option>
+            <option value="overlay">Overlay</option>
+            <option value="darken">Darken</option>
+            <option value="lighten">Lighten</option>
+            <option value="color-dodge">Color Dodge</option>
+            <option value="color-burn">Color Burn</option>
+            <option value="hard-light">Hard Light</option>
+            <option value="soft-light">Soft Light</option>
+            <option value="difference">Difference</option>
+            <option value="exclusion">Exclusion</option>
+            <option value="hue">Hue</option>
+            <option value="saturation">Saturation</option>
+            <option value="color">Color</option>
+            <option value="luminosity">Luminosity</option>
+          </select>
+        </div>
+        <div className={styles.inputWrap}>
+          <label htmlFor="backgroundBlend">Background Blend</label>
+          <input
+            type="checkbox"
+            id="backgroundBlend"
+            onChange={(e) => console.log(e)}
+          />
+        </div>
+
+        <div className={styles.inputWrap}>
+          <label htmlFor="backgroundSize">Background Size</label>
+          <PlaceholderInput />
+        </div>
+
+        <div className={styles.inputWrap}>
+          <label htmlFor="backgroundPosition">Background Position</label>
+          <PlaceholderInput />
+        </div>
+
+        <div className={styles.inputWrap}>
+          <label htmlFor="backgroundOrigin">Background Origin</label>
+          <PlaceholderInput />
+        </div>
+      </div>
     </div>
   )
 }

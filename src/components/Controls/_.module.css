@@ -33,9 +33,20 @@
     z-index: -1;
   }
 }
+.card.active {
+  opacity: 1;
+  translate: 0;
+  user-select: auto;
+}
 .card {
   position: absolute;
   top: 0;
+  right: 0;
+  opacity: 0;
+  translate: -50%;
+  user-select: none;
+  transition: all var(--transition-duration) var(--animation-easing);
+  /* display: flex; */
   background-color: blueviolet;
   border-radius: 0.5rem;
   padding: 1rem;

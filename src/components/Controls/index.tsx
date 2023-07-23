@@ -1,5 +1,4 @@
 import { HTMLAttributes, useEffect, useRef, useState } from 'react'
-import { AnimatePresence } from 'framer-motion'
 import { SlidersHorizontal, Stack } from '@phosphor-icons/react'
 import { IconButton } from '@shared'
 
@@ -14,6 +13,7 @@ function generateSimpleId() {
   return Math.random().toString(36).substring(2, 7)
 }
 
+// FIXME: there is an issue on mount where sometimes the indicator is not set
 const ActiveIndicator = ({
   indicator,
   children,
@@ -33,10 +33,39 @@ const ActiveIndicator = ({
         }
       }
     } catch (err) {
+      // Why does this error some times?
       console.log({ err })
     }
   }, [indicator])
   return <div id={id.current}>{children}</div>
+}
+
+// FIXME: there is an issue on mount where sometimes the panel is not set
+const ActivePanel = ({
+  mode,
+  children,
+}: {
+  mode: string
+  children: React.ReactElement | React.ReactElement[]
+}) => {
+  console.log('ActivePanel', { mode, children })
+  const prev = useRef<Element>()
+  const setActivePanel = (id: string) => {
+    const el = document.querySelector(`#${id}`)
+    if (el && id !== prev.current?.id) {
+      console.log({ el, prev })
+      console.log('toggle active class')
+      el.classList.toggle(styles.active)
+
+      if (prev.current) {
+        prev.current.classList.toggle(styles.active)
+      }
+      prev.current = el
+    }
+  }
+
+  setActivePanel(mode)
+  return <>{children}</>
 }
 
 export default function Controls() {
@@ -75,35 +104,16 @@ export default function Controls() {
             />
           </div>
         </ActiveIndicator>
-        <AnimatePresence initial={false} mode="wait">
-          {/* TODO: Move these motion.div's inside inner components instead */}
-          {mode === 'tools' && (
-            // <motion.div
-            //   key="tools"
-            //   className={styles.card}
-            //   transition={{ duration: 0.2 }}
-            //   style={{ position: 'relative' }}
-            //   initial={{ opacity: 0, left: '-100%' }}
-            //   animate={{ opacity: 1, left: 0 }}
-            //   exit={{ opacity: 0, left: '-100%' }}
-            // >
-            <Tools />
-            // </motion.div>
-          )}
-          {mode === 'edit' && (
-            // <motion.div
-            //   key="edit"
-            //   className={styles.card}
-            //   transition={{ duration: 0.2 }}
-            //   style={{ position: 'relative' }}
-            //   initial={{ opacity: 0, left: '100%' }}
-            //   animate={{ opacity: 1, left: 0 }}
-            //   exit={{ opacity: 0, left: '100%' }}
-            // >
-            <LayerControls />
-            // </motion.div>
-          )}
-        </AnimatePresence>
+        <div style={{ position: 'relative' }}>
+          <ActivePanel mode={mode === 'tools' ? 'toolsPanel' : 'controlsPanel'}>
+            <div id="toolsPanel" className={styles.card}>
+              <Tools />
+            </div>
+            <div id="controlsPanel" className={styles.card}>
+              <LayerControls />
+            </div>
+          </ActivePanel>
+        </div>
       </div>
     </section>
   )

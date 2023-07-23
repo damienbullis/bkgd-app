@@ -1,5 +1,5 @@
 import styles from './_.module.css'
-import { Button, List } from '../_shared'
+import { Button, IconButton, List } from '../_shared'
 import { useState } from 'react'
 import { LayerButtons } from './LayerButtons'
 import {
@@ -7,17 +7,33 @@ import {
   DownloadSimple,
   Eye,
   EyeClosed,
+  Icon,
   // Plus,
   // Trash,
 } from '@phosphor-icons/react'
 import { LayerPropsType, LayerEnum } from '@types'
 
+const LiButton = ({
+  icon,
+  onClick,
+}: {
+  icon: Icon
+  onClick: React.MouseEventHandler<HTMLButtonElement>
+}) => {
+  return (
+    <li>
+      <IconButton icon={icon} onClick={onClick} />
+    </li>
+  )
+}
+
 const VisibilityButton = () => {
   const [hide, setHide] = useState(false)
   return (
-    <Button onClick={() => setHide((prev) => !prev)}>
-      {hide ? <EyeClosed size={'1.618rem'} /> : <Eye size={'1.618rem'} />}
-    </Button>
+    <LiButton
+      icon={hide ? EyeClosed : Eye}
+      onClick={() => setHide((prev) => !prev)}
+    />
   )
 }
 
@@ -41,16 +57,12 @@ export default function Layers() {
   return (
     <aside id="layers" className={styles.wrap}>
       <List>
-        <li>
-          <Button>
-            <DownloadSimple size={'1.618rem'} />
-          </Button>
-        </li>
-        <li>
-          <Button>
-            <Clipboard size={'1.618rem'} />
-          </Button>
-        </li>
+        <LiButton
+          icon={DownloadSimple}
+          onClick={() => console.log('download')}
+        />
+        <LiButton icon={Clipboard} onClick={() => console.log('copy')} />
+        <VisibilityButton />
         {/* <li>
           <Button onClick={() => addLayer()}>
             <Plus size={'1.618rem'} />
@@ -61,9 +73,6 @@ export default function Layers() {
             <Trash size={'1.618rem'} />
           </Button>
         </li> */}
-        <li>
-          <VisibilityButton />
-        </li>
       </List>
       <LayerButtons layers={layersList} />
     </aside>
