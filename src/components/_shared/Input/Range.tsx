@@ -3,16 +3,10 @@ import styles from './_.module.css'
 /**
  * Range Input Type
  */
-export default function Range<T extends string>({
-  label,
-  id,
-}: {
-  label: T
-  id?: T
-}) {
+export default function Range({ label, id }: { label: string; id?: string }) {
   return (
     <div className={styles.wrap}>
-      <label htmlFor="opacity" className={styles.full}>
+      <label htmlFor={id || label} className={styles.full}>
         {label}
       </label>
       <input
