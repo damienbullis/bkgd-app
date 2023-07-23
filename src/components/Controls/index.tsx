@@ -48,13 +48,10 @@ const ActivePanel = ({
   mode: string
   children: React.ReactElement | React.ReactElement[]
 }) => {
-  console.log('ActivePanel', { mode, children })
   const prev = useRef<Element>()
   const setActivePanel = (id: string) => {
     const el = document.querySelector(`#${id}`)
     if (el && id !== prev.current?.id) {
-      console.log({ el, prev })
-      console.log('toggle active class')
       el.classList.toggle(styles.active)
 
       if (prev.current) {
@@ -88,19 +85,19 @@ export default function Controls() {
           <div className={styles._head}>
             <IconButton
               id="tools"
+              icon={Stack}
               active={mode === 'tools'}
               onClick={() =>
                 setMode((prev) => (prev === 'tools' ? prev : 'tools'))
               }
-              icon={Stack}
             />
             <IconButton
               id="edit"
+              icon={SlidersHorizontal}
               active={mode === 'edit'}
               onClick={() =>
                 setMode((prev) => (prev === 'edit' ? prev : 'edit'))
               }
-              icon={SlidersHorizontal}
             />
           </div>
         </ActiveIndicator>

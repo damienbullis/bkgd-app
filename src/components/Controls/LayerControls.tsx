@@ -10,8 +10,6 @@ const PlaceholderInput = () => (
 )
 
 const LayerTypeProperties = <T extends LayerEnum>({ type }: { type: T }) => {
-  console.log('LayerTypeProperties', { type })
-
   return (
     <div className={styles._section}>
       <h5 className="txt-8">Properties</h5>
