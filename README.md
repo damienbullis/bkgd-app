@@ -54,10 +54,10 @@
   - [ ] Gradient
   - [ ] Noise
 - [ ] Input Components
-  - [ ] Text
-  - [ ] Range Slider
-  - [ ] Dropdown
-  - [ ] Checkbox
+  - [x] Text
+  - [x] Range Slider
+  - [x] Dropdown
+  - [x] Checkbox
 - [ ] Export/Save
   - [ ] Image
   - [ ] Code
