@@ -55,4 +55,17 @@ function hexToHSL(hex: string): { h: string; s: string; l: string } {
   return { h: h.toString(), s: s.toString(), l: l.toString() }
 }
 
-export { hexToHSL }
+function hexToRGB(hex: string): { r: string; g: string; b: string } {
+  // Remove '#' if present
+  hex = hex.replace(/^#/, '')
+
+  // Convert the hex values to integers
+  const r = parseInt(hex.slice(0, 2), 16)
+  const g = parseInt(hex.slice(2, 4), 16)
+  const b = parseInt(hex.slice(4, 6), 16)
+
+  // Return the RGB values as an object
+  return { r: r.toString(), g: g.toString(), b: b.toString() }
+}
+
+export { hexToHSL, hexToRGB }
