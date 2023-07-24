@@ -55,7 +55,10 @@ function hexToHSL(hex: string): { h: string; s: string; l: string } {
   return { h: h.toString(), s: s.toString(), l: l.toString() }
 }
 
-function hexToRGB(hex: string): { r: string; g: string; b: string } {
+function hexToRGB(
+  hex: string,
+  useLinear = true
+): { r: number; g: number; b: number } {
   // Remove '#' if present
   hex = hex.replace(/^#/, '')
 
@@ -64,8 +67,9 @@ function hexToRGB(hex: string): { r: string; g: string; b: string } {
   const g = parseInt(hex.slice(2, 4), 16)
   const b = parseInt(hex.slice(4, 6), 16)
 
+  const factor = useLinear ? 255 : 1
   // Return the RGB values as an object
-  return { r: r.toString(), g: g.toString(), b: b.toString() }
+  return { r: r / factor, g: g / factor, b: b / factor }
 }
 
 export { hexToHSL, hexToRGB }
