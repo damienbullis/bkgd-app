@@ -4,7 +4,7 @@ import { LayerEnum, LayerPropsType } from '../../types/LayerType'
 
 import styles from './_.module.css'
 import { useSelectedLayer } from '@state/global'
-import { Checkbox, Input, Select } from '../_shared/Input'
+import { Checkbox, ColorType, Input, Select } from '../_shared/Input'
 
 const blendModesOptions = [
   'normal',
@@ -47,12 +47,7 @@ const LayerControls = () => {
   return (
     <div className={styles.layerControls}>
       <h5 className="txt-8">Properties</h5>
-      {type === 'solid' && (
-        <div className={styles.inputWrap}>
-          <label htmlFor="color">Color</label>
-          <input type="color" id="color" onChange={(e) => console.log(e)} />
-        </div>
-      )}
+      {type === 'solid' && <ColorType label="Color" />}
       {type === 'gradient' && (
         <div className={styles.inputWrap}>
           <label htmlFor="gradient">Gradient</label>
