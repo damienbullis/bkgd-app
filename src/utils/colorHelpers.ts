@@ -1,4 +1,8 @@
-function hexToHSL(hex: string): { h: string; s: string; l: string } {
+function limitDecimalToTwo(num: number) {
+  return Math.floor(num * 100) / 100
+}
+
+function hexToHSL(hex: string): { h: number; s: number; l: number } {
   // Remove '#' if present
   hex = hex.replace(/^#/, '')
 
@@ -52,7 +56,11 @@ function hexToHSL(hex: string): { h: string; s: string; l: string } {
   s = Math.round(s * 100 * 100) / 100
   l = Math.round(l * 100 * 100) / 100
 
-  return { h: h.toString(), s: s.toString(), l: l.toString() }
+  return {
+    h: limitDecimalToTwo(h),
+    s: limitDecimalToTwo(s),
+    l: limitDecimalToTwo(l),
+  }
 }
 
 function hexToRGB(
@@ -69,7 +77,11 @@ function hexToRGB(
 
   const factor = useLinear ? 255 : 1
   // Return the RGB values as an object
-  return { r: r / factor, g: g / factor, b: b / factor }
+  return {
+    r: limitDecimalToTwo(r / factor),
+    g: limitDecimalToTwo(g / factor),
+    b: limitDecimalToTwo(b / factor),
+  }
 }
 
 export { hexToHSL, hexToRGB }

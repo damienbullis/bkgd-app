@@ -37,8 +37,10 @@ const LayerPropsSchema = z.union([
 
 const SharedLayerPropsSchema = z.object({
   id: z.string(),
-  opacity: z.number().default(100),
-  backgroundBlend: z.boolean().default(false),
+  opacity: z.number().optional(),
+  backgroundBlend: z.boolean().optional(),
+  backgroundSize: z.string().optional(),
+  backgroundPosition: z.string().optional(),
   blendMode: z
     .enum([
       'normal',
@@ -58,8 +60,10 @@ const SharedLayerPropsSchema = z.object({
       'color',
       'luminosity',
     ])
-    .default('normal'),
+    .optional(),
 })
+
+type t = z.infer<typeof SharedLayerPropsSchema>
 
 const LayerTypeSchema = z.intersection(LayerPropsSchema, SharedLayerPropsSchema)
 

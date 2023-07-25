@@ -67,7 +67,6 @@ const LayerControls = () => {
       <Select label="Blend Mode" options={blendModesOptions} />
       <Checkbox label="Background Blend" id="backgroundBlend" />
       <Input label="Background Size" />
-      <Input label="Background Origin" />
       <Input label="Background Position" />
     </div>
   )
