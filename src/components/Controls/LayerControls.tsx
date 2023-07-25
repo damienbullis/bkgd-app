@@ -1,6 +1,6 @@
 import { useSearch } from '@tanstack/router'
 import { Range } from '@shared'
-import { LayerEnum, LayerPropsType } from '../../types/LayerType'
+import { LayerPropsType } from '../../types/LayerType'
 
 import styles from './_.module.css'
 import { useSelectedLayer } from '@state/global'

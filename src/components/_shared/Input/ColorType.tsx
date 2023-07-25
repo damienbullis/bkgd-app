@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useState } from 'react'
-import styles from './_.module.css'
-import { hexToHSL, hexToRGB } from '../../../utils/colorHelpers'
 import { useNavigate } from '@tanstack/router'
+
+import styles from './_.module.css'
 import { useSelectedLayer } from '@state/global'
-import { debounce } from '../../../utils'
+import { debounce, hexToHSL, hexToRGB } from '@utils'
 
 type ColorTypeEnum = 'hex' | 'srgb' | 'hsl' | 'display-p3'
 

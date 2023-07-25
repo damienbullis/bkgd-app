@@ -63,8 +63,6 @@ const SharedLayerPropsSchema = z.object({
     .optional(),
 })
 
-type t = z.infer<typeof SharedLayerPropsSchema>
-
 const LayerTypeSchema = z.intersection(LayerPropsSchema, SharedLayerPropsSchema)
 
 const LayerSchema = z.object({

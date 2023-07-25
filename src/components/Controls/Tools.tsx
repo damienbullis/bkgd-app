@@ -1,11 +1,30 @@
 import { CircleHalf, Gradient, Palette } from '@phosphor-icons/react'
 import { Button } from '@shared'
 import styles from './_.module.css'
-import { useSelectedLayer } from '@state/global'
+import { selectedLayerStore } from '@state/global'
+import { makeID } from '@utils'
+
+const setLayerId = () => selectedLayerStore.publish(makeID())
 
 const Tools = () => {
-  const [layerId, setLayerId] = useSelectedLayer()
+  console.log('tools render')
+  /**
+   * TODO: LAYER MANAGER
+   *
+   * We need to create a component / hook that will manage the layers
+   * handle adding, removing, selecting, and reordering layers
+   *
+   * Drag and drop reordering
+   *
+   * TODO: ACTION EVENT SYSTEM
+   *
+   * We also want to creaete a way to track actions and events in the app
+   * so that when we are undoing and redoing we can also show the user what they did
+   *
+   */
+  // const [layerId, setLayerId] = useSelectedLayer()
 
+  // console.log('TOOLS: \n', { layerId })
   /**
    * TODO: FEATURE MANAGER
    *
@@ -31,7 +50,12 @@ const Tools = () => {
 
   return (
     <div className={styles.tools}>
-      <Button onClick={() => setLayerId('solid')}>
+      <Button
+        onClick={() => {
+          setLayerId()
+          console.log(selectedLayerStore.value())
+        }}
+      >
         <Palette size={32} />
       </Button>
 

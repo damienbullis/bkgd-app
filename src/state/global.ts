@@ -29,5 +29,6 @@ const createStore = <T>(data: T) => {
 
 const useVisible = createStore(false)
 const useSelectedLayer = createStore('')
+const selectedLayerStore = globalStore[1] as SubStore<string>
 
-export { useVisible, useSelectedLayer }
+export { useVisible, useSelectedLayer, selectedLayerStore }

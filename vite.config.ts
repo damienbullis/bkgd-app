@@ -10,6 +10,7 @@ export default defineConfig({
       '@shared': resolve(__dirname, './src/components/_shared'),
       '@state': resolve(__dirname, './src/state'),
       '@types': resolve(__dirname, './src/types'),
+      '@utils': resolve(__dirname, './src/utils'),
     },
   },
 })

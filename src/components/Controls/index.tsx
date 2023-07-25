@@ -1,17 +1,13 @@
 import { HTMLAttributes, useEffect, useRef, useState } from 'react'
 import { SlidersHorizontal, Stack } from '@phosphor-icons/react'
-import { IconButton } from '@shared'
 
 import styles from './_.module.css'
 import Tools from './Tools'
 import LayerControls from './LayerControls'
-import { useSelectedLayer } from '@state/global'
+import { IconButton } from '@shared'
+import { makeID } from '@utils'
 
 type Mode = 'tools' | 'edit'
-
-function generateSimpleId() {
-  return Math.random().toString(36).substring(2, 7)
-}
 
 // FIXME: there is an issue on mount where sometimes the indicator is not set
 const ActiveIndicator = ({
@@ -19,7 +15,7 @@ const ActiveIndicator = ({
   children,
 }: { indicator: string } & HTMLAttributes<HTMLDivElement>) => {
   const prev = useRef<string>()
-  const id = useRef(generateSimpleId())
+  const id = useRef(makeID())
   useEffect(() => {
     try {
       const wrap = document.querySelector(`#${id.current}`)
@@ -68,15 +64,17 @@ const ActivePanel = ({
 export default function Controls() {
   const [mode, setMode] = useState<Mode>('tools')
 
-  const [selectedLayer] = useSelectedLayer()
+  // FEATURE: If we find the rerenders a problem we can seperate sections of the UI to memo the components and handle thier state internally. This will allow us to only rerender the components that need to be rerendered.
 
-  useEffect(() => {
-    if (selectedLayer) {
-      setMode((prev) => (prev === 'tools' ? 'edit' : prev))
-    } else {
-      setMode((prev) => (prev === 'edit' ? 'tools' : prev))
-    }
-  }, [selectedLayer])
+  // const [selectedLayer] = useSelectedLayer()
+
+  // useEffect(() => {
+  //   if (selectedLayer) {
+  //     setMode((prev) => (prev === 'tools' ? 'edit' : prev))
+  //   } else {
+  //     setMode((prev) => (prev === 'edit' ? 'tools' : prev))
+  //   }
+  // }, [selectedLayer])
 
   return (
     <section id="controls" className={styles.wrap}>
