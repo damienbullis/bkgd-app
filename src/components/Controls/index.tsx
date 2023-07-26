@@ -1,61 +1,34 @@
-import { HTMLAttributes, useEffect, useMemo, useRef, useState } from 'react'
+import { Children, cloneElement, useEffect, useState } from 'react'
 import { SlidersHorizontal, Stack } from '@phosphor-icons/react'
+
+import { useSelectedLayer } from '@state/global'
+import { IconButton } from '@shared'
 
 import styles from './_.module.css'
 import Tools from './Tools'
 import LayerControls from './LayerControls'
-import { IconButton } from '@shared'
-import { makeID } from '@utils'
-import { useSelectedLayer } from '@state/global'
 
 type Mode = 'tools' | 'edit'
-const id = makeID()
 
-// FIXME: there is an issue on mount where sometimes the indicator is not set
-const ActiveIndicator = ({
-  indicator,
-  children,
-}: { indicator: string } & HTMLAttributes<HTMLDivElement>) => {
-  const prev = useRef<string>()
-  const wrapRef = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    if (wrapRef.current) {
-      const child = wrapRef.current.querySelector(`#${indicator}`)
-      if (child && prev.current !== indicator) {
-        child.classList.toggle(styles.indicator)
-        prev.current = indicator
-      }
-    }
-  }, [indicator])
-
-  return <div ref={wrapRef}>{children}</div>
-}
-
-// FIXME: there is an issue on mount where sometimes the panel is not set
-const ActivePanel = ({
-  mode,
+const ToggleStyle = ({
+  target,
+  applyClass,
   children,
 }: {
-  mode: string
+  target: string
+  applyClass: string
   children: React.ReactElement | React.ReactElement[]
-}) => {
-  const prev = useRef<Element>()
-  const wrapRef = useRef<HTMLDivElement>(null)
-  const setActivePanel = (id: string) => {
-    if (!wrapRef.current) return
-    const el = wrapRef.current.querySelector(`#${id}`)
-    if (el && id !== prev.current?.id) {
-      el.classList.toggle(styles.active)
-      if (prev.current) {
-        prev.current.classList.toggle(styles.active)
-      }
-      prev.current = el
-    }
-  }
-
-  setActivePanel(mode)
-  return <div ref={wrapRef}>{children}</div>
-}
+}) => (
+  <>
+    {Children.map(children, (child) =>
+      cloneElement(child, {
+        className: `${child.props.className} ${
+          child.props.id === target ? applyClass : ''
+        }`,
+      })
+    )}
+  </>
+)
 
 export default function Controls() {
   const [mode, setMode] = useState<Mode>('tools')
@@ -75,8 +48,8 @@ export default function Controls() {
   return (
     <section id="controls" className={styles.wrap}>
       <div className={styles.layer}>
-        <ActiveIndicator indicator={mode}>
-          <div className={styles._head}>
+        <div className={styles._head}>
+          <ToggleStyle target={mode} applyClass={styles.indicator}>
             <IconButton
               id="tools"
               icon={Stack}
@@ -93,17 +66,20 @@ export default function Controls() {
                 setMode((prev) => (prev === 'edit' ? prev : 'edit'))
               }
             />
-          </div>
-        </ActiveIndicator>
+          </ToggleStyle>
+        </div>
         <div style={{ position: 'relative' }}>
-          <ActivePanel mode={mode === 'tools' ? 'toolsPanel' : 'controlsPanel'}>
+          <ToggleStyle
+            target={mode === 'tools' ? 'toolsPanel' : 'controlsPanel'}
+            applyClass={styles.active}
+          >
             <div id="toolsPanel" className={styles.card}>
               <Tools />
             </div>
             <div id="controlsPanel" className={styles.card}>
               <LayerControls />
             </div>
-          </ActivePanel>
+          </ToggleStyle>
         </div>
       </div>
     </section>
