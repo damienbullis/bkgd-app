@@ -1,4 +1,4 @@
-import { HTMLAttributes, useEffect, useRef, useState } from 'react'
+import { HTMLAttributes, useEffect, useMemo, useRef, useState } from 'react'
 import { SlidersHorizontal, Stack } from '@phosphor-icons/react'
 
 import styles from './_.module.css'
@@ -6,8 +6,10 @@ import Tools from './Tools'
 import LayerControls from './LayerControls'
 import { IconButton } from '@shared'
 import { makeID } from '@utils'
+import { useSelectedLayer } from '@state/global'
 
 type Mode = 'tools' | 'edit'
+const id = makeID()
 
 // FIXME: there is an issue on mount where sometimes the indicator is not set
 const ActiveIndicator = ({
@@ -15,25 +17,18 @@ const ActiveIndicator = ({
   children,
 }: { indicator: string } & HTMLAttributes<HTMLDivElement>) => {
   const prev = useRef<string>()
-  const id = useRef(makeID())
+  const wrapRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    try {
-      const wrap = document.querySelector(`#${id.current}`)
-
-      if (wrap) {
-        const child = wrap.querySelector(`#${indicator}`)
-
-        if (child && prev.current !== indicator) {
-          child.classList.toggle(styles.indicator)
-          prev.current = indicator
-        }
+    if (wrapRef.current) {
+      const child = wrapRef.current.querySelector(`#${indicator}`)
+      if (child && prev.current !== indicator) {
+        child.classList.toggle(styles.indicator)
+        prev.current = indicator
       }
-    } catch (err) {
-      // Why does this error some times?
-      console.log({ err })
     }
   }, [indicator])
-  return <div id={id.current}>{children}</div>
+
+  return <div ref={wrapRef}>{children}</div>
 }
 
 // FIXME: there is an issue on mount where sometimes the panel is not set
@@ -45,11 +40,12 @@ const ActivePanel = ({
   children: React.ReactElement | React.ReactElement[]
 }) => {
   const prev = useRef<Element>()
+  const wrapRef = useRef<HTMLDivElement>(null)
   const setActivePanel = (id: string) => {
-    const el = document.querySelector(`#${id}`)
+    if (!wrapRef.current) return
+    const el = wrapRef.current.querySelector(`#${id}`)
     if (el && id !== prev.current?.id) {
       el.classList.toggle(styles.active)
-
       if (prev.current) {
         prev.current.classList.toggle(styles.active)
       }
@@ -58,7 +54,7 @@ const ActivePanel = ({
   }
 
   setActivePanel(mode)
-  return <>{children}</>
+  return <div ref={wrapRef}>{children}</div>
 }
 
 export default function Controls() {
@@ -66,15 +62,15 @@ export default function Controls() {
 
   // FEATURE: If we find the rerenders a problem we can seperate sections of the UI to memo the components and handle thier state internally. This will allow us to only rerender the components that need to be rerendered.
 
-  // const [selectedLayer] = useSelectedLayer()
+  const [selectedLayer] = useSelectedLayer()
 
-  // useEffect(() => {
-  //   if (selectedLayer) {
-  //     setMode((prev) => (prev === 'tools' ? 'edit' : prev))
-  //   } else {
-  //     setMode((prev) => (prev === 'edit' ? 'tools' : prev))
-  //   }
-  // }, [selectedLayer])
+  useEffect(() => {
+    if (selectedLayer) {
+      setMode((prev) => (prev === 'tools' ? 'edit' : prev))
+    } else {
+      setMode((prev) => (prev === 'edit' ? 'tools' : prev))
+    }
+  }, [selectedLayer])
 
   return (
     <section id="controls" className={styles.wrap}>
