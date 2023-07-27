@@ -1,5 +1,30 @@
 # BKGD
 
+Create beautiful modern backgrounds for your website or app.
+
+---
+
+---
+
+---
+
+<br>
+
+**Some Project Goals:**
+
+- Simple UI
+- Use modern CSS (display-p3 color space, noise, filters, blend modes, etc)
+- Export as code or image
+- Share your background with others
+- Save your backgrounds for later
+- Use URL state for:
+  - Tracking history of changes (undo/redo)
+  - Sharing your background
+  - Persisting your state
+- Learn new technologies
+- Practice deployment
+- Use in portfolio
+
 ## ROADMAP
 
 - [ ] Finish `readme.md`
