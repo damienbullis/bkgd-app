@@ -29,10 +29,13 @@ Create beautiful modern backgrounds for your website or app.
 
 - [ ] Finish `readme.md`
 - [x] Using these libraries
-  - [x] Framer Motion
+  - [x] Framer Motion`**`
   - [x] Tanstack Router
   - [x] React
   - [x] Zod
+  - [x] Vite
+  - [ ] Vitest
+  - [ ] Others???
 - [x] Scaffold App
   - [x] Add noise
   - [x] Add background
@@ -40,40 +43,25 @@ Create beautiful modern backgrounds for your website or app.
   - [x] Add controls
 - [ ] Deploy to `vercel`
 
-<br>
+> `**` Not sure if we want to continue to use? seems like a lot of overhead for what we are doing plus bundle size is large.
 
-> At some point we will want switch to `astro` and possible `solidjs`???
-> Then we can add some additional pages and features to the website besides the app.
+<br>
 
 ## TODOs
 
-### Sections
-
 - [x] Nav
+- [x] State
+  - [x] Global State
+  - [ ] LocalStorage/SessionStorage State
+  - [x] Transient State
+  - [x] URL State
 - [ ] Layers
   - [ ] Add Layer
   - [ ] Remove Layer
   - [ ] Move Layer
   - [x] Layer State
   - [x] Layer Type
-- [ ] Controls
-  - [ ] Layer Types
-    - [x] Solid
-    - [ ] Gradient
-    - [ ] Noise
-  - [x] Opacity
-  - [x] Blend Modes
-  - [x] Background Blend Mode
 - [ ] Bkgd Controller
-- [x] Footer
-
-### Additional Features
-
-- [x] State
-  - [x] Global State
-  - [x] Persistant State
-  - [x] Transient State
-  - [x] URL State
 - [ ] Layer Components
   - [x] Solid
   - [ ] Gradient
@@ -88,6 +76,10 @@ Create beautiful modern backgrounds for your website or app.
   - [ ] Code
   - [ ] Share
   - [ ] `Explore different ways to do this`
+- [ ] Footer
+- [ ] Banner
+- [ ] Spotlight
+- [ ] Help
 
 ### Additional Layer Types\*\*\*
 
@@ -96,19 +88,3 @@ Create beautiful modern backgrounds for your website or app.
 - [ ] Text
 - [ ] Patterns
 - [ ] Shaders\*
-
-<br>
-
-## Other notes
-
-### Add Changesets to project
-
-### Add CI/CD to project
-
-### Add testing to project
-
-<br>
-
-> How do we figure out gathering metrics for usage?
-
-> How do we add commit hash on build to the app?
