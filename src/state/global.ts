@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import SubStore from './subStore'
 
 const globalStore: SubStore<unknown>[] = []
@@ -6,19 +6,21 @@ const globalStore: SubStore<unknown>[] = []
 const createStore = <T>(data: T) => {
   globalStore.push(new SubStore(data))
   return () => {
-    const store = useMemo(
-        () => globalStore[globalStore.length - 1] as SubStore<T>,
-        []
-      ),
-      setter = useCallback<(state: T) => void>(
-        (state) => store.publish(state),
-        [store]
-      ),
-      [state, setState] = useState(store.value())
+    // initialize store & setter
+    const _ = useRef([
+        globalStore[globalStore.length - 1] as SubStore<T>,
+        (data: T) => {
+          globalStore[globalStore.length - 1].publish(data)
+        },
+      ] as const),
+      // primary state
+      [state, setState] = useState(_.current[0].value())
 
-    useEffect(() => () => store.subscribe(setState)(), [store])
+    // subscribe to store changes, and unsubscribe on unmount
+    useEffect(() => () => _.current[0].subscribe(setState)(), [])
 
-    return [state, setter] as const
+    // state & setter & store (for convenience)
+    return [state, _.current[1], _.current[0]] as const
   }
 }
 
