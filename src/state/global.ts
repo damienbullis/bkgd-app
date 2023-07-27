@@ -1,34 +1,33 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import SubStore from './subStore'
 
 const globalStore: SubStore<unknown>[] = []
 
 const createStore = <T>(data: T) => {
   globalStore.push(new SubStore(data))
-
   return () => {
     const store = useMemo(
-      () => globalStore[globalStore.length - 1] as SubStore<T>,
-      []
-    )
+        () => globalStore[globalStore.length - 1] as SubStore<T>,
+        []
+      ),
+      setter = useCallback<(state: T) => void>(
+        (state) => store.publish(state),
+        [store]
+      ),
+      [state, setState] = useState(store.value())
 
-    const [state, setState] = useState(store.value())
-    useEffect(() => {
-      const unsubscribe = store.subscribe(setState)
-      return () => unsubscribe()
-    }, [store])
-
-    const setter = useCallback<(state: T) => void>(
-      (state) => store.publish(state),
-      [store]
-    )
+    useEffect(() => () => store.subscribe(setState)(), [store])
 
     return [state, setter] as const
   }
 }
 
+// Transient state
 const useVisible = createStore(false)
 const useSelectedLayer = createStore('')
-const selectedLayerStore = globalStore[1] as SubStore<string>
 
-export { useVisible, useSelectedLayer, selectedLayerStore }
+const useStore = <T>(index: number) =>
+  useRef(globalStore[index] as SubStore<T>).current
+const selectedLayerStore = globalStore[1]
+
+export { useVisible, useSelectedLayer, useStore, selectedLayerStore }

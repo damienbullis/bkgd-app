@@ -19,6 +19,7 @@ export default function Bkgd() {
     <section id="bkgd">
       {layers.map((layer) => {
         if (layer.type === 'solid') {
+          console.log(layer.props.color)
           return (
             <div
               key={layer.id}
