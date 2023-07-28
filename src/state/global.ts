@@ -3,18 +3,18 @@ import SubStore from './subStore'
 
 const globalStore: SubStore<unknown>[] = []
 
-const createStore = <T>(data: T) => {
+const createStoreHook = <T>(data: T) => {
   globalStore.push(new SubStore(data))
   return () => {
     // initialize store & setter
     const _ = useRef([
         globalStore[globalStore.length - 1] as SubStore<T>,
         (data: T) => {
-          globalStore[globalStore.length - 1].publish(data)
+          globalStore[globalStore.length - 1].set(data)
         },
       ] as const),
       // primary state
-      [state, setState] = useState(_.current[0].value())
+      [state, setState] = useState(_.current[0].get())
 
     // subscribe to store changes, and unsubscribe on unmount
     useEffect(() => () => _.current[0].subscribe(setState)(), [])
@@ -25,11 +25,10 @@ const createStore = <T>(data: T) => {
 }
 
 // Transient state
-const useVisible = createStore(false)
-const useSelectedLayer = createStore('')
+const useVisible = createStoreHook(false)
+const useSelectedLayer = createStoreHook('')
 
 const useStore = <T>(index: number) =>
   useRef(globalStore[index] as SubStore<T>).current
-const selectedLayerStore = globalStore[1]
 
-export { useVisible, useSelectedLayer, useStore, selectedLayerStore }
+export { useVisible, useSelectedLayer, useStore }

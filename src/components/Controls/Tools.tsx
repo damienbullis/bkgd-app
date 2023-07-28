@@ -1,13 +1,24 @@
 import { CircleHalf, Gradient, Palette } from '@phosphor-icons/react'
 import { Button } from '@shared'
 import styles from './_.module.css'
-import { selectedLayerStore } from '@state/global'
-import { makeID } from '@utils'
+import { useSelectedLayer } from '@state/global'
+import { calcAverageColor, makeID } from '@utils'
+import { useNavigate } from '@tanstack/router'
 
-const setLayerId = () => selectedLayerStore.publish(makeID())
+const stateChange = (title: string, fn: () => void) => {
+  return () => {
+    // calcAverageColor()
+    const headEl = document.head
+    const titleEl = headEl.querySelector('title')
+    if (titleEl) titleEl.textContent = title
+    fn()
+  }
+}
 
 const Tools = () => {
   console.log('tools render')
+  const [, setSelectedLayer] = useSelectedLayer()
+  const nav = useNavigate({ from: '/' })
   /**
    * TODO: LAYER MANAGER
    *
@@ -51,10 +62,17 @@ const Tools = () => {
   return (
     <div className={styles.tools}>
       <Button
-        onClick={() => {
-          setLayerId()
-          console.log(selectedLayerStore.value())
-        }}
+        onClick={stateChange('Add Layer', () => {
+          const id = makeID()
+          setSelectedLayer(id)
+          nav({
+            search: {
+              layerStack: [id],
+              layerData: [{ id, type: 'solid', props: { color: 'black' } }],
+            },
+          })
+          console.log({ id })
+        })}
       >
         <Palette size={32} />
       </Button>

@@ -12,6 +12,7 @@ import {
   // Trash,
 } from '@phosphor-icons/react'
 import { LayerPropsType, LayerEnum } from '@types'
+import { useSearch } from '@tanstack/router'
 
 const LiButton = ({
   icon,
@@ -38,10 +39,6 @@ const VisibilityButton = () => {
 }
 
 export default function Layers() {
-  const [layers, setLayers] = useState<LayerPropsType<LayerEnum>[]>([])
-
-  const layersList = ['solid'] satisfies LayerEnum[]
-
   // const addLayer = () => {
   //   setLayers((prev) => [...prev, randomLayer()])
   // }
@@ -74,7 +71,7 @@ export default function Layers() {
           </Button>
         </li> */}
       </List>
-      <LayerButtons layers={layersList} />
+      <LayerButtons />
     </aside>
   )
 }

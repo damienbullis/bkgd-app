@@ -19,14 +19,18 @@ class SubStore<
     )
   }
 
-  value() {
-    return this.store
-  }
-
-  publish(data: StoreT) {
+  private publish(data: StoreT) {
     for (const callback of this.subscribers) {
       callback(data)
     }
+  }
+
+  get() {
+    return this.store
+  }
+
+  set(data: StoreT) {
+    this.publish(data)
     this.store = data
   }
 }
