@@ -5,6 +5,7 @@ import Bkgd from './components/Bkgd'
 import Footer from './components/Footer'
 import Controls from './components/Controls'
 import Layout from './components/Layout'
+import { calcAverageColor } from '@utils'
 
 // const DownloadButton = () => {
 //   const nav = useNavigate({ from: '/' })
@@ -33,6 +34,7 @@ import Layout from './components/Layout'
 // }
 
 export default function App() {
+  calcAverageColor()
   return (
     <Layout>
       <Bkgd />
