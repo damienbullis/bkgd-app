@@ -8,18 +8,15 @@ export default function Bkgd() {
   const { layerStack, layerData } = useSearch({ from: '/' })
 
   const layers = useMemo(() => {
-    console.log('memo triggered')
     return layerData.sort((a, b) => {
       return layerStack.indexOf(a.id) - layerStack.indexOf(b.id)
     })
   }, [layerStack, layerData])
 
-  console.log({ layers })
   return (
     <section id="bkgd">
       {layers.map((layer) => {
         if (layer.type === 'solid') {
-          console.log(layer.props.color)
           return (
             <div
               key={layer.id}

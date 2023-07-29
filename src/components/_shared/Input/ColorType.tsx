@@ -36,8 +36,6 @@ export default function ColorType({
         color = `hsl(${hsl.h} ${hsl.s}% ${hsl.l}% / 1)`
       }
 
-      console.log({ color, selectedLayer })
-
       /**
        *  NEXT: Should also create hook / context / provider for:
        *

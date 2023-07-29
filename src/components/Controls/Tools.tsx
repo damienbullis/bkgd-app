@@ -16,7 +16,6 @@ const stateChange = (title: string, fn: () => void) => {
 }
 
 const Tools = () => {
-  console.log('tools render')
   const [, setSelectedLayer] = useSelectedLayer()
   const nav = useNavigate({ from: '/' })
   /**
