@@ -1,11 +1,7 @@
-// import { useSearch, useNavigate } from '@tanstack/router'
-import Layers from './components/Layers'
-import Nav from './components/Nav'
-import Bkgd from './components/Bkgd'
-import Footer from './components/Footer'
-import Controls from './components/Controls'
-import Layout from './components/Layout'
-import { calcAverageColor } from '@utils'
+import { memo } from 'react'
+import { checkBrowser } from '@utils'
+import { CapabilitiesProvider } from './components/Capabilities'
+import { Bkgd, Footer, Layout, Controls, Layers, Nav } from './components'
 
 // const DownloadButton = () => {
 //   const nav = useNavigate({ from: '/' })
@@ -33,23 +29,37 @@ import { calcAverageColor } from '@utils'
 //   )
 // }
 
-export default function App() {
-  calcAverageColor()
-  return (
-    <Layout>
-      <Bkgd />
-      <Footer />
-      <Controls />
-      <Layers />
-      <Nav />
+const memApp = memo(function () {
+  try {
+    checkBrowser()
+    return (
+      <Layout>
+        <CapabilitiesProvider>
+          <Bkgd />
+          <Footer />
+          <Controls />
+          <Layers />
+          <Nav />
+        </CapabilitiesProvider>
 
-      {/* 
-      Absolute Layers
+        {/* 
+          Absolute Layers
+    
+          Help Layer
+          Spotlight Layer
+          Splash Layer
+        */}
+      </Layout>
+    )
+  } catch (e) {
+    console.warn(e)
+    return (
+      <>
+        {/* TODO: Add a better error page for future */}
+        <h1>{(e as Error).message}</h1>
+      </>
+    )
+  }
+})
 
-      Help Layer
-      Spotlight Layer
-      Splash Layer
-      */}
-    </Layout>
-  )
-}
+export default memApp
