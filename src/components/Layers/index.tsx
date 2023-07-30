@@ -1,5 +1,5 @@
 import styles from './_.module.css'
-import { Button, IconButton, List } from '../_shared'
+import { IconButton, List } from '../_shared'
 import { useState } from 'react'
 import { LayerButtons } from './LayerButtons'
 import {
@@ -8,11 +8,8 @@ import {
   Eye,
   EyeClosed,
   Icon,
-  // Plus,
-  // Trash,
 } from '@phosphor-icons/react'
-import { LayerPropsType, LayerEnum } from '@types'
-import { useSearch } from '@tanstack/router'
+import { EventHandler } from '@state/events'
 
 const LiButton = ({
   icon,
@@ -39,37 +36,20 @@ const VisibilityButton = () => {
 }
 
 export default function Layers() {
-  // const addLayer = () => {
-  //   setLayers((prev) => [...prev, randomLayer()])
-  // }
-
-  // const removeLayer = (index: number) => {
-  //   setLayers((prev) => {
-  //     const next = [...prev]
-  //     prev.splice(index, 1)
-  //     return next
-  //   })
-  // }
-
   return (
     <aside id="layers" className={styles.wrap}>
       <List>
         <LiButton
           icon={DownloadSimple}
-          onClick={() => console.log('download')}
+          onClick={EventHandler({
+            action: 'add-layer',
+            payload: {
+              id: 'some_id',
+            },
+          })}
         />
         <LiButton icon={Clipboard} onClick={() => console.log('copy')} />
         <VisibilityButton />
-        {/* <li>
-          <Button onClick={() => addLayer()}>
-            <Plus size={'1.618rem'} />
-          </Button>
-        </li>
-        <li>
-          <Button onClick={() => removeLayer(0)}>
-            <Trash size={'1.618rem'} />
-          </Button>
-        </li> */}
       </List>
       <LayerButtons />
     </aside>

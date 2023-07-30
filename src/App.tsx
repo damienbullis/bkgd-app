@@ -29,7 +29,7 @@ import { Bkgd, Footer, Layout, Controls, Layers, Nav } from './components'
 //   )
 // }
 
-const memApp = memo(function () {
+const App = memo(function () {
   try {
     checkBrowser()
     return (
@@ -62,4 +62,4 @@ const memApp = memo(function () {
   }
 })
 
-export default memApp
+export default App
