@@ -1,4 +1,4 @@
-import { LayerEnum, LayerPropsType } from '../../types/LayerType'
+import { LayerEnum, LayerPropsType } from '@types'
 
 // (Pretty much) All events in the app are handled through the EventHandler.
 type EventPayloadType = {
@@ -42,6 +42,6 @@ const handleEvent = (event: EventHandlerType<EventActionEnum>) => {
 }
 
 const updateState = (event: EventHandlerType<EventActionEnum>) => {
-  console.log('')
+  console.log('Updating State')
   console.log(event)
 }
