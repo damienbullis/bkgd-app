@@ -18,10 +18,10 @@ export default function Range({
       <input
         type="range"
         id={label}
-        value={value}
-        defaultValue="100"
+        value={value || 100}
         min="0"
         max="100"
+        onChange={(e) => console.log('Range', e)}
       />
     </div>
   )

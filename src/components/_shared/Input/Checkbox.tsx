@@ -13,7 +13,12 @@ export default function Checkbox({
   return (
     <div className={styles.wrap}>
       <label htmlFor={label}>{label}</label>
-      <input id={label} type="checkbox" checked={value} />
+      <input
+        id={label}
+        type="checkbox"
+        checked={value || false}
+        onChange={(e) => console.log('Checkbox', e)}
+      />
     </div>
   )
 }

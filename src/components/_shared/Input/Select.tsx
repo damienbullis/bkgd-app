@@ -17,7 +17,11 @@ export default function Select({
       <label htmlFor={label} className={styles.full}>
         {label}
       </label>
-      <select id={label} value={value}>
+      <select
+        id={label}
+        value={value || ''}
+        onChange={(e) => console.log('Select', e)}
+      >
         {options.map((option) => {
           return (
             <option
