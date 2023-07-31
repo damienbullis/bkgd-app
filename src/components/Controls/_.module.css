@@ -95,9 +95,18 @@
   display: grid;
   grid-auto-flow: row;
   gap: 0.5rem;
+}
 
-  > h5 {
-    margin: 0.25rem 0;
-    padding: 0;
+.title {
+  margin: 0.25rem 0;
+  padding: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  & label {
+  }
+  &.reverse {
+    flex-flow: row-reverse nowrap;
   }
 }

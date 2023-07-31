@@ -73,6 +73,11 @@
   --transition-duration: var(--duration-short);
 
   --scalar: 1.618;
+  --x: calc(1 / var(--scalar));
+  --x2: var(--scalar);
+  --x3: calc(var(--scalar) * 2);
+  --x4: calc(var(--scalar) * 3);
+  --x5: calc(var(--scalar) * 4);
   --color-text-black: 0, 0, 0;
   --color-text-white: 255, 255, 255;
   --color-text: var(--color-text-white);
@@ -94,34 +99,34 @@
 }
 
 .txt {
-  color: color(display-p3 var(--color-text) / 1);
+  color: color(srgb var(--color-text) / 1);
 }
 .txt-9 {
-  color: color(display-p3 var(--color-text) / 0.9);
+  color: color(srgb var(--color-text) / 0.9);
 }
 .txt-8 {
-  color: color(display-p3 var(--color-text) / 0.8);
+  color: color(srgb var(--color-text) / 0.8);
 }
 .txt-7 {
-  color: color(display-p3 var(--color-text) / 0.7);
+  color: color(srgb var(--color-text) / 0.7);
 }
 .txt-6 {
-  color: color(display-p3 var(--color-text) / 0.6);
+  color: color(srgb var(--color-text) / 0.6);
 }
 .txt-5 {
-  color: color(display-p3 var(--color-text) / 0.5);
+  color: color(srgb var(--color-text) / 0.5);
 }
 .txt-4 {
-  color: color(display-p3 var(--color-text) / 0.4);
+  color: color(srgb var(--color-text) / 0.4);
 }
 .txt-3 {
-  color: color(display-p3 var(--color-text) / 0.3);
+  color: color(srgb var(--color-text) / 0.3);
 }
 .txt-2 {
-  color: color(display-p3 var(--color-text) / 0.2);
+  color: color(srgb var(--color-text) / 0.2);
 }
 .txt-1 {
-  color: color(display-p3 var(--color-text) / 0.1);
+  color: color(srgb var(--color-text) / 0.1);
 }
 
 body,
@@ -134,6 +139,40 @@ button > p {
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
+h1 {
+  font-size: calc(1rem * var(--x5));
+}
+
+h2 {
+  font-size: calc(1rem * var(--x4));
+}
+
+h3 {
+  font-size: calc(1rem * var(--x3));
+}
+
+h4 {
+  font-size: calc(1rem * var(--x2));
+}
+
+h5 {
+  font-size: 1rem;
+}
+
+h6 {
+  font-size: calc(1rem * var(--x));
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 900;
+  line-height: 1.4;
+  margin: 0.5em 0 0.25rem;
+}
 *,
 *::before,
 *::after {
