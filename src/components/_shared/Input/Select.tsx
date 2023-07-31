@@ -6,18 +6,18 @@ import styles from './_.module.css'
 export default function Select({
   label,
   options,
-  id,
+  value,
 }: {
   label: string
   options: (string | { value: string; label: string })[]
-  id?: string
+  value?: string
 }) {
   return (
     <div className={styles.wrap}>
-      <label htmlFor={id || label} className={styles.full}>
+      <label htmlFor={label} className={styles.full}>
         {label}
       </label>
-      <select id={id || label}>
+      <select id={label} value={value}>
         {options.map((option) => {
           return (
             <option

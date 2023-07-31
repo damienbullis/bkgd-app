@@ -5,6 +5,8 @@ import { LayerPropsType } from '../../types/LayerType'
 import styles from './_.module.css'
 import { useSelectedLayer } from '@state/global'
 import { Checkbox, ColorType, Input, Select } from '../_shared/Input'
+import { Sliders } from '@phosphor-icons/react'
+import { useMemo } from 'react'
 
 const blendModesOptions = [
   'normal',
@@ -36,18 +38,33 @@ const TEST_LAYER = {
   blendMode: 'normal',
 } satisfies LayerPropsType<'solid'>
 
+const SectionTitle = ({
+  children,
+  alignment = 'start',
+}: {
+  children: string
+  alignment?: 'start' | 'end'
+}) => (
+  <div
+    className={`${styles.title} ${alignment === 'end' ? styles.reverse : ''}`}
+  >
+    <label className="txt-8">{children}</label>
+    <Sliders size={'1.5em'} />
+  </div>
+)
+
 const LayerControls = () => {
   const [selectedLayer] = useSelectedLayer()
   const { layerData } = useSearch({ from: '/' })
 
-  const layer =
-    layerData.find((layer) => layer.id === selectedLayer) || TEST_LAYER
-  const { type } = layer
+  const { type, opacity, blendMode, backgroundBlend, props } = useMemo(() => {
+    return layerData.find((layer) => layer.id === selectedLayer) || TEST_LAYER
+  }, [layerData, selectedLayer])
 
   return (
     <div className={styles.layerControls}>
-      <h5 className="txt-8">Properties</h5>
-      {type === 'solid' && <ColorType label="Color" />}
+      <SectionTitle>Properties</SectionTitle>
+      {type === 'solid' && <ColorType label="Color" typeProps={props} />}
       {type === 'gradient' && (
         <div className={styles.inputWrap}>
           <label htmlFor="gradient">Gradient</label>
@@ -60,14 +77,18 @@ const LayerControls = () => {
           <input type="color" id="noise" onChange={(e) => console.log(e)} />
         </div>
       )}
-      <br />
 
       <h5 className="txt-8">Adjustments</h5>
-      <Range label="Opacity" />
-      <Select label="Blend Mode" options={blendModesOptions} />
-      <Checkbox label="Background Blend" id="backgroundBlend" />
-      <Input label="Background Size" />
-      <Input label="Background Position" />
+      <Range label="Opacity" value={opacity} />
+      <Select
+        label="Blend Mode"
+        options={blendModesOptions}
+        value={blendMode}
+      />
+      <Checkbox label="Background Blend" value={backgroundBlend} />
+      <Input label="Size" />
+      <Input label="Position" />
+      <Input label="Repeat" />
     </div>
   )
 }

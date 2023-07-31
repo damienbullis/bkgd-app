@@ -5,15 +5,15 @@ import styles from './_.module.css'
  */
 export default function Checkbox({
   label,
-  id,
+  value,
 }: {
   label: string
-  id?: string
+  value?: boolean
 }) {
   return (
     <div className={styles.wrap}>
-      <label htmlFor={id || label}>{label}</label>
-      <input id={id || label} type="checkbox" />
+      <label htmlFor={label}>{label}</label>
+      <input id={label} type="checkbox" checked={value} />
     </div>
   )
 }

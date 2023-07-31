@@ -4,6 +4,7 @@ import { useNavigate } from '@tanstack/router'
 import styles from './_.module.css'
 import { useSelectedLayer } from '@state/global'
 import { debounce, hexToHSL, hexToRGB } from '@utils'
+import { LayerPropsType } from '../../../types/LayerType'
 
 type ColorTypeEnum = 'hex' | 'srgb' | 'hsl' | 'display-p3'
 
@@ -12,10 +13,9 @@ type ColorTypeEnum = 'hex' | 'srgb' | 'hsl' | 'display-p3'
  */
 export default function ColorType({
   label,
-  id,
 }: {
   label: string
-  id?: string
+  typeProps: LayerPropsType<'solid'>['props']
 }) {
   const [colorType, setColorType] = useState<ColorTypeEnum>('display-p3')
   const [selectedLayer] = useSelectedLayer()
@@ -75,16 +75,11 @@ export default function ColorType({
     },
     [nav, selectedLayer]
   )
-  // const throttled = useCallback(
-  //   (e: React.ChangeEvent<HTMLInputElement>, colorType: ColorTypeEnum) => {
-  //     return throttle(handler, 200)
-  //   },
-  //   [handler]
-  // )
-  const throttled = useMemo(() => debounce(handler, 200), [handler])
+
+  const debouncedHandler = useMemo(() => debounce(handler, 200), [handler])
   return (
     <div className={styles.wrap}>
-      <label htmlFor={id || label}>{label}</label>
+      <label htmlFor={label}>{label}</label>
       <select
         name="colorType"
         id="colorType"
@@ -99,8 +94,8 @@ export default function ColorType({
       </select>
       <input
         type="color"
-        id={id || label}
-        onChange={(e) => throttled(e, colorType)}
+        id={label}
+        onChange={(e) => debouncedHandler(e, colorType)}
         className="clr"
       />
     </div>
