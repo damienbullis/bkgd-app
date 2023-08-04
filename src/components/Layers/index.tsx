@@ -10,6 +10,7 @@ import {
   Icon,
 } from '@phosphor-icons/react'
 import { EventHandler } from '@state/events'
+import { makeID } from '@utils'
 
 const LiButton = ({
   icon,
@@ -44,11 +45,21 @@ export default function Layers() {
           onClick={EventHandler({
             action: 'bkgd-add-layer',
             payload: {
-              id: 'some_id',
+              id: makeID(),
+              type: 'solid',
             },
           })}
         />
-        <LiButton icon={Clipboard} onClick={() => console.log('copy')} />
+        <LiButton
+          icon={Clipboard}
+          onClick={EventHandler({
+            action: 'bkgd-update-layer',
+            payload: {
+              id: makeID(),
+              blendMode: 'difference',
+            },
+          })}
+        />
         <VisibilityButton />
       </List>
       <LayerButtons />

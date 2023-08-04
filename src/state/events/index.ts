@@ -8,18 +8,15 @@ type EventHandlerType<T> = T extends infer U extends EventActionEnum
   : never
 
 type EventPayload<T extends EventActionEnum> = T extends 'bkgd-add-layer'
-  ? Pick<EventPayloadType, 'id'>
+  ? Pick<EventPayloadType, 'id' | 'type'>
   : T extends 'bkgd-remove-layer'
   ? Pick<EventPayloadType, 'id'>
   : T extends 'bkgd-update-layer'
-  ? EventPayloadType
+  ? Pick<EventPayloadType, 'id'> & Partial<Omit<EventPayloadType, 'id'>>
   : never
 
 // (Pretty much) All events in the app are handled through the EventHandler.
-type EventPayloadType = {
-  id: string
-  props: Partial<LayerPropsType<LayerEnum>>
-}
+type EventPayloadType = LayerPropsType<LayerEnum>
 
 type EventActionEnum = BkgdEventsEnum | EventsEnum
 type BkgdEventsEnum =

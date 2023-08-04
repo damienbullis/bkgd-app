@@ -55,8 +55,11 @@ type LayerProps<T extends LayerEnum> = T extends 'solid'
 type SharedLayerProps = {
   id: string
   opacity: number
-  backgroundBlend: boolean
   blendMode: BlendModeEnum
+  backgroundBlend: boolean
+  backgroundSize: string
+  backgroundPosition: string
+  backgroundRepeat: number
 }
 
 type LayerPropsType<T extends LayerEnum> = SharedLayerProps & {
