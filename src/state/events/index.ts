@@ -1,21 +1,5 @@
 import { LayerEnum, LayerPropsType } from '@types'
 
-// (Pretty much) All events in the app are handled through the EventHandler.
-type EventPayloadType = {
-  id: string
-  props: Partial<LayerPropsType<LayerEnum>>
-}
-
-type EventPayload<T extends EventActionEnum> = T extends 'add-layer'
-  ? Pick<EventPayloadType, 'id'>
-  : T extends 'remove-layer'
-  ? Pick<EventPayloadType, 'id'>
-  : T extends 'update-layer'
-  ? EventPayloadType
-  : never
-
-type EventActionEnum = 'add-layer' | 'remove-layer' | 'update-layer'
-
 type EventHandlerType<T> = T extends infer U extends EventActionEnum
   ? {
       action: U
@@ -23,20 +7,41 @@ type EventHandlerType<T> = T extends infer U extends EventActionEnum
     }
   : never
 
-export const EventHandler = (event: EventHandlerType<EventActionEnum>) => {
-  if (event.action.includes('bkgd')) {
-    return () => handleMiddleware(event)
-  }
+type EventPayload<T extends EventActionEnum> = T extends 'bkgd-add-layer'
+  ? Pick<EventPayloadType, 'id'>
+  : T extends 'bkgd-remove-layer'
+  ? Pick<EventPayloadType, 'id'>
+  : T extends 'bkgd-update-layer'
+  ? EventPayloadType
+  : never
 
-  return () => handleEvent(event)
+// (Pretty much) All events in the app are handled through the EventHandler.
+type EventPayloadType = {
+  id: string
+  props: Partial<LayerPropsType<LayerEnum>>
 }
 
-const handleMiddleware = (event: EventHandlerType<EventActionEnum>) => {
+type EventActionEnum = BkgdEventsEnum | EventsEnum
+type BkgdEventsEnum =
+  | 'bkgd-add-layer'
+  | 'bkgd-remove-layer'
+  | 'bkgd-update-layer'
+type EventsEnum = 'toggle-ui-visibility'
+
+export const EventHandler = (event: EventHandlerType<EventActionEnum>) => {
+  if (event.action.includes('bkgd')) {
+    return () => handleMiddleware(event as EventHandlerType<BkgdEventsEnum>)
+  } else {
+    return () => handleEvent(event as EventHandlerType<EventsEnum>)
+  }
+}
+
+const handleMiddleware = (event: EventHandlerType<BkgdEventsEnum>) => {
   console.log('With Middleware')
   updateState(event)
 }
 
-const handleEvent = (event: EventHandlerType<EventActionEnum>) => {
+const handleEvent = (event: EventHandlerType<EventsEnum>) => {
   console.log('Without Middleware')
   updateState(event)
 }

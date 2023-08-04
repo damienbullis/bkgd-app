@@ -22,9 +22,9 @@ export default function ColorType({
   typeProps: ColorTypeProps
 }) {
   const caps = useCapabilities()
-  const hasP3 = caps.displayP3 || false
+  const hasP3 = (caps.displayP3 as boolean) || false
   const [colorType, setColorType] = useState<ColorTypeEnum>(
-    hasP3 ? 'display-p3' : 'hsl'
+    hasP3 ? 'display-p3' : 'srgb'
   )
   const [selectedLayer] = useSelectedLayer()
   const nav = useNavigate({ from: '/' })
@@ -32,34 +32,18 @@ export default function ColorType({
   const handler = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>, colorType: ColorTypeEnum) => {
       // starts as hex
+      console.log({ e, colorType })
       const _props: ColorTypeProps = {
         color: e.target.value,
       }
 
-      if (colorType === 'srgb' || colorType === 'display-p3') {
-        _props.color = hexToRGB(e.target.value)
+      if (colorType === 'display-p3' || colorType === 'srgb') {
+        _props.color = hexToRGB(e.target.value, hasP3)
       }
 
       if (colorType === 'hsl') {
         _props.color = hexToHSL(e.target.value)
       }
-
-      /**
-       *  NEXT: Should also create hook / context / provider for:
-       *
-       * 1. Hooking into the selected layer
-       * 2. Hooking to layerData[selectedLayer]
-       * 3. Hooking into the specific key of layerData[selectedLayer]
-       * 4. Providing a setter for that key
-       */
-
-      // NEXT: This should get turned into a function
-      // that is like a middleware for the nav fn (state)
-      // on a state change we:
-      // 1. Check the action type
-      //    - possibly check action payload as well
-      // 2. Update the title element
-      // 3. Update the URL
 
       nav({
         search: {
@@ -76,17 +60,18 @@ export default function ColorType({
         },
       })
     },
-    [nav, selectedLayer]
+    [nav, selectedLayer, hasP3]
   )
 
   const debouncedHandler = useMemo(() => debounce(handler, 200), [handler])
   const value = useMemo(() => {
     if (typeof typeProps.color === 'string') return typeProps.color
     if ('h' in typeProps.color) return hslToHex(typeProps.color)
-    if ('r' in typeProps.color) return rgbToHex(typeProps.color)
-    return '#000000'
-  }, [typeProps])
-  console.log({ value, caps })
+    if ('r' in typeProps.color) return rgbToHex(typeProps.color, hasP3)
+    return 'pink'
+  }, [typeProps, hasP3])
+  console.log({ typeProps, value, caps })
+
   return (
     <div className={styles.wrap}>
       <label htmlFor={label}>{label}</label>
@@ -98,13 +83,16 @@ export default function ColorType({
         onChange={(e) => setColorType(e.target.value as ColorTypeEnum)}
       >
         <option value="hex">HEX</option>
-        <option value="srgb">RGB</option>
         <option value="hsl">HSL</option>
-        {hasP3 ? <option value="display-p3">Display P3</option> : null}
+        {hasP3 ? (
+          <option value="display-p3">Display P3</option>
+        ) : (
+          <option value="srgb">RGB</option>
+        )}
       </select>
       <input
         type="color"
-        value={value}
+        defaultValue={value}
         id={label}
         onChange={(e) => debouncedHandler(e, colorType)}
         className="clr"

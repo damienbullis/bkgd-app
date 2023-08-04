@@ -42,7 +42,7 @@ export default function Layers() {
         <LiButton
           icon={DownloadSimple}
           onClick={EventHandler({
-            action: 'add-layer',
+            action: 'bkgd-add-layer',
             payload: {
               id: 'some_id',
             },

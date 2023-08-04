@@ -120,7 +120,7 @@ function hslToHex(color: { h: number; s: number; l: number }): string {
 
 function hexToRGB(
   hex: string,
-  useLinear = true
+  useLinear = false
 ): { r: number; g: number; b: number } {
   // Remove '#' if present
   hex = hex.replace(/^#/, '')
