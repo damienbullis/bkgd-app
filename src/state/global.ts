@@ -31,4 +31,6 @@ const useSelectedLayer = createStoreHook('')
 const useStore = <T>(index: number) =>
   useRef(globalStore[index] as SubStore<T>).current
 
-export { useVisible, useSelectedLayer, useStore }
+const getStore = <T>(index: number) => globalStore[index] as SubStore<T>
+
+export { useVisible, useSelectedLayer, useStore, getStore }
