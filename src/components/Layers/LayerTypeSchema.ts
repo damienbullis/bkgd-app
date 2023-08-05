@@ -60,9 +60,19 @@ const SharedLayerPropsSchema = z.object({
 })
 
 const LayerTypeSchema = z.intersection(
-  z.union([SolidPropsSchema, GradientPropsSchema, NoisePropsSchema]),
+  z.discriminatedUnion('type', [
+    SolidPropsSchema,
+    GradientPropsSchema,
+    NoisePropsSchema,
+  ]),
   SharedLayerPropsSchema
 )
+
+type LayerType = z.infer<typeof LayerTypeSchema>
+type SolidLayerType = z.infer<typeof SolidPropsSchema>
+type GradientLayerType = z.infer<typeof GradientPropsSchema>
+type NoiseLayerType = z.infer<typeof NoisePropsSchema>
+type SharedLayerPropsSchemaType = z.infer<typeof SharedLayerPropsSchema>
 
 const LayerSchema = z.object({
   layerStack: z
@@ -82,3 +92,10 @@ const LayerSchema = z.object({
 })
 
 export { LayerSchema }
+export type {
+  LayerType,
+  SolidLayerType,
+  GradientLayerType,
+  NoiseLayerType,
+  SharedLayerPropsSchemaType,
+}
