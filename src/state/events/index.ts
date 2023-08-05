@@ -34,19 +34,22 @@ export const EventHandler = (event: EventHandlerType<EventActionEnum>) => {
   }
 }
 
+function getActionTitle(action: EventActionEnum) {
+  let title: string = action
+  if (action.startsWith('bkgd')) {
+    title = action.replace('bkgd-', '')
+  }
+  return title.replace(/-/g, ' ').toLocaleUpperCase()
+}
+
+function mwUpdateUIColors() {
+  console.log('Background Color Changed\nUpdating UI Colors to match')
+}
+
 const triggerTitleUpdate = (event: EventHandlerType<BkgdEventsEnum>) => {
-  let title = ''
-  if (event.action === 'bkgd-add-layer') {
-    title = `Add ${event.payload.type}`
-  }
-  if (event.action === 'bkgd-remove-layer') {
-    title = `Remove Layer: ${event.payload.id}`
-  }
-  if (event.action === 'bkgd-update-layer') {
-    title = `Update Layer: ${Object.keys(event.payload).join(', ')}`
-  }
   const titleElement = document.querySelector('title')
   if (titleElement) {
+    const title = getActionTitle(event.action)
     titleElement.innerHTML = title
   }
 }
@@ -55,6 +58,7 @@ const handleMiddleware = (event: EventHandlerType<BkgdEventsEnum>) => {
   console.log('With Middleware')
   try {
     triggerTitleUpdate(event)
+    mwUpdateUIColors()
     updateState(event)
   } catch (error) {
     console.error(error)
