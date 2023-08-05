@@ -7,6 +7,7 @@ const ColorPropsSchema = z.union([
 ])
 
 const SolidPropsSchema = z.object({
+  id: z.string(),
   type: z.literal('solid'),
   props: z.object({
     color: ColorPropsSchema,
@@ -14,6 +15,7 @@ const SolidPropsSchema = z.object({
 })
 
 const GradientPropsSchema = z.object({
+  id: z.string(),
   type: z.literal('gradient'),
   props: z.object({
     gradient: z.array(z.tuple([ColorPropsSchema, z.number()])),
@@ -22,6 +24,7 @@ const GradientPropsSchema = z.object({
 })
 
 const NoisePropsSchema = z.object({
+  id: z.string(),
   type: z.literal('noise'),
   props: z.object({
     noise: z.number(),
@@ -29,14 +32,7 @@ const NoisePropsSchema = z.object({
   }),
 })
 
-const LayerPropsSchema = z.union([
-  SolidPropsSchema,
-  GradientPropsSchema,
-  NoisePropsSchema,
-])
-
 const SharedLayerPropsSchema = z.object({
-  id: z.string(),
   opacity: z.number().optional(),
   backgroundBlend: z.boolean().optional(),
   backgroundSize: z.string().optional(),
@@ -63,7 +59,10 @@ const SharedLayerPropsSchema = z.object({
     .optional(),
 })
 
-const LayerTypeSchema = z.intersection(LayerPropsSchema, SharedLayerPropsSchema)
+const LayerTypeSchema = z.intersection(
+  z.union([SolidPropsSchema, GradientPropsSchema, NoisePropsSchema]),
+  SharedLayerPropsSchema
+)
 
 const LayerSchema = z.object({
   layerStack: z

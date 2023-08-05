@@ -1,4 +1,3 @@
-import { getStore } from '@state/global'
 import { LayerEnum, LayerPropsType } from '@types'
 import router from '../../router'
 
@@ -29,53 +28,37 @@ type EventsEnum = 'toggle-ui-visibility'
 
 export const EventHandler = (event: EventHandlerType<EventActionEnum>) => {
   if (event.action.includes('bkgd')) {
-    return () => handleMiddleware(event as EventHandlerType<BkgdEventsEnum>)
+    return handleMiddleware(event as EventHandlerType<BkgdEventsEnum>)
   } else {
-    return () => handleEvent(event as EventHandlerType<EventsEnum>)
+    return handleEvent(event as EventHandlerType<EventsEnum>)
   }
 }
 
-const buildPropsFromType = <T extends LayerEnum>(type: T) => {
-  switch (type) {
-    case 'solid':
-      return {
-        type: type,
-        props: {
-          color: 'pink',
-        },
-      } satisfies Partial<LayerPropsType<'solid'>>
-    case 'gradient':
-      return {
-        type: 'gradient',
-        props: {
-          gradient: [
-            ['pink', 0],
-            ['hotpink', 1],
-          ],
-          type: 'linear',
-        },
-      } satisfies Partial<LayerPropsType<'gradient'>>
-    case 'noise':
-      return {
-        type: 'noise',
-        props: {
-          noise: 0.5,
-          type: 'turbulence',
-        },
-      } satisfies Partial<LayerPropsType<'noise'>>
-    default:
-      throw new Error('Invalid Layer Type')
+const triggerTitleUpdate = (event: EventHandlerType<BkgdEventsEnum>) => {
+  let title = ''
+  if (event.action === 'bkgd-add-layer') {
+    title = `Add ${event.payload.type}`
+  }
+  if (event.action === 'bkgd-remove-layer') {
+    title = `Remove Layer: ${event.payload.id}`
+  }
+  if (event.action === 'bkgd-update-layer') {
+    title = `Update Layer: ${Object.keys(event.payload).join(', ')}`
+  }
+  const titleElement = document.querySelector('title')
+  if (titleElement) {
+    titleElement.innerHTML = title
   }
 }
 
 const handleMiddleware = (event: EventHandlerType<BkgdEventsEnum>) => {
   console.log('With Middleware')
-
-  // if (event.action === 'bkgd-remove-layer') {
-  // }
-  // if (event.action === 'bkgd-update-layer') {
-  // }
-  updateState(event)
+  try {
+    triggerTitleUpdate(event)
+    updateState(event)
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 const handleEvent = (event: EventHandlerType<EventsEnum>) => {
@@ -83,23 +66,35 @@ const handleEvent = (event: EventHandlerType<EventsEnum>) => {
   updateState(event)
 }
 
+const addSolidLayer = (id: string) => {
+  console.log('Adding Solid Layer')
+  const { layerStack = [], layerData = [] } =
+    router.state.currentLocation.search
+
+  layerStack.push(id)
+  layerData.push({
+    id,
+    type: 'solid',
+    props: {
+      color: 'pink',
+    },
+  })
+  router.navigate({
+    to: '/',
+    search: {
+      layerStack,
+      layerData,
+    },
+  })
+}
+
 const updateState = (event: EventHandlerType<EventActionEnum>) => {
   console.log('Updating State')
   if (event.action === 'bkgd-add-layer') {
     const { id, type } = event.payload
-    console.log({ id, type })
-    const props = buildPropsFromType(type)
-    router.navigate({
-      to: '/',
-      search: {
-        layerStack: [id],
-        layerData: [
-          {
-            id,
-            ...props,
-          },
-        ],
-      },
-    })
+
+    if (type === 'solid') {
+      addSolidLayer(id)
+    }
   }
 }

@@ -42,23 +42,27 @@ export default function Layers() {
       <List>
         <LiButton
           icon={DownloadSimple}
-          onClick={EventHandler({
-            action: 'bkgd-add-layer',
-            payload: {
-              id: makeID(),
-              type: 'solid',
-            },
-          })}
+          onClick={() =>
+            EventHandler({
+              action: 'bkgd-add-layer',
+              payload: {
+                id: makeID(),
+                type: 'solid',
+              },
+            })
+          }
         />
         <LiButton
           icon={Clipboard}
-          onClick={EventHandler({
-            action: 'bkgd-update-layer',
-            payload: {
-              id: makeID(),
-              blendMode: 'difference',
-            },
-          })}
+          onClick={() =>
+            EventHandler({
+              action: 'bkgd-update-layer',
+              payload: {
+                id: makeID(),
+                blendMode: 'difference',
+              },
+            })
+          }
         />
         <VisibilityButton />
       </List>
