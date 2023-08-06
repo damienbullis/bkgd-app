@@ -1,6 +1,7 @@
 import { LayerEnum, LayerPropsType } from '@types'
 import router from '../../router'
 import { getStore } from '@state/global'
+import { randomHex } from '../../utils/colorHelpers'
 
 type EventHandlerType<T> = T extends infer U extends EventActionEnum
   ? {
@@ -83,7 +84,7 @@ const addSolidLayer = (id: string) => {
     id,
     type: 'solid',
     props: {
-      color: 'pink', // TODO: make random
+      color: randomHex(),
     },
   })
   router.navigate({

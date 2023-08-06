@@ -55,10 +55,14 @@ export default function ColorType({
 
   const debouncedHandler = useMemo(() => debounce(handler, 200), [handler])
   const value = useMemo(() => {
-    if (typeof typeProps.color === 'string') return typeProps.color
+    const DEFAULT = '#000000'
+    if (typeof typeProps.color === 'string') {
+      if (typeProps.color.startsWith('#')) return typeProps.color
+      return DEFAULT
+    }
     if ('h' in typeProps.color) return hslToHex(typeProps.color)
     if ('r' in typeProps.color) return rgbToHex(typeProps.color, hasP3)
-    return 'pink'
+    return DEFAULT
   }, [typeProps, hasP3])
 
   return (
@@ -76,7 +80,7 @@ export default function ColorType({
         {hasP3 ? (
           <option value="display-p3">Display P3</option>
         ) : (
-          <option value="srgb">RGB</option>
+          <option value="srgb">SRGB</option>
         )}
       </select>
       <input
