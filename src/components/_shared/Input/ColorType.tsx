@@ -1,12 +1,11 @@
 import { useCallback, useMemo, useState } from 'react'
-import { useNavigate } from '@tanstack/router'
-
 import styles from './_.module.css'
 import { useSelectedLayer } from '@state/global'
 import { debounce, hexToHSL, hexToRGB } from '@utils'
 import { LayerPropsType } from '../../../types/LayerType'
 import { hslToHex, rgbToHex } from '../../../utils/colorHelpers'
 import { useCapabilities } from '../../Capabilities'
+import { EventHandler } from '@state/events'
 
 type ColorTypeEnum = 'hex' | 'srgb' | 'hsl' | 'display-p3'
 type ColorTypeProps = LayerPropsType<'solid'>['props']
@@ -27,12 +26,10 @@ export default function ColorType({
     hasP3 ? 'display-p3' : 'srgb'
   )
   const [selectedLayer] = useSelectedLayer()
-  const nav = useNavigate({ from: '/' })
 
   const handler = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>, colorType: ColorTypeEnum) => {
       // starts as hex
-      console.log({ e, colorType })
       const _props: ColorTypeProps = {
         color: e.target.value,
       }
@@ -45,22 +42,15 @@ export default function ColorType({
         _props.color = hexToHSL(e.target.value)
       }
 
-      nav({
-        search: {
-          layerData: [
-            {
-              id: selectedLayer,
-              props: _props,
-              type: 'solid',
-              // opacity: 100,
-              // backgroundBlend: false,
-              // blendMode: 'normal',
-            },
-          ],
+      EventHandler({
+        action: 'bkgd-update-layer',
+        payload: {
+          id: selectedLayer,
+          props: _props,
         },
       })
     },
-    [nav, selectedLayer, hasP3]
+    [selectedLayer, hasP3]
   )
 
   const debouncedHandler = useMemo(() => debounce(handler, 200), [handler])
@@ -70,7 +60,6 @@ export default function ColorType({
     if ('r' in typeProps.color) return rgbToHex(typeProps.color, hasP3)
     return 'pink'
   }, [typeProps, hasP3])
-  console.log({ typeProps, value, caps })
 
   return (
     <div className={styles.wrap}>

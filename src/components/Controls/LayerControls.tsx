@@ -36,6 +36,9 @@ const TEST_LAYER = {
   opacity: 100,
   backgroundBlend: false,
   blendMode: 'normal',
+  backgroundPosition: '0% 0%',
+  backgroundSize: 'auto',
+  backgroundRepeat: 0,
 } satisfies LayerPropsType<'solid'>
 
 const SectionTitle = ({
