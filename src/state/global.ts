@@ -5,7 +5,7 @@ const globalStore: SubStore<unknown>[] = []
 
 const createStoreHook = <T>(data: T) => {
   globalStore.push(new SubStore(data))
-  return () => {
+  return function () {
     // initialize store & setter
     const _ = useRef([
         globalStore[globalStore.length - 1] as SubStore<T>,
@@ -17,7 +17,12 @@ const createStoreHook = <T>(data: T) => {
       [state, setState] = useState(_.current[0].get())
 
     // subscribe to store changes, and unsubscribe on unmount
-    useEffect(() => () => _.current[0].subscribe(setState)(), [])
+    useEffect(() => {
+      const unsub = _.current[0].subscribe(setState)
+      return () => {
+        unsub()
+      }
+    }, [])
 
     // state & setter & store (for convenience)
     return [state, _.current[1], _.current[0]] as const
