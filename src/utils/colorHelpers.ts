@@ -160,4 +160,8 @@ function rgbToHex(
   return '#' + hex
 }
 
-export { hexToHSL, hexToRGB, hslToHex, rgbToHex }
+function randomHex(): string {
+  return '#' + Math.floor(Math.random() * 16777215).toString(16)
+}
+
+export { hexToHSL, hexToRGB, hslToHex, rgbToHex, randomHex }
