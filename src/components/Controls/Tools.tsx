@@ -1,23 +1,10 @@
 import { CircleHalf, Gradient, Palette } from '@phosphor-icons/react'
+import { EventHandler } from '@state/events'
 import { Button } from '@shared'
+import { makeID } from '@utils'
 import styles from './_.module.css'
-import { useSelectedLayer } from '@state/global'
-import { calcAverageColor, makeID } from '@utils'
-import { useNavigate } from '@tanstack/router'
-
-const stateChange = (title: string, fn: () => void) => {
-  return () => {
-    // calcAverageColor()
-    const headEl = document.head
-    const titleEl = headEl.querySelector('title')
-    if (titleEl) titleEl.textContent = title
-    fn()
-  }
-}
 
 const Tools = () => {
-  const [, setSelectedLayer] = useSelectedLayer()
-  const nav = useNavigate({ from: '/' })
   /**
    * TODO: LAYER MANAGER
    *
@@ -61,26 +48,44 @@ const Tools = () => {
   return (
     <div className={styles.tools}>
       <Button
-        onClick={stateChange('Add Layer', () => {
-          const id = makeID()
-          setSelectedLayer(id)
-          nav({
-            search: {
-              layerStack: [id],
-              layerData: [{ id, type: 'solid', props: { color: 'black' } }],
+        onClick={() =>
+          EventHandler({
+            action: 'bkgd-add-layer',
+            payload: {
+              id: makeID(),
+              type: 'solid',
             },
           })
-          console.log({ id })
-        })}
+        }
       >
         <Palette size={32} />
       </Button>
 
-      <Button>
+      <Button
+        onClick={() =>
+          EventHandler({
+            action: 'bkgd-add-layer',
+            payload: {
+              id: makeID(),
+              type: 'gradient',
+            },
+          })
+        }
+      >
         <CircleHalf size={32} />
       </Button>
 
-      <Button>
+      <Button
+        onClick={() =>
+          EventHandler({
+            action: 'bkgd-add-layer',
+            payload: {
+              id: makeID(),
+              type: 'noise',
+            },
+          })
+        }
+      >
         <Gradient size={32} />
       </Button>
     </div>

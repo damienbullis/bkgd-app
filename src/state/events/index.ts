@@ -1,5 +1,6 @@
 import { LayerEnum, LayerPropsType } from '@types'
 import router from '../../router'
+import { getStore } from '@state/global'
 
 type EventHandlerType<T> = T extends infer U extends EventActionEnum
   ? {
@@ -55,7 +56,7 @@ const triggerTitleUpdate = (event: EventHandlerType<BkgdEventsEnum>) => {
 }
 
 const handleMiddleware = (event: EventHandlerType<BkgdEventsEnum>) => {
-  console.log('With Middleware')
+  console.log('With Middleware LayerID: ', event.payload.id)
   try {
     triggerTitleUpdate(event)
     mwUpdateUIColors()
@@ -71,16 +72,18 @@ const handleEvent = (event: EventHandlerType<EventsEnum>) => {
 }
 
 const addSolidLayer = (id: string) => {
+  const store = getStore<string>(1)
   console.log('Adding Solid Layer')
   const { layerStack = [], layerData = [] } =
     router.state.currentLocation.search
 
+  store.set(id)
   layerStack.push(id)
   layerData.push({
     id,
     type: 'solid',
     props: {
-      color: 'pink',
+      color: 'pink', // TODO: make random
     },
   })
   router.navigate({
