@@ -5,7 +5,6 @@ import styles from './_.module.css'
 import LayerTypeSwitch from './LayerTypeSwitch'
 
 export default function Bkgd() {
-  // Main App Logic Here
   const { layerStack, layerData } = useSearch({ from: '/' })
 
   const layers = useMemo(() => {
