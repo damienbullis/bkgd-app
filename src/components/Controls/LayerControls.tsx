@@ -1,12 +1,12 @@
-import { useSearch } from '@tanstack/router'
-import { Range } from '@shared'
-import { LayerPropsType } from '../../types/LayerType'
-
-import styles from './_.module.css'
-import { useSelectedLayer } from '@state/global'
-import { Checkbox, ColorType, Input, Select } from '../_shared/Input'
-import { Sliders } from '@phosphor-icons/react'
 import { useMemo } from 'react'
+import { Sliders } from '@phosphor-icons/react'
+import { useSearch } from '@tanstack/router'
+
+import { Range, Checkbox, ColorType, Select, Input } from '@shared'
+import { useSelectedLayer } from '@state/global'
+
+import { LayerType } from '../Layers/LayerTypeSchema'
+import styles from './_.module.css'
 
 const blendModesOptions = [
   'normal',
@@ -27,7 +27,7 @@ const blendModesOptions = [
   'luminosity',
 ]
 
-const TEST_LAYER = {
+const FALLBACK = {
   id: 'test',
   type: 'solid',
   props: {
@@ -38,8 +38,8 @@ const TEST_LAYER = {
   blendMode: 'normal',
   backgroundPosition: '0% 0%',
   backgroundSize: 'auto',
-  backgroundRepeat: 0,
-} satisfies LayerPropsType<'solid'>
+  backgroundRepeat: true,
+} satisfies LayerType
 
 const SectionTitle = ({
   children,
@@ -60,9 +60,10 @@ const LayerControls = () => {
   const [selectedLayer] = useSelectedLayer()
   const { layerData } = useSearch({ from: '/' })
 
-  const { type, opacity, blendMode, backgroundBlend, props } = useMemo(() => {
-    return layerData.find((layer) => layer.id === selectedLayer) || TEST_LAYER
-  }, [layerData, selectedLayer])
+  const { type, opacity, blendMode, backgroundBlend, props } =
+    useMemo<LayerType>(() => {
+      return layerData.find((layer) => layer.id === selectedLayer) || FALLBACK
+    }, [layerData, selectedLayer])
 
   return (
     <div className={styles.layerControls}>
