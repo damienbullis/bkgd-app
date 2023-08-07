@@ -104,14 +104,14 @@ const addSolidLayer = (id: string) => {
     router.state.currentLocation.search
 
   store.set(id) // Set the selected layer to the new layer
-  layerStack.unshift(id)
+  layerStack.unshift(id) // Add the new layer to the top of the stack
   layerData.push({
     id,
     type: 'solid',
     props: {
       color: randomHex(),
     },
-  })
+  }) // Push data to end of array for compat with div stacking
   router.navigate({
     to: '/',
     search: {
