@@ -17,6 +17,10 @@ type EventPayload<T extends EventActionEnum> = T extends 'bkgd-add-layer'
   ? Pick<EventPayloadType, 'id'>
   : T extends 'bkgd-update-layer'
   ? Pick<EventPayloadType, 'id'> & Partial<Omit<EventPayloadType, 'id'>>
+  : T extends 'toggle-ui' | 'download-css' | 'download-image' | 'save-bkgd'
+  ? null
+  : T extends 'load-bkgd' | 'delete-bkgd' | 'select-layer'
+  ? { id: string }
   : never
 
 // (Pretty much) All events in the app are handled through the EventHandler.
@@ -27,8 +31,18 @@ type BkgdEventsEnum =
   | 'bkgd-add-layer'
   | 'bkgd-remove-layer'
   | 'bkgd-update-layer'
-type EventsEnum = 'toggle-ui-visibility'
+type EventsEnum =
+  | 'toggle-ui'
+  | 'save-bkgd'
+  | 'load-bkgd'
+  | 'delete-bkgd'
+  | 'select-layer'
+  | 'download-css'
+  | 'download-image'
 
+/**
+ * These are only the events that are initiated by the user.
+ */
 export const EventHandler = (event: EventHandlerType<EventActionEnum>) => {
   if (event.action.includes('bkgd')) {
     handleMiddleware(event as EventHandlerType<BkgdEventsEnum>)
@@ -37,12 +51,19 @@ export const EventHandler = (event: EventHandlerType<EventActionEnum>) => {
   }
 }
 
-function getActionTitle(action: EventActionEnum) {
-  let title: string = action
-  if (action.startsWith('bkgd')) {
-    title = action.replace('bkgd-', '')
+function getActionTitle(action: BkgdEventsEnum) {
+  switch (action) {
+    case 'bkgd-add-layer':
+      return 'Add Layer'
+    case 'bkgd-remove-layer':
+      return 'Remove Layer'
+    case 'bkgd-update-layer':
+      return 'Update Layer'
+    default: {
+      const _exhaustiveCheck: never = action
+      return _exhaustiveCheck
+    }
   }
-  return title.replace(/-/g, ' ').toLocaleUpperCase()
 }
 
 function mwUpdateUIColors() {
@@ -62,7 +83,7 @@ const handleMiddleware = (event: EventHandlerType<BkgdEventsEnum>) => {
   try {
     triggerTitleUpdate(event)
     mwUpdateUIColors()
-    updateState(event)
+    updateBkgdState(event)
   } catch (error) {
     console.error(error)
   }
@@ -152,8 +173,8 @@ const addLayerSwitch = (event: EventHandlerType<'bkgd-add-layer'>): void => {
   console.groupEnd()
 }
 
-const updateState = (event: EventHandlerType<EventActionEnum>): void => {
-  console.group('Updating State')
+const updateBkgdState = (event: EventHandlerType<BkgdEventsEnum>): void => {
+  console.group('Updating BKGD State')
   switch (event.action) {
     case 'bkgd-add-layer': {
       addLayerSwitch(event)
@@ -167,8 +188,43 @@ const updateState = (event: EventHandlerType<EventActionEnum>): void => {
       console.warn('Updating Layer')
       break
     }
-    case 'toggle-ui-visibility': {
+    default: {
+      const _exhaust: never = event
+      return _exhaust
+    }
+  }
+  console.groupEnd()
+}
+
+const updateState = (event: EventHandlerType<EventsEnum>): void => {
+  console.group('Updating State')
+  switch (event.action) {
+    case 'toggle-ui': {
       console.warn('Toggling UI Visibility')
+      break
+    }
+    case 'save-bkgd': {
+      console.warn('Saving Background')
+      break
+    }
+    case 'load-bkgd': {
+      console.warn('Loading Background')
+      break
+    }
+    case 'delete-bkgd': {
+      console.warn('Deleting Background')
+      break
+    }
+    case 'select-layer': {
+      console.warn('Selecting Layer')
+      break
+    }
+    case 'download-css': {
+      console.warn('Downloading CSS')
+      break
+    }
+    case 'download-image': {
+      console.warn('Downloading Image')
       break
     }
     default: {
