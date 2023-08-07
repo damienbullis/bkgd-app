@@ -30,19 +30,20 @@ const LayerButton = ({ id, type }: { id: string; type: LayerEnum }) => {
 }
 
 const LayerButtons = () => {
-  const { layerStack, layerData } = useSearch({ from: '/' })
+  const { layerData, layerStack } = useSearch({ from: '/' })
   const layers = useMemo(() => {
-    return layerData.sort((a, b) => {
-      return layerStack.indexOf(a.id) - layerStack.indexOf(b.id)
-    })
-  }, [layerStack, layerData])
+    return layerStack.map((id) => layerData.find((l) => l.id === id))
+  }, [layerData, layerStack])
   return (
     <List className={styles.layers}>
-      {layers.map((layer, i) => (
-        <li key={i}>
-          <LayerButton id={layer.id} type={layer.type} />
-        </li>
-      ))}
+      {layers.map((layer, i) => {
+        if (!layer) return null
+        return (
+          <li key={i}>
+            <LayerButton id={layer.id} type={layer.type} />
+          </li>
+        )
+      })}
     </List>
   )
 }

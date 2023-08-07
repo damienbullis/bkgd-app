@@ -103,8 +103,8 @@ const addSolidLayer = (id: string) => {
   const { layerStack = [], layerData = [] } =
     router.state.currentLocation.search
 
-  store.set(id)
-  layerStack.push(id)
+  store.set(id) // Set the selected layer to the new layer
+  layerStack.unshift(id)
   layerData.push({
     id,
     type: 'solid',

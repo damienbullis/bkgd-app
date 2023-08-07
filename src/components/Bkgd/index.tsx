@@ -5,13 +5,11 @@ import styles from './_.module.css'
 import LayerTypeSwitch from './LayerTypeSwitch'
 
 export default function Bkgd() {
-  const { layerStack, layerData } = useSearch({ from: '/' })
+  const { layerData } = useSearch({ from: '/' })
 
   const layers = useMemo(() => {
-    return layerData.sort((a, b) => {
-      return layerStack.indexOf(a.id) - layerStack.indexOf(b.id)
-    })
-  }, [layerStack, layerData])
+    return layerData
+  }, [layerData])
 
   return (
     <section id="bkgd" className={styles.bkgdWrap}>
