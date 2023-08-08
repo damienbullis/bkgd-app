@@ -34,9 +34,6 @@ const ToggleStyle = ({
 
 export default function Controls() {
   const [mode, setMode] = useState<Mode>('tools')
-
-  // FEATURE: If we find the rerenders a problem we can seperate sections of the UI to memo the components and handle thier state internally. This will allow us to only rerender the components that need to be rerendered.
-
   const [selectedLayer] = useSelectedLayer()
 
   useEffect(() => {

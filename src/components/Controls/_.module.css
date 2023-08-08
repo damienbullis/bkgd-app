@@ -112,8 +112,6 @@
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
-  & label {
-  }
   &.reverse {
     flex-flow: row-reverse nowrap;
   }

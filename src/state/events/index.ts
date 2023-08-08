@@ -142,6 +142,65 @@ const removeLayer = (id: string) => {
     store.set('')
   }
 }
+const DEFAULT_COLOR = '#000000'
+
+const DEFAULT_SOLID = {
+  color: DEFAULT_COLOR,
+} satisfies LayerPropsType<'solid'>['props']
+
+const DEFAULT_GRADIENT = {
+  type: 'linear',
+  gradient: [[DEFAULT_COLOR, 0]],
+} satisfies LayerPropsType<'gradient'>['props']
+
+const DEFAULT_NOISE = {
+  type: 'perlin',
+  noise: 1,
+} satisfies LayerPropsType<'noise'>['props']
+
+const prepareNextLayer = (
+  layer: LayerType,
+  props: EventPayload<'bkgd-update-layer'>
+): LayerType => {
+  if (layer.type === 'solid') {
+    return Object.assign({}, layer, {
+      props: Object.assign({}, DEFAULT_SOLID, props),
+    })
+  } else if (layer.type === 'gradient') {
+    return Object.assign({}, layer, {
+      props: Object.assign({}, DEFAULT_GRADIENT, props),
+    })
+  } else if (layer.type === 'noise') {
+    return Object.assign({}, layer, {
+      props: Object.assign({}, DEFAULT_NOISE, props),
+    })
+  }
+  return layer
+}
+
+const updateLayer = (id: string, props: EventPayload<'bkgd-update-layer'>) => {
+  const { layerData = [] } = router.state.currentLocation.search
+  let index = -1
+  const layer = layerData.find((layer: LayerType, i) => {
+    if (layer.id === id) {
+      index = i
+      return true
+    }
+    return false
+  })
+  if (!layer) {
+    console.error('Update Layer Error: Layer not found')
+    throw new Error('Update Layer Error: Layer not found')
+  }
+  const nextLayer = prepareNextLayer(layer, props)
+  layerData[index] = nextLayer
+  console.log('Updated Layer', {
+    nextLayer,
+    layer: layerData[index],
+    id,
+    props,
+  })
+}
 
 //#endregion
 
@@ -185,7 +244,7 @@ const updateBkgdState = (event: EventHandlerType<BkgdEventsEnum>): void => {
       break
     }
     case 'bkgd-update-layer': {
-      console.warn('Updating Layer')
+      updateLayer(event.payload.id, event.payload)
       break
     }
     default: {
