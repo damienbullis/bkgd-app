@@ -1,12 +1,9 @@
+import { CircleHalf, Gradient, Palette } from '@phosphor-icons/react'
+import { useLayers } from '@state/hooks'
 import { Button, List } from '@shared'
 
-import styles from './_.module.css'
-import { useMemo } from 'react'
-
-import { CircleHalf, Gradient, Palette } from '@phosphor-icons/react'
 import { LayerEnum } from '../../types/LayerType'
-import { useSelectedLayer } from '@state/global'
-import { useSearch } from '@tanstack/router'
+import styles from './_.module.css'
 
 const LAYER_TYPES = {
   gradient: CircleHalf,
@@ -16,7 +13,7 @@ const LAYER_TYPES = {
 
 const LayerButton = ({ id, type }: { id: string; type: LayerEnum }) => {
   const Icon = LAYER_TYPES[type]
-  const [selectedLayer, setSelectedLayer] = useSelectedLayer()
+  const { selectedLayer, setSelectedLayer } = useLayers()
   const isActive = id === selectedLayer
   return (
     <Button
@@ -30,10 +27,7 @@ const LayerButton = ({ id, type }: { id: string; type: LayerEnum }) => {
 }
 
 const LayerButtons = () => {
-  const { layerData, layerStack } = useSearch({ from: '/' })
-  const layers = useMemo(() => {
-    return layerStack.map((id) => layerData.find((l) => l.id === id))
-  }, [layerData, layerStack])
+  const { layers } = useLayers()
   return (
     <List className={styles.layers}>
       {layers.map((layer, i) => {
