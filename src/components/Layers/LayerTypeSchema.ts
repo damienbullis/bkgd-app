@@ -75,6 +75,7 @@ type GradientLayerType = z.infer<typeof GradientPropsSchema>
 type NoiseLayerType = z.infer<typeof NoisePropsSchema>
 type SharedLayerPropsSchemaType = z.infer<typeof SharedLayerPropsSchema>
 
+// TODO: on error lets strip out the bad data and return the rest plus replace with default on missing data
 const LayerSchema = z.object({
   layerStack: z
     .array(z.string())
@@ -85,9 +86,32 @@ const LayerSchema = z.object({
     .default([]),
   layerData: z
     .array(LayerTypeSchema)
-    .catch((err) => {
-      console.warn(err.error.issues)
-      return []
+    .catch(({ error, input }) => {
+      console.log('LayerData Error', { input })
+      let layer: any
+      for (const { path } of error.issues) {
+        console.log('LayerData Error', { path })
+        const [, layerIndex, ...props] = path
+        layer = input[layerIndex as number]
+        console.log('LayerData Error', { layer })
+        if (layer) {
+          let drill: any = layer
+          for (const prop of props as string[]) {
+            console.log('LayerData Error', { prop, drill })
+            if (prop === 'props') {
+              drill = drill[prop] as any
+            }
+            if (prop === 'color') {
+              const next = layer as SolidLayerType
+              next.props = {
+                color: '#000000',
+              }
+            }
+          }
+        }
+      }
+      console.log('LayerData Error', { input })
+      return input
     })
     .default([]),
 })
