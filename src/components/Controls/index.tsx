@@ -13,17 +13,19 @@ type Mode = 'tools' | 'edit'
 const ToggleStyle = ({
   target,
   applyClass,
+  inactiveClass = '',
   children,
 }: {
   target: string
   applyClass: string
+  inactiveClass?: string
   children: React.ReactElement | React.ReactElement[]
 }) => (
   <>
     {Children.map(children, (child) =>
       cloneElement(child, {
         className: `${child.props.className} ${
-          child.props.id === target ? applyClass : ''
+          child.props.id === target ? applyClass : inactiveClass
         }`,
       })
     )}
@@ -72,6 +74,7 @@ export default function Controls() {
           <ToggleStyle
             target={mode === 'tools' ? 'toolsPanel' : 'controlsPanel'}
             applyClass={styles.active}
+            inactiveClass={styles.inactive}
           >
             <div id="toolsPanel" className={styles.card}>
               <Tools />

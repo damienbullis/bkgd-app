@@ -6,15 +6,9 @@ function useLayers() {
   const [selectedLayer, setSelectedLayer] = useSelectedLayer()
   const { layerData, layerStack } = useSearch({ from: '/' })
   const layers = useMemo(() => {
-    return layerStack
-      .map((layerId) => {
-        const layer = layerData.find((layer) => layer.id === layerId)
-        if (!layer) {
-          return null
-        }
-        return layer
-      })
-      .filter((layer) => layer !== null)
+    return layerStack.map((layerId) => {
+      return layerData.find((layer) => layer.id === layerId)
+    })
   }, [layerData, layerStack])
 
   return {
