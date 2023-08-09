@@ -14,9 +14,11 @@ type EventHandlerType<T> = T extends infer U extends EventActionEnum
 type EventPayload<T extends EventActionEnum> = T extends 'bkgd-add-layer'
   ? Pick<EventPayloadType, 'id' | 'type'>
   : T extends 'bkgd-remove-layer'
-  ? Pick<EventPayloadType, 'id'>
+  ? { id: string }
   : T extends 'bkgd-update-layer'
   ? Pick<EventPayloadType, 'id'> & Partial<Omit<EventPayloadType, 'id'>>
+  : T extends 'bkgd-update-stack'
+  ? { id: string; direction: 'up' | 'down' }
   : T extends 'toggle-ui' | 'download-css' | 'download-image' | 'save-bkgd'
   ? null
   : T extends 'load-bkgd' | 'delete-bkgd' | 'select-layer'

@@ -12,6 +12,7 @@ import { Button, IconButton, List } from '@shared'
 
 import { LayerEnum } from '../../types/LayerType'
 import styles from './_.module.css'
+import { EventHandler } from '@state/events'
 
 const LAYER_TYPES = {
   gradient: CircleHalf,
@@ -30,9 +31,42 @@ const EllipseDropdown = ({
     <div className={styles.ellipse}>
       <IconButton icon={DotsThreeOutlineVertical} size="sm" active={isActive} />
       <div className={styles.dropdown}>
-        <IconButton icon={ArrowBendLeftUp} size="sm" />
-        <IconButton icon={ArrowBendRightDown} size="sm" />
-        <IconButton icon={TrashSimple} size="sm" />
+        <IconButton
+          icon={ArrowBendLeftUp}
+          size="sm"
+          onClick={() =>
+            EventHandler({
+              action: 'bkgd-update-stack',
+              payload: {
+                id,
+                direction: 'up',
+              },
+            })
+          }
+        />
+        <IconButton
+          icon={ArrowBendRightDown}
+          size="sm"
+          onClick={() =>
+            EventHandler({
+              action: 'bkgd-update-stack',
+              payload: {
+                id,
+                direction: 'down',
+              },
+            })
+          }
+        />
+        <IconButton
+          icon={TrashSimple}
+          size="sm"
+          onClick={() =>
+            EventHandler({
+              action: 'bkgd-remove-layer',
+              payload: { id },
+            })
+          }
+        />
       </div>
     </div>
   )
