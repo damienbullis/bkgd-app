@@ -75,7 +75,6 @@ type GradientLayerType = z.infer<typeof GradientPropsSchema>
 type NoiseLayerType = z.infer<typeof NoisePropsSchema>
 type SharedLayerPropsSchemaType = z.infer<typeof SharedLayerPropsSchema>
 
-// TODO: on error lets strip out the bad data and return the rest plus replace with default on missing data
 const LayerSchema = z.object({
   layerStack: z
     .array(z.string())
@@ -87,6 +86,10 @@ const LayerSchema = z.object({
   layerData: z
     .array(LayerTypeSchema)
     .catch(({ error, input }) => {
+      // TODO: fix this
+      // this is just a poc of how to handle errors
+      // maybe I just want to use defaults?
+      // using zod.default() on the individual property level???
       console.log('LayerData Error', { input })
       let layer: any
       for (const { path } of error.issues) {
