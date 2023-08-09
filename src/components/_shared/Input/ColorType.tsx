@@ -25,6 +25,22 @@ const getValue = (val: ColorTypeProps['color'], hasP3: boolean) => {
   return DEFAULT_COLOR
 }
 
+const getColor = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  colorType: ColorTypeEnum,
+  hasP3: boolean
+) => {
+  if (colorType === 'display-p3' || colorType === 'srgb') {
+    return hexToRGB(e.target.value, hasP3)
+  }
+
+  if (colorType === 'hsl') {
+    return hexToHSL(e.target.value)
+  }
+  // hex
+  return e.target.value
+}
+
 //#endregion
 
 /**
@@ -70,23 +86,13 @@ export default function ColorType({
         id={label}
         onChange={(e) => {
           // starts as hex
-          const _props: ColorTypeProps = {
-            color: e.target.value,
-          }
-
-          if (colorType === 'display-p3' || colorType === 'srgb') {
-            _props.color = hexToRGB(e.target.value, hasP3)
-          }
-
-          if (colorType === 'hsl') {
-            _props.color = hexToHSL(e.target.value)
-          }
-
           deb({
             action: 'bkgd-update-layer',
             payload: {
               id: selectedLayer,
-              props: _props,
+              props: {
+                color: getColor(e, colorType, hasP3),
+              },
             },
           })
         }}
