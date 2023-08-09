@@ -7,6 +7,8 @@ import { LayerPropsType } from '../../../types/LayerType'
 import { useCapabilities } from '../../Capabilities'
 import styles from './_.module.css'
 
+//#region types & utils
+
 type ColorTypeEnum = 'hex' | 'srgb' | 'hsl' | 'display-p3'
 type ColorTypeProps = LayerPropsType<'solid'>['props']
 
@@ -23,6 +25,8 @@ const getValue = (val: ColorTypeProps['color'], hasP3: boolean) => {
   return DEFAULT_COLOR
 }
 
+//#endregion
+
 /**
  * ColorType Picker Input
  */
@@ -33,34 +37,12 @@ export default function ColorType({
   label: string
   typeProps: ColorTypeProps
 }) {
+  const [selectedLayer] = useSelectedLayer()
   const caps = useCapabilities()
   const hasP3 = (caps.displayP3 as boolean) || false
   const [colorType, setColorType] = useState<ColorTypeEnum>(
     hasP3 ? 'display-p3' : 'srgb'
   )
-  const [selectedLayer] = useSelectedLayer()
-  const handler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // starts as hex
-    const _props: ColorTypeProps = {
-      color: e.target.value,
-    }
-
-    if (colorType === 'display-p3' || colorType === 'srgb') {
-      _props.color = hexToRGB(e.target.value, hasP3)
-    }
-
-    if (colorType === 'hsl') {
-      _props.color = hexToHSL(e.target.value)
-    }
-
-    deb({
-      action: 'bkgd-update-layer',
-      payload: {
-        id: selectedLayer,
-        props: _props,
-      },
-    })
-  }
 
   const value = getValue(typeProps.color, hasP3)
 
@@ -86,7 +68,28 @@ export default function ColorType({
         type="color"
         value={value}
         id={label}
-        onChange={handler}
+        onChange={(e) => {
+          // starts as hex
+          const _props: ColorTypeProps = {
+            color: e.target.value,
+          }
+
+          if (colorType === 'display-p3' || colorType === 'srgb') {
+            _props.color = hexToRGB(e.target.value, hasP3)
+          }
+
+          if (colorType === 'hsl') {
+            _props.color = hexToHSL(e.target.value)
+          }
+
+          deb({
+            action: 'bkgd-update-layer',
+            payload: {
+              id: selectedLayer,
+              props: _props,
+            },
+          })
+        }}
         className="clr"
       />
     </div>

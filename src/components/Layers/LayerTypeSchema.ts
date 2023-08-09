@@ -93,17 +93,18 @@ const LayerSchema = z.object({
       console.log('LayerData Error', { input })
       let layer: any
       for (const { path } of error.issues) {
-        console.log('LayerData Error', { path })
         const [, layerIndex, ...props] = path
         layer = input[layerIndex as number]
-        console.log('LayerData Error', { layer })
+
         if (layer) {
           let drill: any = layer
           for (const prop of props as string[]) {
             console.log('LayerData Error', { prop, drill })
+
             if (prop === 'props') {
               drill = drill[prop] as any
             }
+
             if (prop === 'color') {
               const next = layer as SolidLayerType
               next.props = {
