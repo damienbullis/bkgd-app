@@ -1,12 +1,10 @@
 import { useMemo } from 'react'
 import { Sliders } from '@phosphor-icons/react'
-import { useSearch } from '@tanstack/router'
-
 import { Range, Checkbox, ColorType, Select, Input } from '@shared'
-import { useSelectedLayer } from '@state/global'
 
 import { LayerType } from '../Layers/LayerTypeSchema'
 import styles from './_.module.css'
+import { useLayers } from '@state/hooks'
 
 const blendModesOptions = [
   'normal',
@@ -38,7 +36,7 @@ const FALLBACK = {
   blendMode: 'normal',
   backgroundPosition: '0% 0%',
   backgroundSize: 'auto',
-  backgroundRepeat: true,
+  backgroundRepeat: 0,
 } satisfies LayerType
 
 const SectionTitle = ({
@@ -57,13 +55,10 @@ const SectionTitle = ({
 )
 
 const LayerControls = () => {
-  const [selectedLayer] = useSelectedLayer()
-  const { layerData } = useSearch({ from: '/' })
-
-  const { type, opacity, blendMode, backgroundBlend, props } =
-    useMemo<LayerType>(() => {
-      return layerData.find((layer) => layer.id === selectedLayer) || FALLBACK
-    }, [layerData, selectedLayer])
+  const { layers, selectedLayer } = useLayers()
+  const { type, props, opacity, blendMode, backgroundBlend } = useMemo(() => {
+    return layers.find((l) => l?.id === selectedLayer) || FALLBACK
+  }, [layers, selectedLayer])
 
   return (
     <div className={styles.layerControls}>

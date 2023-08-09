@@ -1,8 +1,8 @@
 import { LayerEnum, LayerPropsType } from '@types'
 import router from '../../router'
 import { getStore } from '@state/global'
-import { randomHex } from '../../utils/colorHelpers'
 import { LayerType } from '../../components/Layers/LayerTypeSchema'
+import { randomHex } from '@utils'
 
 type EventHandlerType<T> = T extends infer U extends EventActionEnum
   ? {
@@ -31,6 +31,7 @@ type BkgdEventsEnum =
   | 'bkgd-add-layer'
   | 'bkgd-remove-layer'
   | 'bkgd-update-layer'
+  | 'bkgd-update-stack'
 type EventsEnum =
   | 'toggle-ui'
   | 'save-bkgd'
@@ -59,6 +60,8 @@ function getActionTitle(action: BkgdEventsEnum) {
       return 'Remove Layer'
     case 'bkgd-update-layer':
       return 'Update Layer'
+    case 'bkgd-update-stack':
+      return 'Reorder Layers'
     default: {
       const _exhaustiveCheck: never = action
       return _exhaustiveCheck
@@ -163,9 +166,15 @@ const prepareNextLayer = (
   props: EventPayload<'bkgd-update-layer'>
 ): LayerType => {
   if (layer.type === 'solid') {
-    return Object.assign({}, layer, {
-      props: Object.assign({}, DEFAULT_SOLID, props),
-    })
+    return {
+      ...layer,
+      ...props,
+      props: {
+        ...DEFAULT_SOLID,
+        ...layer.props,
+        ...props.props,
+      },
+    } as LayerType
   } else if (layer.type === 'gradient') {
     return Object.assign({}, layer, {
       props: Object.assign({}, DEFAULT_GRADIENT, props),
@@ -179,7 +188,7 @@ const prepareNextLayer = (
 }
 
 const updateLayer = (id: string, props: EventPayload<'bkgd-update-layer'>) => {
-  const { layerData = [] } = router.state.currentLocation.search
+  const { layerData = [], layerStack } = router.state.currentLocation.search
   let index = -1
   const layer = layerData.find((layer: LayerType, i) => {
     if (layer.id === id) {
@@ -190,15 +199,23 @@ const updateLayer = (id: string, props: EventPayload<'bkgd-update-layer'>) => {
   })
   if (!layer) {
     console.error('Update Layer Error: Layer not found')
-    throw new Error('Update Layer Error: Layer not found')
+    return
   }
+  const nextLayers = [...layerData]
   const nextLayer = prepareNextLayer(layer, props)
-  layerData[index] = nextLayer
+  nextLayers[index] = nextLayer
   console.log('Updated Layer', {
     nextLayer,
     layer: layerData[index],
     id,
     props,
+  })
+  router.navigate({
+    to: '/',
+    search: {
+      layerStack,
+      layerData: nextLayers,
+    },
   })
 }
 
@@ -245,6 +262,10 @@ const updateBkgdState = (event: EventHandlerType<BkgdEventsEnum>): void => {
     }
     case 'bkgd-update-layer': {
       updateLayer(event.payload.id, event.payload)
+      break
+    }
+    case 'bkgd-update-stack': {
+      console.warn('Updating Layer Stack')
       break
     }
     default: {
