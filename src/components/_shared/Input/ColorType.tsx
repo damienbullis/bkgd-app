@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelectedLayer } from '@state/global'
 import { EventHandler } from '@state/events'
 import { debounce, hexToHSL, hexToRGB, hslToHex, rgbToHex } from '@utils'
@@ -59,8 +59,17 @@ export default function ColorType({
   const [colorType, setColorType] = useState<ColorTypeEnum>(
     hasP3 ? 'display-p3' : 'srgb'
   )
+  const inputRef = React.useRef<HTMLInputElement>(null)
 
   const value = getValue(typeProps.color, hasP3)
+
+  useEffect(() => {
+    // because this in an uncontrolled input
+    // when selectedLayer changes, we need to update the value manually
+    if (inputRef.current) {
+      inputRef.current.value = value
+    }
+  }, [value])
 
   return (
     <div className={styles.wrap}>
@@ -81,8 +90,9 @@ export default function ColorType({
         )}
       </select>
       <input
+        ref={inputRef}
         type="color"
-        value={value}
+        defaultValue={value}
         id={label}
         onChange={(e) => {
           // starts as hex
