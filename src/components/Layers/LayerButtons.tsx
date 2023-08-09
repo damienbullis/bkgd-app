@@ -1,6 +1,14 @@
-import { CircleHalf, Gradient, Palette } from '@phosphor-icons/react'
+import {
+  ArrowBendLeftUp,
+  ArrowBendRightDown,
+  CircleHalf,
+  DotsThreeOutlineVertical,
+  Gradient,
+  Palette,
+  TrashSimple,
+} from '@phosphor-icons/react'
 import { useLayers } from '@state/hooks'
-import { Button, List } from '@shared'
+import { Button, IconButton, List } from '@shared'
 
 import { LayerEnum } from '../../types/LayerType'
 import styles from './_.module.css'
@@ -11,18 +19,38 @@ const LAYER_TYPES = {
   solid: Palette,
 } as const
 
+const EllipseDropdown = ({
+  id,
+  isActive,
+}: {
+  id: string
+  isActive: boolean
+}) => {
+  return (
+    <div className={styles.ellipse}>
+      <IconButton icon={DotsThreeOutlineVertical} size="sm" active={isActive} />
+      <div className={styles.dropdown}>
+        <IconButton icon={ArrowBendLeftUp} size="sm" />
+        <IconButton icon={ArrowBendRightDown} size="sm" />
+        <IconButton icon={TrashSimple} size="sm" />
+      </div>
+    </div>
+  )
+}
+
 const LayerButton = ({ id, type }: { id: string; type: LayerEnum }) => {
   const Icon = LAYER_TYPES[type]
   const { selectedLayer, setSelectedLayer } = useLayers()
   const isActive = id === selectedLayer
   return (
-    <Button
+    <div
       className={`${isActive ? styles.active + ' ' : ''}md`}
       onClick={() => setSelectedLayer(isActive ? '' : id)}
     >
       <Icon size={'1em'} />
       <p>{type}</p>
-    </Button>
+      <EllipseDropdown id={id} isActive={isActive} />
+    </div>
   )
 }
 
