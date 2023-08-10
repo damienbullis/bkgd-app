@@ -45,14 +45,5 @@
       white-space: nowrap;
       font-size: calc(1em / var(--scalar));
     }
-    &.active {
-      background-color: #ffffff;
-      color: #000000;
-    }
   }
-}
-
-.ellipse {
-  display: inline-flex;
-  position: relative;
 }

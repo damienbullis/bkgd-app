@@ -1,92 +1,8 @@
-import {
-  ArrowBendLeftUp,
-  ArrowBendRightDown,
-  CircleHalf,
-  DotsThreeOutlineVertical,
-  Gradient,
-  Palette,
-  TrashSimple,
-} from '@phosphor-icons/react'
 import { useLayers } from '@state/hooks'
-import { Button, IconButton, List } from '@shared'
+import { List } from '@shared'
 
-import { LayerEnum } from '../../types/LayerType'
 import styles from './_.module.css'
-import { EventHandler } from '@state/events'
-
-const LAYER_TYPES = {
-  gradient: CircleHalf,
-  noise: Gradient,
-  solid: Palette,
-} as const
-
-const EllipseDropdown = ({
-  id,
-  isActive,
-}: {
-  id: string
-  isActive: boolean
-}) => {
-  return (
-    <div className={styles.ellipse}>
-      <IconButton icon={DotsThreeOutlineVertical} size="sm" active={isActive} />
-      <div className={styles.dropdown}>
-        <IconButton
-          icon={ArrowBendLeftUp}
-          size="sm"
-          onClick={() =>
-            EventHandler({
-              action: 'bkgd-update-stack',
-              payload: {
-                id,
-                direction: 'up',
-              },
-            })
-          }
-        />
-        <IconButton
-          icon={ArrowBendRightDown}
-          size="sm"
-          onClick={() =>
-            EventHandler({
-              action: 'bkgd-update-stack',
-              payload: {
-                id,
-                direction: 'down',
-              },
-            })
-          }
-        />
-        <IconButton
-          icon={TrashSimple}
-          size="sm"
-          onClick={() =>
-            EventHandler({
-              action: 'bkgd-remove-layer',
-              payload: { id },
-            })
-          }
-        />
-      </div>
-    </div>
-  )
-}
-
-const LayerButton = ({ id, type }: { id: string; type: LayerEnum }) => {
-  const Icon = LAYER_TYPES[type]
-  const { selectedLayer, setSelectedLayer } = useLayers()
-  const isActive = id === selectedLayer
-  return (
-    <div
-      className={`${isActive ? styles.active + ' ' : ''}md`}
-      onClick={() => setSelectedLayer(isActive ? '' : id)}
-    >
-      <Icon size={'1em'} />
-      <p>{type}</p>
-      <EllipseDropdown id={id} isActive={isActive} />
-    </div>
-  )
-}
+import LayerButton from './Layer'
 
 const LayerButtons = () => {
   const { layers } = useLayers()
@@ -104,4 +20,4 @@ const LayerButtons = () => {
   )
 }
 
-export { LayerButtons }
+export default LayerButtons

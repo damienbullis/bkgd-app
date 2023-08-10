@@ -1,7 +1,3 @@
-import styles from './_.module.css'
-import { IconButton, List } from '../_shared'
-import { useState } from 'react'
-import { LayerButtons } from './LayerButtons'
 import {
   Clipboard,
   DownloadSimple,
@@ -10,7 +6,11 @@ import {
   Icon,
 } from '@phosphor-icons/react'
 import { EventHandler } from '@state/events'
-import { makeID } from '@utils'
+import { useVisible } from '@state/global'
+import { IconButton, List } from '@shared'
+
+import LayerButtons from './LayerButtons'
+import styles from './_.module.css'
 
 const LiButton = ({
   icon,
@@ -27,11 +27,16 @@ const LiButton = ({
 }
 
 const VisibilityButton = () => {
-  const [hide, setHide] = useState(false)
+  const [hide] = useVisible()
   return (
     <LiButton
       icon={hide ? EyeClosed : Eye}
-      onClick={() => setHide((prev) => !prev)}
+      onClick={() =>
+        EventHandler({
+          action: 'toggle-ui',
+          payload: null,
+        })
+      }
     />
   )
 }
@@ -44,11 +49,8 @@ export default function Layers() {
           icon={DownloadSimple}
           onClick={() =>
             EventHandler({
-              action: 'bkgd-add-layer',
-              payload: {
-                id: makeID(),
-                type: 'solid',
-              },
+              action: 'download-image',
+              payload: null,
             })
           }
         />
@@ -56,11 +58,8 @@ export default function Layers() {
           icon={Clipboard}
           onClick={() =>
             EventHandler({
-              action: 'bkgd-update-layer',
-              payload: {
-                id: makeID(),
-                blendMode: 'difference',
-              },
+              action: 'download-css',
+              payload: null,
             })
           }
         />
