@@ -6,7 +6,7 @@ import { IconButton } from '@shared'
 
 import styles from './_.module.css'
 import Tools from './Tools'
-import LayerControls from './LayerControls'
+import LayerProperties from './LayerProperties'
 
 type Mode = 'tools' | 'edit'
 
@@ -77,7 +77,7 @@ export default function Controls() {
               <Tools />
             </div>
             <div id="controlsPanel" className={styles.card}>
-              <LayerControls />
+              <LayerProperties />
             </div>
           </ToggleStyle>
         </div>
