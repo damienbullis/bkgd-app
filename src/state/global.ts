@@ -3,14 +3,20 @@ import SubStore from './subStore'
 
 const globalStore: SubStore<unknown>[] = []
 
-const createStoreHook = <T>(data: T) => {
+function createStoreHook<T>(data: T) {
   globalStore.push(new SubStore(data))
+  console.log('creating', globalStore.length)
+  const index = globalStore.length - 1
   return function () {
     // initialize store & setter
+    console.log('hook', {
+      store: globalStore[index],
+      index,
+    })
     const _ = useRef([
-        globalStore[globalStore.length - 1] as SubStore<T>,
+        globalStore[index] as SubStore<T>,
         (data: T) => {
-          globalStore[globalStore.length - 1].set(data)
+          globalStore[index].set(data)
         },
       ] as const),
       // primary state

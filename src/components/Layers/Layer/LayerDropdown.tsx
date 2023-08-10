@@ -11,7 +11,12 @@ import styles from './_.module.css'
 const LayerDropdown = ({ id, isActive }: { id: string; isActive: boolean }) => {
   return (
     <div className={styles.ellipse}>
-      <IconButton icon={DotsThreeOutlineVertical} size="sm" active={isActive} />
+      <IconButton
+        icon={DotsThreeOutlineVertical}
+        size="sm"
+        color="inherit"
+        className={isActive ? styles.active : ''}
+      />
       <div className={styles.dropdown}>
         <IconButton
           icon={ArrowBendLeftUp}
