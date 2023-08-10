@@ -1,0 +1,24 @@
+.ellipse {
+  display: inline-flex;
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  transition: height 0.5s ease-in-out;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  border: #ffffff90 1px solid;
+  box-shadow: 0 0 0.5rem #00000090;
+  z-index: 1;
+}
+
+.active {
+  background-color: #ffffff;
+  color: #000000;
+}
