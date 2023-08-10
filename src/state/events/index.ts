@@ -105,8 +105,6 @@ const handleEvent = (event: EventHandlerType<EventsEnum>) => {
 
 const addSolidLayer = (id: string) => {
   const store = getStore<string>(1)
-  const vis = getStore<boolean>(0)
-  console.log(store.get(), vis.get())
   const { layerStack = [], layerData = [] } =
     router.state.currentLocation.search
 

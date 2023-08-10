@@ -5,14 +5,9 @@ const globalStore: SubStore<unknown>[] = []
 
 function createStoreHook<T>(data: T) {
   globalStore.push(new SubStore(data))
-  console.log('creating', globalStore.length)
   const index = globalStore.length - 1
   return function () {
     // initialize store & setter
-    console.log('hook', {
-      store: globalStore[index],
-      index,
-    })
     const _ = useRef([
         globalStore[index] as SubStore<T>,
         (data: T) => {
