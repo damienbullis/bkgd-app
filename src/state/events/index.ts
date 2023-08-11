@@ -166,7 +166,7 @@ const DEFAULT_NOISE = {
 
 const prepareNextLayer = (
   layer: LayerType,
-  props: EventPayload<'bkgd-update-layer'>
+  props?: EventPayload<'bkgd-update-layer'>
 ): LayerType => {
   if (layer.type === 'solid') {
     return {
@@ -175,7 +175,7 @@ const prepareNextLayer = (
       props: {
         ...DEFAULT_SOLID,
         ...layer.props,
-        ...props.props,
+        ...props?.props,
       },
     } as LayerType
   } else if (layer.type === 'gradient') {
@@ -190,11 +190,11 @@ const prepareNextLayer = (
   return layer
 }
 
-const updateLayer = (id: string, props: EventPayload<'bkgd-update-layer'>) => {
+const updateLayer = (event: EventHandlerType<'bkgd-update-layer'>) => {
   const { layerData = [], layerStack } = router.state.currentLocation.search
   let index = -1
   const layer = layerData.find((layer: LayerType, i) => {
-    if (layer.id === id) {
+    if (layer.id === event.payload.id) {
       index = i
       return true
     }
@@ -205,19 +205,39 @@ const updateLayer = (id: string, props: EventPayload<'bkgd-update-layer'>) => {
     return
   }
   const nextLayers = [...layerData]
-  const nextLayer = prepareNextLayer(layer, props)
+  const nextLayer = prepareNextLayer(layer, event.payload)
   nextLayers[index] = nextLayer
-  console.log('Updated Layer', {
-    nextLayer,
-    layer: layerData[index],
-    id,
-    props,
-  })
   router.navigate({
     to: '/',
     search: {
       layerStack,
       layerData: nextLayers,
+    },
+  })
+}
+
+const updateStack = (event: EventHandlerType<'bkgd-update-stack'>) => {
+  const { layerStack = [], layerData = [] } =
+    router.state.currentLocation.search
+  const index = layerStack.findIndex((id: string) => id === event.payload.id)
+  if (index === -1) {
+    console.error('Move Layer Error: Layer not found')
+    return
+  }
+
+  const nextStack = [...layerStack]
+  const nextLayer = nextStack.splice(index, 1)[0]
+  if (event.payload.direction === 'up') {
+    nextStack.splice(index - 1, 0, nextLayer)
+  } else {
+    nextStack.splice(index + 1, 0, nextLayer)
+  }
+
+  router.navigate({
+    to: '/',
+    search: {
+      layerStack: nextStack,
+      layerData,
     },
   })
 }
@@ -264,11 +284,11 @@ const updateBkgdState = (event: EventHandlerType<BkgdEventsEnum>): void => {
       break
     }
     case 'bkgd-update-layer': {
-      updateLayer(event.payload.id, event.payload)
+      updateLayer(event)
       break
     }
     case 'bkgd-update-stack': {
-      console.warn('Updating Layer Stack')
+      updateStack(event)
       break
     }
     default: {
