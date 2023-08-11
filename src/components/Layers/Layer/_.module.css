@@ -3,8 +3,17 @@
   position: relative;
   color: inherit;
   > button {
-    display: none;
+    opacity: 0;
+    padding: calc(0.5em * var(--x));
+    &:not(.active):hover {
+      opacity: 0;
+    }
   }
+}
+
+.active {
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .dropdown {
@@ -21,15 +30,18 @@
   border: #ffffff90 1px solid;
   box-shadow: 0 0 0.5rem #00000090;
   z-index: 1;
+
+  &.active {
+    display: block;
+  }
+  > button {
+    color: #000000;
+  }
 }
 
-.active {
-  background-color: #ffffff;
-  color: #000000;
-}
 button.active {
   color: #000000;
-  display: block;
+  opacity: 1;
   &:hover {
     color: #000000;
   }
