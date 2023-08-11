@@ -27,26 +27,4 @@
   gap: 0.5rem;
   width: 100%;
   font-family: var(--font-impact);
-  > li > div {
-    width: 100%;
-    padding: 0.5rem 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 0.5rem;
-    flex-direction: row;
-    border: #ffffff90 1px solid;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    & p {
-      margin: 0 0.5rem;
-      line-height: 1;
-      max-width: 75%;
-      text-transform: uppercase;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-size: calc(1em / var(--scalar));
-    }
-  }
 }

@@ -5,6 +5,7 @@ import { EventHandler } from '@state/events'
 import { LayerEnum } from '../../../types/LayerType'
 import LayerDropdown from './LayerDropdown'
 import styles from './_.module.css'
+import { useSearch } from '@tanstack/router'
 
 const LAYER_TYPES = {
   gradient: CircleHalf,
@@ -15,15 +16,16 @@ const LAYER_TYPES = {
 const LayerButton = ({ id, type }: { id: string; type: LayerEnum }) => {
   const Icon = LAYER_TYPES[type]
   const [selectedLayer] = useSelectedLayer()
+  const { layerStack = [] } = useSearch({ from: '/' })
   const isActive = id === selectedLayer
   return (
     <div
-      className={`${isActive ? styles.active + ' ' : ''}md`}
+      className={`${styles.layer} ${isActive ? styles.active : ''} md`}
       onClick={() => EventHandler({ action: 'select-layer', payload: { id } })}
     >
       <Icon size={'1em'} />
       <p>{type}</p>
-      <LayerDropdown id={id} isActive={isActive} />
+      <LayerDropdown id={id} isActive={isActive} stack={layerStack} />
     </div>
   )
 }
