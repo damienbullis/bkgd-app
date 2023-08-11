@@ -59,7 +59,7 @@ export default function Layers() {
           icon={Clipboard}
           onClick={() =>
             EventHandler({
-              action: 'download-css',
+              action: 'copy-css',
               payload: null,
             })
           }

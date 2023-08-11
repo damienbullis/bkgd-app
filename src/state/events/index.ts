@@ -19,7 +19,7 @@ type EventPayload<T extends EventActionEnum> = T extends 'bkgd-add-layer'
   ? Pick<EventPayloadType, 'id'> & Partial<Omit<EventPayloadType, 'id'>>
   : T extends 'bkgd-update-stack'
   ? { id: string; direction: 'up' | 'down' }
-  : T extends 'toggle-ui' | 'download-css' | 'download-image' | 'save-bkgd'
+  : T extends 'toggle-ui' | 'copy-css' | 'download-image' | 'save-bkgd'
   ? null
   : T extends 'load-bkgd' | 'delete-bkgd' | 'select-layer'
   ? { id: string }
@@ -40,7 +40,7 @@ type EventsEnum =
   | 'load-bkgd'
   | 'delete-bkgd'
   | 'select-layer'
-  | 'download-css'
+  | 'copy-css'
   | 'download-image'
 
 /**
@@ -72,11 +72,12 @@ function getActionTitle(action: BkgdEventsEnum) {
 }
 
 function mwUpdateUIColors() {
-  console.log('Background Color Changed\nUpdating UI Colors to match')
+  console.log('Updating UI Colors')
 }
 
 const triggerTitleUpdate = (event: EventHandlerType<BkgdEventsEnum>) => {
   const titleElement = document.querySelector('title')
+  console.log('Updating Title')
   if (titleElement) {
     const title = getActionTitle(event.action)
     titleElement.innerHTML = title
@@ -96,7 +97,7 @@ const handleMiddleware = (event: EventHandlerType<BkgdEventsEnum>) => {
 }
 
 const handleEvent = (event: EventHandlerType<EventsEnum>) => {
-  console.group('EVENT')
+  console.groupCollapsed('EVENT', event.action)
   updateState(event)
   console.groupEnd()
 }
@@ -282,7 +283,9 @@ const updateState = (event: EventHandlerType<EventsEnum>): void => {
   console.group('Updating State')
   switch (event.action) {
     case 'toggle-ui': {
-      console.warn('Toggling UI Visibility')
+      console.log('Toggling UI')
+      const ui = getStore<boolean>(0)
+      ui.set(!ui.get())
       break
     }
     case 'save-bkgd': {
@@ -298,11 +301,14 @@ const updateState = (event: EventHandlerType<EventsEnum>): void => {
       break
     }
     case 'select-layer': {
-      console.warn('Selecting Layer')
+      console.log('Selecting Layer')
+      const selectedLayer = getStore<string>(1)
+      const isSelected = selectedLayer.get() === event.payload.id
+      selectedLayer.set(isSelected ? '' : event.payload.id)
       break
     }
-    case 'download-css': {
-      console.warn('Downloading CSS')
+    case 'copy-css': {
+      console.warn('Copy CSS')
       break
     }
     case 'download-image': {

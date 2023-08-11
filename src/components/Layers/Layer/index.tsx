@@ -1,8 +1,10 @@
 import { CircleHalf, Gradient, Palette } from '@phosphor-icons/react'
+import { useSelectedLayer } from '@state/global'
+import { EventHandler } from '@state/events'
+
 import { LayerEnum } from '../../../types/LayerType'
-import { useLayers } from '@state/hooks'
-import styles from './_.module.css'
 import LayerDropdown from './LayerDropdown'
+import styles from './_.module.css'
 
 const LAYER_TYPES = {
   gradient: CircleHalf,
@@ -12,12 +14,12 @@ const LAYER_TYPES = {
 
 const LayerButton = ({ id, type }: { id: string; type: LayerEnum }) => {
   const Icon = LAYER_TYPES[type]
-  const { selectedLayer, setSelectedLayer } = useLayers()
+  const [selectedLayer] = useSelectedLayer()
   const isActive = id === selectedLayer
   return (
     <div
       className={`${isActive ? styles.active + ' ' : ''}md`}
-      onClick={() => setSelectedLayer(isActive ? '' : id)}
+      onClick={() => EventHandler({ action: 'select-layer', payload: { id } })}
     >
       <Icon size={'1em'} />
       <p>{type}</p>
