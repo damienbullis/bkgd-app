@@ -13,9 +13,7 @@ Create beautiful modern backgrounds for your website or app.
 **Some Project Goals:**
 
 - Simple UI
-- Use modern CSS (display-p3 color space, noise, filters, blend modes, etc)
 - Export as code or image
-- Share your background with others
 - Save your backgrounds for later
 - Use URL state for:
   - Tracking history of changes (undo/redo)
@@ -55,10 +53,10 @@ Create beautiful modern backgrounds for your website or app.
   - [ ] LocalStorage/SessionStorage State
   - [x] Transient State
   - [x] URL State
-- [ ] Layers
-  - [ ] Add Layer
-  - [ ] Remove Layer
-  - [ ] Move Layer
+- [x] Layers
+  - [x] Add Layer
+  - [x] Remove Layer
+  - [x] Move Layer
   - [x] Layer State
   - [x] Layer Type
 - [ ] Bkgd Controller
@@ -66,7 +64,7 @@ Create beautiful modern backgrounds for your website or app.
   - [x] Solid
   - [ ] Gradient
   - [ ] Noise
-- [ ] Input Components
+- [x] Input Components
   - [x] Text
   - [x] Range Slider
   - [x] Dropdown
