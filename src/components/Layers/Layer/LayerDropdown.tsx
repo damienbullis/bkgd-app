@@ -25,7 +25,13 @@ const LayerDropdown = ({ id, isActive }: { id: string; isActive: boolean }) => {
     if (!isActive) setMenu(false)
   }, [isActive])
   return (
-    <div className={styles.ellipse}>
+    <div
+      className={styles.ellipse}
+      onBlur={(e) => {
+        if (e.relatedTarget) return
+        setMenu(false)
+      }}
+    >
       <IconButton
         icon={DotsThreeOutlineVertical}
         size="sm"
