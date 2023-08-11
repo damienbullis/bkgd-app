@@ -21,7 +21,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  width: 100%;
+  width: auto;
   height: auto;
   overflow: hidden;
   transition: height 0.5s ease-in-out;
