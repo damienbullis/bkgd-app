@@ -6,12 +6,11 @@ import {
   Icon,
 } from '@phosphor-icons/react'
 import { EventHandler } from '@state/events'
-import { getStore, useVisible } from '@state/global'
+import { useVisible } from '@state/global'
 import { IconButton, List } from '@shared'
 
 import LayerButtons from './LayerButtons'
 import styles from './_.module.css'
-import { useStore } from '@tanstack/router'
 
 const LiButton = ({
   icon,
