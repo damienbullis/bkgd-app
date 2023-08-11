@@ -14,8 +14,11 @@ const LayerDropdown = ({ id, isActive }: { id: string; isActive: boolean }) => {
       <IconButton
         icon={DotsThreeOutlineVertical}
         size="sm"
-        color="inherit"
         className={isActive ? styles.active : ''}
+        onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+        }}
       />
       <div className={styles.dropdown}>
         <IconButton

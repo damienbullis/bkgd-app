@@ -34,6 +34,7 @@ function createStoreHook<T>(data: T) {
 const useVisible = createStoreHook(false)
 const useSelectedLayer = createStoreHook('')
 
+// Helpers
 const useStore = <T>(index: number) =>
   useRef(globalStore[index] as SubStore<T>).current
 

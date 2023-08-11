@@ -2,6 +2,9 @@
   display: inline-flex;
   position: relative;
   color: inherit;
+  > button {
+    display: none;
+  }
 }
 
 .dropdown {
@@ -23,4 +26,11 @@
 .active {
   background-color: #ffffff;
   color: #000000;
+}
+button.active {
+  color: #000000;
+  display: block;
+  &:hover {
+    color: #000000;
+  }
 }
