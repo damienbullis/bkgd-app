@@ -55,7 +55,6 @@ const useLocalStorage = (id?: string) => {
 export default function Nav() {
   const { id, layerData, layerStack } = useSearch({ from: '/' })
   const { isSaved, bkgdId, bkgds } = useLocalStorage(id)
-  console.log({ isSaved, bkgdId, bkgds })
   const saveHandler = (id?: string) => {
     let _id = id
     if (!_id) {

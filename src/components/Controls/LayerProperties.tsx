@@ -78,13 +78,17 @@ const LayerControls = () => {
       )}
 
       <h5 className="txt-8">Adjustments</h5>
-      <Range label="Opacity" value={opacity} />
+      <Range label="Opacity" id="opacity" value={opacity} />
       <Select
         label="Blend Mode"
         options={blendModesOptions}
         value={blendMode}
       />
-      <Checkbox label="Background Blend" value={backgroundBlend} />
+      <Checkbox
+        label="Background Blend"
+        id="backgroundBlend"
+        value={backgroundBlend}
+      />
       <Input label="Size" />
       <Input label="Position" />
       <Input label="Repeat" />

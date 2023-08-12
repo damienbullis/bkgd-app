@@ -193,9 +193,10 @@ const prepareNextLayer = (
 }
 
 const updateLayer = (event: EventHandlerType<'bkgd-update-layer'>) => {
-  const { layerData = [], layerStack } = router.state.currentLocation.search
+  const search = router.state.currentLocation.search
+  console.log('Updating Layer', { event })
   let index = -1
-  const layer = layerData.find((layer: LayerType, i) => {
+  const layer = search.layerData?.find((layer: LayerType, i) => {
     if (layer.id === event.payload.id) {
       index = i
       return true
@@ -206,28 +207,29 @@ const updateLayer = (event: EventHandlerType<'bkgd-update-layer'>) => {
     console.error('Update Layer Error: Layer not found')
     return
   }
-  const nextLayers = [...layerData]
+  const nextLayers = [...(search.layerData || [])]
   const nextLayer = prepareNextLayer(layer, event.payload)
   nextLayers[index] = nextLayer
   router.navigate({
     to: '/',
     search: {
-      layerStack,
+      ...search,
       layerData: nextLayers,
     },
   })
 }
 
 const updateStack = (event: EventHandlerType<'bkgd-update-stack'>) => {
-  const { layerStack = [], layerData = [] } =
-    router.state.currentLocation.search
-  const index = layerStack.findIndex((id: string) => id === event.payload.id)
-  if (index === -1) {
+  const search = router.state.currentLocation.search
+  const index = search.layerStack?.findIndex(
+    (id: string) => id === event.payload.id
+  )
+  if (index === -1 || index === undefined) {
     console.error('Move Layer Error: Layer not found')
     return
   }
 
-  const nextStack = [...layerStack]
+  const nextStack = [...(search.layerStack || [])]
   const nextLayer = nextStack.splice(index, 1)[0]
   if (event.payload.direction === 'up') {
     nextStack.splice(index - 1, 0, nextLayer)
@@ -238,8 +240,8 @@ const updateStack = (event: EventHandlerType<'bkgd-update-stack'>) => {
   router.navigate({
     to: '/',
     search: {
+      ...search,
       layerStack: nextStack,
-      layerData,
     },
   })
 }

@@ -11,9 +11,11 @@ const handler = debounce(EventHandler, 200)
  */
 export default function Range({
   label,
+  id = label,
   value,
 }: {
   label: string
+  id?: string
   value?: number
 }) {
   const [selectedLayer] = useSelectedLayer()
@@ -43,7 +45,7 @@ export default function Range({
             action: 'bkgd-update-layer',
             payload: {
               id: selectedLayer,
-              [label.toLocaleLowerCase()]: Number(e.target.value),
+              [id]: Number(e.target.value),
             },
           })
         }
