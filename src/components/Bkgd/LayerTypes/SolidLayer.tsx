@@ -35,7 +35,7 @@ const SolidLayer = ({ layer }: { layer: SolidLayerProps }) => {
       layer.props.color,
       (displayP3 as boolean) || false
     ),
-    opacity: layer.opacity,
+    opacity: typeof layer.opacity === 'number' ? layer.opacity / 100 : 1,
     [layer.backgroundBlend ? 'backgroundBlendMode' : 'mixBlendMode']:
       layer.blendMode,
     backgroundPosition: layer.backgroundPosition,

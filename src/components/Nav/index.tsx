@@ -53,11 +53,6 @@ export default function Nav() {
             <Question size={32} />
           </Button>
         </li>
-        <li className="clr">
-          <Button disabled title="Settings">
-            <UserCircle size={32} />
-          </Button>
-        </li>
       </ul>
     </nav>
   )
