@@ -5,9 +5,6 @@ import { EventHandler } from '@state/events'
 import { useEffect, useRef } from 'react'
 
 const handler = debounce(EventHandler, 200)
-const prevLayer = {
-  id: '',
-}
 
 /**
  * Range Input Type
@@ -21,15 +18,12 @@ export default function Range({
 }) {
   const [selectedLayer] = useSelectedLayer()
   const inputRef = useRef<HTMLInputElement>(null)
-
+  const v = typeof value === 'number' ? value : 100
   useEffect(() => {
-    // because this in an uncontrolled input
-    // when selectedLayer changes, we need to update the value manually
     if (inputRef.current) {
-      // console.log('UPDATING RANGE', { value })
-      // prevLayer.id = selectedLayer
-      inputRef.current.value = `${typeof value === 'number' ? value : 100}`
+      inputRef.current.value = String(v)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLayer])
   return (
     <div className={styles.wrap}>
@@ -41,7 +35,7 @@ export default function Range({
         className="clr"
         type="range"
         id={label}
-        defaultValue={typeof value === 'number' ? value : 100}
+        defaultValue={v}
         min="0"
         max="100"
         onChange={(e) =>
