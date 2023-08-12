@@ -9,6 +9,7 @@
   > ul {
     display: inline-grid;
     padding: 1rem;
+    grid-template-rows: max-content;
     gap: var(--padding);
     justify-items: center;
     align-items: start;

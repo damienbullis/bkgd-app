@@ -1,8 +1,9 @@
 import {
+  ArrowsCounterClockwise,
   Clipboard,
-  DownloadSimple,
   Eye,
   EyeClosed,
+  FloppyDisk,
   Icon,
 } from '@phosphor-icons/react'
 import { EventHandler } from '@state/events'
@@ -11,6 +12,7 @@ import { IconButton, List } from '@shared'
 
 import LayerButtons from './LayerButtons'
 import styles from './_.module.css'
+import { useNavigate } from '@tanstack/router'
 
 const LiButton = ({
   icon,
@@ -42,6 +44,7 @@ const VisibilityButton = () => {
 }
 
 export default function Layers() {
+  const navigate = useNavigate()
   return (
     <aside id="layers" className={styles.wrap}>
       <List>
@@ -55,7 +58,7 @@ export default function Layers() {
           }
         />
         <LiButton
-          icon={DownloadSimple}
+          icon={FloppyDisk}
           onClick={() =>
             EventHandler({
               action: 'download-image',
@@ -64,6 +67,10 @@ export default function Layers() {
           }
         />
         <VisibilityButton />
+        <LiButton
+          icon={ArrowsCounterClockwise}
+          onClick={() => navigate({ to: '/' })}
+        />
       </List>
       <LayerButtons />
     </aside>

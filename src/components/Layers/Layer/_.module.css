@@ -2,6 +2,7 @@
   display: inline-flex;
   position: relative;
   color: inherit;
+  margin-left: auto;
   > button {
     opacity: 0;
     /* TODO: Fix Click-thru for layer selection */
