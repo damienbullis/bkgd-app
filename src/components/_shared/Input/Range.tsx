@@ -31,7 +31,6 @@ export default function Range({
       inputRef.current.value = `${typeof value === 'number' ? value : 100}`
     }
   }, [selectedLayer])
-  console.log('RENDERING RANGE', { label, value })
   return (
     <div className={styles.wrap}>
       <label htmlFor={label} className={styles.full}>
