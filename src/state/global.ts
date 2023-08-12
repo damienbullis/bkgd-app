@@ -42,6 +42,7 @@ function createStoreHook<T>(data: T) {
 // Transient state
 const useVisible = createStoreHook(false)
 const useSelectedLayer = createStoreHook('')
+const useBkgdsCount = createStoreHook(0)
 
 // Helpers
 const useStore = <T>(index: number) =>
@@ -49,4 +50,4 @@ const useStore = <T>(index: number) =>
 
 const getStore = <T>(index: number) => globalStore[index] as SubStore<T>
 
-export { useVisible, useSelectedLayer, useStore, getStore }
+export { useVisible, useSelectedLayer, useBkgdsCount, useStore, getStore }
