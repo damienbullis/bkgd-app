@@ -38,13 +38,7 @@ const getInitialState = (): Bkgd => {
   }
 }
 
-const useSearchId = () => {
-  const { id } = useSearch({ from: '/' })
-  return useMemo(() => id, [id])
-}
-
-const useLocalStorage = () => {
-  const id = useSearchId()
+const useLocalStorage = (id?: string) => {
   const [count] = useBkgdsCount()
   const [bkgds, setBkgds] = useState<Bkgd>(getInitialState())
   useEffect(() => {
@@ -52,17 +46,16 @@ const useLocalStorage = () => {
     setBkgds(getInitialState())
   }, [count])
 
-  return {
-    isSaved: bkgds.some((b) => b.id === id),
-    bkgdId: id,
-    bkgds,
-  }
+  return useMemo(
+    () => ({ isSaved: bkgds.some((b) => b.id === id), bkgdId: id, bkgds }),
+    [bkgds, id]
+  )
 }
 
 export default function Nav() {
-  const { isSaved, bkgdId, bkgds } = useLocalStorage()
+  const { id, layerData, layerStack } = useSearch({ from: '/' })
+  const { isSaved, bkgdId, bkgds } = useLocalStorage(id)
   console.log({ isSaved, bkgdId, bkgds })
-
   const saveHandler = (id?: string) => {
     let _id = id
     if (!_id) {
@@ -72,12 +65,16 @@ export default function Nav() {
     next.push({
       id: _id,
       name: 'Untitled',
-      layers: [],
+      layers: [
+        {
+          layerData,
+          layerStack,
+        },
+      ],
       createdAt: new Date().toJSON(),
       updatedAt: new Date().toJSON(),
     })
     const json = JSON.stringify(next)
-    console.log('Saving', { _id, json: JSON.parse(json) })
     localStorage.setItem('bkgds', json)
 
     EventHandler({
@@ -103,7 +100,7 @@ export default function Nav() {
             onClick={() =>
               EventHandler({
                 action: 'delete-bkgd',
-                payload: { id: '' },
+                payload: { id: bkgdId || bkgds[bkgds.length - 1]?.id },
               })
             }
           >

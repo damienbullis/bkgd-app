@@ -327,6 +327,16 @@ const updateState = (event: EventHandlerType<EventsEnum>): void => {
     case 'delete-bkgd': {
       updateBkgdCount()
       console.warn('Deleting Background')
+      const storage = localStorage.getItem('bkgds') || '[]'
+      const bkgds = JSON.parse(storage)
+      const nextBkgds = bkgds.filter(
+        (bkgd: unknown) =>
+          bkgd &&
+          typeof bkgd === 'object' &&
+          'id' in bkgd &&
+          bkgd?.id !== event.payload.id
+      )
+      localStorage.setItem('bkgds', JSON.stringify(nextBkgds))
       break
     }
     case 'select-layer': {
