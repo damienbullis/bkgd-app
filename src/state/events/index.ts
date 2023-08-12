@@ -47,7 +47,7 @@ type EventsEnum =
  * These are only the events that are initiated by the user.
  */
 export const EventHandler = (event: EventHandlerType<EventActionEnum>) => {
-  if (event.action.includes('bkgd')) {
+  if (event.action.startsWith('bkgd')) {
     handleMiddleware(event as EventHandlerType<BkgdEventsEnum>)
   } else {
     handleEvent(event as EventHandlerType<EventsEnum>)
@@ -127,22 +127,24 @@ const addSolidLayer = (id: string) => {
   })
 }
 
-const removeLayer = (id: string) => {
-  const { layerStack = [], layerData = [] } =
-    router.state.currentLocation.search
+const removeLayer = (_id: string) => {
+  const prevSearch = router.state.currentLocation.search
 
   const store = getStore<string>(1)
-  const layerIsSelected = store.get() === id
+  const layerIsSelected = store.get() === _id
 
-  const nextStack = layerStack.filter((layerId: string) => layerId !== id)
-  const nextData = layerData.filter((layer: LayerType) => layer.id !== id)
+  const nextStack = prevSearch.layerStack?.filter(
+    (layerId: string) => layerId !== _id
+  )
+  const nextData = prevSearch.layerData?.filter(
+    (layer: LayerType) => layer.id !== _id
+  )
+  prevSearch.layerStack = nextStack
+  prevSearch.layerData = nextData
 
   router.navigate({
     to: '/',
-    search: {
-      layerStack: nextStack,
-      layerData: nextData,
-    },
+    search: prevSearch,
   })
   if (layerIsSelected) {
     store.set('')
@@ -298,7 +300,12 @@ const updateBkgdState = (event: EventHandlerType<BkgdEventsEnum>): void => {
   }
   console.groupEnd()
 }
-
+const updateBkgdCount = () => {
+  const store = getStore<number>(2)
+  const bkgdCount = store.get()
+  store.set(bkgdCount + 1)
+  console.log('Updating Background Count to ' + (bkgdCount + 1))
+}
 const updateState = (event: EventHandlerType<EventsEnum>): void => {
   console.group('Updating State')
   switch (event.action) {
@@ -309,6 +316,7 @@ const updateState = (event: EventHandlerType<EventsEnum>): void => {
       break
     }
     case 'save-bkgd': {
+      updateBkgdCount()
       console.warn('Saving Background')
       break
     }
@@ -317,6 +325,7 @@ const updateState = (event: EventHandlerType<EventsEnum>): void => {
       break
     }
     case 'delete-bkgd': {
+      updateBkgdCount()
       console.warn('Deleting Background')
       break
     }

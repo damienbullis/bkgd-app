@@ -76,6 +76,7 @@ type NoiseLayerType = z.infer<typeof NoisePropsSchema>
 type SharedLayerPropsSchemaType = z.infer<typeof SharedLayerPropsSchema>
 
 const LayerSchema = z.object({
+  id: z.string().optional(),
   layerStack: z
     .array(z.string())
     .catch((err) => {
