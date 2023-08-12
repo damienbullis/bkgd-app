@@ -4,6 +4,7 @@
   color: inherit;
   > button {
     opacity: 0;
+    /* TODO: Fix Click-thru for layer selection */
     padding: calc(0.5em * var(--x));
     &:not(.active):hover {
       opacity: 0;

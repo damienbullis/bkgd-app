@@ -46,19 +46,19 @@ export default function Layers() {
     <aside id="layers" className={styles.wrap}>
       <List>
         <LiButton
-          icon={DownloadSimple}
+          icon={Clipboard}
           onClick={() =>
             EventHandler({
-              action: 'download-image',
+              action: 'copy-css',
               payload: null,
             })
           }
         />
         <LiButton
-          icon={Clipboard}
+          icon={DownloadSimple}
           onClick={() =>
             EventHandler({
-              action: 'copy-css',
+              action: 'download-image',
               payload: null,
             })
           }

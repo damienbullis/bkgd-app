@@ -13,7 +13,6 @@ const checkStack = (stack: string[], id: string) => {
   const index = stack.indexOf(id)
   const isBottom = index === stack.length - 1
   const isTop = index === 0
-  console.log('checkStack', { stack, id, isTop, isBottom })
   return { isTop, isBottom }
 }
 
@@ -24,7 +23,6 @@ const Hide = ({
   condition: boolean
   children: React.ReactNode
 }) => {
-  console.log('hide', condition)
   return condition ? null : <>{children}</>
 }
 
@@ -43,7 +41,6 @@ const LayerDropdown = ({
 
   const prevent =
     (fn: () => void) => (e: React.MouseEvent<HTMLButtonElement>) => {
-      // console.log('prevent')
       e.preventDefault()
       e.stopPropagation()
       fn()

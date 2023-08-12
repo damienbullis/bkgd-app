@@ -17,22 +17,25 @@ function createStoreHook<T>(data: T) {
   const index = globalStore.length - 1
   return function () {
     // initialize store & setter
-    const [state, setState] = useState(globalStore[index].get())
+    const _ = useRef([
+        globalStore[index] as SubStore<T>,
+        (data: T) => {
+          globalStore[index].set(data)
+        },
+      ] as const),
+      // primary state
+      [state, setState] = useState(_.current[0].get())
 
     // subscribe to store changes, and unsubscribe on unmount
     useEffect(() => {
-      const unsub = globalStore[index].subscribe(setState)
+      const unsub = _.current[0].subscribe(setState)
       return () => {
         unsub()
       }
     }, [])
 
     // state & setter & store (for convenience)
-    return [
-      state,
-      (data: T) => globalStore[index].set(data),
-      globalStore[index],
-    ] as const
+    return [state, _.current[1], _.current[0]] as const
   }
 }
 
