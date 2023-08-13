@@ -3,8 +3,8 @@ import { useSelectedLayer } from '@state/global'
 import { EventHandler } from '@state/events'
 import { debounce, hexToHSL, hexToRGB, hslToHex, rgbToHex } from '@utils'
 
-import { LayerPropsType } from '../../../types/LayerType'
-import { useCapabilities } from '../../Capabilities'
+import { LayerPropsType } from '../../types/LayerType'
+import { useCapabilities } from '../Capabilities'
 import styles from './_.module.css'
 
 //#region types & utils
