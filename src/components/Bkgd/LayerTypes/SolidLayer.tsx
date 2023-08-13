@@ -1,26 +1,25 @@
-import { CSSProperties } from 'react'
 import {
   SharedLayerPropsSchemaType,
   SolidLayerType,
 } from '../../Layers/LayerTypeSchema'
-import styles from '../_.module.css'
-import { useCapabilities } from '../../Capabilities'
 
 const getColor = (
   color:
     | string
     | Record<'r' | 'g' | 'b', number>
     | Record<'h' | 's' | 'l', number>,
+  opacity = 100,
   useP3 = false
 ) => {
   if (typeof color === 'string') {
-    return color
+    const o = String(opacity)
+    return color + (o.length === 3 ? '' : o)
   } else if ('r' in color) {
     return `${useP3 ? 'color(display-p3' : 'rgb('}${color.r} ${color.g} ${
       color.b
-    } / 1)`
+    } / ${opacity / 100})`
   } else if ('h' in color) {
-    return `hsl(${color.h} ${color.s}% ${color.l}% / 1)`
+    return `hsl(${color.h} ${color.s}% ${color.l}% / ${opacity / 100})`
   } else {
     return 'transparent'
   }
@@ -28,20 +27,9 @@ const getColor = (
 
 type SolidLayerProps = SolidLayerType & SharedLayerPropsSchemaType
 
-const SolidLayer = ({ layer }: { layer: SolidLayerProps }) => {
-  const { displayP3 } = useCapabilities()
-  const style: CSSProperties = {
-    backgroundColor: getColor(
-      layer.props.color,
-      (displayP3 as boolean) || false
-    ),
-    opacity: typeof layer.opacity === 'number' ? layer.opacity / 100 : 1,
-    [layer.backgroundBlend ? 'backgroundBlendMode' : 'mixBlendMode']:
-      layer.blendMode,
-    backgroundPosition: layer.backgroundPosition,
-    backgroundSize: layer.backgroundSize,
-  }
-  return <div className={styles.layer} style={style} />
+const SolidLayer = (layer: SolidLayerProps, displayP3?: boolean) => {
+  const color = getColor(layer.props.color, layer.opacity, displayP3)
+  return `linear-gradient(0deg, ${color}, ${color})`
 }
 
 export default SolidLayer

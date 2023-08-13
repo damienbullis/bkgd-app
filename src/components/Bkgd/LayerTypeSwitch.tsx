@@ -1,14 +1,17 @@
 import { LayerType } from '../Layers/LayerTypeSchema'
 import { SolidLayer } from './LayerTypes'
 
-const LayerTypeSwitch = ({ layer }: { layer: LayerType }) => {
+/**
+ * This returns background images styles for a single layer
+ */
+const LayerTypeSwitch = (layer: LayerType, displayP3?: boolean) => {
   switch (layer.type) {
     case 'solid':
-      return <SolidLayer layer={layer} />
+      return SolidLayer(layer, displayP3)
     case 'gradient':
-      return <div>Gradient</div>
+      return ''
     case 'noise':
-      return <div>Noise</div>
+      return ''
     default: {
       const _exhaustiveCheck: never = layer
       return _exhaustiveCheck
