@@ -1,4 +1,9 @@
-import { MinusCircle, PlusCircle, Question } from '@phosphor-icons/react'
+import {
+  ImageSquare,
+  MinusCircle,
+  PlusCircle,
+  Question,
+} from '@phosphor-icons/react'
 import { EventHandler } from '@state/events'
 import { Button, Shine } from '@shared'
 import styles from './_.module.css'
@@ -92,8 +97,34 @@ export default function Nav() {
         ADD: the saved bkgds list here
       */}
       <ul className="clr">
+        {bkgds.map((b) => (
+          <li key={b.id} className="clr">
+            <Button
+              title={b.id}
+              onClick={() => {
+                if (isSaved && b.id === bkgdId) {
+                  EventHandler({
+                    action: 'delete-bkgd',
+                    payload: { id: bkgdId },
+                  })
+                } else {
+                  EventHandler({
+                    action: 'load-bkgd',
+                    payload: { id: b.id },
+                  })
+                }
+              }}
+            >
+              {isSaved && b.id === bkgdId ? (
+                <MinusCircle size={32} />
+              ) : (
+                <ImageSquare size={32} />
+              )}
+            </Button>
+          </li>
+        ))}
         {/* This will be visible if nav id is saved in local storage and we are on it? */}
-        <li className="clr">
+        {/* <li className="clr">
           <Button
             title="Delete"
             onClick={() =>
@@ -105,7 +136,7 @@ export default function Nav() {
           >
             <MinusCircle size={32} />
           </Button>
-        </li>
+        </li> */}
         <li className="clr">
           <Button title="Save" onClick={() => saveHandler()}>
             <PlusCircle size={32} />
