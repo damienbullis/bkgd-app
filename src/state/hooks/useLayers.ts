@@ -1,14 +1,17 @@
 import { useSelectedLayer } from '@state/global'
 import { useSearch } from '@tanstack/router'
 import { useMemo } from 'react'
+import { LayerType } from '../../components/Layers/LayerTypeSchema'
 
 function useLayers() {
   const [selectedLayer, setSelectedLayer] = useSelectedLayer()
   const { layerData, layerStack } = useSearch({ from: '/' })
   const layers = useMemo(() => {
-    return layerStack.map((layerId) => {
-      return layerData.find((layer) => layer.id === layerId)
-    })
+    return layerStack
+      .map((layerId) => {
+        return layerData.find((layer) => layer.id === layerId) || null
+      })
+      .filter(Boolean) as LayerType[]
   }, [layerData, layerStack])
 
   return {
