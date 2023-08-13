@@ -106,8 +106,9 @@ const handleEvent = (event: EventHandlerType<EventsEnum>) => {
 
 const addSolidLayer = (id: string) => {
   const store = getStore<string>(1)
-  const { layerStack = [], layerData = [] } =
-    router.state.currentLocation.search
+  const search = router.state.currentLocation.search
+  const layerStack = search.layerStack || []
+  const layerData = search.layerData || []
 
   store.set(id) // Set the selected layer to the new layer
   layerStack.unshift(id) // Add the new layer to the top of the stack
@@ -117,10 +118,11 @@ const addSolidLayer = (id: string) => {
     props: {
       color: randomHex(),
     },
-  }) // Push data to end of array for compat with div stacking
+  })
   router.navigate({
     to: '/',
     search: {
+      ...search,
       layerStack,
       layerData,
     },
