@@ -68,6 +68,7 @@ const LayerControls = () => {
         <>
           <Select
             label="Blend Mode"
+            id="blendMode"
             options={blendModesOptions}
             value={blendMode}
           />

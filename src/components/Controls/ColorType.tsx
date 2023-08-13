@@ -5,7 +5,8 @@ import { debounce, hexToHSL, hexToRGB, hslToHex, rgbToHex } from '@utils'
 
 import { LayerPropsType } from '../../types/LayerType'
 import { useCapabilities } from '../Capabilities'
-import styles from './_.module.css'
+import styles from './ColorType.module.css'
+import { Select } from '../_shared/Input'
 
 //#region types & utils
 
@@ -71,23 +72,21 @@ export default function ColorType({
   }, [value])
   // REFACTOR: ADD OPACITY SLIDER HERE
   return (
-    <div className={styles.wrap}>
+    <div className={styles.colorTypeWrap}>
       <label htmlFor={label}>{label}</label>
-      <select
-        name="colorType"
-        id="colorType"
+      <Select
+        label=""
+        hideLabel
+        options={[
+          { value: 'hex', label: 'HEX' },
+          { value: 'hsl', label: 'HSL' },
+          ...(hasP3
+            ? [{ value: 'display-p3', label: 'Display P3' }]
+            : [{ value: 'srgb', label: 'SRGB' }]),
+        ]}
         value={colorType}
-        className="clr"
         onChange={(e) => setColorType(e.target.value as ColorTypeEnum)}
-      >
-        <option value="hex">HEX</option>
-        <option value="hsl">HSL</option>
-        {hasP3 ? (
-          <option value="display-p3">Display P3</option>
-        ) : (
-          <option value="srgb">SRGB</option>
-        )}
-      </select>
+      />
       <input
         ref={inputRef}
         type="color"
