@@ -38,6 +38,7 @@ const getColor = (
     return hexToHSL(e.target.value)
   }
   // hex
+  console.log('hex', { v: e.target.value, hasP3, colorType })
   return e.target.value
 }
 
@@ -56,9 +57,7 @@ export default function ColorType({
   const [selectedLayer] = useSelectedLayer()
   const caps = useCapabilities()
   const hasP3 = (caps.displayP3 as boolean) || false
-  const [colorType, setColorType] = useState<ColorTypeEnum>(
-    hasP3 ? 'display-p3' : 'srgb'
-  )
+  const [colorType, setColorType] = useState<ColorTypeEnum>('hex')
   const inputRef = React.useRef<HTMLInputElement>(null)
 
   const value = getValue(typeProps.color, hasP3)
@@ -70,7 +69,7 @@ export default function ColorType({
       inputRef.current.value = value
     }
   }, [value])
-
+  // REFACTOR: ADD OPACITY SLIDER HERE
   return (
     <div className={styles.wrap}>
       <label htmlFor={label}>{label}</label>
