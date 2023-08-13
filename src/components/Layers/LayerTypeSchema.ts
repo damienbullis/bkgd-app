@@ -34,7 +34,6 @@ const NoisePropsSchema = z.object({
 
 const SharedLayerPropsSchema = z.object({
   opacity: z.number().optional(),
-  backgroundBlend: z.boolean().optional(),
   backgroundSize: z.string().optional(),
   backgroundPosition: z.string().optional(),
   backgroundRepeat: z.number().optional(), // This wont map directly to css
