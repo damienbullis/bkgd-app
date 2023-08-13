@@ -16,8 +16,6 @@ const buildLayerStyle = (layers: LayerType[]) => {
     bkgdStyle.backgroundImage += t + end
     i++
   }
-  console.log('bkgdStyle', bkgdStyle)
-
   return bkgdStyle
 }
 
