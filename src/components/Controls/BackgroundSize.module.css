@@ -1,7 +1,19 @@
 .wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0 0 20px 0;
+  margin: 0.5rem 0;
+  > label {
+    font-size: calc(1em / var(--scalar));
+    margin: 0;
+    padding: 0;
+    color: #ffffff90;
+
+    &.full {
+      width: 100%;
+    }
+  }
+
+  & select {
+    margin-bottom: 0.25rem;
+
+    /* add styles from sub selects single line */
+  }
 }

@@ -8,14 +8,12 @@ type SizeOptions = 'default' | 'single' | 'double'
 
 const SizeController = ({
   type,
-  id,
-  value,
+  value = 'auto auto',
 }: {
   type: SizeOptions
-  id: string
-  value: BackgroundSizeType
+  value?: BackgroundSizeType
 }) => {
-  console.log({ id, value })
+  console.log({ value })
 
   if (type === 'default') return null
   if (type === 'single') {
@@ -46,28 +44,22 @@ const SizeController = ({
   )
 }
 
-export default function BackgroundSize({
-  label,
-  id = label,
-  value = 'auto auto',
-}: {
-  label: string
-  id?: string
-  value?: BackgroundSizeType
-}) {
+const label = 'Background Size'
+
+export default function BackgroundSize({ value }: { value?: string }) {
   const [sizeType, setSizeType] = useState<SizeOptions>('default')
   return (
     <div className={styles.wrap}>
-      <label htmlFor={label} className={styles.full}>
-        {label}
-      </label>
+      <label htmlFor={label}>{label}</label>
       <Select
+        id={label}
         label="Size"
+        hideLabel
         options={['default', 'single', 'double']}
         value={sizeType}
         onChange={(e) => setSizeType(e.target.value as SizeOptions)}
       />
-      <SizeController type={sizeType} id={id} value={value} />
+      <SizeController type={sizeType} value={value as BackgroundSizeType} />
     </div>
   )
 }

@@ -72,10 +72,10 @@ export default function ColorType({
   }, [value])
   // REFACTOR: ADD OPACITY SLIDER HERE
   return (
-    <div className={styles.colorTypeWrap}>
+    <div className={styles.wrap}>
       <label htmlFor={label}>{label}</label>
       <Select
-        label=""
+        label="color type"
         hideLabel
         options={[
           { value: 'hex', label: 'HEX' },

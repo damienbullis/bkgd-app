@@ -5,6 +5,7 @@ import { LayerType } from '../Layers/LayerTypeSchema'
 import styles from './_.module.css'
 import { useLayers } from '@state/hooks'
 import ColorType from './ColorType'
+import BackgroundSize from './BackgroundSize'
 
 const blendModesOptions = [
   'normal',
@@ -40,7 +41,7 @@ const FALLBACK = {
 
 const LayerControls = () => {
   const { layers, selectedLayer } = useLayers()
-  const { type, props, blendMode, opacity } = useMemo(() => {
+  const { type, props, blendMode, opacity, backgroundSize } = useMemo(() => {
     return layers.find((l) => l?.id === selectedLayer) || FALLBACK
   }, [layers, selectedLayer])
 
@@ -58,25 +59,22 @@ const LayerControls = () => {
           <input type="color" id="noise" onChange={(e) => console.log(e)} />
         </div>
       )}
-      {type === 'solid' ? (
-        <>
-          {/* REFACTOR: Need to combine these and then remove opacity from overall props */}
-          <ColorType label="Color" typeProps={props} />
-          <Range label="Opacity" id="opacity" value={opacity} />
-        </>
-      ) : (
-        <>
-          <Select
-            label="Blend Mode"
-            id="blendMode"
-            options={blendModesOptions}
-            value={blendMode}
-          />
-          <Input label="Size" />
-          <Input label="Position" />
-          <Input label="Repeat" />
-        </>
-      )}
+
+      {type === 'solid' && <ColorType label="Color" typeProps={props} />}
+      <Range // REFACTOR: Add to ColorType
+        label="Opacity"
+        id="opacity"
+        value={opacity}
+      />
+      <Select
+        label="Blend Mode"
+        id="blendMode"
+        options={blendModesOptions}
+        value={blendMode}
+      />
+      <BackgroundSize value={backgroundSize} />
+      <Input label="Position" />
+      <Input label="Repeat" />
     </div>
   )
 }
