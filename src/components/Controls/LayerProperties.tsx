@@ -1,10 +1,10 @@
 import { useMemo } from 'react'
-import { Sliders } from '@phosphor-icons/react'
-import { Range, Checkbox, ColorType, Select, Input } from '@shared'
+import { Range, Select, Input } from '@shared'
 
 import { LayerType } from '../Layers/LayerTypeSchema'
 import styles from './_.module.css'
 import { useLayers } from '@state/hooks'
+import ColorType from './ColorType'
 
 const blendModesOptions = [
   'normal',
