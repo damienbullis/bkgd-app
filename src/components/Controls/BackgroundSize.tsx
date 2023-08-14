@@ -48,6 +48,7 @@ const SizeController = ({
   const [double, setDouble] = useState<[string, string]>(getSizeValue(value))
   useEffect(() => {
     setDouble(getSizeValue(value))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLayer])
   const handler = (e: React.ChangeEvent<HTMLSelectElement>, index: 0 | 1) => {
     setDouble((prev) => {
@@ -114,6 +115,7 @@ export default function BackgroundSize({ value = 'auto' }: { value?: string }) {
   const [selectedLayer] = useSelectedLayer()
   useEffect(() => {
     setSizeType(getValue(value))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLayer])
 
   return (
