@@ -6,6 +6,8 @@ import styles from './_.module.css'
 import { useLayers } from '@state/hooks'
 import ColorType from './ColorType'
 import BackgroundSize from './BackgroundSize'
+import BackgroundPosition from './BackgroundPosition'
+import BackgroundRepeat from './BackgroundRepeat'
 
 const blendModesOptions = [
   'normal',
@@ -73,8 +75,8 @@ const LayerControls = () => {
         value={blendMode}
       />
       <BackgroundSize value={backgroundSize} />
-      <Input label="Position" />
-      <Input label="Repeat" />
+      <BackgroundPosition value={''} label="positions" />
+      <BackgroundRepeat value={''} label="repeat" />
     </div>
   )
 }
