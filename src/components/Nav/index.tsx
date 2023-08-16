@@ -10,33 +10,15 @@ import styles from './_.module.css'
 import { makeID } from '@utils'
 import { useEffect, useMemo, useState } from 'react'
 import { useSearch } from '@tanstack/router'
-import z from 'zod'
-import { LayerSchema } from '../Layers/LayerTypeSchema'
+
 import { useBkgdsCount } from '@state/global'
+import { Bkgds, bkgdsSchema } from './bkgdSchemas'
 
-const bkgdSchema = z
-  .array(
-    z.object({
-      id: z.string(),
-      name: z.string().default('Untitled'),
-      layers: z.array(LayerSchema),
-      createdAt: z.string().default(() => new Date().toJSON()),
-      updatedAt: z.string().default(() => new Date().toJSON()),
-    })
-  )
-  .catch((e) => {
-    console.error(e)
-    return []
-  })
-  .default([])
-
-type Bkgd = z.infer<typeof bkgdSchema>
-
-const getInitialState = (): Bkgd => {
+const getInitialState = (): Bkgds => {
   // check local storage for bkgds
   const bkgds = localStorage.getItem('bkgds') || '[]'
   try {
-    return bkgdSchema.parse(JSON.parse(bkgds))
+    return bkgdsSchema.parse(JSON.parse(bkgds))
   } catch (e) {
     console.error(e, bkgds)
     return []
@@ -45,7 +27,7 @@ const getInitialState = (): Bkgd => {
 
 const useLocalStorage = (id?: string) => {
   const [count] = useBkgdsCount()
-  const [bkgds, setBkgds] = useState<Bkgd>(getInitialState())
+  const [bkgds, setBkgds] = useState<Bkgds>(getInitialState())
   useEffect(() => {
     if (count === 0) return
     setBkgds(getInitialState())
@@ -61,29 +43,23 @@ export default function Nav() {
   const { id, layerData, layerStack } = useSearch({ from: '/' })
   const { isSaved, bkgdId, bkgds } = useLocalStorage(id)
   const saveHandler = (id?: string) => {
-    let _id = id
-    if (!_id) {
-      _id = makeID()
-    }
-    const next = bkgds.filter((b) => b.id !== _id)
-    next.push({
-      id: _id,
-      name: 'Untitled',
-      layers: [
-        {
-          layerData,
-          layerStack,
-        },
-      ],
-      createdAt: new Date().toJSON(),
-      updatedAt: new Date().toJSON(),
-    })
-    const json = JSON.stringify(next)
-    localStorage.setItem('bkgds', json)
-
     EventHandler({
       action: 'save-bkgd',
-      payload: { id: _id },
+      payload: {
+        bkgd: bkgds.find((b) => b.id === id) || {
+          // Could clean this up
+          id: makeID(),
+          name: 'Untitled',
+          layers: [
+            {
+              layerData,
+              layerStack,
+            },
+          ],
+          createdAt: new Date().toJSON(),
+          updatedAt: new Date().toJSON(),
+        },
+      },
     })
   }
   return (
@@ -105,12 +81,12 @@ export default function Nav() {
                 if (isSaved && b.id === bkgdId) {
                   EventHandler({
                     action: 'delete-bkgd',
-                    payload: { id: bkgdId },
+                    payload: { bkgd: b },
                   })
                 } else {
                   EventHandler({
                     action: 'load-bkgd',
-                    payload: { id: b.id },
+                    payload: { bkgd: b },
                   })
                 }
               }}
@@ -137,6 +113,7 @@ export default function Nav() {
             <MinusCircle size={32} />
           </Button>
         </li> */}
+        {/* TODO: Hide control if there are no layers */}
         <li className="clr">
           <Button title="Save" onClick={() => saveHandler()}>
             <PlusCircle size={32} />

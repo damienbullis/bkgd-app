@@ -3,6 +3,7 @@ import router from '../../router'
 import { getStore } from '@state/global'
 import { LayerType } from '../../components/Layers/LayerTypeSchema'
 import { randomHex } from '@utils'
+import { Bkgd } from '../../components/Nav/bkgdSchemas'
 
 type EventHandlerType<T> = T extends infer U extends EventActionEnum
   ? {
@@ -21,8 +22,10 @@ type EventPayload<T extends EventActionEnum> = T extends 'bkgd-add-layer'
   ? { id: string; direction: 'up' | 'down' }
   : T extends 'toggle-ui' | 'copy-css' | 'download-image'
   ? null
-  : T extends 'save-bkgd' | 'load-bkgd' | 'delete-bkgd' | 'select-layer'
+  : T extends 'select-layer'
   ? { id: string }
+  : T extends 'save-bkgd' | 'load-bkgd' | 'delete-bkgd'
+  ? { bkgd: Bkgd }
   : never
 
 // (Pretty much) All events in the app are handled through the EventHandler.
@@ -248,6 +251,10 @@ const updateStack = (event: EventHandlerType<'bkgd-update-stack'>) => {
   })
 }
 
+const loadBkgd = (id: string) => {
+  const storage = localStorage.getItem('bkgds') || '[]'
+}
+
 //#endregion
 
 //#region Event Control Switches
@@ -321,26 +328,29 @@ const updateState = (event: EventHandlerType<EventsEnum>): void => {
     }
     case 'save-bkgd': {
       updateBkgdCount()
-      console.warn('Saving Background')
+      console.warn('Saving Background', event.payload.bkgd)
       break
     }
     case 'load-bkgd': {
-      console.warn('Loading Background')
+      updateBkgdCount()
+      // loadBkgd(event.payload.id)
+      console.warn('Loading Background', event.payload.bkgd)
       break
     }
     case 'delete-bkgd': {
       updateBkgdCount()
-      console.warn('Deleting Background')
-      const storage = localStorage.getItem('bkgds') || '[]'
-      const bkgds = JSON.parse(storage)
-      const nextBkgds = bkgds.filter(
-        (bkgd: unknown) =>
-          bkgd &&
-          typeof bkgd === 'object' &&
-          'id' in bkgd &&
-          bkgd?.id !== event.payload.id
-      )
-      localStorage.setItem('bkgds', JSON.stringify(nextBkgds))
+      console.warn('Deleting Background', event.payload.bkgd)
+      // REFACTOR: Consolidate the storage logic
+      // const storage = localStorage.getItem('bkgds') ?? '[]'
+      // const bkgds = JSON.parse(storage)
+      // const nextBkgds = bkgds.filter(
+      //   (bkgd: unknown) =>
+      //     bkgd &&
+      //     typeof bkgd === 'object' &&
+      //     'id' in bkgd &&
+      //     bkgd?.id !== event.payload.id
+      // )
+      // localStorage.setItem('bkgds', JSON.stringify(nextBkgds))
       break
     }
     case 'select-layer': {

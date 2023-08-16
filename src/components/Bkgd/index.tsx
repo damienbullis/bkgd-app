@@ -24,11 +24,6 @@ export default function Bkgd() {
   console.log('layers', layers)
   const bkgdStyle = buildLayerStyle(layers)
   return (
-    <section id="bkgd" className={styles.bkgdWrap} style={bkgdStyle}>
-      {/* 
-        NOTE: bottom div is top layer of stack 
-        layerData is in reverse order of layerStack for div stacking order
-      */}
-    </section>
+    <section id="bkgd" className={styles.bkgdWrap} style={bkgdStyle}></section>
   )
 }
