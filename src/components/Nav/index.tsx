@@ -5,14 +5,15 @@ import {
   Question,
 } from '@phosphor-icons/react'
 import { EventHandler } from '@state/events'
-import { Button, Shine } from '@shared'
+import { Button, IconButton, Shine } from '@shared'
 import styles from './_.module.css'
 import { makeID } from '@utils'
 import { useEffect, useMemo, useState } from 'react'
 import { useSearch } from '@tanstack/router'
 
 import { useBkgdsCount } from '@state/global'
-import { Bkgds, bkgdsSchema } from './bkgdSchemas'
+import { Bkgd, Bkgds, bkgdsSchema } from './bkgdSchemas'
+import { set } from 'zod'
 
 const getInitialState = (): Bkgds => {
   // check local storage for bkgds
@@ -34,14 +35,15 @@ const useLocalStorage = (id?: string) => {
   }, [count])
 
   return useMemo(
-    () => ({ isSaved: bkgds.some((b) => b.id === id), bkgdId: id, bkgds }),
+    () => ({ isSaved: bkgds.some((b) => b.id === id), bkgds }),
     [bkgds, id]
   )
 }
 
 export default function Nav() {
   const { id, layerData, layerStack } = useSearch({ from: '/' })
-  const { isSaved, bkgdId, bkgds } = useLocalStorage(id)
+  const { isSaved, bkgds } = useLocalStorage(id)
+  const [bkgdSelected, setBkgdSelected] = useState<string>('')
   const saveHandler = (id?: string) => {
     EventHandler({
       action: 'save-bkgd',
@@ -62,57 +64,77 @@ export default function Nav() {
       },
     })
   }
+
+  const bkgdHandler = (bkgd: Bkgd) => {
+    setBkgdSelected((prevID) => {
+      if (prevID === bkgd.id) {
+        const bkgdBtn = document.querySelector<HTMLButtonElement>(
+          `#bkgd_btn_${prevID}`
+        )
+
+        if (bkgdBtn) {
+          bkgdBtn.classList.remove(styles.selected)
+        }
+
+        EventHandler({
+          action: 'load-bkgd',
+          payload: { bkgd },
+        })
+
+        // Reset the selected bkgd
+        return ''
+      } else {
+        const bkgdBtn = document.querySelector<HTMLButtonElement>(
+          `#bkgd_btn_${bkgd.id}`
+        )
+        if (bkgdBtn) {
+          // Add the selected class to the button
+          bkgdBtn.classList.add(styles.selected)
+        }
+        // Set the selected bkgd
+        return bkgd.id
+      }
+    })
+  }
+
   return (
     <nav id="nav" className={styles.wrap}>
-      <span>
+      <span
+      // Remove this span
+      >
         <div className={styles.logo}>
           <Shine>BKGD</Shine>
         </div>
       </span>
-      {/* TODO: 
-        ADD: the saved bkgds list here
-      */}
       <ul className="clr">
         {bkgds.map((b) => (
           <li key={b.id} className="clr">
             <Button
+              id={`bkgd_btn_${b.id}`}
               title={b.id}
-              onClick={() => {
-                if (isSaved && b.id === bkgdId) {
-                  EventHandler({
-                    action: 'delete-bkgd',
-                    payload: { bkgd: b },
-                  })
-                } else {
-                  EventHandler({
-                    action: 'load-bkgd',
-                    payload: { bkgd: b },
-                  })
-                }
-              }}
+              onClick={() => bkgdHandler(b)}
             >
-              {isSaved && b.id === bkgdId ? (
+              {isSaved && b.id === id ? (
                 <MinusCircle size={32} />
               ) : (
                 <ImageSquare size={32} />
               )}
+
+              <div
+                className={styles.delete}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  EventHandler({
+                    action: 'delete-bkgd',
+                    payload: { bkgd: b },
+                  })
+                }}
+              >
+                <MinusCircle size={32} />
+              </div>
             </Button>
           </li>
         ))}
-        {/* This will be visible if nav id is saved in local storage and we are on it? */}
-        {/* <li className="clr">
-          <Button
-            title="Delete"
-            onClick={() =>
-              EventHandler({
-                action: 'delete-bkgd',
-                payload: { id: bkgdId || bkgds[bkgds.length - 1]?.id },
-              })
-            }
-          >
-            <MinusCircle size={32} />
-          </Button>
-        </li> */}
         {/* TODO: Hide control if there are no layers */}
         <li className="clr">
           <Button title="Save" onClick={() => saveHandler()}>
