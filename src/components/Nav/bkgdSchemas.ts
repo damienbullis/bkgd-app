@@ -4,7 +4,7 @@ import { LayerSchema } from '../Layers/LayerTypeSchema'
 export const bkgdSchema = z.object({
   id: z.string(),
   name: z.string().default('Untitled'),
-  layers: z.array(LayerSchema),
+  layers: LayerSchema,
   createdAt: z.string().default(() => new Date().toJSON()),
   updatedAt: z.string().default(() => new Date().toJSON()),
 })

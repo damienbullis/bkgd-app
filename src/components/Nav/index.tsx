@@ -68,12 +68,11 @@ export default function Nav() {
           // Could clean this up
           id: makeID(),
           name: 'Untitled',
-          layers: [
-            {
-              layerData,
-              layerStack,
-            },
-          ],
+          layers: {
+            layerData,
+            layerStack,
+          },
+
           createdAt: new Date().toJSON(),
           updatedAt: new Date().toJSON(),
         },
@@ -83,6 +82,7 @@ export default function Nav() {
 
   const bkgdHandler = (bkgd: Bkgd) => {
     setBkgdSelected((prevID) => {
+      // If bkgd is selected, load it
       if (prevID === bkgd.id) {
         const bkgdBtn = document.querySelector<HTMLButtonElement>(
           `#bkgd_btn_${prevID}`
@@ -112,7 +112,7 @@ export default function Nav() {
       }
     })
   }
-
+  console.log({ isSaved, id, bkgdSelected, bkgds })
   return (
     <nav id="nav" className={styles.wrap}>
       <span

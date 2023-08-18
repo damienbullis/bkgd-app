@@ -1,9 +1,10 @@
 import { LayerEnum, LayerPropsType } from '@types'
 import router from '../../router'
 import { getStore } from '@state/global'
-import { LayerType } from '../../components/Layers/LayerTypeSchema'
+import { LayerSchema, LayerType } from '../../components/Layers/LayerTypeSchema'
 import { randomHex } from '@utils'
-import { Bkgd } from '../../components/Nav/bkgdSchemas'
+import { Bkgd, bkgdSchema, bkgdsSchema } from '../../components/Nav/bkgdSchemas'
+import { z } from 'zod'
 
 type EventHandlerType<T> = T extends infer U extends EventActionEnum
   ? {
@@ -251,8 +252,11 @@ const updateStack = (event: EventHandlerType<'bkgd-update-stack'>) => {
   })
 }
 
-const loadBkgd = (id: string) => {
-  const storage = localStorage.getItem('bkgds') || '[]'
+const loadBkgd = (bkgd: Bkgd) => {
+  router.navigate({
+    to: '/',
+    search: bkgd.layers,
+  })
 }
 
 //#endregion
@@ -317,6 +321,23 @@ const updateBkgdCount = () => {
   store.set(bkgdCount + 1)
   console.log('Updating Background Count to ' + (bkgdCount + 1))
 }
+
+const storageAction = (action: 'save' | 'delete', bkgd: Bkgd) => {
+  const storage = localStorage.getItem('bkgds') ?? '[]'
+  const bkgds = bkgdsSchema.parse(JSON.parse(storage))
+  let nextBkgds: Bkgd[] = []
+  if (action === 'save') {
+    nextBkgds = [...bkgds, bkgd]
+  } else if (action === 'delete') {
+    nextBkgds = bkgds.filter((b) => b.id !== bkgd.id)
+  }
+  try {
+    localStorage.setItem('bkgds', JSON.stringify(nextBkgds))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 const updateState = (event: EventHandlerType<EventsEnum>): void => {
   console.group('Updating State')
   switch (event.action) {
@@ -328,17 +349,19 @@ const updateState = (event: EventHandlerType<EventsEnum>): void => {
     }
     case 'save-bkgd': {
       updateBkgdCount()
+      storageAction('save', event.payload.bkgd)
       console.warn('Saving Background', event.payload.bkgd)
       break
     }
     case 'load-bkgd': {
       updateBkgdCount()
-      // loadBkgd(event.payload.id)
+      loadBkgd(event.payload.bkgd)
       console.warn('Loading Background', event.payload.bkgd)
       break
     }
     case 'delete-bkgd': {
       updateBkgdCount()
+      storageAction('delete', event.payload.bkgd)
       console.warn('Deleting Background', event.payload.bkgd)
       // REFACTOR: Consolidate the storage logic
       // const storage = localStorage.getItem('bkgds') ?? '[]'
