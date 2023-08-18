@@ -5,7 +5,7 @@ import {
   Question,
 } from '@phosphor-icons/react'
 import { EventHandler } from '@state/events'
-import { Button, IconButton, Shine } from '@shared'
+import { Button, Shine } from '@shared'
 import styles from './_.module.css'
 import { makeID } from '@utils'
 import { useEffect, useMemo, useState } from 'react'
@@ -13,7 +13,6 @@ import { useSearch } from '@tanstack/router'
 
 import { useBkgdsCount } from '@state/global'
 import { Bkgd, Bkgds, bkgdsSchema } from './bkgdSchemas'
-import { set } from 'zod'
 
 const getInitialState = (): Bkgds => {
   // check local storage for bkgds
@@ -38,6 +37,23 @@ const useLocalStorage = (id?: string) => {
     () => ({ isSaved: bkgds.some((b) => b.id === id), bkgds }),
     [bkgds, id]
   )
+}
+
+const DeleteButton = ({ bkgd, show }: { bkgd: Bkgd; show: boolean }) => {
+  return show ? (
+    <div
+      className={styles.delete}
+      onClick={(e) => {
+        e.stopPropagation()
+        EventHandler({
+          action: 'delete-bkgd',
+          payload: { bkgd },
+        })
+      }}
+    >
+      <MinusCircle size={32} />
+    </div>
+  ) : null
 }
 
 export default function Nav() {
@@ -112,7 +128,11 @@ export default function Nav() {
             <Button
               id={`bkgd_btn_${b.id}`}
               title={b.id}
-              onClick={() => bkgdHandler(b)}
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                bkgdHandler(b)
+              }}
             >
               {isSaved && b.id === id ? (
                 <MinusCircle size={32} />
@@ -120,18 +140,7 @@ export default function Nav() {
                 <ImageSquare size={32} />
               )}
 
-              <div
-                className={styles.delete}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  EventHandler({
-                    action: 'delete-bkgd',
-                    payload: { bkgd: b },
-                  })
-                }}
-              >
-                <MinusCircle size={32} />
-              </div>
+              <DeleteButton bkgd={b} show={bkgdSelected === b.id} />
             </Button>
           </li>
         ))}
