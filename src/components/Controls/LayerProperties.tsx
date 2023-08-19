@@ -1,13 +1,13 @@
 import { useMemo } from 'react'
-import { Range, Select, Input } from '@shared'
+import { Range, Select } from '@shared'
+import { useLayers } from '@state/hooks'
 
 import { LayerType } from '../Layers/LayerTypeSchema'
-import styles from './_.module.css'
-import { useLayers } from '@state/hooks'
-import ColorType from './ColorType'
-import BackgroundSize from './BackgroundSize'
 import BackgroundPosition from './BackgroundPosition'
-import BackgroundRepeat from './BackgroundRepeat'
+import BackgroundSize from './BackgroundSize'
+import ColorType from './ColorType'
+
+import styles from './_.module.css'
 
 const blendModesOptions = [
   'normal',
@@ -16,16 +16,25 @@ const blendModesOptions = [
   'overlay',
   'darken',
   'lighten',
-  { value: 'color-dodge', label: 'Color Dodge' },
-  { value: 'color-burn', label: 'Color Burn' },
-  { value: 'hard-light', label: 'Hard Light' },
-  { value: 'soft-light', label: 'Soft Light' },
+  'color-dodge',
+  'color-burn',
+  'hard-light',
+  'soft-light',
   'difference',
   'exclusion',
   'hue',
   'saturation',
   'color',
   'luminosity',
+]
+
+const repeatOptions = [
+  'repeat',
+  'repeat-x',
+  'repeat-y',
+  'no-repeat',
+  'space',
+  'round',
 ]
 
 const FALLBACK = {
@@ -84,7 +93,12 @@ const LayerControls = () => {
       />
       <BackgroundSize value={backgroundSize} />
       <BackgroundPosition value={backgroundPosition} />
-      <BackgroundRepeat value={backgroundRepeat} />
+      <Select
+        label="Background Repeat"
+        id="backgroundRepeat"
+        options={repeatOptions}
+        value={backgroundRepeat}
+      />
     </div>
   )
 }
