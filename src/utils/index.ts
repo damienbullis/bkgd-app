@@ -13,3 +13,11 @@ export { default as checkBrowser } from './checkBrowser'
 export function makeID() {
   return Math.random().toString(36).substring(2, 7)
 }
+
+export const Show = ({
+  show,
+  children,
+}: {
+  show: boolean
+  children: JSX.Element
+}) => (show ? children : null)

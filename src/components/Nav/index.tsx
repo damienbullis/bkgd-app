@@ -4,62 +4,33 @@ import {
   PlusCircle,
   Question,
 } from '@phosphor-icons/react'
+import { useSearch } from '@tanstack/router'
+import { useLocalStorage } from '@state/hooks'
 import { EventHandler } from '@state/events'
 import { Button, Shine } from '@shared'
+import { Show, makeID } from '@utils'
+
+import { useBkgdSelected } from './_helpers'
+import { Bkgd } from './bkgdSchemas'
 import styles from './_.module.css'
-import { makeID } from '@utils'
-import { useEffect, useMemo, useState } from 'react'
-import { useSearch } from '@tanstack/router'
 
-import { useBkgdsCount } from '@state/global'
-import { Bkgd, Bkgds, bkgdsSchema } from './bkgdSchemas'
-
-const getInitialState = (): Bkgds => {
-  // check local storage for bkgds
-  const bkgds = localStorage.getItem('bkgds') || '[]'
-  try {
-    return bkgdsSchema.parse(JSON.parse(bkgds))
-  } catch (e) {
-    console.error(e, bkgds)
-    return []
+const updateClasslist = (action: keyof DOMTokenList, id: string) => {
+  const bkgdBtn = document.querySelector<HTMLButtonElement>(`#bkgd_btn_${id}`)
+  if (bkgdBtn) {
+    if (action === 'add') {
+      bkgdBtn.classList.add(styles.selected)
+    } else {
+      bkgdBtn.classList.remove(styles.selected)
+    }
   }
 }
 
-const useLocalStorage = (id?: string) => {
-  const [count] = useBkgdsCount()
-  const [bkgds, setBkgds] = useState<Bkgds>(getInitialState())
-  useEffect(() => {
-    if (count === 0) return
-    setBkgds(getInitialState())
-  }, [count])
-
-  return useMemo(
-    () => ({ isSaved: bkgds.some((b) => b.id === id), bkgds }),
-    [bkgds, id]
-  )
-}
-
-const DeleteButton = ({ bkgd, show }: { bkgd: Bkgd; show: boolean }) => {
-  return show ? (
-    <div
-      className={styles.delete}
-      onClick={(e) => {
-        e.stopPropagation()
-        EventHandler({
-          action: 'delete-bkgd',
-          payload: { bkgd },
-        })
-      }}
-    >
-      <MinusCircle size={32} />
-    </div>
-  ) : null
-}
-
 export default function Nav() {
+  const [bkgdSelected, setBkgdSelected] = useBkgdSelected()
   const { id, layerData, layerStack } = useSearch({ from: '/' })
   const { isSaved, bkgds } = useLocalStorage(id)
-  const [bkgdSelected, setBkgdSelected] = useState<string>('')
+
+  //#region Handlers
   const saveHandler = (id?: string) => {
     EventHandler({
       action: 'save-bkgd',
@@ -84,13 +55,7 @@ export default function Nav() {
     setBkgdSelected((prevID) => {
       // If bkgd is selected, load it
       if (prevID === bkgd.id) {
-        const bkgdBtn = document.querySelector<HTMLButtonElement>(
-          `#bkgd_btn_${prevID}`
-        )
-
-        if (bkgdBtn) {
-          bkgdBtn.classList.remove(styles.selected)
-        }
+        updateClasslist('remove', `#bkgd_btn_${prevID}`)
 
         EventHandler({
           action: 'load-bkgd',
@@ -100,46 +65,20 @@ export default function Nav() {
         // Reset the selected bkgd
         return ''
       } else {
-        const bkgdBtn = document.querySelector<HTMLButtonElement>(
-          `#bkgd_btn_${bkgd.id}`
-        )
-        if (bkgdBtn) {
-          // Add the selected class to the button
-          bkgdBtn.classList.add(styles.selected)
-        }
+        updateClasslist('add', `#bkgd_btn_${bkgd.id}`)
         // Set the selected bkgd
         return bkgd.id
       }
     })
   }
-  // Blur side effect
-  useEffect(() => {
-    // Create a click handler to deselect the selected bkgd on blur
-    const handler = (e: MouseEvent) => {
-      console.log('click', { e })
-      const target = e.target as HTMLElement
-      if (target.id !== 'nav') {
-        setBkgdSelected('')
-      }
-    }
-    // if the background isnt selected, remove any previous handler
-    if (!bkgdSelected) window.removeEventListener('click', handler)
-    else window.addEventListener('click', handler)
-
-    // on unmount, remove any previous handler
-    return () => window.removeEventListener('click', handler)
-  }, [bkgdSelected])
+  //#endregion
 
   console.log({ isSaved, id, bkgdSelected, bkgds })
   return (
     <nav id="nav" className={styles.wrap}>
-      <span
-      // Remove this span
-      >
-        <div className={styles.logo}>
-          <Shine>BKGD</Shine>
-        </div>
-      </span>
+      <div className={styles.logo}>
+        <Shine>BKGD</Shine>
+      </div>
       <ul className="clr">
         {bkgds.map((b) => (
           <li key={b.id} className="clr">
@@ -153,16 +92,30 @@ export default function Nav() {
               }}
             >
               <ImageSquare size={32} />
-              <DeleteButton bkgd={b} show={bkgdSelected === b.id} />
+              <Show show={bkgdSelected === b.id}>
+                <div
+                  className={styles.delete}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    EventHandler({
+                      action: 'delete-bkgd',
+                      payload: { bkgd: b },
+                    })
+                  }}
+                >
+                  <MinusCircle size={32} />
+                </div>
+              </Show>
             </Button>
           </li>
         ))}
-        {/* TODO: Hide control if there are no layers */}
-        <li className="clr">
-          <Button title="Save" onClick={() => saveHandler()}>
-            <PlusCircle size={32} />
-          </Button>
-        </li>
+        <Show show={layerStack.length > 0}>
+          <li className="clr">
+            <Button title="Save" onClick={() => saveHandler()}>
+              <PlusCircle size={32} />
+            </Button>
+          </li>
+        </Show>
       </ul>
       <ul className="clr">
         <li className="clr">
