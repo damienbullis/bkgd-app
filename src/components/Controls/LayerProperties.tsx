@@ -38,7 +38,7 @@ const FALLBACK = {
   blendMode: 'normal',
   backgroundPosition: '0% 0%',
   backgroundSize: 'auto',
-  backgroundRepeat: 0,
+  backgroundRepeat: 'repeat',
 } satisfies LayerType
 
 const LayerControls = () => {
@@ -50,6 +50,7 @@ const LayerControls = () => {
     opacity,
     backgroundSize,
     backgroundPosition,
+    backgroundRepeat,
   } = useMemo(() => {
     return layers.find((l) => l?.id === selectedLayer) || FALLBACK
   }, [layers, selectedLayer])
@@ -83,7 +84,7 @@ const LayerControls = () => {
       />
       <BackgroundSize value={backgroundSize} />
       <BackgroundPosition value={backgroundPosition} />
-      <BackgroundRepeat value={''} label="repeat" />
+      <BackgroundRepeat value={backgroundRepeat} />
     </div>
   )
 }

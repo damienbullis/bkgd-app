@@ -36,7 +36,9 @@ const SharedLayerPropsSchema = z.object({
   opacity: z.number().optional(),
   backgroundSize: z.string().optional(),
   backgroundPosition: z.string().optional(),
-  backgroundRepeat: z.number().optional(), // This wont map directly to css
+  backgroundRepeat: z
+    .enum(['repeat', 'repeat-x', 'repeat-y', 'no-repeat', 'space', 'round'])
+    .optional(), // This wont map directly to css
   blendMode: z
     .enum([
       'normal',

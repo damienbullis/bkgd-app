@@ -1,27 +1,33 @@
-import { useRef } from 'react'
-import styles from './BackgroundPosition.module.css'
+import styles from './BackgroundRepeat.module.css'
+import { Select } from '@shared'
 
-export default function BackgroundRepeat(
-  {
-    label,
-    id = label,
-    value,
-  }: { label: string; id?: string; value?: number | string } = {
-    label: 'background-position',
-  }
-) {
-  const inputRef = useRef<HTMLInputElement>(null)
+const label = 'Background Repeat'
+
+const options = [
+  'repeat',
+  'repeat-x',
+  'repeat-y',
+  'no-repeat',
+  { value: 'space', label: 'Space' },
+  { value: 'round', label: 'Round' },
+]
+
+export default function BackgroundRepeat({
+  value = 'repeat',
+}: {
+  value?: string
+}) {
   return (
     <div className={styles.wrap}>
       <label htmlFor={label} className={styles.full}>
         {label}
       </label>
-      <input
-        ref={inputRef}
-        className="clr"
-        type="range"
-        id={label}
-        defaultValue={value}
+      <Select
+        id="backgroundRepeat"
+        label={label}
+        hideLabel
+        options={options}
+        value={value}
       />
     </div>
   )

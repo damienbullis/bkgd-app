@@ -1,12 +1,17 @@
 .wrap {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  width: 100%;
-  margin-bottom: 1rem;
-}
+  align-items: flex-start;
+  & label {
+    font-size: calc(1em / var(--scalar));
+    margin: 0;
+    padding: 0;
+    color: #ffffff90;
 
-.wrap > * {
-  margin-bottom: 1rem;
+    &.full {
+      display: inline-flex;
+      width: 100%;
+    }
+  }
 }
