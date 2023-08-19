@@ -255,7 +255,10 @@ const updateStack = (event: EventHandlerType<'bkgd-update-stack'>) => {
 const loadBkgd = (bkgd: Bkgd) => {
   router.navigate({
     to: '/',
-    search: bkgd.layers,
+    search: {
+      id: bkgd.id,
+      ...bkgd.layers,
+    },
   })
 }
 

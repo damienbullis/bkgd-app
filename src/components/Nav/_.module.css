@@ -8,7 +8,7 @@
   /* Nav Menu */
   > ul {
     display: inline-grid;
-    padding: 1rem;
+    padding: 0 1rem;
     grid-auto-rows: max-content;
     gap: var(--padding);
     justify-items: center;

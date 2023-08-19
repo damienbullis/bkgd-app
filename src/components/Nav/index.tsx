@@ -112,6 +112,24 @@ export default function Nav() {
       }
     })
   }
+  // Blur side effect
+  useEffect(() => {
+    // Create a click handler to deselect the selected bkgd on blur
+    const handler = (e: MouseEvent) => {
+      console.log('click', { e })
+      const target = e.target as HTMLElement
+      if (target.id !== 'nav') {
+        setBkgdSelected('')
+      }
+    }
+    // if the background isnt selected, remove any previous handler
+    if (!bkgdSelected) window.removeEventListener('click', handler)
+    else window.addEventListener('click', handler)
+
+    // on unmount, remove any previous handler
+    return () => window.removeEventListener('click', handler)
+  }, [bkgdSelected])
+
   console.log({ isSaved, id, bkgdSelected, bkgds })
   return (
     <nav id="nav" className={styles.wrap}>
