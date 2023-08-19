@@ -338,49 +338,41 @@ const storageAction = (action: 'save' | 'delete', bkgd: Bkgd) => {
   }
 }
 
+const toggleUI = () => {
+  const ui = getStore<boolean>(0)
+  ui.set(!ui.get())
+}
+
+const selectLayer = (id: string) => {
+  const selectedLayer = getStore<string>(1)
+  const isSelected = selectedLayer.get() === id
+  selectedLayer.set(isSelected ? '' : id)
+}
+
 const updateState = (event: EventHandlerType<EventsEnum>): void => {
   console.group('Updating State')
   switch (event.action) {
     case 'toggle-ui': {
-      console.log('Toggling UI')
-      const ui = getStore<boolean>(0)
-      ui.set(!ui.get())
+      toggleUI()
       break
     }
     case 'save-bkgd': {
       updateBkgdCount()
       storageAction('save', event.payload.bkgd)
-      console.warn('Saving Background', event.payload.bkgd)
       break
     }
     case 'load-bkgd': {
       updateBkgdCount()
       loadBkgd(event.payload.bkgd)
-      console.warn('Loading Background', event.payload.bkgd)
       break
     }
     case 'delete-bkgd': {
       updateBkgdCount()
       storageAction('delete', event.payload.bkgd)
-      console.warn('Deleting Background', event.payload.bkgd)
-      // REFACTOR: Consolidate the storage logic
-      // const storage = localStorage.getItem('bkgds') ?? '[]'
-      // const bkgds = JSON.parse(storage)
-      // const nextBkgds = bkgds.filter(
-      //   (bkgd: unknown) =>
-      //     bkgd &&
-      //     typeof bkgd === 'object' &&
-      //     'id' in bkgd &&
-      //     bkgd?.id !== event.payload.id
-      // )
-      // localStorage.setItem('bkgds', JSON.stringify(nextBkgds))
       break
     }
     case 'select-layer': {
-      console.log('Selecting Layer')
-      const selectedLayer = getStore<string>(1)
-      const isSelected = selectedLayer.get() === event.payload.id
-      selectedLayer.set(isSelected ? '' : event.payload.id)
+      selectLayer(event.payload.id)
       break
     }
     case 'copy-css': {
