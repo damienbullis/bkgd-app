@@ -43,7 +43,14 @@ const FALLBACK = {
 
 const LayerControls = () => {
   const { layers, selectedLayer } = useLayers()
-  const { type, props, blendMode, opacity, backgroundSize } = useMemo(() => {
+  const {
+    type,
+    props,
+    blendMode,
+    opacity,
+    backgroundSize,
+    backgroundPosition,
+  } = useMemo(() => {
     return layers.find((l) => l?.id === selectedLayer) || FALLBACK
   }, [layers, selectedLayer])
 
@@ -75,7 +82,7 @@ const LayerControls = () => {
         value={blendMode}
       />
       <BackgroundSize value={backgroundSize} />
-      <BackgroundPosition value={''} label="positions" />
+      <BackgroundPosition value={backgroundPosition} />
       <BackgroundRepeat value={''} label="repeat" />
     </div>
   )
