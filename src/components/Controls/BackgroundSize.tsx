@@ -52,7 +52,7 @@ const SizeController = ({
   }, [selectedLayer])
   const handler = (e: React.ChangeEvent<HTMLSelectElement>, index: 0 | 1) => {
     setDouble((prev) => {
-      const next = [...prev]
+      const next: [string, string] = [...prev]
       next[index] = e.target.value
       EventHandler({
         action: 'bkgd-update-layer',
@@ -61,7 +61,7 @@ const SizeController = ({
           backgroundSize: next.join(' '),
         },
       })
-      return next as [string, string]
+      return next
     })
   }
 

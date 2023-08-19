@@ -1,5 +1,4 @@
 .wrap {
-  margin: 0.5rem 0;
   > label {
     font-size: calc(1em / var(--scalar));
     margin: 0;
