@@ -134,12 +134,7 @@ export default function Nav() {
                 bkgdHandler(b)
               }}
             >
-              {isSaved && b.id === id ? (
-                <MinusCircle size={32} />
-              ) : (
-                <ImageSquare size={32} />
-              )}
-
+              <ImageSquare size={32} />
               <DeleteButton bkgd={b} show={bkgdSelected === b.id} />
             </Button>
           </li>
