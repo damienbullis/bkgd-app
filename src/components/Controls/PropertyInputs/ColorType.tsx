@@ -45,14 +45,14 @@ const getColor = (
 
 //#endregion
 
+const label = 'Color'
+
 /**
  * ColorType Picker Input
  */
 export default function ColorType({
-  label,
   typeProps,
 }: {
-  label: string
   typeProps: ColorTypeProps
 }) {
   const [selectedLayer] = useSelectedLayer()

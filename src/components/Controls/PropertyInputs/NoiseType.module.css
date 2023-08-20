@@ -1,0 +1,18 @@
+.wrap {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  min-width: 100px;
+  & label {
+    font-size: calc(1em / var(--scalar));
+    margin: 0;
+    padding: 0;
+    color: #ffffff90;
+
+    &.full {
+      width: 100%;
+    }
+  }
+}

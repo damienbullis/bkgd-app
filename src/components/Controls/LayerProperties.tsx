@@ -8,6 +8,7 @@ import BackgroundSize from './PropertyInputs/BackgroundSize'
 import ColorType from './PropertyInputs/ColorType'
 
 import styles from './_.module.css'
+import NoiseType from './PropertyInputs/NoiseType'
 
 const blendModesOptions = [
   'normal',
@@ -72,14 +73,9 @@ const LayerControls = () => {
           <input type="color" id="gradient" onChange={(e) => console.log(e)} />
         </div>
       )}
-      {type === 'noise' && (
-        <div className={styles.inputWrap}>
-          <label htmlFor="noise">Noise</label>
-          <input type="color" id="noise" onChange={(e) => console.log(e)} />
-        </div>
-      )}
+      {type === 'noise' && <NoiseType />}
 
-      {type === 'solid' && <ColorType label="Color" typeProps={props} />}
+      {type === 'solid' && <ColorType typeProps={props} />}
       <Range // REFACTOR: Add to ColorType
         label="Opacity"
         id="opacity"
