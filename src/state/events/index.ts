@@ -3,14 +3,12 @@ import router from '../../router'
 import { getStore } from '@state/global'
 import {
   GradientLayerType,
-  LayerSchema,
   LayerType,
   NoiseLayerType,
   SolidLayerType,
 } from '../../components/Layers/LayerTypeSchema'
 import { randomHex } from '@utils'
-import { Bkgd, bkgdSchema, bkgdsSchema } from '../../components/Nav/bkgdSchemas'
-import { z } from 'zod'
+import { Bkgd, bkgdsSchema } from '../../components/Nav/bkgdSchemas'
 
 type EventHandlerType<T> = T extends infer U extends EventActionEnum
   ? {
@@ -110,6 +108,34 @@ const handleEvent = (event: EventHandlerType<EventsEnum>) => {
   console.groupCollapsed('EVENT', event.action)
   updateState(event)
   console.groupEnd()
+}
+
+const downloadImage = () => {
+  const el = document.querySelector<HTMLElement>('#bkgd')
+  if (el) {
+    // Copy the computed styles of the target element
+    const computedStyles = getComputedStyle(el)
+
+    // Create a new tab with a specific size (1600px x 900px)
+    const newTab = window.open('', '_blank')
+    if (newTab) {
+      newTab.resizeTo(1600, 900)
+      newTab.document.title = 'bkgd'
+      // Create a new element in the new tab and apply copied styles
+      const newElement = document.createElement('div')
+      newElement.style.width = '1600px'
+      newElement.style.height = '900px'
+      newElement.style.background = computedStyles.background
+      newElement.style.backgroundImage = computedStyles.backgroundImage
+      newElement.style.backgroundSize = computedStyles.backgroundSize
+      newElement.style.backgroundPosition = computedStyles.backgroundPosition
+      newElement.style.backgroundRepeat = computedStyles.backgroundRepeat
+      newElement.style.backgroundBlendMode = computedStyles.backgroundBlendMode
+
+      // Append the new element to the new tab's document
+      newTab.document.body.appendChild(newElement)
+    }
+  }
 }
 
 // #region Background Event Actions
@@ -418,7 +444,7 @@ const updateState = (event: EventHandlerType<EventsEnum>): void => {
       break
     }
     case 'download-image': {
-      console.warn('Downloading Image')
+      downloadImage()
       break
     }
     default: {
