@@ -119,9 +119,9 @@ const downloadImage = () => {
     // Create a new tab with a specific size (1600px x 900px)
     const newTab = window.open('', '_blank')
     if (newTab) {
-      newTab.resizeTo(1600, 900)
       // Create a new element in the new tab and apply copied styles
       const newElement = document.createElement('div')
+      // add a way to configure this width & height?
       newElement.style.width = '1600px'
       newElement.style.height = '900px'
       newElement.style.background = computedStyles.background

@@ -73,7 +73,6 @@ export default function Nav() {
   }
   //#endregion
 
-  console.log({ isSaved, id, bkgdSelected, bkgds })
   return (
     <nav id="nav" className={styles.wrap}>
       <div className={styles.logo}>

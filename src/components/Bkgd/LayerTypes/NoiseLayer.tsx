@@ -18,7 +18,7 @@ const NoiseLayer = (layer: NoiseLayerType & SharedLayerPropsSchemaType) => {
   </filter>
   <rect width="100%" height="100%" filter="url(#noise)" />
 </svg>`
-  console.log('string', string)
+
   const dataUrl = `url(data:image/svg+xml;base64,${btoa(string)})`
 
   return dataUrl
