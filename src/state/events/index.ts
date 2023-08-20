@@ -1,7 +1,13 @@
 import { LayerEnum, LayerPropsType } from '@types'
 import router from '../../router'
 import { getStore } from '@state/global'
-import { LayerSchema, LayerType } from '../../components/Layers/LayerTypeSchema'
+import {
+  GradientLayerType,
+  LayerSchema,
+  LayerType,
+  NoiseLayerType,
+  SolidLayerType,
+} from '../../components/Layers/LayerTypeSchema'
 import { randomHex } from '@utils'
 import { Bkgd, bkgdSchema, bkgdsSchema } from '../../components/Nav/bkgdSchemas'
 import { z } from 'zod'
@@ -107,31 +113,6 @@ const handleEvent = (event: EventHandlerType<EventsEnum>) => {
 }
 
 // #region Background Event Actions
-
-const addSolidLayer = (id: string) => {
-  const store = getStore<string>(1)
-  const search = router.state.currentLocation.search
-  const layerStack = search.layerStack || []
-  const layerData = search.layerData || []
-
-  store.set(id) // Set the selected layer to the new layer
-  layerStack.unshift(id) // Add the new layer to the top of the stack
-  layerData.push({
-    id,
-    type: 'solid',
-    props: {
-      color: randomHex(),
-    },
-  })
-  router.navigate({
-    to: '/',
-    search: {
-      ...search,
-      layerStack,
-      layerData,
-    },
-  })
-}
 
 const removeLayer = (_id: string) => {
   const prevSearch = router.state.currentLocation.search
@@ -262,41 +243,80 @@ const loadBkgd = (bkgd: Bkgd) => {
   })
 }
 
-//#endregion
-
-//#region Event Control Switches
-
-const addLayerSwitch = (event: EventHandlerType<'bkgd-add-layer'>): void => {
-  const { id, type } = event.payload
-  console.group(
-    'Adding Layer ' + id + ' of type ' + type.replace(/-/g, ' ').toUpperCase()
-  )
+const buildLayerData = (e: EventHandlerType<'bkgd-add-layer'>) => {
+  const { id, type } = e.payload
   switch (type) {
     case 'solid': {
-      addSolidLayer(id)
-      break
+      return {
+        id,
+        type: 'solid',
+        props: {
+          color: randomHex(),
+        },
+      } satisfies SolidLayerType
     }
     case 'gradient': {
-      console.warn('Adding Gradient Layer')
-      break
+      return {
+        id,
+        type: 'gradient',
+        props: {
+          type: 'linear',
+          gradient: [
+            [randomHex(), 0],
+            [randomHex(), 100],
+          ],
+        },
+      } satisfies GradientLayerType
     }
     case 'noise': {
-      console.warn('Adding Noise Layer')
-      break
+      return {
+        id,
+        type: 'noise',
+        props: {
+          type: 'perlin',
+          noise: 1,
+        },
+      } satisfies NoiseLayerType
     }
     default: {
       const _exhaustiveCheck: never = type
       return _exhaustiveCheck
     }
   }
-  console.groupEnd()
 }
+
+const addLayer = (event: EventHandlerType<'bkgd-add-layer'>): void => {
+  const { id, type } = event.payload
+  console.info(
+    'Adding Layer ' + id + ' of type ' + type.replace(/-/g, ' ').toUpperCase()
+  )
+
+  const store = getStore<string>(1)
+  const search = router.state.currentLocation.search
+  const layerStack = search.layerStack || []
+  const layerData = search.layerData || []
+
+  store.set(id) // Set the selected layer to the new layer
+  layerStack.unshift(id) // Add the new layer to the top of the stack
+  layerData.push(buildLayerData(event))
+  router.navigate({
+    to: '/',
+    search: {
+      ...search,
+      layerStack,
+      layerData,
+    },
+  })
+}
+//#endregion
+
+//#region Event Control Switches
 
 const updateBkgdState = (event: EventHandlerType<BkgdEventsEnum>): void => {
   console.group('Updating BKGD State')
   switch (event.action) {
     case 'bkgd-add-layer': {
-      addLayerSwitch(event)
+      addLayer(event)
       break
     }
     case 'bkgd-remove-layer': {
