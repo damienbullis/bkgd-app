@@ -6,9 +6,10 @@ import { LayerType } from '../Layers/LayerTypeSchema'
 import BackgroundPosition from './PropertyInputs/BackgroundPosition'
 import BackgroundSize from './PropertyInputs/BackgroundSize'
 import ColorType from './PropertyInputs/ColorType'
+import NoiseType from './PropertyInputs/NoiseType'
 
 import styles from './_.module.css'
-import NoiseType from './PropertyInputs/NoiseType'
+import GradientType from './PropertyInputs/GradientType'
 
 const blendModesOptions = [
   'normal',
@@ -67,20 +68,11 @@ const LayerControls = () => {
 
   return (
     <div className={styles.layerControls}>
-      {type === 'gradient' && (
-        <div className={styles.inputWrap}>
-          <label htmlFor="gradient">Gradient</label>
-          <input type="color" id="gradient" onChange={(e) => console.log(e)} />
-        </div>
-      )}
-      {type === 'noise' && <NoiseType typeProps={props} />}
+      {type === 'gradient' && <GradientType typeProps={props} />}
+      {type === 'noise' && <NoiseType typeProps={props} opacity={opacity} />}
 
-      {type === 'solid' && <ColorType typeProps={props} />}
-      <Range // REFACTOR: Add to ColorType
-        label="Opacity"
-        id="opacity"
-        value={opacity}
-      />
+      {type === 'solid' && <ColorType typeProps={props} opacity={opacity} />}
+
       <Select
         label="Blend Mode"
         id="blendMode"

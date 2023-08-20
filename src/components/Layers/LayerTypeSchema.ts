@@ -14,18 +14,47 @@ const SolidPropsSchema = z.object({
   }),
 })
 
+const OpacityPropsSchema = z.number().optional()
+
+const ColorStopsPropsSchema = z
+  .union([z.number(), z.tuple([z.number(), z.number()])])
+  .optional()
+
+const LineaerGradientPropsSchema = z.object({
+  type: z.literal('linear'),
+  deg: z.number().optional(),
+  colorSpace: z.enum(['oklab', 'Oklch']).optional(),
+  stops: z.array(
+    z.tuple([ColorPropsSchema, OpacityPropsSchema, ColorStopsPropsSchema])
+  ),
+})
+
+const RadialGradientPropsSchema = z.object({
+  type: z.literal('radial'),
+  colorSpace: z.enum(['oklab', 'Oklch']).optional(),
+  shape: z.enum(['ellipse', 'circle']).optional(),
+  length: z.number().optional(),
+  position: z.tuple([z.number(), z.number()]).optional(),
+  stops: z.array(
+    z.tuple([ColorPropsSchema, OpacityPropsSchema, ColorStopsPropsSchema])
+  ),
+})
+
+const ConicGradientPropsSchema = z.object({
+  type: z.literal('conic'),
+  deg: z.number().optional(),
+  position: z.tuple([z.number(), z.number()]).optional(),
+  stops: z.array(z.tuple([ColorPropsSchema, OpacityPropsSchema, z.number()])),
+})
+
 const GradientPropsSchema = z.object({
   id: z.string(),
   type: z.literal('gradient'),
-  props: z.object({
-    gradient: z.array(
-      z.tuple([
-        ColorPropsSchema,
-        z.union([z.number(), z.tuple([z.number(), z.number()])]),
-      ])
-    ),
-    type: z.enum(['linear', 'radial', 'conic']),
-  }),
+  props: z.discriminatedUnion('type', [
+    LineaerGradientPropsSchema,
+    RadialGradientPropsSchema,
+    ConicGradientPropsSchema,
+  ]),
 })
 
 const NoisePropsSchema = z.object({
@@ -99,6 +128,7 @@ const LayerSchema = z.object({
       // this is just a poc of how to handle errors
       // maybe I just want to use defaults?
       // using zod.default() on the individual property level???
+      // ...hmmm not sure about any of this...
       console.log('LayerData Error', { input })
       let layer: any
       for (const { path } of error.issues) {

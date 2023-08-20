@@ -291,9 +291,11 @@ const buildLayerData = (e: EventHandlerType<'bkgd-add-layer'>) => {
         type: 'gradient',
         props: {
           type: 'linear',
-          gradient: [
-            [randomHex(), 0],
-            [randomHex(), 100],
+          deg: 0,
+          colorSpace: 'oklab',
+          stops: [
+            [randomHex(), 1, undefined],
+            [randomHex(), 1, undefined],
           ],
         },
       } satisfies GradientLayerType
