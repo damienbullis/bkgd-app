@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { debounce, hexToHSL, hexToRGB, hslToHex, rgbToHex } from '@utils'
 import { useSelectedLayer } from '@state/global'
 import { EventHandler } from '@state/events'
-import { LayerPropsType } from '@types'
-import { Select } from '@shared'
+import { Range, Select } from '@shared'
 
 import { useCapabilities } from '../../Capabilities'
 import styles from './ColorType.module.css'
+import { SolidLayerType } from '../../Layers/LayerTypeSchema'
 
 //#region types & utils
 
 type ColorTypeEnum = 'hex' | 'srgb' | 'hsl' | 'display-p3'
-type ColorTypeProps = LayerPropsType<'solid'>['props']
+type ColorTypeProps = SolidLayerType['props']
 
 const deb = debounce(EventHandler, 200)
 
@@ -52,8 +52,10 @@ const label = 'Color'
  */
 export default function ColorType({
   typeProps,
+  opacity,
 }: {
   typeProps: ColorTypeProps
+  opacity?: number
 }) {
   const [selectedLayer] = useSelectedLayer()
   const caps = useCapabilities()
@@ -70,7 +72,7 @@ export default function ColorType({
       inputRef.current.value = value
     }
   }, [value])
-  // REFACTOR: ADD OPACITY SLIDER HERE
+
   return (
     <div className={styles.wrap}>
       <label htmlFor={label}>{label}</label>
@@ -106,6 +108,7 @@ export default function ColorType({
         }}
         className="clr"
       />
+      <Range label="Opacity" id="opacity" value={opacity} />
     </div>
   )
 }

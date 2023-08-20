@@ -1,19 +1,23 @@
-import { debounce } from '@utils'
-import styles from './NoiseType.module.css'
-import { EventHandler } from '@state/events'
-import { useSelectedLayer } from '@state/global'
 import { useEffect, useRef } from 'react'
+import { useSelectedLayer } from '@state/global'
+import { EventHandler } from '@state/events'
+import { debounce } from '@utils'
+import { Range } from '@shared'
 
-type NoiseTypeProps = {
-  type?: 'fractalNoise' | 'turbulence'
-  frequency?: string
-  octaves?: string
-  stitch?: 'stitch' | 'noStitch'
-}
+import { NoiseLayerType } from '../../Layers/LayerTypeSchema'
+import styles from './NoiseType.module.css'
+
+type NoiseTypeProps = NoiseLayerType['props']
 
 const deHandler = debounce(EventHandler, 200)
 
-const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
+const NoiseType = ({
+  typeProps,
+  opacity,
+}: {
+  typeProps: NoiseTypeProps
+  opacity?: number
+}) => {
   const freqRef = useRef<HTMLInputElement>(null)
   const octRef = useRef<HTMLInputElement>(null)
 
@@ -132,7 +136,7 @@ const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
           }
         />
       </span>
-      <span>
+      <span style={{ marginBottom: '.5rem' }}>
         <label htmlFor="noStitch">No Stitch</label>
         <input
           type="radio"
@@ -151,6 +155,7 @@ const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
           }
         />
       </span>
+      <Range label="Opacity" id="opacity" value={opacity} />
     </div>
   )
 }
