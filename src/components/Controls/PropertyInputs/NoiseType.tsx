@@ -1,4 +1,7 @@
+import { debounce } from '@utils'
 import styles from './NoiseType.module.css'
+import { EventHandler } from '@state/events'
+import { useSelectedLayer } from '@state/global'
 
 type NoiseTypeProps = {
   type?: 'fractalNoise' | 'turbulence'
@@ -9,7 +12,10 @@ type NoiseTypeProps = {
 
 const label = 'Noise'
 
+const deHandler = debounce(EventHandler, 200)
+
 const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
+  const [selectedLayer] = useSelectedLayer()
   const {
     type = 'fractalNoise',
     frequency = '0.65',
@@ -28,7 +34,12 @@ const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
           id="fractalNoise"
           value="fractalNoise"
           checked={type === 'fractalNoise'}
-          onChange={(e) => console.log(e)}
+          onChange={() =>
+            EventHandler({
+              action: 'bkgd-update-layer',
+              payload: { id: selectedLayer, props: { type: 'fractalNoise' } },
+            })
+          }
         />
       </span>
       <span>
@@ -38,7 +49,12 @@ const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
           id="turbulence"
           value="turbulence"
           checked={type === 'turbulence'}
-          onChange={(e) => console.log(e.target.value)}
+          onChange={() =>
+            EventHandler({
+              action: 'bkgd-update-layer',
+              payload: { id: selectedLayer, props: { type: 'turbulence' } },
+            })
+          }
         />
       </span>
       <label htmlFor="frequency" style={{ marginTop: '.5rem' }}>
@@ -50,6 +66,18 @@ const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
         max="1"
         step="0.01"
         defaultValue={frequency}
+        onChange={(e) =>
+          deHandler({
+            action: 'bkgd-update-layer',
+            payload: {
+              id: selectedLayer,
+              props: {
+                type,
+                frequency: e.target.value,
+              },
+            },
+          })
+        }
         id="frequency"
       />
       <label htmlFor="octaves" style={{ marginTop: '.5rem' }}>
@@ -62,6 +90,18 @@ const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
         max="10"
         step="1"
         defaultValue={octaves}
+        onChange={(e) =>
+          deHandler({
+            action: 'bkgd-update-layer',
+            payload: {
+              id: selectedLayer,
+              props: {
+                type,
+                octaves: e.target.value,
+              },
+            },
+          })
+        }
         id="octaves"
       />
       <span>
@@ -71,7 +111,12 @@ const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
           id="stitch"
           value="stitch"
           checked={stitch === 'stitch'}
-          onChange={(e) => console.log(e.target.value)}
+          onChange={() =>
+            EventHandler({
+              action: 'bkgd-update-layer',
+              payload: { id: selectedLayer, props: { type, stitch: 'stitch' } },
+            })
+          }
         />
       </span>
       <span>
@@ -81,7 +126,15 @@ const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
           id="noStitch"
           value="noStitch"
           checked={stitch === 'noStitch'}
-          onChange={(e) => console.log(e.target.value)}
+          onChange={() =>
+            EventHandler({
+              action: 'bkgd-update-layer',
+              payload: {
+                id: selectedLayer,
+                props: { type, stitch: 'noStitch' },
+              },
+            })
+          }
         />
       </span>
     </div>

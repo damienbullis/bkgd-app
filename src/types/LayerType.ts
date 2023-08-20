@@ -40,8 +40,10 @@ type GradientProps = {
 }
 
 type NoiseProps = {
-  noise: number
-  type: 'turbulence' | 'perlin'
+  type: 'turbulence' | 'fractalNoise'
+  frequency?: string
+  octaves?: string
+  stitch?: 'noStitch' | 'stitch'
 }
 
 type LayerProps<T extends LayerEnum> = T extends 'solid'

@@ -149,8 +149,7 @@ const DEFAULT_GRADIENT = {
 } satisfies LayerPropsType<'gradient'>['props']
 
 const DEFAULT_NOISE = {
-  type: 'perlin',
-  noise: 1,
+  type: 'turbulence',
 } satisfies LayerPropsType<'noise'>['props']
 
 const prepareNextLayer = (
@@ -172,9 +171,15 @@ const prepareNextLayer = (
       props: Object.assign({}, DEFAULT_GRADIENT, props),
     })
   } else if (layer.type === 'noise') {
-    return Object.assign({}, layer, {
-      props: Object.assign({}, DEFAULT_NOISE, props),
-    })
+    return {
+      ...layer,
+      ...props,
+      props: {
+        ...DEFAULT_NOISE,
+        ...layer.props,
+        ...props?.props,
+      },
+    } as LayerType
   }
   return layer
 }
