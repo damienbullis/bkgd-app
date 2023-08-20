@@ -120,7 +120,6 @@ const downloadImage = () => {
     const newTab = window.open('', '_blank')
     if (newTab) {
       newTab.resizeTo(1600, 900)
-      newTab.document.title = 'bkgd'
       // Create a new element in the new tab and apply copied styles
       const newElement = document.createElement('div')
       newElement.style.width = '1600px'

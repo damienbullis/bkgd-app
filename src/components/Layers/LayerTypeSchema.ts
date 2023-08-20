@@ -18,7 +18,12 @@ const GradientPropsSchema = z.object({
   id: z.string(),
   type: z.literal('gradient'),
   props: z.object({
-    gradient: z.array(z.tuple([ColorPropsSchema, z.number()])),
+    gradient: z.array(
+      z.tuple([
+        ColorPropsSchema,
+        z.union([z.number(), z.tuple([z.number(), z.number()])]),
+      ])
+    ),
     type: z.enum(['linear', 'radial', 'conic']),
   }),
 })
