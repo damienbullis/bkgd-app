@@ -27,8 +27,10 @@ const NoisePropsSchema = z.object({
   id: z.string(),
   type: z.literal('noise'),
   props: z.object({
-    noise: z.number(),
-    type: z.enum(['turbulence', 'perlin']),
+    type: z.enum(['turbulence', 'fractalNoise']),
+    frequency: z.string().optional(),
+    octaves: z.string().optional(),
+    stitch: z.enum(['noStitch', 'stitch']).optional(),
   }),
 })
 

@@ -5,27 +5,22 @@ type NoiseTypeProps = {
   frequency?: string
   octaves?: string
   stitch?: 'stitch' | 'noStitch'
-  width?: number
-  height?: number
 }
 
 const label = 'Noise'
 
-const NoiseType = ({
-  type = 'fractalNoise',
-  frequency = '0.65',
-  octaves = '3',
-  stitch = 'stitch',
-  width = 500,
-  height = 500,
-}: NoiseTypeProps) => {
-  console.log('NoiseType', { type, frequency, octaves, stitch, width, height })
+const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
+  const {
+    type = 'fractalNoise',
+    frequency = '0.65',
+    octaves = '3',
+    stitch = 'stitch',
+  } = typeProps
+  console.log('NoiseType', { type, frequency, octaves, stitch })
 
   return (
     <div className={styles.wrap}>
-      <label htmlFor={label} className={styles.full}>
-        {label}
-      </label>
+      <h5 className={styles.full}>{label}</h5>
       <span>
         <label htmlFor="fractalNoise">Fractal</label>
         <input
@@ -61,6 +56,7 @@ const NoiseType = ({
         Octaves
       </label>
       <input
+        style={{ marginBottom: '1rem' }}
         type="range"
         min="1"
         max="10"
@@ -68,6 +64,26 @@ const NoiseType = ({
         defaultValue={octaves}
         id="octaves"
       />
+      <span>
+        <label htmlFor="stitch">Stitch</label>
+        <input
+          type="radio"
+          id="stitch"
+          value="stitch"
+          checked={stitch === 'stitch'}
+          onChange={(e) => console.log(e.target.value)}
+        />
+      </span>
+      <span>
+        <label htmlFor="noStitch">No Stitch</label>
+        <input
+          type="radio"
+          id="noStitch"
+          value="noStitch"
+          checked={stitch === 'noStitch'}
+          onChange={(e) => console.log(e.target.value)}
+        />
+      </span>
     </div>
   )
 }

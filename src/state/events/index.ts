@@ -273,8 +273,7 @@ const buildLayerData = (e: EventHandlerType<'bkgd-add-layer'>) => {
         id,
         type: 'noise',
         props: {
-          type: 'perlin',
-          noise: 1,
+          type: 'turbulence',
         },
       } satisfies NoiseLayerType
     }

@@ -73,7 +73,7 @@ const LayerControls = () => {
           <input type="color" id="gradient" onChange={(e) => console.log(e)} />
         </div>
       )}
-      {type === 'noise' && <NoiseType />}
+      {type === 'noise' && <NoiseType typeProps={props} />}
 
       {type === 'solid' && <ColorType typeProps={props} />}
       <Range // REFACTOR: Add to ColorType

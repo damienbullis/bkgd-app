@@ -10,9 +10,8 @@
     margin: 0;
     padding: 0;
     color: #ffffff90;
-
-    &.full {
-      width: 100%;
-    }
+  }
+  & .full {
+    width: 100%;
   }
 }
