@@ -2,6 +2,7 @@ import { debounce } from '@utils'
 import styles from './NoiseType.module.css'
 import { EventHandler } from '@state/events'
 import { useSelectedLayer } from '@state/global'
+import { useEffect, useRef } from 'react'
 
 type NoiseTypeProps = {
   type?: 'fractalNoise' | 'turbulence'
@@ -10,12 +11,21 @@ type NoiseTypeProps = {
   stitch?: 'stitch' | 'noStitch'
 }
 
-const label = 'Noise'
-
 const deHandler = debounce(EventHandler, 200)
 
 const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
+  const freqRef = useRef<HTMLInputElement>(null)
+  const octRef = useRef<HTMLInputElement>(null)
+
   const [selectedLayer] = useSelectedLayer()
+  useEffect(() => {
+    if (freqRef.current && octRef.current) {
+      freqRef.current.value = typeProps.frequency || '0.65'
+      octRef.current.value = typeProps.octaves || '3'
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedLayer])
+
   const {
     type = 'fractalNoise',
     frequency = '0.65',
@@ -26,7 +36,6 @@ const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
 
   return (
     <div className={styles.wrap}>
-      <h5 className={styles.full}>{label}</h5>
       <span>
         <label htmlFor="fractalNoise">Fractal</label>
         <input
@@ -61,6 +70,7 @@ const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
         Frequency
       </label>
       <input
+        ref={freqRef}
         type="range"
         min="0"
         max="1"
@@ -84,6 +94,7 @@ const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
         Octaves
       </label>
       <input
+        ref={octRef}
         style={{ marginBottom: '1rem' }}
         type="range"
         min="1"
