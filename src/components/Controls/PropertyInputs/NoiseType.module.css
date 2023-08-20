@@ -14,4 +14,13 @@
   & .full {
     width: 100%;
   }
+
+  > span {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    > input {
+      margin: 0.25rem;
+    }
+  }
 }

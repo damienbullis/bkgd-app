@@ -5,7 +5,9 @@ import {
 
 const NoiseLayer = (layer: NoiseLayerType & SharedLayerPropsSchemaType) => {
   const { type, frequency, octaves, stitch } = layer.props
-  const string = `<svg xmlns="http://www.w3.org/2000/svg" width="500px" height="500px">
+  const string = `<svg xmlns="http://www.w3.org/2000/svg" width="500px" height="500px" opacity="${
+    typeof layer.opacity === 'number' ? layer.opacity / 100 : 1
+  }">
   <filter id="noise">
     <feTurbulence
       type="${type}"
@@ -14,10 +16,9 @@ const NoiseLayer = (layer: NoiseLayerType & SharedLayerPropsSchemaType) => {
       stitchTiles="${stitch || 'stitch'}"
     />
   </filter>
-  <rect width="100%" height="100%" filter="url(#noise)" opacity="${
-    layer.opacity || 1
-  }" />
+  <rect width="100%" height="100%" filter="url(#noise)" />
 </svg>`
+  console.log('string', string)
   const dataUrl = `url(data:image/svg+xml;base64,${btoa(string)})`
 
   return dataUrl

@@ -32,7 +32,6 @@ const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
     octaves = '3',
     stitch = 'stitch',
   } = typeProps
-  console.log('NoiseType', { type, frequency, octaves, stitch })
 
   return (
     <div className={styles.wrap}>
@@ -40,6 +39,7 @@ const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
         <label htmlFor="fractalNoise">Fractal</label>
         <input
           type="radio"
+          className="clr"
           id="fractalNoise"
           value="fractalNoise"
           checked={type === 'fractalNoise'}
@@ -55,6 +55,7 @@ const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
         <label htmlFor="turbulence">Turbulence</label>
         <input
           type="radio"
+          className="clr"
           id="turbulence"
           value="turbulence"
           checked={type === 'turbulence'}
@@ -95,6 +96,7 @@ const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
       </label>
       <input
         ref={octRef}
+        className="clr"
         style={{ marginBottom: '1rem' }}
         type="range"
         min="1"
@@ -135,6 +137,7 @@ const NoiseType = ({ typeProps }: { typeProps: NoiseTypeProps }) => {
         <input
           type="radio"
           id="noStitch"
+          className="clr"
           value="noStitch"
           checked={stitch === 'noStitch'}
           onChange={() =>
