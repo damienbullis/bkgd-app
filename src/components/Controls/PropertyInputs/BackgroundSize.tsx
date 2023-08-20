@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import styles from './BackgroundSize.module.css'
-import { Select } from '../_shared/Input'
-import { EventHandler } from '@state/events'
 import { useSelectedLayer } from '@state/global'
+import { EventHandler } from '@state/events'
+import { Select } from '@shared'
+import styles from './BackgroundSize.module.css'
 
 type BackgroundSizeType =
   | 'auto auto'

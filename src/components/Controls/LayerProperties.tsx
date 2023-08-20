@@ -3,9 +3,9 @@ import { Range, Select } from '@shared'
 import { useLayers } from '@state/hooks'
 
 import { LayerType } from '../Layers/LayerTypeSchema'
-import BackgroundPosition from './BackgroundPosition'
-import BackgroundSize from './BackgroundSize'
-import ColorType from './ColorType'
+import BackgroundPosition from './PropertyInputs/BackgroundPosition'
+import BackgroundSize from './PropertyInputs/BackgroundSize'
+import ColorType from './PropertyInputs/ColorType'
 
 import styles from './_.module.css'
 

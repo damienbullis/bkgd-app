@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import { debounce, hexToHSL, hexToRGB, hslToHex, rgbToHex } from '@utils'
 import { useSelectedLayer } from '@state/global'
 import { EventHandler } from '@state/events'
-import { debounce, hexToHSL, hexToRGB, hslToHex, rgbToHex } from '@utils'
+import { LayerPropsType } from '@types'
+import { Select } from '@shared'
 
-import { LayerPropsType } from '../../types/LayerType'
-import { useCapabilities } from '../Capabilities'
+import { useCapabilities } from '../../Capabilities'
 import styles from './ColorType.module.css'
-import { Select } from '../_shared/Input'
 
 //#region types & utils
 

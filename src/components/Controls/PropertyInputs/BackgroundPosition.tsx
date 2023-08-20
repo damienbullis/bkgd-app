@@ -3,7 +3,7 @@ import { useSelectedLayer } from '@state/global'
 
 import styles from './BackgroundPosition.module.css'
 import { EventHandler } from '@state/events'
-import debounce from '../../utils/debounce'
+import { debounce } from '@utils'
 
 const getPositionValue = (value = ''): [number, number] => {
   if (/\s/.test(value)) {
