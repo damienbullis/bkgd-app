@@ -9,7 +9,7 @@ const NoiseLayer = (layer: NoiseLayerType & SharedLayerPropsSchemaType) => {
   <filter id="noise">
     <feTurbulence
       type="${type}"
-      baseFrequency="${frequency || 0.65}"
+      baseFrequency="${frequency || '0.65'}"
       numOctaves="${octaves || 3}"
       stitchTiles="${stitch || 'stitch'}"
     />

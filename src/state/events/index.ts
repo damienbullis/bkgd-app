@@ -370,6 +370,17 @@ const toggleUI = () => {
   ui.set(!ui.get())
 }
 
+const copyCSS = () => {
+  const el = document.querySelector<HTMLElement>('#bkgd')
+  if (el) {
+    navigator.clipboard.writeText(
+      `.bkgd {
+  ${el.style.cssText}
+}`
+    )
+  }
+}
+
 const selectLayer = (id: string) => {
   const selectedLayer = getStore<string>(1)
   const isSelected = selectedLayer.get() === id
@@ -403,7 +414,7 @@ const updateState = (event: EventHandlerType<EventsEnum>): void => {
       break
     }
     case 'copy-css': {
-      console.warn('Copy CSS')
+      copyCSS()
       break
     }
     case 'download-image': {
