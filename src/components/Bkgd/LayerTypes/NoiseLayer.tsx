@@ -1,26 +1,24 @@
-const NoiseLayer = ({
-  type = 'fractalNoise',
-  frequency = '0.65',
-  octaves = '3',
-  stitch = 'stitch',
-  opacity = '1',
-  width = 500,
-  height = 500,
-}) => {
-  const string = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
-      <filter id="noise">
-        <feTurbulence
-          type="${type}"
-          baseFrequency="${frequency}"
-          numOctaves="${octaves}"
-          stitchTiles="${stitch}"
-        />
-      </filter>
-      <rect width="100%" height="100%" filter="url(#noise)" opacity="${opacity}" />
-    </svg>
-  `
-  const dataUrl = `data:image/svg+xml;base64,${btoa(string)}`
+import {
+  NoiseLayerType,
+  SharedLayerPropsSchemaType,
+} from '../../Layers/LayerTypeSchema'
+
+const NoiseLayer = (layer: NoiseLayerType & SharedLayerPropsSchemaType) => {
+  const { type, frequency, octaves, stitch } = layer.props
+  const string = `<svg xmlns="http://www.w3.org/2000/svg" width="500px" height="500px">
+  <filter id="noise">
+    <feTurbulence
+      type="${type}"
+      baseFrequency="${frequency || 0.65}"
+      numOctaves="${octaves || 3}"
+      stitchTiles="${stitch || 'stitch'}"
+    />
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)" opacity="${
+    layer.opacity || 1
+  }" />
+</svg>`
+  const dataUrl = `url(data:image/svg+xml;base64,${btoa(string)})`
 
   return dataUrl
 }
