@@ -14,11 +14,13 @@ const SolidPropsSchema = z.object({
   }),
 })
 
-const OpacityPropsSchema = z.number().optional()
+const OpacityPropsSchema = z.number().nullable()
 
-const ColorStopsPropsSchema = z
-  .union([z.number(), z.tuple([z.number(), z.number()])])
-  .optional()
+const ColorStopsPropsSchema = z.union([
+  z.number(),
+  z.tuple([z.number(), z.number()]),
+  z.null(),
+])
 
 const LineaerGradientPropsSchema = z.object({
   type: z.literal('linear'),
@@ -49,7 +51,9 @@ const ConicGradientPropsSchema = z.object({
   deg: z.number().optional(),
   position: z.tuple([z.number(), z.number()]).optional(),
   stops: z
-    .array(z.tuple([ColorPropsSchema, OpacityPropsSchema, z.number()]))
+    .array(
+      z.tuple([ColorPropsSchema, OpacityPropsSchema, z.number().nullable()])
+    )
     .optional(),
 })
 
@@ -135,7 +139,7 @@ const LayerSchema = z.object({
       // maybe I just want to use defaults?
       // using zod.default() on the individual property level???
       // ...hmmm not sure about any of this...
-      console.log('LayerData Error', { input })
+      console.log('LayerData Error', { input, error })
       let layer: any
       for (const { path } of error.issues) {
         const [, layerIndex, ...props] = path

@@ -1,5 +1,5 @@
 import { LayerType } from '../Layers/LayerTypeSchema'
-import { NoiseLayer, SolidLayer } from './LayerTypes'
+import { NoiseLayer, SolidLayer, GradientLayer } from './LayerTypes'
 
 /**
  * This returns background images styles for a single layer
@@ -9,7 +9,7 @@ const LayerTypeSwitch = (layer: LayerType, displayP3?: boolean) => {
     case 'solid':
       return SolidLayer(layer, displayP3)
     case 'gradient':
-      return 'linear-gradient(90deg, #000000 0%, #ffffff 100%)'
+      return GradientLayer(layer)
     case 'noise':
       return NoiseLayer(layer)
     default: {
