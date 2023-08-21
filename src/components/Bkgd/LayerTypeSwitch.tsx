@@ -9,7 +9,7 @@ const LayerTypeSwitch = (layer: LayerType, displayP3?: boolean) => {
     case 'solid':
       return SolidLayer(layer, displayP3)
     case 'gradient':
-      return GradientLayer(layer)
+      return GradientLayer(layer, displayP3)
     case 'noise':
       return NoiseLayer(layer)
     default: {
