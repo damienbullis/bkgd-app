@@ -26,6 +26,7 @@ const LineaerGradientPropsSchema = z.object({
   type: z.literal('linear'),
   deg: z.number().optional(),
   colorSpace: z.enum(['oklab', 'Oklch']).optional(),
+  repeating: z.boolean().optional(),
   stops: z
     .array(
       z.tuple([ColorPropsSchema, OpacityPropsSchema, ColorStopsPropsSchema])
@@ -37,8 +38,9 @@ const RadialGradientPropsSchema = z.object({
   type: z.literal('radial'),
   colorSpace: z.enum(['oklab', 'Oklch']).optional(),
   shape: z.enum(['ellipse', 'circle']).optional(),
-  length: z.number().optional(),
+  size: z.union([z.number(), z.tuple([z.number(), z.number()])]).optional(),
   position: z.tuple([z.number(), z.number()]).optional(),
+  repeating: z.boolean().optional(),
   stops: z
     .array(
       z.tuple([ColorPropsSchema, OpacityPropsSchema, ColorStopsPropsSchema])
@@ -49,10 +51,12 @@ const RadialGradientPropsSchema = z.object({
 const ConicGradientPropsSchema = z.object({
   type: z.literal('conic'),
   deg: z.number().optional(),
+  colorSpace: z.enum(['oklab', 'Oklch']).optional(),
   position: z.tuple([z.number(), z.number()]).optional(),
+  repeating: z.boolean().optional(),
   stops: z
     .array(
-      z.tuple([ColorPropsSchema, OpacityPropsSchema, z.number().nullable()])
+      z.tuple([ColorPropsSchema, OpacityPropsSchema, ColorStopsPropsSchema])
     )
     .optional(),
 })

@@ -19,18 +19,16 @@ type EventHandlerType<T> = T extends infer U extends EventActionEnum
 
 type EventPayload<T extends EventActionEnum> = T extends 'bkgd-add-layer'
   ? { id: string; type: LayerEnum }
-  : T extends 'bkgd-remove-layer'
+  : T extends 'bkgd-remove-layer' | 'select-layer'
   ? { id: string }
   : T extends 'bkgd-update-layer'
   ? { id: string } & Partial<EventPayloadType>
   : T extends 'bkgd-update-stack'
   ? { id: string; direction: 'up' | 'down' }
-  : T extends 'toggle-ui' | 'copy-css' | 'download-image'
-  ? null
-  : T extends 'select-layer'
-  ? { id: string }
   : T extends 'save-bkgd' | 'load-bkgd' | 'delete-bkgd'
   ? { bkgd: Bkgd }
+  : T extends 'toggle-ui' | 'copy-css' | 'download-image'
+  ? null
   : never
 
 // (Pretty much) All events in the app are handled through the EventHandler.
