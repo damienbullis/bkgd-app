@@ -18,11 +18,11 @@ type EventHandlerType<T> = T extends infer U extends EventActionEnum
   : never
 
 type EventPayload<T extends EventActionEnum> = T extends 'bkgd-add-layer'
-  ? Pick<EventPayloadType, 'id' | 'type'>
+  ? { id: string; type: LayerEnum }
   : T extends 'bkgd-remove-layer'
   ? { id: string }
   : T extends 'bkgd-update-layer'
-  ? Pick<EventPayloadType, 'id'> & Partial<Omit<EventPayloadType, 'id'>>
+  ? { id: string } & Partial<EventPayloadType>
   : T extends 'bkgd-update-stack'
   ? { id: string; direction: 'up' | 'down' }
   : T extends 'toggle-ui' | 'copy-css' | 'download-image'
@@ -170,7 +170,6 @@ const DEFAULT_SOLID = {
 
 const DEFAULT_GRADIENT = {
   type: 'linear',
-  gradient: [[DEFAULT_COLOR, 0]],
 } satisfies LayerPropsType<'gradient'>['props']
 
 const DEFAULT_NOISE = {
@@ -192,9 +191,15 @@ const prepareNextLayer = (
       },
     } as LayerType
   } else if (layer.type === 'gradient') {
-    return Object.assign({}, layer, {
-      props: Object.assign({}, DEFAULT_GRADIENT, props),
-    })
+    return {
+      ...layer,
+      ...props,
+      props: {
+        ...DEFAULT_GRADIENT,
+        ...layer.props,
+        ...props?.props,
+      },
+    } as LayerType
   } else if (layer.type === 'noise') {
     return {
       ...layer,

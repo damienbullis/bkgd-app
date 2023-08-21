@@ -1,3 +1,10 @@
+import {
+  NoiseLayerType,
+  GradientLayerType,
+  SolidLayerType,
+  SharedLayerPropsSchemaType,
+} from '../components/Layers/LayerTypeSchema'
+
 type LayerEnum = 'solid' | 'gradient' | 'noise'
 type BlendModeEnum =
   | 'normal'
@@ -17,34 +24,11 @@ type BlendModeEnum =
   | 'color'
   | 'luminosity'
 
-// TODO: add support for other color spaces?
-type ColorType =
-  | string
-  | {
-      h: number
-      s: number
-      l: number
-    }
-  | {
-      r: number
-      g: number
-      b: number
-    }
-type SolidProps = {
-  color: ColorType
-}
+type SolidProps = SolidLayerType['props']
 
-type GradientProps = {
-  gradient: [ColorType, number][]
-  type: 'linear' | 'radial' | 'conic'
-}
+type GradientProps = GradientLayerType['props']
 
-type NoiseProps = {
-  type: 'turbulence' | 'fractalNoise'
-  frequency?: string
-  octaves?: string
-  stitch?: 'noStitch' | 'stitch'
-}
+type NoiseProps = NoiseLayerType['props']
 
 type LayerProps<T extends LayerEnum> = T extends 'solid'
   ? SolidProps
@@ -54,15 +38,7 @@ type LayerProps<T extends LayerEnum> = T extends 'solid'
   ? NoiseProps
   : never
 
-type SharedLayerProps = {
-  id: string
-  opacity: number
-  blendMode: BlendModeEnum
-  backgroundBlend: boolean
-  backgroundSize: string
-  backgroundPosition: string
-  backgroundRepeat: number
-}
+type SharedLayerProps = SharedLayerPropsSchemaType
 
 type LayerPropsType<T extends LayerEnum> = SharedLayerProps & {
   type: T
