@@ -38,7 +38,7 @@ const RadialGradientPropsSchema = z.object({
   type: z.literal('radial'),
   colorSpace: z.enum(['oklab', 'Oklch']).optional(),
   shape: z.enum(['ellipse', 'circle']).optional(),
-  size: z.union([z.number(), z.tuple([z.number(), z.number()])]).optional(),
+  size: ColorStopsPropsSchema.optional(),
   position: z.tuple([z.number(), z.number()]).optional(),
   repeating: z.boolean().optional(),
   stops: z

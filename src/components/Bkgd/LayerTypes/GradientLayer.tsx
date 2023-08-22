@@ -21,6 +21,15 @@ const getColor = (
   }
 }
 
+const transformStop = (
+  size: number | [number, number] | null,
+  nullReturn = ''
+) => {
+  if (size === null) return nullReturn
+  if (typeof size === 'number') return `${size}%`
+  return size.map((s) => s + '%').join(' ')
+}
+
 const GradientLayer = (layer: GradientLayerProps, displayP3?: boolean) => {
   console.log('GradientLayer', { layer })
   const repeat = layer.props.repeating ? 'repeating-' : ''
@@ -29,39 +38,21 @@ const GradientLayer = (layer: GradientLayerProps, displayP3?: boolean) => {
     const space = layer.props.colorSpace || 'oklab'
     const stops =
       layer.props.stops?.map(([color, opacity, stop]) => {
-        return `${getColor(color, opacity, displayP3)} ${
-          stop
-            ? `${
-                typeof stop === 'number'
-                  ? `${stop}%`
-                  : stop.map((s) => s + '%').join(' ')
-              }`
-            : ''
-        }`
+        return `${getColor(color, opacity, displayP3)} ${transformStop(stop)}`
       }) || []
+
     return `${repeat}linear-gradient(${deg}deg in ${space}, ${stops.join(
       ', '
     )})`
   } else if (layer.props.type === 'radial') {
     const shape = layer.props.shape || 'ellipse'
-    const size = layer.props.size
-      ? typeof layer.props.size === 'number'
-        ? ` ${layer.props.size}%`
-        : ' ' + layer.props.size.map((s) => s + '%').join(' ')
-      : ''
+    const size = transformStop(layer.props.size || null)
     const position = layer.props.position || 'center'
     const stops =
       layer.props.stops?.map(([color, opacity, stop]) => {
-        return `${getColor(color, opacity, displayP3)} ${
-          stop
-            ? `${
-                typeof stop === 'number'
-                  ? `${stop}%`
-                  : stop.map((s) => s + '%').join(' ')
-              }`
-            : ''
-        }`
+        return `${getColor(color, opacity, displayP3)} ${transformStop(stop)}`
       }) || []
+
     return `${repeat}radial-gradient(${shape}${size} at ${position}, ${stops.join(
       ', '
     )})`
@@ -71,18 +62,14 @@ const GradientLayer = (layer: GradientLayerProps, displayP3?: boolean) => {
     const space = layer.props.colorSpace || 'oklab'
     const stops =
       layer.props.stops?.map(([color, opacity, stop]) => {
-        return `${getColor(color, opacity, displayP3)} ${
-          stop
-            ? typeof stop === 'number'
-              ? `${stop}deg`
-              : stop.map((s) => s + 'deg').join(' ')
-            : ''
-        }`
+        return `${getColor(color, opacity, displayP3)} ${transformStop(stop)}`
       }) || []
+
     return `${repeat}conic-gradient(from ${deg}deg in ${space} at ${position}, ${stops.join(
       ', '
     )})`
   }
+  return ''
 }
 
 export default GradientLayer
