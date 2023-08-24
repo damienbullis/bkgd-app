@@ -6,23 +6,6 @@ import styles from './_.module.css'
 
 const Tools = () => {
   /**
-   * TODO: LAYER MANAGER
-   *
-   * We need to create a component / hook that will manage the layers
-   * handle adding, removing, selecting, and reordering layers
-   *
-   * Drag and drop reordering
-   *
-   * TODO: ACTION EVENT SYSTEM
-   *
-   * We also want to creaete a way to track actions and events in the app
-   * so that when we are undoing and redoing we can also show the user what they did
-   *
-   */
-  // const [layerId, setLayerId] = useSelectedLayer()
-
-  // console.log('TOOLS: \n', { layerId })
-  /**
    * TODO: FEATURE MANAGER
    *
    * We need a component / hook that will check for env variable and feature flags
@@ -43,6 +26,12 @@ const Tools = () => {
    * v.1 features: solid, gradient, noise
    *
    * v.X features: pattern, shader, image, video, text
+   *
+   * # REFACTOR: Convert all encompassing tool types to individual tools
+   *
+   * - Gradient -> Linear, Radial, Conic
+   * - Filter -> Blur, Drop Shadow, etc
+   * - Combined -> ??? What would this look like?
    */
 
   return (

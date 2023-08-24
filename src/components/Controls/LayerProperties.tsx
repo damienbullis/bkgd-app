@@ -70,9 +70,7 @@ const LayerControls = () => {
     <div className={styles.layerControls}>
       {type === 'gradient' && <GradientType typeProps={props} />}
       {type === 'noise' && <NoiseType typeProps={props} opacity={opacity} />}
-
       {type === 'solid' && <ColorType typeProps={props} opacity={opacity} />}
-
       <Select
         label="Blend Mode"
         id="blendMode"
