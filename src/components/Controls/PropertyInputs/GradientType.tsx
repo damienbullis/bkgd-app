@@ -2,8 +2,12 @@
 import { EventHandler } from '@state/events'
 import { GradientLayerType } from '../../Layers/LayerTypeSchema'
 import { useSelectedLayer } from '@state/global'
+import styles from './GradientType.module.css'
+import { debounce } from '@utils'
 
 type GradientTypeProps = GradientLayerType['props']
+
+const deHandler = debounce(EventHandler, 200)
 
 // const randomGradient = (type: GradientLayerType['props']['type']) => {
 
@@ -11,10 +15,88 @@ type GradientTypeProps = GradientLayerType['props']
 
 const LinearGradientType = ({
   typeProps,
+  selectedLayer,
 }: {
-  typeProps: GradientTypeProps
+  typeProps: GradientTypeProps & { type: 'linear' }
+  selectedLayer: string
 }) => {
-  return <></>
+  const { deg, colorSpace, repeating, stops } = typeProps
+  return (
+    <>
+      <label className={styles.full}>
+        Degrees
+        <input
+          type="number"
+          defaultValue={deg}
+          min={1}
+          max={360}
+          onChange={(e) =>
+            deHandler({
+              action: 'bkgd-update-layer',
+              payload: {
+                id: selectedLayer,
+                type: 'gradient',
+                props: {
+                  type: 'linear',
+                  deg: Number(e.target.value),
+                },
+              },
+            })
+          }
+        />
+      </label>
+      <label>
+        Color Space
+        <br />
+        <label>
+          oklab
+          <input
+            type="radio"
+            name="color-space"
+            value="oklab"
+            defaultChecked={colorSpace === 'oklab'}
+            onChange={(e) =>
+              deHandler({
+                action: 'bkgd-update-layer',
+                payload: {
+                  id: selectedLayer,
+                  type: 'gradient',
+                  props: {
+                    type: 'linear',
+                    colorSpace: e.target
+                      .value as GradientTypeProps['colorSpace'],
+                  },
+                },
+              })
+            }
+          />
+        </label>
+        <label>
+          oklch
+          <input
+            type="radio"
+            name="color-space"
+            value="oklch"
+            defaultChecked={colorSpace === 'Oklch'}
+            onChange={(e) =>
+              deHandler({
+                action: 'bkgd-update-layer',
+                payload: {
+                  id: selectedLayer,
+                  type: 'gradient',
+                  props: {
+                    type: 'linear',
+                    colorSpace: e.target
+                      .value as GradientTypeProps['colorSpace'],
+                  },
+                },
+              })
+            }
+          />
+        </label>
+      </label>
+    </>
+  )
 }
 
 const RadialGradientType = ({
@@ -29,10 +111,21 @@ const ConicGradientType = ({ typeProps }: { typeProps: GradientTypeProps }) => {
   return <></>
 }
 
-const GradientSwitch = ({ typeProps }: { typeProps: GradientTypeProps }) => {
+const GradientSwitch = ({
+  typeProps,
+  selectedLayer,
+}: {
+  typeProps: GradientTypeProps
+  selectedLayer: string
+}) => {
   switch (typeProps.type) {
     case 'linear':
-      return <LinearGradientType typeProps={typeProps} />
+      return (
+        <LinearGradientType
+          typeProps={typeProps}
+          selectedLayer={selectedLayer}
+        />
+      )
     case 'radial':
       return <RadialGradientType typeProps={typeProps} />
     case 'conic':
@@ -49,7 +142,7 @@ const GradientType = ({ typeProps }: { typeProps: GradientTypeProps }) => {
   const [selectedLayer] = useSelectedLayer()
 
   return (
-    <div>
+    <div className={styles.wrap}>
       <label htmlFor="gradient-type">Gradient Type</label>
       <select
         id="gradient-type"
@@ -71,7 +164,7 @@ const GradientType = ({ typeProps }: { typeProps: GradientTypeProps }) => {
         <option value="radial">Radial</option>
         <option value="conic">Conic</option>
       </select>
-      <GradientSwitch typeProps={typeProps} />
+      <GradientSwitch typeProps={typeProps} selectedLayer={selectedLayer} />
     </div>
   )
 }
