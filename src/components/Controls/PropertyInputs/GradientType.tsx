@@ -1,9 +1,9 @@
-// import { randomHex } from '../../../utils/colorHelpers'
-import { EventHandler } from '@state/events'
-import { GradientLayerType } from '../../Layers/LayerTypeSchema'
 import { useSelectedLayer } from '@state/global'
-import styles from './GradientType.module.css'
+import { EventHandler } from '@state/events'
 import { debounce } from '@utils'
+
+import { GradientLayerType } from '../../Layers/LayerTypeSchema'
+import styles from './GradientType.module.css'
 
 type GradientTypeProps = GradientLayerType['props']
 
