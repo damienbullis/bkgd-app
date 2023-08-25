@@ -27,18 +27,12 @@ const LinearGradientStops = ({
   stops: LinearGradientPropsType['stops']
   selectedLayer: string
 }) => {
-  if (stops.length === 0) {
-    // Add a stop
-  }
-
   return (
-    // color, opacity, stop
-    // opacity is a number
-    // stop is a number | [number, number]
     <>
       {stops.map(([color, opacity, stop], i) => (
         <ColorStop
           key={i}
+          index={i}
           color={color}
           opacity={opacity}
           stop={stop}
@@ -68,11 +62,13 @@ const LinearGradientStops = ({
 }
 
 const ColorStop = ({
+  index,
   color,
   opacity,
   stop,
   selectedLayer,
 }: {
+  index: number
   color: GradientStopsType[0]
   opacity: GradientStopsType[1]
   stop: GradientStopsType[2]
@@ -85,7 +81,7 @@ const ColorStop = ({
         <input
           type="color"
           defaultValue={transformColorValue(color)}
-          onChange={(e) => console.log('Color', e.target.value)}
+          onChange={(e) => console.log('Color', e.target.value, index)}
         />
       </label>
       <label>
@@ -95,7 +91,7 @@ const ColorStop = ({
           defaultValue={opacity ?? 100}
           min={0}
           max={100}
-          onChange={(e) => console.log('Opacity', e.target.value)}
+          onChange={(e) => console.log('Opacity', e.target.value, index)}
         />
       </label>
       <label>
@@ -107,7 +103,7 @@ const ColorStop = ({
             name="stop"
             value="single"
             defaultChecked={typeof stop === 'number'}
-            onChange={(e) => console.log('single stop', e.target.value)}
+            onChange={(e) => console.log('single stop', e.target.value, index)}
           />
         </span>
         <span>
@@ -117,20 +113,22 @@ const ColorStop = ({
             name="stop"
             value="double"
             defaultChecked={Array.isArray(stop)}
-            onChange={(e) => console.log('doiuble stop', e.target.value)}
+            onChange={(e) => console.log('doiuble stop', e.target.value, index)}
           />
         </span>
         <br />
-        <StopInput stop={stop} selectedLayer={selectedLayer} />
+        <StopInput stop={stop} selectedLayer={selectedLayer} index={index} />
       </label>
     </>
   )
 }
 
 const StopInput = ({
+  index,
   stop,
   selectedLayer,
 }: {
+  index: number
   stop: GradientStopsType[2]
   selectedLayer: string
 }) => {
@@ -142,14 +140,14 @@ const StopInput = ({
           defaultValue={stop[0]}
           min={0}
           max={100}
-          onChange={(e) => console.log(e.target.value, selectedLayer)}
+          onChange={(e) => console.log(e.target.value, selectedLayer, index)}
         />
         <input
           type="number"
           defaultValue={stop[1]}
           min={0}
           max={100}
-          onChange={(e) => console.log(e.target.value, selectedLayer)}
+          onChange={(e) => console.log(e.target.value, selectedLayer, index)}
         />
       </>
     )
@@ -160,7 +158,7 @@ const StopInput = ({
       defaultValue={stop ?? 100}
       min={0}
       max={100}
-      onChange={(e) => console.log(e.target.value, selectedLayer)}
+      onChange={(e) => console.log(e.target.value, selectedLayer, index)}
     />
   )
 }
