@@ -203,7 +203,6 @@ const LinearGradientType = ({
           <input
             type="radio"
             name="color-space"
-            value="oklab"
             defaultChecked={colorSpace === 'oklab'}
             onChange={(e) =>
               deHandler({
@@ -213,8 +212,7 @@ const LinearGradientType = ({
                   type: 'gradient',
                   props: {
                     type: 'linear',
-                    colorSpace: e.target
-                      .value as LinearGradientPropsType['colorSpace'],
+                    colorSpace: 'oklab',
                   },
                 },
               })
@@ -226,7 +224,6 @@ const LinearGradientType = ({
           <input
             type="radio"
             name="color-space"
-            value="oklch"
             defaultChecked={colorSpace === 'Oklch'}
             onChange={(e) =>
               deHandler({
@@ -236,8 +233,7 @@ const LinearGradientType = ({
                   type: 'gradient',
                   props: {
                     type: 'linear',
-                    colorSpace: e.target
-                      .value as LinearGradientPropsType['colorSpace'],
+                    colorSpace: 'Oklch',
                   },
                 },
               })

@@ -190,29 +190,29 @@ const RadialGradientType = ({
   const { position = [], shape, size, colorSpace, repeating, stops } = typeProps
   return (
     <>
-      <label className={styles.full}>
-        X
-        <input
-          type="number"
-          defaultValue={position[0] || 0}
-          onChange={(e) =>
-            deHandler({
-              action: 'bkgd-update-layer',
-              payload: {
-                id: selectedLayer,
-                type: 'gradient',
-                props: {
-                  type: 'radial',
-                  position: [Number(e.target.value), position[1] || 0],
-                },
+      <label htmlFor="positionX">X</label>
+      <input
+        name="positionX"
+        type="number"
+        defaultValue={position[0] || 0}
+        onChange={(e) =>
+          deHandler({
+            action: 'bkgd-update-layer',
+            payload: {
+              id: selectedLayer,
+              type: 'gradient',
+              props: {
+                type: 'radial',
+                position: [Number(e.target.value), position[1] || 0],
               },
-            })
-          }
-        />
-      </label>
-      <label>
+            },
+          })
+        }
+      />
+      <label htmlFor="positionY">
         Y
         <input
+          name="positionY"
           type="number"
           defaultValue={position[1] || 0}
           onChange={(e) =>
@@ -239,9 +239,8 @@ const RadialGradientType = ({
           <input
             type="radio"
             name="shape"
-            value="ellipse"
             defaultChecked={shape === 'ellipse'}
-            onChange={(e) =>
+            onChange={() =>
               deHandler({
                 action: 'bkgd-update-layer',
                 payload: {
@@ -249,7 +248,7 @@ const RadialGradientType = ({
                   type: 'gradient',
                   props: {
                     type: 'radial',
-                    shape: e.target.value as RadialGradientPropsType['shape'],
+                    shape: 'ellipse',
                   },
                 },
               })
@@ -263,7 +262,7 @@ const RadialGradientType = ({
             name="shape"
             value="circle"
             defaultChecked={shape === 'circle'}
-            onChange={(e) =>
+            onChange={() =>
               deHandler({
                 action: 'bkgd-update-layer',
                 payload: {
@@ -271,7 +270,7 @@ const RadialGradientType = ({
                   type: 'gradient',
                   props: {
                     type: 'radial',
-                    shape: e.target.value as RadialGradientPropsType['shape'],
+                    shape: 'circle',
                   },
                 },
               })
@@ -294,19 +293,17 @@ const RadialGradientType = ({
           oklab
           <input
             type="radio"
-            name="color-space"
-            value="oklab"
+            name="color-space-oklab"
             defaultChecked={colorSpace === 'oklab'}
-            onChange={(e) =>
+            onChange={() =>
               deHandler({
                 action: 'bkgd-update-layer',
                 payload: {
                   id: selectedLayer,
                   type: 'gradient',
                   props: {
-                    type: 'linear',
-                    colorSpace: e.target
-                      .value as RadialGradientPropsType['colorSpace'],
+                    type: 'radial',
+                    colorSpace: 'oklab',
                   },
                 },
               })
@@ -317,19 +314,17 @@ const RadialGradientType = ({
           oklch
           <input
             type="radio"
-            name="color-space"
-            value="oklch"
+            name="color-space-oklch"
             defaultChecked={colorSpace === 'Oklch'}
-            onChange={(e) =>
+            onChange={() =>
               deHandler({
                 action: 'bkgd-update-layer',
                 payload: {
                   id: selectedLayer,
                   type: 'gradient',
                   props: {
-                    type: 'linear',
-                    colorSpace: e.target
-                      .value as RadialGradientPropsType['colorSpace'],
+                    type: 'radial',
+                    colorSpace: 'Oklch',
                   },
                 },
               })
@@ -349,7 +344,7 @@ const RadialGradientType = ({
                 id: selectedLayer,
                 type: 'gradient',
                 props: {
-                  type: 'linear',
+                  type: 'radial',
                   repeating: e.target.checked,
                 },
               },
