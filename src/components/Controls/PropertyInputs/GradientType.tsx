@@ -5,18 +5,9 @@ import { debounce } from '@utils'
 import { GradientLayerType } from '../../Layers/LayerTypeSchema'
 import styles from './GradientType.module.css'
 import LinearGradientType from './LinearGradientType'
+import RadialGradientType from './RadialGradientType'
 
 type GradientTypeProps = GradientLayerType['props']
-
-const deHandler = debounce(EventHandler, 200)
-
-const RadialGradientType = ({
-  typeProps,
-}: {
-  typeProps: GradientTypeProps
-}) => {
-  return <></>
-}
 
 const ConicGradientType = ({ typeProps }: { typeProps: GradientTypeProps }) => {
   return <></>
@@ -38,7 +29,12 @@ const GradientSwitch = ({
         />
       )
     case 'radial':
-      return <RadialGradientType typeProps={typeProps} />
+      return (
+        <RadialGradientType
+          typeProps={typeProps}
+          selectedLayer={selectedLayer}
+        />
+      )
     case 'conic':
       return <ConicGradientType typeProps={typeProps} />
     default: {
