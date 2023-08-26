@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Range, Select } from '@shared'
+import { Select } from '@shared'
 import { useLayers } from '@state/hooks'
 
 import { LayerType } from '../Layers/LayerTypeSchema'
