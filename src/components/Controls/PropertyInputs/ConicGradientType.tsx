@@ -137,7 +137,7 @@ const ColorStop = ({
             name="stop"
             value="single"
             defaultChecked={typeof stop === 'number'}
-            onChange={(e) =>
+            onChange={() =>
               EventHandler({
                 action: 'bkgd-update-layer',
                 payload: {
@@ -167,7 +167,7 @@ const ColorStop = ({
             name="stop"
             value="double"
             defaultChecked={Array.isArray(stop)}
-            onChange={(e) =>
+            onChange={() =>
               EventHandler({
                 action: 'bkgd-update-layer',
                 payload: {
