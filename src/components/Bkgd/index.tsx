@@ -16,9 +16,6 @@ const buildLayerStyle = (layers: LayerType[]) => {
   let i = 0
   for (const layer of layers) {
     const t = LayerTypeSwitch(layer)
-    if (layer.type === 'gradient' && layer.props.type === 'conic') {
-      console.log('conic', { layer, t })
-    }
     const end = i === layers.length - 1 ? '' : ', '
     bkgdStyle.backgroundImage += t + end
     bkgdStyle.backgroundBlendMode += (layer.blendMode || 'normal') + end

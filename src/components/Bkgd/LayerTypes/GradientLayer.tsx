@@ -31,7 +31,6 @@ const transformStop = (
 }
 
 const GradientLayer = (layer: GradientLayerProps, displayP3?: boolean) => {
-  console.log('GradientLayer', { layer })
   const repeat = layer.props.repeating ? 'repeating-' : ''
   if (layer.props.type === 'linear') {
     const deg = layer.props.deg || 0
