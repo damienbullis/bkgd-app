@@ -6,7 +6,6 @@ const useBkgdSelected = () => {
   useEffect(() => {
     // Create a click handler to deselect the selected bkgd on blur
     const handler = (e: MouseEvent) => {
-      console.log('click', { e })
       const target = e.target
 
       if (target instanceof HTMLElement && target.id !== 'nav') {

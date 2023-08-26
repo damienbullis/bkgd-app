@@ -39,7 +39,6 @@ const getColor = (
     return hexToHSL(e.target.value)
   }
   // hex
-  console.log('hex', { v: e.target.value, hasP3, colorType })
   return e.target.value
 }
 
