@@ -123,7 +123,7 @@ const ColorStop = ({
                   stops: allStops.map((s, i) => {
                     const [color, , stop] = s
                     if (i === index) {
-                      return [color, Number(e.target.value), stop || null]
+                      return [color, Number(e.target.value) / 100, stop || null]
                     }
                     return s
                   }),
