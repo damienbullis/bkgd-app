@@ -5,22 +5,22 @@
   justify-content: space-between;
   flex-wrap: wrap;
   min-width: 100px;
-  & label {
-    font-size: calc(1em / var(--scalar));
-    margin: 0;
-    padding: 0;
-    color: #ffffff90;
-  }
-  & .full {
-    width: 100%;
-  }
+}
+.wrap label {
+  font-size: calc(1em / var(--scalar));
+  margin: 0;
+  padding: 0;
+  color: #ffffff90;
+}
+.wrap label.full {
+  width: 100%;
+}
 
-  > span {
-    display: inline-flex;
-    justify-content: space-between;
-    align-items: center;
-    > input {
-      margin: 0.25rem;
-    }
-  }
+.wrap > span {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.wrap > span > input {
+  margin: 0.25rem;
 }

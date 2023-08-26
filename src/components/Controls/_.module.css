@@ -10,28 +10,28 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  & ._head {
-    height: 3rem;
-    display: inline-grid;
-    grid-auto-flow: column;
-    align-items: center;
-    gap: 0.5rem;
-  }
+}
+.layer._head {
+  height: 3rem;
+  display: inline-grid;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .indicator {
   position: relative;
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 100%;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    border-radius: 0.5rem;
-    background-color: blueviolet;
-    z-index: -1;
-  }
+}
+.indicator::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  border-radius: 0.5rem;
+  background-color: blueviolet;
+  z-index: -1;
 }
 .card.active {
   opacity: 1;
@@ -59,45 +59,43 @@
   background-color: blueviolet;
   border-radius: 0.5rem;
   padding: 1rem;
-  > ._head {
-    border-bottom: 1px solid #ffffff20;
-    margin-bottom: 0.5rem;
-    > h3 {
-      text-transform: capitalize;
-      margin: 0;
-      padding: 0;
-      color: #fff;
-    }
-  }
-  > ._foot {
-    border-top: 1px solid #ffffff20;
-    margin-top: 0.5rem;
-  }
+}
+.card > ._head {
+  border-bottom: 1px solid #ffffff20;
+  margin-bottom: 0.5rem;
+}
+.card > ._head > h3 {
+  text-transform: capitalize;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+.card > ._foot {
+  border-top: 1px solid #ffffff20;
+  margin-top: 0.5rem;
 }
 
 .tools {
   display: grid;
   grid-template-columns: auto auto auto;
   gap: 0.25rem;
+}
+.tools > button {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: transparent;
+  border: 1px solid var(--clr-primary);
+  color: var(--clr-primary);
+  line-height: inherit;
+  transition: all 0.2s ease-in-out;
+}
+.tools > button:has(svg) {
+  line-height: 0.5;
+}
 
-  > button {
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    background-color: transparent;
-    border: 1px solid var(--clr-primary);
-    color: var(--clr-primary);
-    line-height: inherit;
-    transition: all 0.2s ease-in-out;
-
-    &:has(> svg) {
-      line-height: 0.5;
-    }
-
-    &:hover {
-      background-color: #ffffff20;
-      color: var(--clr-white);
-    }
-  }
+.tools > button:hover {
+  background-color: #ffffff20;
+  color: var(--clr-white);
 }
 
 .layerControls {
@@ -113,11 +111,11 @@
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
-  > label {
-    margin-right: 0.5rem;
-    text-transform: capitalize;
-  }
-  &.reverse {
-    flex-flow: row-reverse nowrap;
-  }
+}
+.title > label {
+  margin-right: 0.5rem;
+  text-transform: capitalize;
+}
+.title.reverse {
+  flex-flow: row-reverse nowrap;
 }

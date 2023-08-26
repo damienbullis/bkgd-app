@@ -1,22 +1,19 @@
-.wrap {
-  /* Header */
-  > ul:first-child {
-    /* padding: 0 1rem; */
-    height: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-direction: row;
-    & button {
-      color: #ffffff90;
-      padding: 0.5rem;
-      line-height: 0.5;
-      box-sizing: content-box;
-      &:hover {
-        color: #ffffff;
-      }
-    }
-  }
+.wrap > ul:first-child {
+  /* padding: 0 1rem; */
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: row;
+}
+.wrap > ul:first-child button {
+  color: #ffffff90;
+  padding: 0.5rem;
+  line-height: 0.5;
+  box-sizing: content-box;
+}
+.wrap > ul:first-child button:hover {
+  color: #ffffff;
 }
 
 .layers {

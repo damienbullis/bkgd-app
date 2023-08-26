@@ -3,14 +3,14 @@
   position: relative;
   color: inherit;
   margin-left: auto;
-  > button {
-    opacity: 0;
-    /* TODO: Fix Click-thru for layer selection */
-    padding: calc(0.5em * var(--x));
-    &:not(.active):hover {
-      opacity: 0;
-    }
-  }
+}
+.ellipse > button {
+  opacity: 0;
+  /* TODO: Fix Click-thru for layer selection */
+  padding: calc(0.5em * var(--x));
+}
+.ellipse > button:not(.active):hover {
+  opacity: 0;
 }
 
 .layer {
@@ -24,16 +24,16 @@
   border: #ffffff90 1px solid;
   border-radius: 0.5rem;
   cursor: pointer;
-  & p {
-    margin: 0 0.5rem;
-    line-height: 1;
-    max-width: 75%;
-    text-transform: uppercase;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: calc(1em / var(--scalar));
-  }
+}
+.layer p {
+  margin: 0 0.5rem;
+  line-height: 1;
+  max-width: 75%;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: calc(1em / var(--scalar));
 }
 
 .active {
@@ -56,19 +56,18 @@
   border: #ffffff90 1px solid;
   box-shadow: 0 0 0.5rem #00000090;
   z-index: 1;
-
-  &.active {
-    display: block;
-  }
-  > button {
-    color: #000000;
-  }
+}
+.dropdown .active {
+  display: block;
+}
+.dropdown > button {
+  color: #000000;
 }
 
 button.active {
   color: #000000;
   opacity: 1;
-  &:hover {
-    color: #000000;
-  }
+}
+button.active:hover {
+  color: #000000;
 }

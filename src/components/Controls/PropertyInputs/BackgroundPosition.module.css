@@ -3,29 +3,28 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  & label {
-    font-size: calc(1em / var(--scalar));
-    margin: 0;
-    padding: 0;
-    color: #ffffff90;
+}
+.wrap label {
+  font-size: calc(1em / var(--scalar));
+  margin: 0;
+  padding: 0;
+  color: #ffffff90;
+}
+.wrap label.full {
+  display: inline-flex;
+  width: 100%;
+}
+.wrap > span {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5rem 0 0.25rem;
+}
+.wrap > span > label {
+  margin-right: 1rem;
+}
 
-    &.full {
-      display: inline-flex;
-      width: 100%;
-    }
-  }
-  > span {
-    display: inline-flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0.5rem 0 0.25rem;
-    > label {
-      margin-right: 1rem;
-    }
-  }
-
-  & input {
-    margin: 0.5rem 0 0.25rem;
-  }
+.wrap input {
+  margin: 0.5rem 0 0.25rem;
 }

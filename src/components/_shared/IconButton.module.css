@@ -8,23 +8,23 @@
   background: transparent;
   box-sizing: content-box;
   cursor: pointer;
-  &.active {
-    opacity: 1;
-  }
-  > svg {
-    transition: scale var(--transition-duration) var(--transition-timing);
-  }
-  &:hover {
-    opacity: 1;
-    color: #fff;
-    > svg {
-      scale: 1.05;
-    }
-  }
-  &:active {
-    opacity: 1;
-    > svg {
-      scale: 0.95;
-    }
-  }
+}
+.wrap.active {
+  opacity: 1;
+}
+.wrap > svg {
+  transition: scale var(--transition-duration) var(--transition-timing);
+}
+.wrap:hover {
+  opacity: 1;
+  color: #fff;
+}
+.wrap:hover > svg {
+  scale: 1.05;
+}
+.wrap:active {
+  opacity: 1;
+}
+.wrap:active > svg {
+  scale: 0.95;
 }
