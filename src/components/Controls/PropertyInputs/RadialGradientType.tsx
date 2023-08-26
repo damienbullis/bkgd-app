@@ -36,6 +36,7 @@ const RadialGradientStops = ({
           color={color}
           opacity={opacity}
           stop={stop}
+          allStops={stops}
           selectedLayer={selectedLayer}
         />
       ))}
@@ -66,12 +67,14 @@ const ColorStop = ({
   color,
   opacity,
   stop,
+  allStops,
   selectedLayer,
 }: {
   index: number
   color: GradientStopsType[0]
   opacity: GradientStopsType[1]
   stop: GradientStopsType[2]
+  allStops: GradientStopsType[]
   selectedLayer: string
 }) => {
   return (
@@ -82,19 +85,51 @@ const ColorStop = ({
           type="color"
           defaultValue={transformColorValue(color)}
           onChange={(e) =>
-            console.log('Color', e.target.value, selectedLayer, index)
+            EventHandler({
+              action: 'bkgd-update-layer',
+              payload: {
+                id: selectedLayer,
+                type: 'gradient',
+                props: {
+                  type: 'radial',
+                  stops: allStops.map((s, i) => {
+                    const [, opacity, stop] = s
+                    if (i === index) {
+                      return [e.target.value, opacity || null, stop || null]
+                    }
+                    return s
+                  }),
+                },
+              },
+            })
           }
         />
       </label>
       <label>
         Opacity
         <input
-          type="number"
+          type="range"
           defaultValue={opacity ?? 100}
           min={0}
           max={100}
           onChange={(e) =>
-            console.log('Opacity', e.target.value, selectedLayer, index)
+            deHandler({
+              action: 'bkgd-update-layer',
+              payload: {
+                id: selectedLayer,
+                type: 'gradient',
+                props: {
+                  type: 'radial',
+                  stops: allStops.map((s, i) => {
+                    const [color, , stop] = s
+                    if (i === index) {
+                      return [color, Number(e.target.value), stop || null]
+                    }
+                    return s
+                  }),
+                },
+              },
+            })
           }
         />
       </label>
@@ -107,8 +142,24 @@ const ColorStop = ({
             name="stop"
             value="single"
             defaultChecked={typeof stop === 'number'}
-            onChange={(e) =>
-              console.log('single stop', e.target.value, selectedLayer, index)
+            onChange={() =>
+              EventHandler({
+                action: 'bkgd-update-layer',
+                payload: {
+                  id: selectedLayer,
+                  type: 'gradient',
+                  props: {
+                    type: 'radial',
+                    stops: allStops.map((s, i) => {
+                      const [color, opacity] = s
+                      if (i === index) {
+                        return [color, opacity || null, 0]
+                      }
+                      return s
+                    }),
+                  },
+                },
+              })
             }
           />
         </span>
@@ -119,13 +170,34 @@ const ColorStop = ({
             name="stop"
             value="double"
             defaultChecked={Array.isArray(stop)}
-            onChange={(e) =>
-              console.log('doiuble stop', e.target.value, selectedLayer, index)
+            onChange={() =>
+              EventHandler({
+                action: 'bkgd-update-layer',
+                payload: {
+                  id: selectedLayer,
+                  type: 'gradient',
+                  props: {
+                    type: 'radial',
+                    stops: allStops.map((s, i) => {
+                      const [color, opacity] = s
+                      if (i === index) {
+                        return [color, opacity || null, [0, 100]]
+                      }
+                      return s
+                    }),
+                  },
+                },
+              })
             }
           />
         </span>
         <br />
-        <StopInput stop={stop} selectedLayer={selectedLayer} index={index} />
+        <StopInput
+          stop={stop}
+          selectedLayer={selectedLayer}
+          index={index}
+          allStops={allStops}
+        />
       </label>
     </>
   )
@@ -142,11 +214,13 @@ const StopInput = ({
   index,
   property = 'stops',
   stop,
+  allStops,
   selectedLayer,
 }: {
   index?: number
   property?: 'size' | 'stops'
   stop: GradientStopsType[2]
+  allStops: GradientStopsType[]
   selectedLayer: string
 }) => {
   if (Array.isArray(stop)) {
@@ -156,14 +230,54 @@ const StopInput = ({
           {...DEFAULT_STOP_PROPS}
           defaultValue={stop[0]}
           onChange={(e) =>
-            console.log(e.target.value, selectedLayer, property, index)
+            deHandler({
+              action: 'bkgd-update-layer',
+              payload: {
+                id: selectedLayer,
+                type: 'gradient',
+                props: {
+                  type: 'radial',
+                  [property]: allStops.map((s, i) => {
+                    const [color, opacity] = s
+                    if (i === index) {
+                      return [
+                        color,
+                        opacity || null,
+                        [Number(e.target.value), stop[1]],
+                      ]
+                    }
+                    return s
+                  }),
+                },
+              },
+            })
           }
         />
         <input
           {...DEFAULT_STOP_PROPS}
           defaultValue={stop[1]}
           onChange={(e) =>
-            console.log(e.target.value, selectedLayer, property, index)
+            deHandler({
+              action: 'bkgd-update-layer',
+              payload: {
+                id: selectedLayer,
+                type: 'gradient',
+                props: {
+                  type: 'radial',
+                  [property]: allStops.map((s, i) => {
+                    const [color, opacity] = s
+                    if (i === index) {
+                      return [
+                        color,
+                        opacity || null,
+                        [stop[0], Number(e.target.value)],
+                      ]
+                    }
+                    return s
+                  }),
+                },
+              },
+            })
           }
         />
       </>
@@ -174,7 +288,23 @@ const StopInput = ({
       {...DEFAULT_STOP_PROPS}
       defaultValue={stop ?? 100}
       onChange={(e) =>
-        console.log(e.target.value, selectedLayer, property, index)
+        deHandler({
+          action: 'bkgd-update-layer',
+          payload: {
+            id: selectedLayer,
+            type: 'gradient',
+            props: {
+              type: 'radial',
+              [property]: allStops.map((s, i) => {
+                const [color, opacity] = s
+                if (i === index) {
+                  return [color, opacity || null, Number(e.target.value)]
+                }
+                return s
+              }),
+            },
+          },
+        })
       }
     />
   )
@@ -283,6 +413,7 @@ const RadialGradientType = ({
         <StopInput
           property="size"
           stop={size || null}
+          allStops={stops || []}
           selectedLayer={selectedLayer}
         />
       </label>
