@@ -1,17 +1,13 @@
 import { useSelectedLayer } from '@state/global'
 import { EventHandler } from '@state/events'
-import { debounce } from '@utils'
 
 import { GradientLayerType } from '../../Layers/LayerTypeSchema'
 import styles from './GradientType.module.css'
 import LinearGradientType from './LinearGradientType'
 import RadialGradientType from './RadialGradientType'
+import ConicGradientType from './ConicGradientType'
 
 type GradientTypeProps = GradientLayerType['props']
-
-const ConicGradientType = ({ typeProps }: { typeProps: GradientTypeProps }) => {
-  return <></>
-}
 
 const GradientSwitch = ({
   typeProps,
@@ -36,7 +32,12 @@ const GradientSwitch = ({
         />
       )
     case 'conic':
-      return <ConicGradientType typeProps={typeProps} />
+      return (
+        <ConicGradientType
+          typeProps={typeProps}
+          selectedLayer={selectedLayer}
+        />
+      )
     default: {
       const exhaustiveCheck: never = typeProps
       return exhaustiveCheck

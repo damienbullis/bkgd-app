@@ -1,5 +1,5 @@
 import { GradientLayerType } from 'src/components/Layers/LayerTypeSchema'
-import styles from './GradientType.module.css'
+// import styles from './GradientType.module.css'
 import { debounce, hslToHex, randomHex, rgbToHex } from '@utils'
 import { EventHandler } from '@state/events'
 

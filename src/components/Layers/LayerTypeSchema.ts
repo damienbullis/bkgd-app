@@ -138,24 +138,20 @@ const LayerSchema = z.object({
   layerData: z
     .array(LayerTypeSchema)
     .catch(({ error, input }) => {
-      // TODO: fix this
-      // this is just a poc of how to handle errors
-      // maybe I just want to use defaults?
-      // using zod.default() on the individual property level???
-      // ...hmmm not sure about any of this...
+      // REFACTOR: This is a temp solution to sanitize the data
       console.log('LayerData Error', { input, error })
-      let layer: any
+      let layer: Record<string, unknown> | undefined
       for (const { path } of error.issues) {
         const [, layerIndex, ...props] = path
         layer = input[layerIndex as number]
 
         if (layer) {
-          let drill: any = layer
+          let drill = layer
           for (const prop of props as string[]) {
             console.log('LayerData Error', { prop, drill })
 
             if (prop === 'props') {
-              drill = drill[prop] as any
+              drill = drill[prop] as Record<string, unknown>
             }
 
             if (prop === 'color') {

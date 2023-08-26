@@ -28,7 +28,10 @@ const updateClasslist = (action: keyof DOMTokenList, id: string) => {
 export default function Nav() {
   const [bkgdSelected, setBkgdSelected] = useBkgdSelected()
   const { id, layerData, layerStack } = useSearch({ from: '/' })
-  const { isSaved, bkgds } = useLocalStorage(id)
+  const {
+    // isSaved,
+    bkgds,
+  } = useLocalStorage(id)
 
   //#region Handlers
   const saveHandler = (id?: string) => {
