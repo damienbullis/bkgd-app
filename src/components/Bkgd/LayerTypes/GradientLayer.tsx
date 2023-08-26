@@ -65,7 +65,7 @@ const GradientLayer = (layer: GradientLayerProps, displayP3?: boolean) => {
         return `${getColor(color, opacity, displayP3)} ${transformStop(stop)}`
       }) || []
 
-    return `${repeat}conic-gradient(from ${deg}deg in ${space} at ${position}, ${stops.join(
+    return `${repeat}conic-gradient(from ${deg}deg at ${position} in ${space}, ${stops.join(
       ', '
     )})`
   }
