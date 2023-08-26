@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --font-impact: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   --font-roboto: 'Roboto', system-ui, Avenir, Helvetica, Arial, sans-serif;
