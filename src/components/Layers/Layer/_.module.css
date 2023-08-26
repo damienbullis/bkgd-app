@@ -57,7 +57,7 @@
   box-shadow: 0 0 0.5rem #00000090;
   z-index: 1;
 }
-.dropdown .active {
+.dropdown.active {
   display: block;
 }
 .dropdown > button {

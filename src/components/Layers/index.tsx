@@ -16,13 +16,15 @@ import { useNavigate } from '@tanstack/router'
 
 const LiButton = ({
   icon,
+  id,
   onClick,
 }: {
   icon: Icon
+  id?: string
   onClick: React.MouseEventHandler<HTMLButtonElement>
 }) => {
   return (
-    <li>
+    <li id={id}>
       <IconButton icon={icon} onClick={onClick} />
     </li>
   )
@@ -32,6 +34,7 @@ const VisibilityButton = () => {
   const [hide] = useVisible()
   return (
     <LiButton
+      id="visibility-button"
       icon={hide ? EyeClosed : Eye}
       onClick={() =>
         EventHandler({

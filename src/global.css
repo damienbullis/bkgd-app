@@ -103,6 +103,17 @@
 .clr:is(abutton) {
   cursor: pointer;
 }
+.ui-hidden > *:not(ul),
+.ui-hidden > *:is(ul) > * {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+#layers.ui-hidden #visibility-button {
+  visibility: visible;
+  pointer-events: all;
+  opacity: 1;
+}
 
 .txt {
   color: color(srgb var(--color-text) / 1);

@@ -2,38 +2,14 @@ import { memo } from 'react'
 import { checkBrowser } from '@utils'
 import { CapabilitiesProvider } from './components/Capabilities'
 import { Bkgd, Footer, Layout, Controls, Layers, Nav } from './components'
-
-// const DownloadButton = () => {
-//   const nav = useNavigate({ from: '/' })
-//   return (
-//     <button
-//       onClick={() =>
-//         nav({ search: { bkgd: (Math.random() * 100).toFixed(0) } })
-//       }
-//     >
-//       TEST
-//     </button>
-//   )
-// }
-
-// function App() {
-//   const { bkgd } = useSearch({
-//     from: '/',
-//   })
-//   console.log({ bkgd })
-//   return (
-//     <div className="wrap">
-//       <div id="test">{/* <img src={Noise} alt="noise" /> */}</div>
-//       {/* <DownloadButton /> */}
-//     </div>
-//   )
-// }
+import VisibilityController from './components/VisibilityController'
 
 const App = memo(function () {
   try {
     checkBrowser()
     return (
       <Layout>
+        <VisibilityController />
         <CapabilitiesProvider>
           <Bkgd />
           <Footer />

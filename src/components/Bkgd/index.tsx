@@ -5,6 +5,11 @@ import LayerTypeSwitch from './LayerTypeSwitch'
 import styles from './_.module.css'
 import { LayerType } from '../Layers/LayerTypeSchema'
 
+/**
+ * Build the CSS from the layer properties
+ * @param layers The layers to build the background style from
+ * @returns The CSS properties object to set on the background
+ */
 const buildLayerStyle = (layers: LayerType[]) => {
   const bkgdStyle: CSSProperties = {
     backgroundImage: '',
@@ -15,13 +20,14 @@ const buildLayerStyle = (layers: LayerType[]) => {
   }
   let i = 0
   for (const layer of layers) {
-    const t = LayerTypeSwitch(layer)
     const end = i === layers.length - 1 ? '' : ', '
-    bkgdStyle.backgroundImage += t + end
+
+    bkgdStyle.backgroundImage += LayerTypeSwitch(layer) + end
     bkgdStyle.backgroundBlendMode += (layer.blendMode || 'normal') + end
     bkgdStyle.backgroundPosition += (layer.backgroundPosition || '0% 0%') + end
     bkgdStyle.backgroundSize += (layer.backgroundSize || 'auto') + end
     bkgdStyle.backgroundRepeat += (layer.backgroundRepeat || 'repeat') + end
+
     i++
   }
   return bkgdStyle
