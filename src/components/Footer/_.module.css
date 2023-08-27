@@ -14,7 +14,7 @@
   font-size: 0.8rem;
 }
 
-.wrap .active {
+.wrap.active {
   grid-template-rows: 1fr 1fr;
 }
 

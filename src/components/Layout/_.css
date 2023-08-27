@@ -5,8 +5,9 @@
   grid-template-columns: 1fr auto auto;
   grid-template-rows: 1fr auto;
 }
-.layout > * {
-  transition: opacity var(--transition-duration) var(--transition-timing);
+.layout > * > *:not(ul),
+.layout > * > *:is(ul) > * {
+  transition: opacity var(--transition-duration);
 }
 .layout #bkgd {
   grid-column: 1 / 4;
