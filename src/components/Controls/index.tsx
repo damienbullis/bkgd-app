@@ -24,13 +24,35 @@ const ToggleStyle = ({
   <>
     {Children.map(children, (child) =>
       cloneElement(child, {
-        className: `${child.props.className} ${
+        className: `${child.props.className || ''} ${
           child.props.id === target ? applyClass : inactiveClass
         }`,
       })
     )}
   </>
 )
+
+const Panel = ({
+  id,
+  className,
+  children,
+}: {
+  id: string
+  className: string
+  children: React.ReactNode
+}) => {
+  return (
+    <div
+      id={id}
+      className={
+        `absolute right-0 top-0 rounded-lg p-4 shadow-xl 
+        backdrop-blur-3xl backdrop-brightness-50 ` + className
+      }
+    >
+      {children}
+    </div>
+  )
+}
 
 export default function Controls() {
   const [mode, setMode] = useState<Mode>('tools')
@@ -45,40 +67,45 @@ export default function Controls() {
   }, [selectedLayer])
 
   return (
-    <section id="controls" className={styles.wrap}>
+    <section
+      id="controls"
+      className="grid h-full w-full place-items-start justify-items-end"
+    >
       <div className={styles.layer}>
-        <div className={styles._head}>
+        <ul className="inline-grid h-12 grid-flow-col items-center gap-2">
           <ToggleStyle target={mode} applyClass={styles.indicator}>
-            <IconButton
-              id="tools"
-              icon={Stack}
-              active={mode === 'tools'}
-              onClick={() =>
-                setMode((prev) => (prev === 'tools' ? prev : 'tools'))
-              }
-            />
-            <IconButton
-              id="edit"
-              icon={SlidersHorizontal}
-              active={mode === 'edit'}
-              onClick={() =>
-                setMode((prev) => (prev === 'edit' ? prev : 'edit'))
-              }
-            />
+            <li id="tools">
+              <IconButton
+                icon={Stack}
+                active={mode === 'tools'}
+                onClick={() =>
+                  setMode((prev) => (prev === 'tools' ? prev : 'tools'))
+                }
+              />
+            </li>
+            <li id="edit">
+              <IconButton
+                icon={SlidersHorizontal}
+                active={mode === 'edit'}
+                onClick={() =>
+                  setMode((prev) => (prev === 'edit' ? prev : 'edit'))
+                }
+              />
+            </li>
           </ToggleStyle>
-        </div>
-        <div style={{ position: 'relative' }}>
+        </ul>
+        <div className="relative">
           <ToggleStyle
             target={mode === 'tools' ? 'toolsPanel' : 'controlsPanel'}
             applyClass={styles.active}
             inactiveClass={styles.inactive}
           >
-            <div id="toolsPanel" className={styles.card}>
+            <Panel id="toolsPanel" className={styles.card}>
               <Tools />
-            </div>
-            <div id="controlsPanel" className={styles.card}>
+            </Panel>
+            <Panel id="controlsPanel" className={styles.card}>
               <LayerProperties />
-            </div>
+            </Panel>
           </ToggleStyle>
         </div>
       </div>

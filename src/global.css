@@ -106,9 +106,13 @@
 .ui-hidden > *:not(ul),
 .ui-hidden > *:is(ul) > * {
   opacity: 0;
+  pointer-events: none;
+  user-select: none;
 }
 #layers.ui-hidden #visibility-button {
   opacity: 1;
+  pointer-events: auto;
+  user-select: auto;
 }
 
 .txt {

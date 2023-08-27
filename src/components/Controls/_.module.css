@@ -1,10 +1,3 @@
-.wrap {
-  display: grid;
-  width: 100%;
-  height: 100%;
-  place-items: flex-start flex-end;
-}
-
 .layer {
   padding: 0 1rem;
   display: flex;
@@ -28,52 +21,27 @@
   position: absolute;
   height: var(--size);
   border-radius: calc(var(--size) / 2);
-  top: calc(calc(var(--size) / 2) * -1);
+  bottom: 100%;
   left: 0;
   width: 100%;
   z-index: -1;
-  background-color: blueviolet;
+  backdrop-filter: brightness(0.5);
 }
 .card.active {
   opacity: 1;
   translate: 0;
 }
 
-.card.inactive::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+.card.inactive {
+  user-select: none;
+  pointer-events: none;
 }
 .card {
-  position: absolute;
-  min-width: 10rem;
-  top: 0;
-  right: 0;
   opacity: 0;
-  translate: -200%;
-  transition: all var(--transition-duration) var(--animation-easing);
-  display: block;
-  background-color: blueviolet;
-  border-radius: 0.5rem;
-  padding: 1rem;
-}
-.card > ._head {
-  border-bottom: 1px solid #ffffff20;
-  margin-bottom: 0.5rem;
-}
-.card > ._head > h3 {
-  text-transform: capitalize;
-  margin: 0;
-  padding: 0;
-  color: #fff;
-}
-.card > ._foot {
-  border-top: 1px solid #ffffff20;
-  margin-top: 0.5rem;
+  translate: -100%;
+  transition:
+    translate var(--transition-duration) var(--animation-easing),
+    opacity;
 }
 
 .tools {
@@ -97,12 +65,6 @@
 .tools > button:hover {
   background-color: #ffffff20;
   color: var(--clr-white);
-}
-
-.layerControls {
-  display: grid;
-  grid-auto-flow: row;
-  gap: 0.5rem;
 }
 
 .title {

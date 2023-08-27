@@ -68,7 +68,7 @@ const GradientLayer = (layer: GradientLayerProps, displayP3?: boolean) => {
       ', '
     )})`
   }
-  return ''
+  return 'transparent'
 }
 
 export default GradientLayer

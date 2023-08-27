@@ -4,9 +4,9 @@ import styles from './IconButton.module.css'
 
 type SizeEnum = 'sm' | 'md' | 'lg' | 'xl'
 
-const buildClass = (size: SizeEnum, active: boolean, className?: string) => {
+const buildClass = (size: SizeEnum, active: boolean, className = '') => {
   const activeClass = active ? styles.active : ''
-  const parentClass = className || ''
+  const parentClass = className
   return `${styles.wrap} ${size} ${parentClass} ${activeClass}`
 }
 
@@ -17,7 +17,7 @@ type IconButtonProps = {
 } & ButtonHTMLAttributes<HTMLButtonElement>
 const IconButton = ({
   icon,
-  className,
+  className = '',
   onClick,
   size = 'md',
   active = false,
