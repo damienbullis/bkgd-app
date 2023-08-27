@@ -1,10 +1,10 @@
-import { Children, cloneElement, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   ArrowFatLinesRight,
   ChartDonut,
-  CircleHalf,
   PaintBucket,
   SlidersHorizontal,
+  Target,
   Waveform,
 } from '@phosphor-icons/react'
 
@@ -13,30 +13,20 @@ import { IconButton } from '@shared'
 
 import styles from './_.module.css'
 import LayerProperties from './LayerProperties'
+import { debounce, makeID } from '@utils'
+import { EventHandler } from '@state/events'
 
 type Mode = '' | 'edit'
 
-const ToggleStyle = ({
-  target,
-  applyClass,
-  inactiveClass = '',
-  children,
-}: {
-  target: string
-  applyClass: string
-  inactiveClass?: string
-  children: React.ReactElement | React.ReactElement[]
-}) => (
-  <>
-    {Children.map(children, (child) =>
-      cloneElement(child, {
-        className: `${child.props.className || ''} ${
-          child.props.id === target ? applyClass : inactiveClass
-        }`,
-      })
-    )}
-  </>
-)
+const deHandler = debounce(EventHandler, 200)
+const handler = (type: 'solid' | 'gradient' | 'noise') =>
+  deHandler({
+    action: 'bkgd-add-layer',
+    payload: {
+      id: makeID(),
+      type,
+    },
+  })
 
 const Panel = ({
   className,
@@ -94,38 +84,26 @@ export default function Controls() {
       <div className="flex flex-col items-end px-4 py-0">
         <ul className="inline-grid h-12 grid-flow-col items-center gap-2">
           <li className="group relative">
-            <IconButton
-              icon={Waveform}
-              onClick={() => console.log('add noise layer type')}
-            />
+            <IconButton icon={Waveform} onClick={() => handler('noise')} />
             <HoverText>Noise</HoverText>
           </li>
           <li className="group relative">
-            <IconButton
-              icon={ChartDonut}
-              onClick={() => console.log('add conic gradient layer type')}
-            />
+            <IconButton icon={ChartDonut} onClick={() => handler('gradient')} />
             <HoverText>Conic Gradient</HoverText>
           </li>
           <li className="group relative">
-            <IconButton
-              icon={CircleHalf}
-              onClick={() => console.log('add radial gradient layer type')}
-            />
+            <IconButton icon={Target} onClick={() => handler('gradient')} />
             <HoverText>Radial Gradient</HoverText>
           </li>
           <li className="group relative">
             <IconButton
               icon={ArrowFatLinesRight}
-              onClick={() => console.log('add linear gradient layer type')}
+              onClick={() => handler('gradient')}
             />
             <HoverText>Linear Gradient</HoverText>
           </li>
           <li className="group relative">
-            <IconButton
-              icon={PaintBucket}
-              onClick={() => console.log('add solid layer type')}
-            />
+            <IconButton icon={PaintBucket} onClick={() => handler('solid')} />
             <HoverText>Solid Color</HoverText>
           </li>
 

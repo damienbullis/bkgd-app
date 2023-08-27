@@ -13,6 +13,7 @@ import {
   ChartPolar,
   CircleHalf,
   FrameCorners,
+  MapPin,
   Repeat,
 } from '@phosphor-icons/react'
 
@@ -81,7 +82,7 @@ const LayerControls = () => {
           <CircleHalf />
         </div>
         <FrameCorners />
-        <ChartPolar />
+        <MapPin />
         <Repeat />
       </div>
       <Select
