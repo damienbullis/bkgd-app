@@ -17,7 +17,7 @@ const getColor = (
   if (typeof color === 'string') {
     // reduce to rgba()
     const { r, g, b } = hexToRGB(color, displayP3)
-    return `rgba(${r}, ${g}, ${b}, ${opacity ?? 1})`
+    return `rgba(${r}, ${g}, ${b}, ${(opacity ?? 100) / 100})`
   }
 }
 
