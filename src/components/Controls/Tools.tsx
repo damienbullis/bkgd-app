@@ -1,8 +1,26 @@
 import { CircleHalf, Palette, Waveform } from '@phosphor-icons/react'
 import { EventHandler } from '@state/events'
-import { Button } from '@shared'
 import { makeID } from '@utils'
-import styles from './_.module.css'
+
+const ToolButton = ({
+  onClick,
+  children,
+}: {
+  onClick?: () => void
+  children: React.ReactNode
+}) => {
+  return (
+    <button
+      className="
+      rounded-lg bg-transparent p-2 
+      hover:bg-[#ffffff20] active:scale-95
+      active:bg-[#ffffff20]"
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  )
+}
 
 const Tools = () => {
   /**
@@ -35,8 +53,8 @@ const Tools = () => {
    */
 
   return (
-    <div className={styles.tools}>
-      <Button
+    <div className="flex flex-row items-center justify-center gap-2">
+      <ToolButton
         onClick={() =>
           EventHandler({
             action: 'bkgd-add-layer',
@@ -48,9 +66,9 @@ const Tools = () => {
         }
       >
         <Palette size={32} />
-      </Button>
+      </ToolButton>
 
-      <Button
+      <ToolButton
         onClick={() =>
           EventHandler({
             action: 'bkgd-add-layer',
@@ -62,9 +80,9 @@ const Tools = () => {
         }
       >
         <CircleHalf size={32} />
-      </Button>
+      </ToolButton>
 
-      <Button
+      <ToolButton
         onClick={() =>
           EventHandler({
             action: 'bkgd-add-layer',
@@ -76,7 +94,7 @@ const Tools = () => {
         }
       >
         <Waveform size={32} />
-      </Button>
+      </ToolButton>
       {/* OTHER BUTTONS 
         Conic Gradient <ArrowClockwise size={32} />  
         Radial Gradient <CircleHalf size={32} />

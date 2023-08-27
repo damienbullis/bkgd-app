@@ -1,31 +1,9 @@
-.layer {
-  padding: 0 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-.layer._head {
-  height: 3rem;
-  display: inline-grid;
-  grid-auto-flow: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.indicator {
-  position: relative;
-}
-.indicator::after {
-  --size: 8px;
-  content: '';
-  position: absolute;
-  height: var(--size);
-  border-radius: calc(var(--size) / 2);
-  bottom: 100%;
-  left: 0;
-  width: 100%;
-  z-index: -1;
-  backdrop-filter: brightness(0.5);
+.card {
+  opacity: 0;
+  translate: -100%;
+  transition:
+    translate var(--transition-duration) var(--animation-easing),
+    opacity var(--transition-duration) var(--animation-easing);
 }
 .card.active {
   opacity: 1;
@@ -35,36 +13,6 @@
 .card.inactive {
   user-select: none;
   pointer-events: none;
-}
-.card {
-  opacity: 0;
-  translate: -100%;
-  transition:
-    translate var(--transition-duration) var(--animation-easing),
-    opacity;
-}
-
-.tools {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  gap: 0.25rem;
-}
-.tools > button {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: transparent;
-  border: 1px solid var(--clr-primary);
-  color: var(--clr-primary);
-  line-height: inherit;
-  transition: all 0.2s ease-in-out;
-}
-.tools > button:has(svg) {
-  line-height: 0.5;
-}
-
-.tools > button:hover {
-  background-color: #ffffff20;
-  color: var(--clr-white);
 }
 
 .title {
