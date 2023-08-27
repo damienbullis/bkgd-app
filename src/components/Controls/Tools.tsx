@@ -1,4 +1,4 @@
-import { CircleHalf, Gradient, Palette } from '@phosphor-icons/react'
+import { CircleHalf, Palette, Waveform } from '@phosphor-icons/react'
 import { EventHandler } from '@state/events'
 import { Button } from '@shared'
 import { makeID } from '@utils'
@@ -75,8 +75,13 @@ const Tools = () => {
           })
         }
       >
-        <Gradient size={32} />
+        <Waveform size={32} />
       </Button>
+      {/* OTHER BUTTONS 
+        Conic Gradient <ArrowClockwise size={32} />  
+        Radial Gradient <CircleHalf size={32} />
+        Linear Gradient <ArrowFatLinesRight size={32} />
+      */}
     </div>
   )
 }

@@ -4,6 +4,13 @@ import { CapabilitiesProvider } from './components/Capabilities'
 import { Bkgd, Footer, Layout, Controls, Layers, Nav } from './components'
 import VisibilityController from './components/VisibilityController'
 
+const ErrorPage = ({ e }: { e: Error }) => (
+  <>
+    {/* TODO: Add a better error page for future */}
+    <h1>{e.message}</h1>
+  </>
+)
+
 const App = memo(function () {
   try {
     checkBrowser()
@@ -29,12 +36,7 @@ const App = memo(function () {
     )
   } catch (e) {
     console.warn(e)
-    return (
-      <>
-        {/* TODO: Add a better error page for future */}
-        <h1>{(e as Error).message}</h1>
-      </>
-    )
+    return <ErrorPage e={e as Error} />
   }
 })
 
