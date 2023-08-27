@@ -36,8 +36,11 @@ const buildLayerStyle = (layers: LayerType[]) => {
 export default function Bkgd() {
   const { layers } = useLayers()
   console.log('layers', layers)
-  const bkgdStyle = buildLayerStyle(layers)
   return (
-    <section id="bkgd" className={styles.bkgdWrap} style={bkgdStyle}></section>
+    <section
+      id="bkgd"
+      className={styles.bkgdWrap}
+      style={buildLayerStyle(layers)}
+    ></section>
   )
 }

@@ -1,7 +1,14 @@
 import { GradientLayerType } from 'src/components/Layers/LayerTypeSchema'
-import styles from './GradientType.module.css'
 import { debounce, hslToHex, randomHex, rgbToHex } from '@utils'
 import { EventHandler } from '@state/events'
+import {
+  CircleDashed,
+  CrosshairSimple,
+  MinusSquare,
+  PaintBucket,
+  PlusSquare,
+} from '@phosphor-icons/react'
+import { useEffect, useRef } from 'react'
 
 const deHandler = debounce(EventHandler, 200)
 
@@ -28,9 +35,28 @@ const LinearGradientStops = ({
   selectedLayer: string
 }) => {
   return (
-    <>
+    <div className="flex w-full flex-col items-stretch justify-start">
+      <div className="flex w-full flex-row items-center justify-between">
+        <button
+          onClick={() =>
+            deHandler({
+              action: 'bkgd-update-layer',
+              payload: {
+                id: selectedLayer,
+                type: 'gradient',
+                props: {
+                  type: 'linear',
+                  stops: stops.concat([randomHex(), null, null]),
+                },
+              },
+            })
+          }
+        >
+          Add Stop
+        </button>
+      </div>
       {stops.map(([color, opacity, stop], i) => (
-        <ColorStop
+        <GradientStop
           key={i}
           index={i}
           color={color}
@@ -40,29 +66,13 @@ const LinearGradientStops = ({
           selectedLayer={selectedLayer}
         />
       ))}
-
-      <button
-        onClick={() =>
-          deHandler({
-            action: 'bkgd-update-layer',
-            payload: {
-              id: selectedLayer,
-              type: 'gradient',
-              props: {
-                type: 'linear',
-                stops: [...stops, [randomHex(), null, null]],
-              },
-            },
-          })
-        }
-      >
-        Add Stop
-      </button>
-    </>
+    </div>
   )
 }
 
-const ColorStop = ({
+const getID = (index: number) => `gradient-stop-${index}-` as const
+
+const GradientStop = ({
   index,
   color,
   opacity,
@@ -77,11 +87,37 @@ const ColorStop = ({
   allStops: GradientStopsType[]
   selectedLayer: string
 }) => {
+  const prevSelectedLayer = useRef(selectedLayer)
+  const isArr = Array.isArray(stop)
+  const _pos = Math.floor((100 / allStops.length) * (index + 1))
+
+  useEffect(() => {
+    if (prevSelectedLayer.current !== selectedLayer) {
+      prevSelectedLayer.current = selectedLayer
+      const _id = getID(index)
+      const _color = document.querySelector<HTMLInputElement>(`#${_id}color`)
+      const _opacity = document.querySelector<HTMLInputElement>(
+        `#${_id}opacity`
+      )
+
+      if (_color) _color.value = transformColorValue(color)
+      if (_opacity) _opacity.value = String(opacity ?? 100)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedLayer])
   return (
     <>
-      <label>
-        Color
+      <div className="flex w-full flex-row items-center justify-between">
+        <h5>Stop {index + 1}</h5>
+        <PaintBucket />
         <input
+          id={getID(index) + 'color'}
+          className="h-8 w-8 appearance-none overflow-hidden rounded-full
+          [&::-webkit-color-swatch-wrapper]:border-0
+          [&::-webkit-color-swatch-wrapper]:p-0
+          [&::-webkit-color-swatch]:border-0
+          [&::-webkit-color-swatch]:outline-0
+          "
           type="color"
           defaultValue={transformColorValue(color)}
           onChange={(e) =>
@@ -100,102 +136,91 @@ const ColorStop = ({
             })
           }
         />
-      </label>
-      <label>
-        Opacity
-        <input
-          type="range"
-          defaultValue={opacity ?? 100}
-          min={0}
-          max={100}
-          onChange={(e) =>
-            deHandler({
-              action: 'bkgd-update-layer',
-              payload: {
-                id: selectedLayer,
-                type: 'gradient',
-                props: {
-                  type: 'linear',
-                  stops: allStops.map((s, i) =>
-                    i === index ? [s[0], Number(e.target.value), s[2]] : s
-                  ),
-                },
+      </div>
+      <label>Opacity</label>
+      <button>
+        <CircleDashed size={'1em'} />
+      </button>
+      <input
+        id={getID(index) + 'opacity'}
+        type="range"
+        defaultValue={opacity ?? 100}
+        min={0}
+        max={100}
+        onChange={(e) =>
+          deHandler({
+            action: 'bkgd-update-layer',
+            payload: {
+              id: selectedLayer,
+              type: 'gradient',
+              props: {
+                type: 'linear',
+                stops: allStops.map((s, i) =>
+                  i === index ? [s[0], Number(e.target.value), s[2]] : s
+                ),
               },
-            })
-          }
-        />
-      </label>
-      <label>
-        Stop
-        <span>
-          single
-          <input
-            type="radio"
-            name="stop"
-            value="single"
-            defaultChecked={typeof stop === 'number'}
-            onChange={() =>
-              EventHandler({
-                action: 'bkgd-update-layer',
-                payload: {
-                  id: selectedLayer,
-                  type: 'gradient',
-                  props: {
-                    type: 'linear',
-                    stops: allStops.map((s, i) =>
-                      i === index
-                        ? [s[0], s[1], s[2] ?? (100 / allStops.length) * i]
-                        : s
-                    ),
+            },
+          })
+        }
+      />
+      <label className="my-2 flex flex-row flex-nowrap items-baseline">
+        Position
+        <button>
+          <CrosshairSimple size={'1em'} />
+        </button>
+        <span className="ml-auto inline-flex flex-row items-center">
+          <span className="mr-2">
+            {isArr ? stop.join('%, ') : stop ?? _pos}%
+          </span>
+          {isArr ? (
+            <button
+              onClick={() =>
+                deHandler({
+                  action: 'bkgd-update-layer',
+                  payload: {
+                    id: selectedLayer,
+                    type: 'gradient',
+                    props: {
+                      type: 'linear',
+                      stops: allStops.map((s, i) =>
+                        i === index ? [s[0], s[1], _pos] : s
+                      ),
+                    },
                   },
-                },
-              })
-            }
-          />
-        </span>
-        <span>
-          double
-          <input
-            type="radio"
-            name="stop"
-            value="double"
-            defaultChecked={Array.isArray(stop)}
-            onChange={() =>
-              EventHandler({
-                action: 'bkgd-update-layer',
-                payload: {
-                  id: selectedLayer,
-                  type: 'gradient',
-                  props: {
-                    type: 'linear',
-                    stops: allStops.map((s, i) =>
-                      i === index
-                        ? [
-                            s[0],
-                            s[1],
-                            Array.isArray(s[2])
-                              ? s[2]
-                              : [
-                                  (100 / allStops.length) * i,
-                                  (100 / allStops.length) * (i + 1),
-                                ],
-                          ]
-                        : s
-                    ),
+                })
+              }
+            >
+              <MinusSquare />
+            </button>
+          ) : (
+            <button
+              onClick={() =>
+                deHandler({
+                  action: 'bkgd-update-layer',
+                  payload: {
+                    id: selectedLayer,
+                    type: 'gradient',
+                    props: {
+                      type: 'linear',
+                      stops: allStops.map((s, i) =>
+                        i === index ? [s[0], s[1], [_pos, _pos]] : s
+                      ),
+                    },
                   },
-                },
-              })
-            }
-          />
+                })
+              }
+            >
+              <PlusSquare size={'2em'} className="mb-1" />
+            </button>
+          )}
         </span>
-        <br />
-        <StopInput
-          stop={stop}
-          selectedLayer={selectedLayer}
-          index={index}
-          allStops={allStops}
-        />
       </label>
+      <StopInput
+        stop={stop}
+        selectedLayer={selectedLayer}
+        index={index}
+        allStops={allStops}
+      />
     </>
   )
 }
@@ -218,10 +243,26 @@ const StopInput = ({
   allStops: GradientStopsType[]
   selectedLayer: string
 }) => {
+  const _id = getID(index)
+  useEffect(() => {
+    const _stop = document.querySelector<HTMLInputElement>(`#${_id}stop-1`)
+    const _stop2 = document.querySelector<HTMLInputElement>(`#${_id}stop-2`)
+    if (_stop)
+      _stop.value = String(
+        stop ?? Math.floor((100 / allStops.length) * (index + 1))
+      )
+    if (_stop2)
+      _stop2.value = String(
+        stop ?? Math.floor((100 / allStops.length) * (index + 1))
+      )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedLayer])
+
   if (Array.isArray(stop)) {
     return (
       <>
         <input
+          id={_id + 'stop-1'}
           {...DEFAULT_STOP_PROPS}
           defaultValue={stop[0]}
           onChange={(e) =>
@@ -243,6 +284,7 @@ const StopInput = ({
           }
         />
         <input
+          id={_id + 'stop-2'}
           {...DEFAULT_STOP_PROPS}
           defaultValue={stop[1]}
           onChange={(e) =>
@@ -268,8 +310,9 @@ const StopInput = ({
   }
   return (
     <input
+      id={_id + 'stop-1'}
       {...DEFAULT_STOP_PROPS}
-      defaultValue={stop ?? (100 / allStops.length) * index}
+      defaultValue={stop ?? Math.floor((100 / allStops.length) * (index + 1))}
       onChange={(e) =>
         deHandler({
           action: 'bkgd-update-layer',
@@ -297,30 +340,43 @@ const LinearGradientType = ({
   selectedLayer: string
 }) => {
   const { deg, colorSpace, repeating, stops } = typeProps
+  useEffect(() => {
+    const _deg = document.querySelector<HTMLInputElement>('#degrees')
+    const _oklab =
+      document.querySelector<HTMLInputElement>('#color-space-oklab')
+    const _Oklch =
+      document.querySelector<HTMLInputElement>('#color-space-Oklch')
+    const _repeating = document.querySelector<HTMLInputElement>('#repeating')
+    if (_deg) _deg.value = String(deg)
+    if (_oklab) _oklab.checked = colorSpace !== 'Oklch'
+    if (_Oklch) _Oklch.checked = colorSpace === 'Oklch'
+    if (_repeating) _repeating.checked = repeating || false
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedLayer])
   return (
     <>
-      <label className={styles.full}>
-        Degrees
-        <input
-          type="number"
-          defaultValue={deg}
-          min={1}
-          max={360}
-          onChange={(e) =>
-            deHandler({
-              action: 'bkgd-update-layer',
-              payload: {
-                id: selectedLayer,
-                type: 'gradient',
-                props: {
-                  type: 'linear',
-                  deg: Number(e.target.value),
-                },
+      <label className="w-full">Degrees</label>
+      <input
+        id="degrees"
+        type="range"
+        defaultValue={deg}
+        min={1}
+        max={360}
+        onChange={(e) =>
+          deHandler({
+            action: 'bkgd-update-layer',
+            payload: {
+              id: selectedLayer,
+              type: 'gradient',
+              props: {
+                type: 'linear',
+                deg: Number(e.target.value),
               },
-            })
-          }
-        />
-      </label>
+            },
+          })
+        }
+      />
+      <LinearGradientStops stops={stops || []} selectedLayer={selectedLayer} />
       <label>
         Color Space
         <br />
@@ -328,9 +384,12 @@ const LinearGradientType = ({
           oklab
           <input
             type="radio"
-            name="color-space"
-            defaultChecked={colorSpace === 'oklab'}
-            onChange={() =>
+            id="color-space-oklab"
+            defaultChecked={colorSpace !== 'Oklch'}
+            onChange={() => {
+              const el =
+                document.querySelector<HTMLInputElement>('#color-space-Oklch')
+              if (el) el.checked = false
               deHandler({
                 action: 'bkgd-update-layer',
                 payload: {
@@ -339,19 +398,23 @@ const LinearGradientType = ({
                   props: {
                     type: 'linear',
                     colorSpace: 'oklab',
+                    stops,
                   },
                 },
               })
-            }
+            }}
           />
         </span>
         <span>
           oklch
           <input
             type="radio"
-            name="color-space"
+            id="color-space-Oklch"
             defaultChecked={colorSpace === 'Oklch'}
-            onChange={() =>
+            onChange={() => {
+              const el =
+                document.querySelector<HTMLInputElement>('#color-space-oklab')
+              if (el) el.checked = false
               deHandler({
                 action: 'bkgd-update-layer',
                 payload: {
@@ -360,40 +423,34 @@ const LinearGradientType = ({
                   props: {
                     type: 'linear',
                     colorSpace: 'Oklch',
+                    stops,
                   },
                 },
               })
-            }
+            }}
           />
         </span>
       </label>
-      <label>
-        Repeating
-        <input
-          type="checkbox"
-          defaultChecked={repeating}
-          onChange={(e) =>
-            deHandler({
-              action: 'bkgd-update-layer',
-              payload: {
-                id: selectedLayer,
-                type: 'gradient',
-                props: {
-                  type: 'linear',
-                  repeating: e.target.checked,
-                },
+
+      <label>Repeating</label>
+      <input
+        type="checkbox"
+        id="repeating"
+        defaultChecked={repeating}
+        onChange={(e) =>
+          deHandler({
+            action: 'bkgd-update-layer',
+            payload: {
+              id: selectedLayer,
+              type: 'gradient',
+              props: {
+                type: 'linear',
+                repeating: e.target.checked,
               },
-            })
-          }
-        />
-      </label>
-      <label>
-        Stops
-        <LinearGradientStops
-          stops={stops || []}
-          selectedLayer={selectedLayer}
-        />
-      </label>
+            },
+          })
+        }
+      />
     </>
   )
 }
