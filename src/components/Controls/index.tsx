@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import {
-  ArrowFatLinesRight,
-  ChartDonut,
+  CircleHalf,
   PaintBucket,
+  Record,
   SlidersHorizontal,
   Target,
   Waveform,
@@ -88,18 +88,15 @@ export default function Controls() {
             <HoverText>Noise</HoverText>
           </li>
           <li className="group relative">
-            <IconButton icon={ChartDonut} onClick={() => handler('gradient')} />
+            <IconButton icon={Target} onClick={() => handler('gradient')} />
             <HoverText>Conic Gradient</HoverText>
           </li>
           <li className="group relative">
-            <IconButton icon={Target} onClick={() => handler('gradient')} />
+            <IconButton icon={Record} onClick={() => handler('gradient')} />
             <HoverText>Radial Gradient</HoverText>
           </li>
           <li className="group relative">
-            <IconButton
-              icon={ArrowFatLinesRight}
-              onClick={() => handler('gradient')}
-            />
+            <IconButton icon={CircleHalf} onClick={() => handler('gradient')} />
             <HoverText>Linear Gradient</HoverText>
           </li>
           <li className="group relative">
