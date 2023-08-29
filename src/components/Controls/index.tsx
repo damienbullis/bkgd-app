@@ -114,7 +114,9 @@ export default function Controls() {
               data-active={mode === 'edit'}
               onClick={() => setMode((prev) => (prev === 'edit' ? '' : 'edit'))}
             />
-            <HoverText>Edit (e)</HoverText>
+            <HoverText>
+              {selectedLayer ? 'Edit (e)' : 'Select a layer'}
+            </HoverText>
           </li>
         </ul>
         <div className="relative">

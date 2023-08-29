@@ -7,6 +7,7 @@ import {
   CrosshairSimple,
   MinusSquare,
   PaintBucket,
+  PlusCircle,
   PlusSquare,
 } from '@phosphor-icons/react'
 import { useEffect, useRef } from 'react'
@@ -65,7 +66,7 @@ const LinearGradientStops = ({
             })
           }
         >
-          Add Stop
+          <PlusCircle />
         </button>
       </div>
     </div>
@@ -154,9 +155,9 @@ const GradientStop = ({
               curr.dataset.active === 'true' ? 'false' : 'true'
           }
         }}
-        className="group mr-4 flex cursor-pointer justify-start gap-2"
+        className="group mr-4 flex cursor-pointer items-center justify-start gap-2"
       >
-        <label>Opacity</label>
+        <CircleDashed />
         <span className="relative p-1 text-white">
           {opacity ?? 100}%
           <input
@@ -188,11 +189,8 @@ const GradientStop = ({
           />
         </span>
       </div>
-      <div className="flex flex-row items-center justify-start">
-        <label className="">Position</label>
-        <button>
-          <CrosshairSimple />
-        </button>
+      <div className="flex cursor-pointer flex-row items-center justify-start">
+        <CrosshairSimple />
         <span className="ml-auto inline-flex flex-row items-center">
           <span className="mr-2">
             {isArr ? stop.join('%, ') : stop ?? _pos}%
@@ -215,7 +213,7 @@ const GradientStop = ({
                 })
               }
             >
-              <MinusSquare />
+              <MinusSquare size={'1em'} />
             </button>
           ) : (
             <button
@@ -235,7 +233,7 @@ const GradientStop = ({
                 })
               }
             >
-              <PlusSquare size={'2em'} className="mb-1" />
+              <PlusSquare size={'1em'} />
             </button>
           )}
         </span>

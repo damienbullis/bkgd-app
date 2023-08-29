@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
     "@phosphor-icons/react": "^2.0.10",
     "@tanstack/router": "0.0.1-beta.89",
     "framer-motion": "^10.12.17",
