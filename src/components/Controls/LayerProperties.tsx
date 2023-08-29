@@ -9,13 +9,7 @@ import ColorType from './PropertyInputs/ColorType'
 import NoiseType from './PropertyInputs/NoiseType'
 
 import GradientType from './PropertyInputs/GradientType'
-import {
-  ChartPolar,
-  CircleHalf,
-  FrameCorners,
-  MapPin,
-  Repeat,
-} from '@phosphor-icons/react'
+import { CircleHalf, FrameCorners, MapPin, Repeat } from '@phosphor-icons/react'
 
 const blendModesOptions = [
   'normal',
