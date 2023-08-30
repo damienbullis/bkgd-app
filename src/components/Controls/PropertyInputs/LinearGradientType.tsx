@@ -13,6 +13,7 @@ import {
 import { useEffect, useRef } from 'react'
 import styles from './GradientType.module.css'
 import { Popover } from '@headlessui/react'
+import { ToggleButton } from '@shared'
 
 const deHandler = debounce(EventHandler, 200)
 
@@ -378,7 +379,7 @@ const LinearGradientType = ({
   }, [selectedLayer])
   return (
     <div className={styles.wrap}>
-      <div className="mb-2 flex w-full flex-row items-center justify-between">
+      <div className="mb-2 flex w-full flex-row items-center justify-stretch gap-4">
         <div className="inline-flex items-center">
           <label>Angle</label>
           <Popover className="relative">
@@ -412,22 +413,31 @@ const LinearGradientType = ({
                 }}
               />
             </Popover.Panel>
-            {/* <Popover.Overlay className="fixed inset-0" /> */}
           </Popover>
-          {/* <div
-            id="degrees-wrap"
-            className="group relative mx-4 flex cursor-pointer flex-row items-center"
-            data-active={false}
-            onClick={(e) => {
-              const curr = e.target as HTMLDivElement
-              if (curr.dataset.active) {
-                curr.dataset.active =
-                  curr.dataset.active === 'true' ? 'false' : 'true'
-              }
-            }}
-          >
-            {deg || 360}°
-          </div> */}
+        </div>
+        <div
+          data-color-space={colorSpace}
+          className="group flex w-full flex-row items-center justify-start gap-2"
+        >
+          <label>Color Space</label>
+          <ToggleButton
+            onLabel="oklab"
+            offLabel="oklch"
+            defaultValue={colorSpace || 'oklab'}
+            onChange={(v) =>
+              deHandler({
+                action: 'bkgd-update-layer',
+                payload: {
+                  id: selectedLayer,
+                  type: 'gradient',
+                  props: {
+                    type: 'linear',
+                    colorSpace: v ? 'Oklch' : 'oklab',
+                  },
+                },
+              })
+            }
+          />
         </div>
         <div
           className="flex cursor-pointer flex-row items-center justify-end"
@@ -455,54 +465,7 @@ const LinearGradientType = ({
           />
         </div>
       </div>
-      <div
-        data-color-space={colorSpace}
-        className="group flex w-full flex-row items-center justify-start gap-2"
-      >
-        <label>Color Space</label>
-        <span
-          className="cursor-pointer text-sm
-          group-data-[color-space='oklab']:text-white
-          group-data-[color-space='undefined']:text-gray-500
-          group-data-[color-space='oklab']:underline"
-          onClick={() => {
-            deHandler({
-              action: 'bkgd-update-layer',
-              payload: {
-                id: selectedLayer,
-                type: 'gradient',
-                props: {
-                  type: 'linear',
-                  colorSpace: 'oklab',
-                },
-              },
-            })
-          }}
-        >
-          oklab
-        </span>
-        <span
-          className="cursor-pointer text-sm
-          group-data-[color-space='Oklch']:text-white
-          group-data-[color-space='undefined']:text-gray-500
-          group-data-[color-space='Oklch']:underline"
-          onClick={() => {
-            deHandler({
-              action: 'bkgd-update-layer',
-              payload: {
-                id: selectedLayer,
-                type: 'gradient',
-                props: {
-                  type: 'linear',
-                  colorSpace: 'Oklch',
-                },
-              },
-            })
-          }}
-        >
-          oklch
-        </span>
-      </div>
+
       <LinearGradientStops stops={stops || []} selectedLayer={selectedLayer} />
     </div>
   )

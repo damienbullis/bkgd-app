@@ -53,7 +53,16 @@ const FALLBACK = {
   backgroundRepeat: 'repeat',
 } satisfies LayerType
 
-function MyTabs() {
+function MyTabs({
+  props,
+}: {
+  props: Pick<
+    LayerType,
+    'blendMode' | 'backgroundPosition' | 'backgroundSize' | 'backgroundRepeat'
+  >
+}) {
+  const { blendMode, backgroundPosition, backgroundSize, backgroundRepeat } =
+    props
   return (
     <Tab.Group>
       <Tab.List>
@@ -71,10 +80,28 @@ function MyTabs() {
         </Tab>
       </Tab.List>
       <Tab.Panels>
-        <Tab.Panel>Content 1</Tab.Panel>
-        <Tab.Panel>Content 2</Tab.Panel>
-        <Tab.Panel>Content 3</Tab.Panel>
-        <Tab.Panel>Content 4</Tab.Panel>
+        <Tab.Panel>
+          <Select
+            label="Blend Mode"
+            id="blendMode"
+            options={blendModesOptions}
+            value={blendMode}
+          />
+        </Tab.Panel>
+        <Tab.Panel>
+          <BackgroundSize value={backgroundSize} />
+        </Tab.Panel>
+        <Tab.Panel>
+          <BackgroundPosition value={backgroundPosition} />
+        </Tab.Panel>
+        <Tab.Panel>
+          <Select
+            label="Background Repeat"
+            id="backgroundRepeat"
+            options={repeatOptions}
+            value={backgroundRepeat}
+          />
+        </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
   )
@@ -82,46 +109,26 @@ function MyTabs() {
 
 const LayerControls = () => {
   const { layers, selectedLayer } = useLayers()
-  const {
-    type,
-    props,
-    blendMode,
-    opacity,
-    backgroundSize,
-    backgroundPosition,
-    backgroundRepeat,
-  } = useMemo(() => {
+  const layer = useMemo(() => {
     return layers.find((l) => l?.id === selectedLayer) || FALLBACK
   }, [layers, selectedLayer])
 
+  const { type, props, opacity } = layer
+
   return (
-    <div className="grid min-w-[300px] grid-flow-row gap-2 ">
+    <div className="grid w-96 grid-flow-row gap-2 ">
       {type === 'gradient' && <GradientType typeProps={props} />}
       {type === 'noise' && <NoiseType typeProps={props} opacity={opacity} />}
       {type === 'solid' && <ColorType typeProps={props} opacity={opacity} />}
       <div className="grid grid-flow-col place-content-stretch justify-items-center gap-2 text-2xl">
-        <div className="inline-grid w-full cursor-pointer items-center justify-center rounded-lg transition-all hover:ring-2 hover:ring-sky-500">
+        <div className="transfo inline-grid w-full cursor-pointer items-center justify-center rounded-lg transition-all hover:ring-2 hover:ring-sky-500">
           <CircleHalf />
         </div>
         <FrameCorners />
         <MapPin />
         <Repeat />
       </div>
-      <MyTabs />
-      <Select
-        label="Blend Mode"
-        id="blendMode"
-        options={blendModesOptions}
-        value={blendMode}
-      />
-      <BackgroundSize value={backgroundSize} />
-      <BackgroundPosition value={backgroundPosition} />
-      <Select
-        label="Background Repeat"
-        id="backgroundRepeat"
-        options={repeatOptions}
-        value={backgroundRepeat}
-      />
+      <MyTabs props={layer} />
     </div>
   )
 }
