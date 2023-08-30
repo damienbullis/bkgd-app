@@ -10,6 +10,7 @@ import NoiseType from './PropertyInputs/NoiseType'
 
 import GradientType from './PropertyInputs/GradientType'
 import { CircleHalf, FrameCorners, MapPin, Repeat } from '@phosphor-icons/react'
+import { Tab } from '@headlessui/react'
 
 const blendModesOptions = [
   'normal',
@@ -52,6 +53,33 @@ const FALLBACK = {
   backgroundRepeat: 'repeat',
 } satisfies LayerType
 
+function MyTabs() {
+  return (
+    <Tab.Group>
+      <Tab.List>
+        <Tab className="ui-selected:bg-blue-500 ui-selected:text-white ui-not-selected:bg-white ui-not-selected:text-black">
+          Tab 1
+        </Tab>
+        <Tab className="ui-selected:bg-blue-500 ui-selected:text-white ui-not-selected:bg-white ui-not-selected:text-black">
+          Tab 2
+        </Tab>
+        <Tab className="ui-selected:bg-blue-500 ui-selected:text-white ui-not-selected:bg-white ui-not-selected:text-black">
+          Tab 3
+        </Tab>
+        <Tab className="ui-selected:bg-blue-500 ui-selected:text-white ui-not-selected:bg-white ui-not-selected:text-black">
+          Tab 4
+        </Tab>
+      </Tab.List>
+      <Tab.Panels>
+        <Tab.Panel>Content 1</Tab.Panel>
+        <Tab.Panel>Content 2</Tab.Panel>
+        <Tab.Panel>Content 3</Tab.Panel>
+        <Tab.Panel>Content 4</Tab.Panel>
+      </Tab.Panels>
+    </Tab.Group>
+  )
+}
+
 const LayerControls = () => {
   const { layers, selectedLayer } = useLayers()
   const {
@@ -79,6 +107,7 @@ const LayerControls = () => {
         <MapPin />
         <Repeat />
       </div>
+      <MyTabs />
       <Select
         label="Blend Mode"
         id="blendMode"
