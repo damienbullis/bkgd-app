@@ -52,7 +52,7 @@ type EventsEnum =
 /**
  * These are only the events that are initiated by the user.
  */
-export const EventHandler = (event: EventHandlerType<EventActionEnum>) => {
+export function EventHandler(event: EventHandlerType<EventActionEnum>) {
   if (event.action.startsWith('bkgd')) {
     handleMiddleware(event as EventHandlerType<BkgdEventsEnum>)
   } else {

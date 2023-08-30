@@ -1,6 +1,6 @@
 import { useVisible } from '@state/global'
 
-const HIDDEN = 'ui-hidden'
+const HIDDEN = 'bkgd-hidden'
 
 const VisibilityController = () => {
   const [visible] = useVisible()

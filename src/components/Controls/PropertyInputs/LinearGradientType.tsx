@@ -12,6 +12,7 @@ import {
 } from '@phosphor-icons/react'
 import { useEffect, useRef } from 'react'
 import styles from './GradientType.module.css'
+import { Popover } from '@headlessui/react'
 
 const deHandler = debounce(EventHandler, 200)
 
@@ -119,13 +120,14 @@ const GradientStop = ({
           <input
             id={getID(index) + 'color'}
             className="h-8 w-8 cursor-pointer appearance-none overflow-hidden rounded-full
-          [&::-webkit-color-swatch-wrapper]:border-0
-          [&::-webkit-color-swatch-wrapper]:p-0
-          [&::-webkit-color-swatch]:border-0
-          [&::-webkit-color-swatch]:outline-0"
+            [&::-webkit-color-swatch-wrapper]:border-0
+            [&::-webkit-color-swatch-wrapper]:p-0
+            [&::-webkit-color-swatch]:border-0
+            [&::-webkit-color-swatch]:outline-0"
             type="color"
             defaultValue={transformColorValue(color)}
-            onChange={(e) =>
+            onChange={(e) => {
+              allStops[index][0] = e.target.value
               deHandler({
                 action: 'bkgd-update-layer',
                 payload: {
@@ -133,13 +135,11 @@ const GradientStop = ({
                   type: 'gradient',
                   props: {
                     type: 'linear',
-                    stops: allStops.map((s, i) =>
-                      i === index ? [e.target.value, s[1], s[2]] : s
-                    ),
+                    stops: allStops,
                   },
                 },
               })
-            }
+            }}
           />
         </div>
       </div>
@@ -381,7 +381,40 @@ const LinearGradientType = ({
       <div className="mb-2 flex w-full flex-row items-center justify-between">
         <div className="inline-flex items-center">
           <label>Angle</label>
-          <div
+          <Popover className="relative">
+            <Popover.Button className="ml-2">{deg || 360}°</Popover.Button>
+            <Popover.Panel className="absolute z-10 rounded-md bg-[#00000090] px-4 py-2 shadow-2xl backdrop-blur-xl backdrop-brightness-50">
+              <input
+                id="degrees"
+                type="range"
+                defaultValue={deg || 360}
+                min={1}
+                max={360}
+                className="appearance:none m-0 w-32 cursor-pointer rounded-full transition-all
+                focus:outline-none focus:ring-2 focus:ring-pink-300 focus:ring-offset-4 
+                active:ring-2 active:ring-pink-300 active:ring-offset-4
+                [&::-webkit-slider-container]:h-2
+                [&::-webkit-slider-container]:appearance-none 
+                [&::-webkit-slider-container]:rounded-full
+                [&::-webkit-slider-container]:bg-pink-500"
+                onChange={(e) => {
+                  deHandler({
+                    action: 'bkgd-update-layer',
+                    payload: {
+                      id: selectedLayer,
+                      type: 'gradient',
+                      props: {
+                        type: 'linear',
+                        deg: Number(e.target.value),
+                      },
+                    },
+                  })
+                }}
+              />
+            </Popover.Panel>
+            {/* <Popover.Overlay className="fixed inset-0" /> */}
+          </Popover>
+          {/* <div
             id="degrees-wrap"
             className="group relative mx-4 flex cursor-pointer flex-row items-center"
             data-active={false}
@@ -394,33 +427,7 @@ const LinearGradientType = ({
             }}
           >
             {deg || 360}°
-            <input
-              id="degrees"
-              type="range"
-              defaultValue={deg || 360}
-              min={1}
-              max={360}
-              className="pointer-events-none absolute left-1/2 top-full z-10 min-w-[100px] 
-                -translate-x-1/2 scale-50 opacity-0 transition-all
-                before:absolute before:-inset-1 before:z-[-1] 
-                before:rounded before:bg-white before:shadow-md
-                group-data-[active='true']:pointer-events-auto group-data-[active='true']:scale-100
-                group-data-[active='true']:opacity-100"
-              onChange={(e) => {
-                deHandler({
-                  action: 'bkgd-update-layer',
-                  payload: {
-                    id: selectedLayer,
-                    type: 'gradient',
-                    props: {
-                      type: 'linear',
-                      deg: Number(e.target.value),
-                    },
-                  },
-                })
-              }}
-            />
-          </div>
+          </div> */}
         </div>
         <div
           className="flex cursor-pointer flex-row items-center justify-end"

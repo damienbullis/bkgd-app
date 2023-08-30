@@ -103,13 +103,13 @@
 .clr:is(a, button) {
   cursor: pointer;
 }
-.ui-hidden > *:not(ul),
-.ui-hidden > *:is(ul) > * {
+.bkgd-hidden > *:not(ul),
+.bkgd-hidden > *:is(ul) > * {
   opacity: 0;
   pointer-events: none;
   user-select: none;
 }
-#layers.ui-hidden #visibility-button {
+#layers.bkgd-hidden #visibility-button {
   opacity: 1;
   pointer-events: auto;
   user-select: auto;
@@ -209,7 +209,7 @@ h6 {
   );
 }
 
-input[type='range'] {
+/* input[type='range'] {
   appearance: none;
   -webkit-appearance: none;
   margin: 0.5rem 0;
@@ -248,7 +248,7 @@ input[type='range']:hover::-webkit-slider-thumb {
 
 input[type='range']:active::-webkit-slider-thumb {
   transform: scale(1);
-}
+} */
 
 /* ANIMATIONS */
 
