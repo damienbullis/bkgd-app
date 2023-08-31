@@ -9,7 +9,13 @@ import ColorType from './PropertyInputs/ColorType'
 import NoiseType from './PropertyInputs/NoiseType'
 
 import GradientType from './PropertyInputs/GradientType'
-import { CircleHalf, FrameCorners, MapPin, Repeat } from '@phosphor-icons/react'
+import {
+  CircleHalf,
+  FrameCorners,
+  MapPin,
+  Repeat,
+  Unite,
+} from '@phosphor-icons/react'
 import { Tab } from '@headlessui/react'
 
 const blendModesOptions = [
@@ -53,7 +59,12 @@ const FALLBACK = {
   backgroundRepeat: 'repeat',
 } satisfies LayerType
 
-function MyTabs({
+// Some notes
+
+// 1. Change the design of the additional layer properties to be instead a
+// single button that opens some sort of popover with all the additional properties?
+
+function AdditionalProperties({
   props,
 }: {
   props: Pick<
@@ -63,20 +74,21 @@ function MyTabs({
 }) {
   const { blendMode, backgroundPosition, backgroundSize, backgroundRepeat } =
     props
+
   return (
     <Tab.Group>
-      <Tab.List>
-        <Tab className="ui-selected:bg-blue-500 ui-selected:text-white ui-not-selected:bg-white ui-not-selected:text-black">
-          Tab 1
+      <Tab.List className="flex flex-row items-center justify-around">
+        <Tab className="ui-selected:text-fuchsia-500 ui-not-selected:text-white">
+          <Unite size="2em" />
         </Tab>
-        <Tab className="ui-selected:bg-blue-500 ui-selected:text-white ui-not-selected:bg-white ui-not-selected:text-black">
-          Tab 2
+        <Tab className="ui-selected:text-fuchsia-500 ui-not-selected:text-white">
+          <FrameCorners size="2em" />
         </Tab>
-        <Tab className="ui-selected:bg-blue-500 ui-selected:text-white ui-not-selected:bg-white ui-not-selected:text-black">
-          Tab 3
+        <Tab className="ui-selected:text-fuchsia-500 ui-not-selected:text-white">
+          <MapPin size="2em" />
         </Tab>
-        <Tab className="ui-selected:bg-blue-500 ui-selected:text-white ui-not-selected:bg-white ui-not-selected:text-black">
-          Tab 4
+        <Tab className="ui-selected:text-fuchsia-500 ui-not-selected:text-white">
+          <Repeat size="2em" />
         </Tab>
       </Tab.List>
       <Tab.Panels>
@@ -120,15 +132,8 @@ const LayerControls = () => {
       {type === 'gradient' && <GradientType typeProps={props} />}
       {type === 'noise' && <NoiseType typeProps={props} opacity={opacity} />}
       {type === 'solid' && <ColorType typeProps={props} opacity={opacity} />}
-      <div className="grid grid-flow-col place-content-stretch justify-items-center gap-2 text-2xl">
-        <div className="transfo inline-grid w-full cursor-pointer items-center justify-center rounded-lg transition-all hover:ring-2 hover:ring-sky-500">
-          <CircleHalf />
-        </div>
-        <FrameCorners />
-        <MapPin />
-        <Repeat />
-      </div>
-      <MyTabs props={layer} />
+
+      <AdditionalProperties props={layer} />
     </div>
   )
 }
