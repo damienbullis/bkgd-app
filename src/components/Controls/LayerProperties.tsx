@@ -10,6 +10,7 @@ import NoiseType from './PropertyInputs/NoiseType'
 
 import GradientType from './PropertyInputs/GradientType'
 import {
+  ArrowsOut,
   CircleHalf,
   FrameCorners,
   MapPin,
@@ -64,6 +65,20 @@ const FALLBACK = {
 // 1. Change the design of the additional layer properties to be instead a
 // single button that opens some sort of popover with all the additional properties?
 
+function PropTab({ children }: { children: React.ReactNode }) {
+  return (
+    <Tab
+      className="ui-selected:text-white ui-not-selected:text-gray-200 ui-selected:outline-none 
+      ui-selected:drop-shadow-[0_0_12px_rgba(255,255,255,1)]
+      ui-selected:hover:drop-shadow-[0_0_16px_rgba(255,255,255,1)] 
+      ui-not-selected:hover:text-white 
+      flex w-full items-center justify-center transition hover:scale-105 active:scale-95"
+    >
+      {children}
+    </Tab>
+  )
+}
+
 function AdditionalProperties({
   props,
 }: {
@@ -78,20 +93,20 @@ function AdditionalProperties({
   return (
     <Tab.Group>
       <Tab.List className="flex flex-row items-center justify-around">
-        <Tab className="ui-selected:text-fuchsia-500 ui-not-selected:text-white">
+        <PropTab>
           <Unite size="2em" />
-        </Tab>
-        <Tab className="ui-selected:text-fuchsia-500 ui-not-selected:text-white">
+        </PropTab>
+        <PropTab>
           <FrameCorners size="2em" />
-        </Tab>
-        <Tab className="ui-selected:text-fuchsia-500 ui-not-selected:text-white">
-          <MapPin size="2em" />
-        </Tab>
-        <Tab className="ui-selected:text-fuchsia-500 ui-not-selected:text-white">
+        </PropTab>
+        <PropTab>
+          <ArrowsOut size="2em" />
+        </PropTab>
+        <PropTab>
           <Repeat size="2em" />
-        </Tab>
+        </PropTab>
       </Tab.List>
-      <Tab.Panels>
+      <Tab.Panels className="pt-2">
         <Tab.Panel>
           <Select
             label="Blend Mode"
