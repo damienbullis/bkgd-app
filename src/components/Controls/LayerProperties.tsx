@@ -106,7 +106,7 @@ function AdditionalProperties({
           <Repeat size="2em" />
         </PropTab>
       </Tab.List>
-      <Tab.Panels className="pt-2">
+      <Tab.Panels className="pt-1">
         <Tab.Panel>
           <Select
             label="Blend Mode"

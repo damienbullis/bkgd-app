@@ -89,20 +89,6 @@
   --color-text: var(--color-text-white);
 }
 
-.clr {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  /* font-size: 100%; */
-  vertical-align: baseline;
-  background: transparent;
-  text-decoration: none;
-  list-style: none;
-}
-.clr:is(a, button) {
-  cursor: pointer;
-}
 .bkgd-hidden > *:not(ul),
 .bkgd-hidden > *:is(ul) > * {
   opacity: 0;
@@ -176,7 +162,8 @@ h5 {
   font-size: 1rem;
 }
 
-h6 {
+h6,
+.bkgd-font-xs {
   font-size: calc(1rem * var(--x));
 }
 
