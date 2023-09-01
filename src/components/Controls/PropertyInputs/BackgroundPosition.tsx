@@ -27,55 +27,53 @@ export default function BackgroundPosition({ value }: { value?: string }) {
 
   return (
     <div className={styles.wrap}>
-      <label className={styles.full}>{label}</label>
-      <span>
-        <label htmlFor={`${label}-x`}>X</label>
-        <input
-          step={10}
-          type="range"
-          min={-100}
-          max={100}
-          id={`${label}-x`}
-          value={x}
-          onChange={(e) =>
-            setXY((prev) => {
-              const next: [number, number] = [Number(e.target.value), prev[1]]
-              deHandler({
-                action: 'bkgd-update-layer',
-                payload: {
-                  id: selectedLayer,
-                  backgroundPosition: `${next[0]}% ${next[1]}%`,
-                },
+      <div className="my-2 flex w-full flex-row items-baseline justify-start gap-2">
+        <label className="whitespace-nowrap">{label}</label>
+        <span className="relative flex w-full items-center">
+          <label className="absolute left-3">X</label>
+          <input
+            step={10}
+            type="number"
+            value={x}
+            className="flex w-full appearance-none rounded-md border-none bg-transparent px-2 py-1 pl-7 leading-tight text-gray-200 ring-1 ring-white "
+            onChange={(e) =>
+              setXY((prev) => {
+                const next: [number, number] = [Number(e.target.value), prev[1]]
+                deHandler({
+                  action: 'bkgd-update-layer',
+                  payload: {
+                    id: selectedLayer,
+                    backgroundPosition: `${next[0]}% ${next[1]}%`,
+                  },
+                })
+                return next
               })
-              return next
-            })
-          }
-        />
-      </span>
-      <span>
-        <label htmlFor={`${label}-y`}>Y</label>
-        <input
-          step={10}
-          type="range"
-          min={-100}
-          max={100}
-          id={`${label}-y`}
-          value={y}
-          onChange={(e) => {
-            setXY((prev) => {
-              const next: [number, number] = [prev[0], Number(e.target.value)]
-              deHandler({
-                action: 'bkgd-update-layer',
-                payload: {
-                  id: selectedLayer,
-                  backgroundPosition: `${next[0]}% ${next[1]}%`,
-                },
+            }
+          />
+        </span>
+        <span className="relative flex w-full items-center">
+          <label className="absolute left-3">Y</label>
+          <input
+            step={10}
+            type="number"
+            value={y}
+            className="flex w-full appearance-none rounded-md border-none bg-transparent px-2 py-1 pl-7 leading-tight text-gray-200 ring-1 ring-white"
+            onChange={(e) => {
+              setXY((prev) => {
+                const next: [number, number] = [prev[0], Number(e.target.value)]
+                deHandler({
+                  action: 'bkgd-update-layer',
+                  payload: {
+                    id: selectedLayer,
+                    backgroundPosition: `${next[0]}% ${next[1]}%`,
+                  },
+                })
+                return next
               })
-              return next
-            })
-          }}
-        />
-      </span>
+            }}
+          />
+        </span>
+      </div>
     </div>
   )
 }

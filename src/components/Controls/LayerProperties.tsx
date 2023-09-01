@@ -92,7 +92,7 @@ function AdditionalProperties({
 
   return (
     <Tab.Group>
-      <Tab.List className="flex flex-row items-center justify-around">
+      <Tab.List className="my-3 flex flex-row items-center justify-around">
         <PropTab>
           <Unite size="2em" />
         </PropTab>
@@ -106,13 +106,13 @@ function AdditionalProperties({
           <Repeat size="2em" />
         </PropTab>
       </Tab.List>
-      <Tab.Panels className="pt-1">
+      <Tab.Panels className="max-w-full">
         <Tab.Panel>
           <Select
             label="Blend Mode"
             id="blendMode"
             options={blendModesOptions}
-            value={blendMode}
+            value={blendMode || 'normal'}
           />
         </Tab.Panel>
         <Tab.Panel>
@@ -126,7 +126,7 @@ function AdditionalProperties({
             label="Background Repeat"
             id="backgroundRepeat"
             options={repeatOptions}
-            value={backgroundRepeat}
+            value={backgroundRepeat || 'repeat'}
           />
         </Tab.Panel>
       </Tab.Panels>
@@ -143,7 +143,7 @@ const LayerControls = () => {
   const { type, props, opacity } = layer
 
   return (
-    <div className="grid w-96 grid-flow-row gap-2 ">
+    <div className="w-96">
       {type === 'gradient' && <GradientType typeProps={props} />}
       {type === 'noise' && <NoiseType typeProps={props} opacity={opacity} />}
       {type === 'solid' && <ColorType typeProps={props} opacity={opacity} />}

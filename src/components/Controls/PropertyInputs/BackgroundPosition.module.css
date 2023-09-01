@@ -10,21 +10,3 @@
   padding: 0;
   color: #ffffff90;
 }
-.wrap label.full {
-  display: inline-flex;
-  width: 100%;
-}
-.wrap > span {
-  display: inline-flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0.5rem 0 0.25rem;
-}
-.wrap > span > label {
-  margin-right: 1rem;
-}
-
-.wrap input {
-  margin: 0.5rem 0 0.25rem;
-}
