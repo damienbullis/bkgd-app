@@ -115,7 +115,7 @@ const GradientStop = ({
       <div className="mr-4 flex items-center justify-start gap-2">
         <h5>{index + 1}</h5>
         <div className="relative flex cursor-pointer">
-          <div className="bottom pointer-events-none absolute inset-0 z-10 flex place-content-center place-items-center">
+          <div className="bottom pointer-events-none absolute inset-0 z-[1] flex place-content-center place-items-center">
             <PaintBucket className="pointer-events-none text-xl" />
           </div>
           <input
@@ -378,26 +378,54 @@ const LinearGradientType = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLayer])
   return (
-    <div className={styles.wrap}>
+    <>
+      <div className="flex flex-row items-center justify-start gap-2">
+        <h4 className="-skew-x-6 bg-gradient-to-r from-pink-500 to-purple-500 to-[150%] bg-clip-text text-transparent">
+          LINEAR GRADIENT
+        </h4>
+
+        <label className="ml-auto text-[10px] text-gray-300">Color Space</label>
+        <ToggleButton
+          onLabel="oklab"
+          offLabel="oklch"
+          defaultValue={colorSpace || 'oklab'}
+          onChange={(v) =>
+            deHandler({
+              action: 'bkgd-update-layer',
+              payload: {
+                id: selectedLayer,
+                type: 'gradient',
+                props: {
+                  type: 'linear',
+                  colorSpace: v ? 'Oklch' : 'oklab',
+                },
+              },
+            })
+          }
+        />
+      </div>
+
       <div className="mb-2 flex w-full flex-row items-center justify-stretch gap-4">
         <div className="inline-flex items-center">
-          <label>Angle</label>
+          <label className="text-[10px] text-gray-300">Angle</label>
           <Popover className="relative">
             <Popover.Button className="ml-2">{deg || 360}°</Popover.Button>
-            <Popover.Panel className="absolute z-10 rounded-md bg-[#00000090] px-4 py-2 shadow-2xl backdrop-blur-xl backdrop-brightness-50">
+            <Popover.Panel className="absolute z-10 rounded-md bg-[#00000099] px-4 py-2 shadow-2xl shadow-black backdrop-brightness-50">
               <input
                 id="degrees"
                 type="range"
                 defaultValue={deg || 360}
                 min={1}
                 max={360}
-                className="appearance:none m-0 w-32 cursor-pointer rounded-full transition-all
-                focus:outline-none focus:ring-2 focus:ring-pink-300 focus:ring-offset-4 
-                active:ring-2 active:ring-pink-300 active:ring-offset-4
+                className="
+                appearance:none m-0 w-32 cursor-pointer rounded-full transition-all 
                 [&::-webkit-slider-container]:h-2
-                [&::-webkit-slider-container]:appearance-none 
-                [&::-webkit-slider-container]:rounded-full
-                [&::-webkit-slider-container]:bg-pink-500"
+                [&::-webkit-slider-container]:appearance-none
+                [&::-webkit-slider-container]:rounded-full 
+                [&::-webkit-slider-container]:bg-gray-500
+                [&::-webkit-slider-container]:transition-colors
+                hover:[&::-webkit-slider-container]:bg-gray-400
+                active:[&::-webkit-slider-container]:bg-gray-50"
                 onChange={(e) => {
                   deHandler({
                     action: 'bkgd-update-layer',
@@ -416,32 +444,11 @@ const LinearGradientType = ({
           </Popover>
         </div>
         <div
-          data-color-space={colorSpace}
-          className="group flex w-full flex-row items-center justify-start gap-2"
-        >
-          <label>Color Space</label>
-          <ToggleButton
-            onLabel="oklab"
-            offLabel="oklch"
-            defaultValue={colorSpace || 'oklab'}
-            onChange={(v) =>
-              deHandler({
-                action: 'bkgd-update-layer',
-                payload: {
-                  id: selectedLayer,
-                  type: 'gradient',
-                  props: {
-                    type: 'linear',
-                    colorSpace: v ? 'Oklch' : 'oklab',
-                  },
-                },
-              })
-            }
-          />
-        </div>
-        <div
-          className="flex cursor-pointer flex-row items-center justify-end"
-          onClick={() =>
+          className="flex w-full cursor-pointer flex-row items-center justify-end"
+          onClick={() => {
+            const el =
+              document.querySelector<HTMLInputElement>('#repeating-icon')
+            if (el) el.classList.toggle('text-fuchsia-500')
             deHandler({
               action: 'bkgd-update-layer',
               payload: {
@@ -453,21 +460,18 @@ const LinearGradientType = ({
                 },
               },
             })
-          }
+          }}
         >
-          <label>Repeating</label>
+          <label className="text-[10px] text-gray-300">Repeating</label>
           <ArrowsCounterClockwise
-            size={'1.25em'}
-            className={
-              'ml-2 hover:scale-105 focus:scale-95 active:scale-95 ' +
-              (repeating === true ? 'text-fuchsia-500' : '')
-            }
+            id="repeating-icon"
+            className="ml-2 text-2xl hover:scale-105 focus:scale-95 active:scale-95"
           />
         </div>
       </div>
 
       <LinearGradientStops stops={stops || []} selectedLayer={selectedLayer} />
-    </div>
+    </>
   )
 }
 

@@ -25,16 +25,16 @@ function ToggleButton({
       }}
       className={`${
         enabled ? 'bg-purple-700' : 'bg-pink-700'
-      } relative inline-flex h-6 w-[80px] items-center rounded-full`}
+      } relative inline-flex h-6 w-[100px] items-center rounded-full`}
     >
       <span className="sr-only">Enable notifications</span>
       <span
         className={`${
-          enabled ? 'translate-x-[60px]' : 'translate-x-1'
+          enabled ? 'translate-x-[80px]' : 'translate-x-1'
         } inline-block h-4 w-4 transform rounded-full bg-white transition`}
       />
       <span
-        className={`absolute transition ${
+        className={`absolute uppercase transition ${
           enabled ? 'left-2 translate-x-1' : 'right-2 -translate-x-1'
         }`}
       >

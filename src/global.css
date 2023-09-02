@@ -132,13 +132,23 @@
   color: color(srgb var(--color-text) / 0.1);
 }
 
+.bkgd-impact {
+  font-family: var(--font-impact);
+}
+
 body,
 html {
   padding: 0;
   margin: 0;
 }
 
-button > p {
+button > p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-impact);
 }
 

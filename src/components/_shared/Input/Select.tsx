@@ -63,7 +63,10 @@ export default function Select({
             <CaretUpDown className="h-5 w-5 text-gray-400" aria-hidden="true" />
           </span>
         </Listbox.Button>
-        <Listbox.Options className="absolute z-10 mt-2 max-h-56 w-full overflow-auto rounded-md bg-gray-900 py-4 text-base shadow-lg ring-1 ring-gray-300 ring-opacity-5 focus:outline-none sm:text-sm">
+        <Listbox.Options
+          className="absolute z-10 mt-0 max-h-56 w-full overflow-auto rounded-md bg-[#00000099] py-4 text-base 
+          shadow-lg sm:text-sm"
+        >
           {options.map((option) => (
             <Listbox.Option
               className="ui-active:bg-pink-500 relative cursor-pointer select-none py-2 pl-3 pr-9 uppercase"
