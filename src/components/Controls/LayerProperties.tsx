@@ -68,11 +68,8 @@ const FALLBACK = {
 function PropTab({ children }: { children: React.ReactNode }) {
   return (
     <Tab
-      className="ui-selected:text-white ui-not-selected:text-gray-200 
-      ui-not-selected:hover:text-white ui-not-selected:hover:scale-105s 
-      ui-selected:ring-1 ui-selected:ring-white flex
-      w-full items-center justify-center rounded-md border-none p-2 
-      transition active:scale-95"
+      className="ui-active:w-full ui-active:text-pink-500 flex w-[1fr] flex-row items-center justify-center rounded-md 
+      border-none p-2 outline-none transition active:scale-95"
     >
       {children}
     </Tab>
@@ -91,60 +88,62 @@ function AdditionalProperties({
     props
 
   return (
-    <Tab.Group>
-      <Tab.List className="my-3 flex flex-row items-center justify-around">
-        <PropTab>
-          <Unite className="text-lg" />
-          <p className="ui-selected:visible ui-not-selected:hidden mx-2 whitespace-nowrap">
-            Blend Mode
-          </p>
-        </PropTab>
-        <PropTab>
-          <FrameCorners className="text-lg" />
-          <p className="ui-selected:visible ui-not-selected:hidden mx-2 whitespace-nowrap">
-            Size
-          </p>
-        </PropTab>
-        <PropTab>
-          <ArrowsOut className="text-lg" />
-          <p className="ui-selected:visible ui-not-selected:hidden mx-2 whitespace-nowrap">
-            Position
-          </p>
-        </PropTab>
-        <PropTab>
-          <Repeat className="text-lg" />
-          <p className="ui-selected:visible ui-not-selected:hidden mx-2 whitespace-nowrap">
-            Repeat
-          </p>
-        </PropTab>
-      </Tab.List>
-      <Tab.Panels className="max-w-full">
-        <Tab.Panel>
-          <Select
-            hideLabel
-            label=""
-            id="blendMode"
-            options={blendModesOptions}
-            value={blendMode || 'normal'}
-          />
-        </Tab.Panel>
-        <Tab.Panel>
-          <BackgroundSize value={backgroundSize} />
-        </Tab.Panel>
-        <Tab.Panel>
-          <BackgroundPosition value={backgroundPosition} />
-        </Tab.Panel>
-        <Tab.Panel>
-          <Select
-            hideLabel
-            label=""
-            id="backgroundRepeat"
-            options={repeatOptions}
-            value={backgroundRepeat || 'repeat'}
-          />
-        </Tab.Panel>
-      </Tab.Panels>
-    </Tab.Group>
+    <>
+      <Tab.Group>
+        <Tab.List className="my-3 grid grid-flow-col">
+          <PropTab>
+            <Unite className="text-lg" />
+            <p className="ui-selected:visible ui-not-selected:hidden mx-2 whitespace-nowrap">
+              Blend Mode
+            </p>
+          </PropTab>
+          <PropTab>
+            <FrameCorners className="text-lg" />
+            <p className="ui-selected:visible ui-not-selected:hidden mx-2 whitespace-nowrap">
+              Size
+            </p>
+          </PropTab>
+          <PropTab>
+            <ArrowsOut className="text-lg" />
+            <p className="ui-selected:visible ui-not-selected:hidden mx-2 whitespace-nowrap">
+              Position
+            </p>
+          </PropTab>
+          <PropTab>
+            <Repeat className="text-lg" />
+            <p className="ui-selected:visible ui-not-selected:hidden mx-2 whitespace-nowrap">
+              Repeat
+            </p>
+          </PropTab>
+        </Tab.List>
+        <Tab.Panels className="max-w-full">
+          <Tab.Panel>
+            <Select
+              hideLabel
+              label=""
+              id="blendMode"
+              options={blendModesOptions}
+              value={blendMode || 'normal'}
+            />
+          </Tab.Panel>
+          <Tab.Panel>
+            <BackgroundSize value={backgroundSize} />
+          </Tab.Panel>
+          <Tab.Panel>
+            <BackgroundPosition value={backgroundPosition} />
+          </Tab.Panel>
+          <Tab.Panel>
+            <Select
+              hideLabel
+              label=""
+              id="backgroundRepeat"
+              options={repeatOptions}
+              value={backgroundRepeat || 'repeat'}
+            />
+          </Tab.Panel>
+        </Tab.Panels>
+      </Tab.Group>
+    </>
   )
 }
 

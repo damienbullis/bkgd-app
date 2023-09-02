@@ -13,8 +13,6 @@ const getPositionValue = (value = ''): [number, number] => {
   return [0, 0]
 }
 
-const label = 'Background Position'
-
 const deHandler = debounce(EventHandler, 200)
 
 export default function BackgroundPosition({ value }: { value?: string }) {
@@ -27,15 +25,16 @@ export default function BackgroundPosition({ value }: { value?: string }) {
 
   return (
     <div className={styles.wrap}>
-      <div className="my-2 flex w-full flex-row items-baseline justify-start gap-2">
-        <label className="whitespace-nowrap">{label}</label>
+      <div className="flex h-10 w-full flex-row items-stretch justify-start gap-2">
         <span className="relative flex w-full items-center">
-          <label className="absolute left-3">X</label>
+          <span className="absolute left-3 text-sm text-gray-300">X</span>
           <input
             step={10}
             type="number"
             value={x}
-            className="flex w-full appearance-none rounded-md border-none bg-transparent px-2 py-1 pl-7 leading-tight text-gray-200 ring-1 ring-white "
+            className="flex h-full w-full appearance-none rounded-md border-none bg-transparent p-2 px-7 
+            text-right leading-tight tracking-widest text-white ring-1 ring-inset ring-gray-300 
+            hover:ring-white active:ring-white"
             onChange={(e) =>
               setXY((prev) => {
                 const next: [number, number] = [Number(e.target.value), prev[1]]
@@ -50,14 +49,17 @@ export default function BackgroundPosition({ value }: { value?: string }) {
               })
             }
           />
+
+          <span className="absolute right-3 text-sm text-gray-300">%</span>
         </span>
         <span className="relative flex w-full items-center">
-          <label className="absolute left-3">Y</label>
+          <span className="absolute left-3 text-sm text-gray-300">Y</span>
           <input
             step={10}
             type="number"
             value={y}
-            className="flex w-full appearance-none rounded-md border-none bg-transparent px-2 py-1 pl-7 leading-tight text-gray-200 ring-1 ring-white"
+            className="flex h-full w-full appearance-none rounded-md border-none bg-transparent p-2 px-7 text-right leading-tight tracking-widest text-white ring-1 ring-inset ring-gray-300 
+            hover:ring-white active:ring-white"
             onChange={(e) => {
               setXY((prev) => {
                 const next: [number, number] = [prev[0], Number(e.target.value)]
@@ -72,6 +74,8 @@ export default function BackgroundPosition({ value }: { value?: string }) {
               })
             }}
           />
+
+          <span className="absolute right-3 text-sm text-gray-300">%</span>
         </span>
       </div>
     </div>

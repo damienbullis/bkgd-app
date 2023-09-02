@@ -1,127 +1,117 @@
 import { useEffect, useState } from 'react'
 import { useSelectedLayer } from '@state/global'
 import { EventHandler } from '@state/events'
-import { Select } from '@shared'
 import styles from './BackgroundSize.module.css'
+import { MinusSquare, PlusSquare } from '@phosphor-icons/react'
+import { debounce } from '@utils'
 
-type BackgroundSizeType =
-  | 'auto auto'
-  | `${string}%`
-  | `${string}% ${string}%`
-  | `${string}% auto`
-  | `auto ${string}%`
+const deHandler = debounce(EventHandler, 200)
 
-type SizeOptions = 'default' | 'single' | 'double'
-
-const SIZE_OPTIONS = [
-  'auto',
-  '50%',
-  '100%',
-  '200%',
-  '300%',
-  '400%',
-  '500%',
-  '1000%',
-] as const
-
-const options = [...SIZE_OPTIONS]
-
-const getSizeValue = (value: string): [string, string] => {
-  if (value === 'auto') return ['auto', 'auto']
+const getSizeValue = (value = ''): [string, string] | string => {
+  if (value === '') return '100'
   if (/\s/.test(value)) {
     const [x, y] = value.split(' ')
-    return [x, y]
+    return [x.replace('%', ''), y.replace('%', '')]
   }
-  return [value, value]
+  return value.replace('%', '')
 }
 
-const SizeController = ({
-  type,
-  selectedLayer,
-  value = 'auto auto',
-}: {
-  type: SizeOptions
-  selectedLayer: string
-  value?: BackgroundSizeType
-}) => {
-  // [x, y]
-  const [double, setDouble] = useState<[string, string]>(getSizeValue(value))
-  useEffect(() => {
-    setDouble(getSizeValue(value))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedLayer])
-  const handler = (e: React.ChangeEvent<HTMLSelectElement>, index: 0 | 1) => {
-    setDouble((prev) => {
-      const next: [string, string] = [...prev]
-      next[index] = e.target.value
-      EventHandler({
-        action: 'bkgd-update-layer',
-        payload: {
-          id: selectedLayer,
-          backgroundSize: next.join(' '),
-        },
-      })
-      return next
-    })
-  }
-
-  if (type === 'default') return null
-  if (type === 'single') {
-    return (
-      <Select
-        label="Size"
-        options={options}
-        value={value || 'auto'}
-        onChange={(e) =>
-          EventHandler({
-            action: 'bkgd-update-layer',
-            payload: {
-              id: selectedLayer,
-              backgroundSize: e.target.value,
-            },
-          })
-        }
-      />
-    )
-  }
-  return (
-    <>
-      <Select
-        label="Size X"
-        options={options}
-        value={double[0]}
-        onChange={(e) => handler(e, 0)}
-      />
-      <Select
-        label="Size Y"
-        options={options}
-        value={double[1]}
-        onChange={(e) => handler(e, 1)}
-      />
-    </>
-  )
-}
-
-const label = 'Background Size'
-
-const getValue = (value: string): SizeOptions => {
-  if (value === 'auto auto') return 'default'
-  if (/\s/.test(value)) return 'double'
-  return 'single'
-}
-
-export default function BackgroundSize({ value = 'auto' }: { value?: string }) {
-  const [sizeType, setSizeType] = useState<SizeOptions>(getValue(value))
+export default function BackgroundSize({ value }: { value?: string }) {
+  const [xy, setXY] = useState<[string, string] | string>(getSizeValue(value))
   const [selectedLayer] = useSelectedLayer()
   useEffect(() => {
-    setSizeType(getValue(value))
+    setXY(getSizeValue(value))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLayer])
 
   return (
     <div className={styles.wrap}>
-      <label htmlFor={label}>{label}</label>
-      <Select
+      <div className="flex h-10 w-full flex-row flex-nowrap items-stretch gap-2">
+        <span className="relative flex w-full items-center">
+          <span className="absolute left-3 text-sm text-gray-300">
+            {typeof xy === 'string' ? 'X & Y' : 'X'}
+          </span>
+          <input
+            step={10}
+            type="number"
+            value={typeof xy === 'string' ? xy : xy[0]}
+            className="flex h-full w-full appearance-none rounded-md border-none bg-transparent p-2 px-7 text-right leading-tight tracking-widest text-white ring-1 ring-inset ring-gray-300 hover:ring-white focus:ring-white active:ring-white"
+            onChange={(e) =>
+              setXY((prev) => {
+                if (typeof prev === 'string') {
+                  deHandler({
+                    action: 'bkgd-update-layer',
+                    payload: {
+                      id: selectedLayer,
+                      backgroundSize: `${e.target.value}%`,
+                    },
+                  })
+                  return e.target.value || '100'
+                } else {
+                  const next: [string, string] = [
+                    e.target.value || '100',
+                    prev[1],
+                  ]
+                  deHandler({
+                    action: 'bkgd-update-layer',
+                    payload: {
+                      id: selectedLayer,
+                      backgroundSize: `${next[0]}% ${next[1]}%`,
+                    },
+                  })
+                  return next
+                }
+              })
+            }
+          />
+
+          <span className="absolute right-3 text-sm text-gray-300">%</span>
+        </span>
+        {typeof xy === 'string' ? null : (
+          <span className="relative flex w-full items-center">
+            <label className="absolute left-3 text-gray-200">Y</label>
+            <input
+              step={10}
+              type="number"
+              value={xy[1]}
+              className="font- flex h-full w-full appearance-none rounded-md border-none bg-transparent p-2 px-7 text-right leading-tight tracking-widest text-gray-200 ring-1 ring-inset ring-gray-200"
+              onChange={(e) =>
+                setXY((prev) => {
+                  const next: [string, string] = [
+                    prev[0],
+                    e.target.value || '100',
+                  ]
+                  deHandler({
+                    action: 'bkgd-update-layer',
+                    payload: {
+                      id: selectedLayer,
+                      backgroundSize: `${next[0]}% ${next[1]}%`,
+                    },
+                  })
+                  return next
+                })
+              }
+            />
+
+            <span className="absolute right-3">%</span>
+          </span>
+        )}
+        <button
+          className="transform text-3xl transition active:scale-95"
+          onClick={() =>
+            setXY((prev) => {
+              if (typeof prev === 'string') {
+                return [prev, prev]
+              } else {
+                return prev[0]
+              }
+            })
+          }
+        >
+          {typeof xy === 'string' ? <PlusSquare /> : <MinusSquare />}
+        </button>
+      </div>
+      {/* <Select
         id={label}
         label="Size"
         hideLabel
@@ -133,7 +123,7 @@ export default function BackgroundSize({ value = 'auto' }: { value?: string }) {
         type={sizeType}
         value={value as BackgroundSizeType}
         selectedLayer={selectedLayer}
-      />
+      /> */}
     </div>
   )
 }

@@ -57,7 +57,7 @@ export default function Select({
         </Listbox.Label>
       )}
       <div className="relative">
-        <Listbox.Button className="bkgd-font-xs relative h-10 w-full cursor-pointer rounded-md py-1.5 pl-3 pr-10 text-left text-white shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
+        <Listbox.Button className="bkgd-font-xs relative h-10 w-full cursor-pointer rounded-md py-1.5 pl-3 pr-10 text-left text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-white focus:ring-white sm:text-sm sm:leading-6">
           <span className="block truncate uppercase">{value}</span>
           <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
             <CaretUpDown className="h-5 w-5 text-gray-400" aria-hidden="true" />
