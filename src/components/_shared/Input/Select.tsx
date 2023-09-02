@@ -66,15 +66,18 @@ export default function Select({
         <Listbox.Options className="absolute z-10 mt-2 max-h-56 w-full overflow-auto rounded-md bg-gray-900 py-4 text-base shadow-lg ring-1 ring-gray-300 ring-opacity-5 focus:outline-none sm:text-sm">
           {options.map((option) => (
             <Listbox.Option
-              className="ui-active:bg-pink-500 cursor-pointer select-none py-2 pl-3 pr-9 uppercase text-white"
+              className="ui-active:bg-pink-500 relative cursor-pointer select-none py-2 pl-3 pr-9 uppercase"
               key={typeof option === 'string' ? option : option.value}
               value={typeof option === 'string' ? option : option.value}
             >
-              {({ selected }) => (
+              {({ selected, active }) => (
                 <>
                   {typeof option === 'string' ? option : option.label}
                   {selected && (
-                    <span className="ui-active:text-white absolute inset-y-0 right-0 flex items-center pr-4 text-pink-500">
+                    <span
+                      className={`${active ? 'text-white' : 'text-pink-500'}
+                      absolute inset-y-0 right-0 flex items-center pr-4`}
+                    >
                       <Check className="h-5 w-5" aria-hidden="true" />
                     </span>
                   )}

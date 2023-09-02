@@ -68,11 +68,11 @@ const FALLBACK = {
 function PropTab({ children }: { children: React.ReactNode }) {
   return (
     <Tab
-      className="ui-selected:text-white ui-not-selected:text-gray-200 ui-selected:outline-none 
-      ui-selected:drop-shadow-[0_0_12px_rgba(255,255,255,1)]
-      ui-selected:hover:drop-shadow-[0_0_16px_rgba(255,255,255,1)] 
-      ui-not-selected:hover:text-white 
-      flex w-full items-center justify-center transition hover:scale-105 active:scale-95"
+      className="ui-selected:text-white ui-not-selected:text-gray-200 
+      ui-not-selected:hover:text-white ui-not-selected:hover:scale-105s 
+      ui-selected:ring-1 ui-selected:ring-white flex
+      w-full items-center justify-center rounded-md border-none p-2 
+      transition active:scale-95"
     >
       {children}
     </Tab>
@@ -94,22 +94,35 @@ function AdditionalProperties({
     <Tab.Group>
       <Tab.List className="my-3 flex flex-row items-center justify-around">
         <PropTab>
-          <Unite size="2em" />
+          <Unite className="text-lg" />
+          <p className="ui-selected:visible ui-not-selected:hidden mx-2 whitespace-nowrap">
+            Blend Mode
+          </p>
         </PropTab>
         <PropTab>
-          <FrameCorners size="2em" />
+          <FrameCorners className="text-lg" />
+          <p className="ui-selected:visible ui-not-selected:hidden mx-2 whitespace-nowrap">
+            Size
+          </p>
         </PropTab>
         <PropTab>
-          <ArrowsOut size="2em" />
+          <ArrowsOut className="text-lg" />
+          <p className="ui-selected:visible ui-not-selected:hidden mx-2 whitespace-nowrap">
+            Position
+          </p>
         </PropTab>
         <PropTab>
-          <Repeat size="2em" />
+          <Repeat className="text-lg" />
+          <p className="ui-selected:visible ui-not-selected:hidden mx-2 whitespace-nowrap">
+            Repeat
+          </p>
         </PropTab>
       </Tab.List>
       <Tab.Panels className="max-w-full">
         <Tab.Panel>
           <Select
-            label="Blend Mode"
+            hideLabel
+            label=""
             id="blendMode"
             options={blendModesOptions}
             value={blendMode || 'normal'}
@@ -123,7 +136,8 @@ function AdditionalProperties({
         </Tab.Panel>
         <Tab.Panel>
           <Select
-            label="Background Repeat"
+            hideLabel
+            label=""
             id="backgroundRepeat"
             options={repeatOptions}
             value={backgroundRepeat || 'repeat'}
