@@ -4,11 +4,8 @@ import { ArrowsCounterClockwise, PlusCircle } from '@phosphor-icons/react'
 import { useEffect } from 'react'
 import { Popover } from '@headlessui/react'
 import { ToggleButton } from '@shared'
-import {
-  LinearGradientPropsType,
-  GradientStopsType,
-} from './LinearGradient/_helpers'
-import LinearGradientStops from './GradientStops'
+import { GradientLayerType } from 'src/components/Layers/LayerTypeSchema'
+import GradientStops from './GradientStops'
 
 const deHandler = debounce(EventHandler, 200)
 
@@ -16,7 +13,7 @@ const LinearGradient = ({
   typeProps,
   selectedLayer,
 }: {
-  typeProps: LinearGradientPropsType
+  typeProps: GradientLayerType['props'] & { type: 'linear' }
   selectedLayer: string
 }) => {
   const { deg, colorSpace, repeating, stops } = typeProps
@@ -161,7 +158,5 @@ const LinearGradient = ({
     </>
   )
 }
-
-export type { LinearGradientPropsType, GradientStopsType }
 
 export default LinearGradient

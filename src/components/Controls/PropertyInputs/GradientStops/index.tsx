@@ -1,5 +1,8 @@
+import { GradientLayerType } from 'src/components/Layers/LayerTypeSchema'
 import GradientStop from './GradientStop'
-import { GradientStopsType } from './_helpers'
+
+type GradientLayerPropsType = GradientLayerType['props']
+type GradientStopsType = Exclude<GradientLayerPropsType['stops'], undefined>[0]
 
 const GradientStops = ({
   stops = [],
@@ -29,3 +32,4 @@ const GradientStops = ({
 }
 
 export default GradientStops
+export type { GradientStopsType }

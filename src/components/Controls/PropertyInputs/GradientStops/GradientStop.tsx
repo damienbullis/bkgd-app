@@ -1,22 +1,32 @@
 import { useEffect, useRef } from 'react'
-import {
-  GradientStopsType,
-  getID,
-  transformColorValue,
-} from '../LinearGradient/_helpers'
+
 import {
   MinusSquare,
   PaintBucket,
   PlusSquare,
   Trash,
-  TrashSimple,
 } from '@phosphor-icons/react'
 import { EventHandler } from '@state/events'
-import { debounce } from '@utils'
+import { debounce, hslToHex, rgbToHex } from '@utils'
 import { Popover } from '@headlessui/react'
 import { HoverText } from '@shared'
+import { GradientStopsType } from '.'
 
 const deHandler = debounce(EventHandler, 200)
+
+const getID = (index: number) => `gradient-stop-${index}-` as const
+
+const transformColorValue = (color: GradientStopsType[0]) => {
+  if (typeof color === 'string') {
+    return color
+  } else {
+    if ('r' in color) {
+      return rgbToHex(color)
+    } else {
+      return hslToHex(color)
+    }
+  }
+}
 
 const GradientStop = ({
   index,
