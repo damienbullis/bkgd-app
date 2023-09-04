@@ -4,28 +4,23 @@ import styles from './_.module.css'
 import { useSelectedLayer } from '@state/global'
 import { useCallback } from 'react'
 import { Listbox } from '@headlessui/react'
-import { CaretUp, CaretUpDown, Check } from '@phosphor-icons/react'
+import { CaretUpDown, Check } from '@phosphor-icons/react'
 
 const handler = debounce(EventHandler, 200)
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
-}
 
 /**
  * Select Input Type
  */
 export default function Select({
   label,
-  id = label,
+  id,
   options,
   value,
   onChange,
-  hideLabel = false,
 }: {
-  label: string
+  id: string
   options: (string | { value: string; label: string })[]
-  id?: string
+  label?: string
   value?: string
   /**
    * Optional onChange handler
@@ -33,7 +28,6 @@ export default function Select({
    * this will override the default EventHandler
    */
   onChange?(e: string): void
-  hideLabel?: boolean
 }) {
   const [selectedLayer] = useSelectedLayer()
 
@@ -51,7 +45,7 @@ export default function Select({
   )
   return (
     <Listbox value={value} onChange={onChange || cb}>
-      {!hideLabel && (
+      {typeof label === 'string' && (
         <Listbox.Label className="bkgd-font-xs block font-medium leading-6 text-gray-300">
           {label}
         </Listbox.Label>
@@ -69,7 +63,7 @@ export default function Select({
         >
           {options.map((option) => (
             <Listbox.Option
-              className="ui-active:bg-pink-500 relative cursor-pointer select-none py-2 pl-3 pr-9 uppercase"
+              className="relative cursor-pointer select-none py-2 pl-3 pr-9 uppercase ui-active:bg-pink-500"
               key={typeof option === 'string' ? option : option.value}
               value={typeof option === 'string' ? option : option.value}
             >

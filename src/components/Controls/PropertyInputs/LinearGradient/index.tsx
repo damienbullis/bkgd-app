@@ -1,6 +1,6 @@
-import { debounce } from '@utils'
+import { debounce, randomHex } from '@utils'
 import { EventHandler } from '@state/events'
-import { ArrowsCounterClockwise } from '@phosphor-icons/react'
+import { ArrowsCounterClockwise, PlusCircle } from '@phosphor-icons/react'
 import { useEffect } from 'react'
 import { Popover } from '@headlessui/react'
 import { ToggleButton } from '@shared'
@@ -32,38 +32,13 @@ const LinearGradient = ({
   }, [selectedLayer])
   return (
     <>
-      <div className="flex flex-row items-center justify-start gap-2">
-        <h4 className="-skew-x-6 bg-gradient-to-r from-pink-500 to-purple-500 to-[150%] bg-clip-text text-transparent">
-          LINEAR GRADIENT
-        </h4>
-
-        <label className="ml-auto text-[10px] text-gray-300">Color Space</label>
-        <ToggleButton
-          onLabel="oklab"
-          offLabel="oklch"
-          defaultValue={colorSpace || 'oklab'}
-          onChange={(v) =>
-            deHandler({
-              action: 'bkgd-update-layer',
-              payload: {
-                id: selectedLayer,
-                type: 'gradient',
-                props: {
-                  type: 'linear',
-                  colorSpace: v ? 'Oklch' : 'oklab',
-                },
-              },
-            })
-          }
-        />
-      </div>
-
       <div className="mb-2 flex w-full flex-row items-center justify-stretch gap-4">
+        {/* Angle Slider */}
         <div className="inline-flex items-center">
           <label className="text-[10px] text-gray-300">Angle</label>
           <Popover className="relative">
             <Popover.Button className="ml-2">{deg || 360}°</Popover.Button>
-            <Popover.Panel className="absolute z-10 rounded-md bg-[#00000099] px-4 py-2 shadow-2xl shadow-black backdrop-brightness-50">
+            <Popover.Panel className="absolute z-10 rounded-md bg-black px-4 py-2 shadow-2xl shadow-black">
               <input
                 id="degrees"
                 type="range"
@@ -96,8 +71,33 @@ const LinearGradient = ({
             </Popover.Panel>
           </Popover>
         </div>
+        {/* Color Space Toggle */}
+        <div className="inline-flex items-center gap-2">
+          <label className="ml-auto text-[10px] text-gray-300">
+            Color Space
+          </label>
+          <ToggleButton
+            onLabel="oklab"
+            offLabel="oklch"
+            defaultValue={colorSpace || 'oklab'}
+            onChange={(v) =>
+              deHandler({
+                action: 'bkgd-update-layer',
+                payload: {
+                  id: selectedLayer,
+                  type: 'gradient',
+                  props: {
+                    type: 'linear',
+                    colorSpace: v ? 'Oklch' : 'oklab',
+                  },
+                },
+              })
+            }
+          />
+        </div>
+        {/* Repeating Button */}
         <div
-          className="flex w-full cursor-pointer flex-row items-center justify-end"
+          className="ml-auto flex cursor-pointer flex-row items-center justify-end"
           onClick={() => {
             const el =
               document.querySelector<HTMLInputElement>('#repeating-icon')
@@ -123,6 +123,33 @@ const LinearGradient = ({
         </div>
       </div>
 
+      <div className="flex flex-row items-center justify-start gap-2">
+        <h4 className="-skew-x-6 bg-gradient-to-r from-pink-500 to-purple-500 to-[150%] bg-clip-text text-transparent">
+          LINEAR GRADIENT
+        </h4>
+        <label className="ml-auto text-sm text-gray-300">
+          {(stops || []).length} Stops
+        </label>
+        <button
+          className="grid place-content-center rounded-full p-1 text-base text-gray-300 transition
+        hover:text-white active:scale-95 active:text-white"
+          onClick={() =>
+            deHandler({
+              action: 'bkgd-update-layer',
+              payload: {
+                id: selectedLayer,
+                type: 'gradient',
+                props: {
+                  type: 'linear',
+                  stops: [...(stops || []), [randomHex(), null, null]],
+                },
+              },
+            })
+          }
+        >
+          <PlusCircle size="2em" />
+        </button>
+      </div>
       <LinearGradientStops stops={stops || []} selectedLayer={selectedLayer} />
     </>
   )

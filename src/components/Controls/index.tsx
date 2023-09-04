@@ -9,7 +9,7 @@ import {
 } from '@phosphor-icons/react'
 
 import { useSelectedLayer } from '@state/global'
-import { IconButton } from '@shared'
+import { HoverText, IconButton } from '@shared'
 
 import styles from './_.module.css'
 import LayerProperties from './LayerProperties'
@@ -45,20 +45,6 @@ const Panel = ({
     >
       {children}
     </div>
-  )
-}
-
-const HoverText = ({ children }: { children: string }) => {
-  return (
-    <p
-      className="pointer-events-none absolute left-1/2 top-full z-10
-      -translate-x-1/2 -translate-y-full scale-50 select-none whitespace-nowrap 
-      rounded-lg px-3 py-1 text-center text-xs font-semibold uppercase
-      text-white opacity-0 backdrop-blur-xl backdrop-brightness-50 transition-all
-      group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 group-hover:delay-300"
-    >
-      {children}
-    </p>
   )
 }
 
