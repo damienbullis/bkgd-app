@@ -2,6 +2,8 @@ import { GradientLayerType } from 'src/components/Layers/LayerTypeSchema'
 // import styles from './GradientType.module.css'
 import { debounce, hslToHex, randomHex, rgbToHex } from '@utils'
 import { EventHandler } from '@state/events'
+import { ToggleButton } from '@shared'
+import RadialPosition from './RadialGradient/RadialPosition'
 
 const deHandler = debounce(EventHandler, 200)
 
@@ -317,97 +319,56 @@ const RadialGradientType = ({
   typeProps: RadialGradientPropsType
   selectedLayer: string
 }) => {
-  const { position = [], shape, size, colorSpace, repeating, stops } = typeProps
+  const { position, shape, size, colorSpace, repeating, stops } = typeProps
   return (
     <>
-      <label htmlFor="positionX">X</label>
-      <input
-        name="positionX"
-        type="number"
-        defaultValue={position[0] || 0}
-        onChange={(e) =>
-          deHandler({
-            action: 'bkgd-update-layer',
-            payload: {
-              id: selectedLayer,
-              type: 'gradient',
-              props: {
-                type: 'radial',
-                position: [Number(e.target.value), position[1] || 0],
-              },
-            },
-          })
-        }
-      />
-      <label htmlFor="positionY">
-        Y
-        <input
-          name="positionY"
-          type="number"
-          defaultValue={position[1] || 0}
-          onChange={(e) =>
-            deHandler({
-              action: 'bkgd-update-layer',
-              payload: {
-                id: selectedLayer,
-                type: 'gradient',
-                props: {
-                  type: 'radial',
-                  position: [position[0] || 0, Number(e.target.value)],
+      <div className="mb-2 flex w-full flex-row items-center justify-stretch gap-4">
+        <div className="inline-flex items-center gap-2">
+          <label className="text-[10px] text-gray-300">Shape</label>
+          <ToggleButton
+            onLabel="circle"
+            offLabel="ellipse"
+            defaultValue={shape || 'circle'}
+            onChange={(v) =>
+              deHandler({
+                action: 'bkgd-update-layer',
+                payload: {
+                  id: selectedLayer,
+                  type: 'gradient',
+                  props: {
+                    type: 'radial',
+                    shape: v ? 'circle' : 'ellipse',
+                  },
                 },
-              },
-            })
-          }
-        />
-      </label>
+              })
+            }
+          />
+        </div>
+        <div className="ml-auto inline-flex items-center gap-2">
+          <label className="text-[10px] text-gray-300">Color Space</label>
+          <ToggleButton
+            onLabel="oklab"
+            offLabel="Oklch"
+            defaultValue={colorSpace || 'oklab'}
+            onChange={(v) =>
+              deHandler({
+                action: 'bkgd-update-layer',
+                payload: {
+                  id: selectedLayer,
+                  type: 'gradient',
+                  props: {
+                    type: 'radial',
+                    colorSpace: v ? 'Oklch' : 'oklab',
+                  },
+                },
+              })
+            }
+          />
+        </div>
+      </div>
 
-      <label>
-        Shape
-        <br />
-        <span>
-          ellipse
-          <input
-            type="radio"
-            name="shape"
-            defaultChecked={shape === 'ellipse'}
-            onChange={() =>
-              deHandler({
-                action: 'bkgd-update-layer',
-                payload: {
-                  id: selectedLayer,
-                  type: 'gradient',
-                  props: {
-                    type: 'radial',
-                    shape: 'ellipse',
-                  },
-                },
-              })
-            }
-          />
-        </span>
-        <span>
-          circle
-          <input
-            type="radio"
-            name="shape"
-            value="circle"
-            defaultChecked={shape === 'circle'}
-            onChange={() =>
-              deHandler({
-                action: 'bkgd-update-layer',
-                payload: {
-                  id: selectedLayer,
-                  type: 'gradient',
-                  props: {
-                    type: 'radial',
-                    shape: 'circle',
-                  },
-                },
-              })
-            }
-          />
-        </span>
-      </label>
+      <RadialPosition value={position} />
+
       <label>
         Size
         <StopInput

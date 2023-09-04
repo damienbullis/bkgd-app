@@ -21,3 +21,11 @@ export const Show = ({
   show: boolean
   children: JSX.Element
 }) => (show ? children : null)
+
+export const getPositionValue = (value = ''): [number, number] => {
+  if (/\s/.test(value)) {
+    const [x, y] = value.split(' ')
+    return [Number(x.replace('%', '')), Number(y.replace('%', ''))]
+  }
+  return [0, 0]
+}

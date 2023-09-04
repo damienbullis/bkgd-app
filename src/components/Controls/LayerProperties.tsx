@@ -9,14 +9,7 @@ import ColorType from './PropertyInputs/ColorType'
 import NoiseType from './PropertyInputs/NoiseType'
 
 import GradientType from './PropertyInputs/GradientType'
-import {
-  ArrowsOut,
-  CircleHalf,
-  FrameCorners,
-  MapPin,
-  Repeat,
-  Unite,
-} from '@phosphor-icons/react'
+import { ArrowsOut, FrameCorners, Repeat, Unite } from '@phosphor-icons/react'
 import { Tab } from '@headlessui/react'
 
 const blendModesOptions = [

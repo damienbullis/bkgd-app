@@ -21,6 +21,11 @@ const getColor = (
   }
 }
 
+const transformPosition = (position?: [number, number]) => {
+  if (!position) return 'center'
+  return position.join('%, ') + '%'
+}
+
 const transformStop = (
   size: number | [number, number] | null,
   nullReturn = ''
@@ -46,7 +51,7 @@ const GradientLayer = (layer: GradientLayerProps, displayP3?: boolean) => {
   } else if (layer.props.type === 'radial') {
     const shape = layer.props.shape || 'ellipse'
     const size = transformStop(layer.props.size || null)
-    const position = layer.props.position || 'center'
+    const position = transformPosition(layer.props.position)
     const stops =
       layer.props.stops?.map(([color, opacity, stop]) => {
         return `${getColor(color, opacity, displayP3)} ${transformStop(stop)}`
@@ -57,7 +62,7 @@ const GradientLayer = (layer: GradientLayerProps, displayP3?: boolean) => {
     )})`
   } else if (layer.props.type === 'conic') {
     const deg = layer.props.deg || 0
-    const position = layer.props.position || 'center'
+    const position = transformPosition(layer.props.position)
     const space = layer.props.colorSpace || 'oklab'
     const stops =
       layer.props.stops?.map(([color, opacity, stop]) => {

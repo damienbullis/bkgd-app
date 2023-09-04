@@ -1,17 +1,19 @@
-import { useEffect, useState } from 'react'
 import { useSelectedLayer } from '@state/global'
-
-import styles from './BackgroundPosition.module.css'
+import { debounce } from '@utils'
+import { useEffect, useState } from 'react'
 import { EventHandler } from '@state/events'
-import { debounce, getPositionValue } from '@utils'
 
 const deHandler = debounce(EventHandler, 200)
 
-export default function BackgroundPosition({ value }: { value?: string }) {
-  const [[x, y], setXY] = useState<[number, number]>(getPositionValue(value))
+export default function RadialPosition({
+  value,
+}: {
+  value?: [number, number]
+}) {
+  const [[x, y], setXY] = useState<[number, number]>(value || [100, 100])
   const [selectedLayer] = useSelectedLayer()
   useEffect(() => {
-    setXY(getPositionValue(value))
+    setXY(value || [100, 100])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLayer])
 
@@ -25,8 +27,8 @@ export default function BackgroundPosition({ value }: { value?: string }) {
             type="number"
             value={x}
             className="flex h-full w-full appearance-none rounded-md border-none bg-transparent p-2 px-7 
-            text-right leading-tight tracking-widest text-white ring-1 ring-inset ring-gray-300 
-            hover:ring-white active:ring-white"
+        text-right leading-tight tracking-widest text-white ring-1 ring-inset ring-gray-300 
+        hover:ring-white active:ring-white"
             onChange={(e) =>
               setXY((prev) => {
                 const next: [number, number] = [Number(e.target.value), prev[1]]
@@ -34,7 +36,10 @@ export default function BackgroundPosition({ value }: { value?: string }) {
                   action: 'bkgd-update-layer',
                   payload: {
                     id: selectedLayer,
-                    backgroundPosition: `${next[0]}% ${next[1]}%`,
+                    props: {
+                      type: 'radial',
+                      position: next,
+                    },
                   },
                 })
                 return next
@@ -51,7 +56,7 @@ export default function BackgroundPosition({ value }: { value?: string }) {
             type="number"
             value={y}
             className="flex h-full w-full appearance-none rounded-md border-none bg-transparent p-2 px-7 text-right leading-tight tracking-widest text-white ring-1 ring-inset ring-gray-300 
-            hover:ring-white active:ring-white"
+          hover:ring-white active:ring-white"
             onChange={(e) => {
               setXY((prev) => {
                 const next: [number, number] = [prev[0], Number(e.target.value)]
@@ -59,7 +64,10 @@ export default function BackgroundPosition({ value }: { value?: string }) {
                   action: 'bkgd-update-layer',
                   payload: {
                     id: selectedLayer,
-                    backgroundPosition: `${next[0]}% ${next[1]}%`,
+                    props: {
+                      type: 'radial',
+                      position: next,
+                    },
                   },
                 })
                 return next
