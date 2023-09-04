@@ -4,7 +4,10 @@ import { ArrowsCounterClockwise, PlusCircle } from '@phosphor-icons/react'
 import { useEffect } from 'react'
 import { Popover } from '@headlessui/react'
 import { ToggleButton } from '@shared'
-import { LinearGradientPropsType, GradientStopsType } from './_helpers'
+import {
+  LinearGradientPropsType,
+  GradientStopsType,
+} from './LinearGradient/_helpers'
 import LinearGradientStops from './GradientStops'
 
 const deHandler = debounce(EventHandler, 200)
