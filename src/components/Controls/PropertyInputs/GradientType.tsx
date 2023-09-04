@@ -1,9 +1,9 @@
 import { useSelectedLayer } from '@state/global'
 
 import { GradientLayerType } from '../../Layers/LayerTypeSchema'
-import LinearGradientType from './LinearGradientType'
 import RadialGradientType from './RadialGradientType'
 import ConicGradientType from './ConicGradientType'
+import LinearGradient from './LinearGradient'
 
 type GradientTypeProps = GradientLayerType['props']
 
@@ -14,10 +14,7 @@ const GradientType = ({ typeProps }: { typeProps: GradientTypeProps }) => {
   switch (typeProps.type) {
     case 'linear':
       return (
-        <LinearGradientType
-          typeProps={typeProps}
-          selectedLayer={selectedLayer}
-        />
+        <LinearGradient typeProps={typeProps} selectedLayer={selectedLayer} />
       )
     case 'radial':
       return (
