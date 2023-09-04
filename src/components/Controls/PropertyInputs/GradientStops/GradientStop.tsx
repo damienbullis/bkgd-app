@@ -1,5 +1,9 @@
 import { useEffect, useRef } from 'react'
-import { GradientStopsType, getID, transformColorValue } from './_helpers'
+import {
+  GradientStopsType,
+  getID,
+  transformColorValue,
+} from '../LinearGradient/_helpers'
 import {
   MinusSquare,
   PaintBucket,
@@ -21,6 +25,7 @@ const GradientStop = ({
   stop,
   allStops,
   selectedLayer,
+  type,
 }: {
   index: number
   color: GradientStopsType[0]
@@ -28,6 +33,7 @@ const GradientStop = ({
   stop: GradientStopsType[2]
   allStops: GradientStopsType[]
   selectedLayer: string
+  type: 'linear' | 'radial' | 'conic'
 }) => {
   const prevSelectedLayer = useRef(selectedLayer)
   const isArr = Array.isArray(stop)
@@ -72,7 +78,7 @@ const GradientStop = ({
                   id: selectedLayer,
                   type: 'gradient',
                   props: {
-                    type: 'linear',
+                    type,
                     stops: allStops,
                   },
                 },
@@ -108,29 +114,22 @@ const GradientStop = ({
                 [&::-webkit-slider-container]:transition-colors
                 hover:[&::-webkit-slider-container]:bg-gray-400
                 active:[&::-webkit-slider-container]:bg-gray-50"
-                onChange={(e) =>
+                onChange={(e) => {
+                  allStops[index][2] = isArr
+                    ? [Number(e.target.value), stop[1]]
+                    : Number(e.target.value)
                   deHandler({
                     action: 'bkgd-update-layer',
                     payload: {
                       id: selectedLayer,
                       type: 'gradient',
                       props: {
-                        type: 'linear',
-                        stops: allStops.map((s, i) =>
-                          i === index
-                            ? [
-                                s[0],
-                                s[1],
-                                isArr
-                                  ? [Number(e.target.value), stop[1]]
-                                  : Number(e.target.value),
-                              ]
-                            : s
-                        ),
+                        type,
+                        stops: allStops,
                       },
                     },
                   })
-                }
+                }}
               />
             </Popover.Panel>
           </Popover>
@@ -164,7 +163,7 @@ const GradientStop = ({
                         id: selectedLayer,
                         type: 'gradient',
                         props: {
-                          type: 'linear',
+                          type,
                           stops: allStops,
                         },
                       },
@@ -187,7 +186,7 @@ const GradientStop = ({
                     id: selectedLayer,
                     type: 'gradient',
                     props: {
-                      type: 'linear',
+                      type,
                       stops: allStops,
                     },
                   },
@@ -207,7 +206,7 @@ const GradientStop = ({
                     id: selectedLayer,
                     type: 'gradient',
                     props: {
-                      type: 'linear',
+                      type,
                       stops: allStops,
                     },
                   },
@@ -276,7 +275,7 @@ const GradientStop = ({
               id: selectedLayer,
               type: 'gradient',
               props: {
-                type: 'linear',
+                type,
                 stops: allStops.filter((_, i) => i !== index),
               },
             },

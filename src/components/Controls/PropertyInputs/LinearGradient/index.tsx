@@ -150,7 +150,11 @@ const LinearGradient = ({
           <PlusCircle size="2em" />
         </button>
       </div>
-      <LinearGradientStops stops={stops || []} selectedLayer={selectedLayer} />
+      <GradientStops
+        stops={stops || []}
+        selectedLayer={selectedLayer}
+        type="linear"
+      />
     </>
   )
 }
