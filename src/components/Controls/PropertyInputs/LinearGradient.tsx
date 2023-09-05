@@ -34,7 +34,7 @@ const LinearGradient = ({
     <>
       {/* Head */}
       <div className="mb-2 flex flex-row items-center justify-start gap-2">
-        <h4 className="-skew-x-6 bg-gradient-to-r from-pink-500 to-purple-500 to-[150%] bg-clip-text text-transparent">
+        <h4 className="-skew-x-6 bg-gradient-to-r from-pink-500 to-green-500 to-[150%] bg-clip-text text-transparent">
           LINEAR GRADIENT
         </h4>
         <label className="ml-auto text-sm text-gray-300">

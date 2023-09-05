@@ -24,7 +24,7 @@ const RadialGradient = ({
         <h4
           className="-skew-x-6 bg-clip-text text-transparent"
           style={{
-            backgroundImage: 'radial-gradient(#F472B6 50%, #7C3AED 70%)',
+            backgroundImage: 'radial-gradient(#F472B6, aqua)',
           }}
         >
           RADIAL GRADIENT

@@ -2,6 +2,7 @@ import { GradientLayerType } from 'src/components/Layers/LayerTypeSchema'
 // import styles from './GradientType.module.css'
 import { debounce, hslToHex, randomHex, rgbToHex } from '@utils'
 import { EventHandler } from '@state/events'
+import { PlusCircle } from '@phosphor-icons/react'
 
 const deHandler = debounce(EventHandler, 200)
 
@@ -289,16 +290,50 @@ const StopInput = ({
   )
 }
 
-const ConicGradientType = ({
+const ConicGradient = ({
   typeProps,
   selectedLayer,
 }: {
   typeProps: ConicGradientPropsType
   selectedLayer: string
 }) => {
-  const { position = [], colorSpace, repeating, stops, deg } = typeProps
+  const { position, colorSpace, repeating, stops, deg } = typeProps
   return (
     <>
+      {/* Header */}
+      <div className="mb-4 flex flex-row items-center justify-start gap-2">
+        <h4
+          className="-skew-x-6 bg-clip-text text-transparent"
+          style={{
+            backgroundImage:
+              'conic-gradient(from 0deg at right in oklch, aqua 0%, #ec4899 110%)',
+          }}
+        >
+          CONIC GRADIENT
+        </h4>
+        <label className="ml-auto text-sm text-gray-300">
+          {(stops || []).length} Stops
+        </label>
+        <button
+          className="grid place-content-center rounded-full p-1 text-base text-gray-300 transition
+        hover:text-white active:scale-95 active:text-white"
+          onClick={() =>
+            deHandler({
+              action: 'bkgd-update-layer',
+              payload: {
+                id: selectedLayer,
+                type: 'gradient',
+                props: {
+                  type: 'conic',
+                  stops: [...(stops || []), [randomHex(), null, null]],
+                },
+              },
+            })
+          }
+        >
+          <PlusCircle size="2em" />
+        </button>
+      </div>
       <label htmlFor="deg">Deg</label>
       <input
         name="deg"
@@ -323,7 +358,7 @@ const ConicGradientType = ({
       <input
         name="positionX"
         type="number"
-        defaultValue={position[0] || 0}
+        defaultValue={position?.[0] || 0}
         onChange={(e) =>
           deHandler({
             action: 'bkgd-update-layer',
@@ -332,7 +367,7 @@ const ConicGradientType = ({
               type: 'gradient',
               props: {
                 type: 'conic',
-                position: [Number(e.target.value), position[1] || 0],
+                position: [Number(e.target.value), position?.[1] || 0],
               },
             },
           })
@@ -343,7 +378,7 @@ const ConicGradientType = ({
         <input
           name="positionY"
           type="number"
-          defaultValue={position[1] || 0}
+          defaultValue={position?.[1] || 0}
           onChange={(e) =>
             deHandler({
               action: 'bkgd-update-layer',
@@ -352,7 +387,7 @@ const ConicGradientType = ({
                 type: 'gradient',
                 props: {
                   type: 'conic',
-                  position: [position[0] || 0, Number(e.target.value)],
+                  position: [position?.[0] || 0, Number(e.target.value)],
                 },
               },
             })
@@ -434,4 +469,4 @@ const ConicGradientType = ({
   )
 }
 
-export default ConicGradientType
+export default ConicGradient

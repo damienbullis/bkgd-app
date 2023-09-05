@@ -1,7 +1,7 @@
 import { useSelectedLayer } from '@state/global'
 
 import { GradientLayerType } from '../../Layers/LayerTypeSchema'
-import ConicGradientType from './ConicGradient'
+import ConicGradient from './ConicGradient'
 import LinearGradient from './LinearGradient'
 import RadialGradient from './RadialGradient'
 
@@ -21,10 +21,7 @@ const GradientType = ({ typeProps }: { typeProps: GradientTypeProps }) => {
       )
     case 'conic':
       return (
-        <ConicGradientType
-          typeProps={typeProps}
-          selectedLayer={selectedLayer}
-        />
+        <ConicGradient typeProps={typeProps} selectedLayer={selectedLayer} />
       )
     default: {
       const exhaustiveCheck: never = typeProps
