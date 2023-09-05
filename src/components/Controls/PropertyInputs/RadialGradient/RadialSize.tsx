@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Popover } from '@headlessui/react'
 import { EventHandler } from '@state/events'
 import { debounce } from '@utils'
-import { set } from 'zod'
+import { HoverText } from '@shared'
 
 const deHandler = debounce(EventHandler, 200)
 
@@ -10,22 +10,26 @@ export default function RadialSize({
   size,
   selectedLayer,
 }: {
-  size: [number, number]
+  size?: [number, number]
   selectedLayer: string
 }) {
-  const [[x, y], setPos] = useState(size)
+  const [[x, y], setPos] = useState(size || [50, 50])
 
   useEffect(() => {
-    setPos(size)
+    setPos(size || [50, 50])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLayer])
 
   return (
     <span className="inline-flex flex-row items-center gap-2">
-      <label className="text-[10px] text-gray-300">Size</label>
       {/* Size */}
       <Popover className="relative">
-        <Popover.Button>{x}%</Popover.Button>
+        <span className="group relative">
+          <Popover.Button>
+            {x}%<HoverText>Size X</HoverText>
+          </Popover.Button>
+        </span>
+
         <Popover.Panel className="absolute z-10 rounded-md bg-[#00000099] px-4 py-2 shadow-2xl shadow-black backdrop-brightness-50">
           <input
             id={'radial-size-x'}
@@ -61,7 +65,11 @@ export default function RadialSize({
         </Popover.Panel>
       </Popover>
       <Popover className="relative">
-        <Popover.Button>{y}%</Popover.Button>
+        <span className="group relative">
+          <Popover.Button>
+            {y}%<HoverText>Size Y</HoverText>
+          </Popover.Button>
+        </span>
         <Popover.Panel className="absolute z-10 rounded-md bg-[#00000099] px-4 py-2 shadow-2xl shadow-black backdrop-brightness-50">
           <input
             id={'radial-size-y'}

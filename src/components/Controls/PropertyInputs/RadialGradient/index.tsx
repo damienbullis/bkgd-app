@@ -1,7 +1,7 @@
 import { GradientLayerType } from 'src/components/Layers/LayerTypeSchema'
 import { debounce, randomHex } from '@utils'
 import { EventHandler } from '@state/events'
-import { ToggleButton } from '@shared'
+import { HoverText, ToggleButton } from '@shared'
 import { ArrowsCounterClockwise, PlusCircle } from '@phosphor-icons/react'
 import GradientStops from '../GradientStops'
 import RadialPosition from './RadialPosition'
@@ -16,7 +16,7 @@ const RadialGradient = ({
   typeProps: GradientLayerType['props'] & { type: 'radial' }
   selectedLayer: string
 }) => {
-  const { position, shape, size, colorSpace, repeating, stops } = typeProps
+  const { position, size, colorSpace, repeating, stops } = typeProps
   return (
     <>
       {/* Header */}
@@ -47,31 +47,9 @@ const RadialGradient = ({
           <PlusCircle size="2em" />
         </button>
       </div>
-      {/* Shape Toggle */}
+      {/* Color Space */}
       <div className="my-2 flex w-full flex-row items-center justify-stretch gap-4">
-        <div className="inline-flex items-center gap-2">
-          <label className="text-[10px] text-gray-300">Shape</label>
-          <ToggleButton
-            onLabel="circle"
-            offLabel="ellipse"
-            defaultValue={shape || 'circle'}
-            onChange={(v) =>
-              deHandler({
-                action: 'bkgd-update-layer',
-                payload: {
-                  id: selectedLayer,
-                  type: 'gradient',
-                  props: {
-                    type: 'radial',
-                    shape: v ? 'circle' : 'ellipse',
-                  },
-                },
-              })
-            }
-          />
-        </div>
-        <div className="ml-auto inline-flex items-center gap-2">
-          <label className="text-[10px] text-gray-300">Color Space</label>
+        <div className="group relative inline-flex items-center gap-2">
           <ToggleButton
             onLabel="oklab"
             offLabel="Oklch"
@@ -84,25 +62,22 @@ const RadialGradient = ({
                   type: 'gradient',
                   props: {
                     type: 'radial',
-                    colorSpace: v ? 'Oklch' : 'oklab',
+                    colorSpace: v ? 'oklab' : 'Oklch',
                   },
                 },
               })
             }
           />
+          <HoverText>Color Space</HoverText>
         </div>
-      </div>
-
-      <div className="flex w-full flex-row items-center gap-4">
-        <RadialPosition position={position} selectedLayer={selectedLayer} />
         {/* Size */}
-        <RadialSize
-          size={Array.isArray(size) ? size : [100, 100]}
-          selectedLayer={selectedLayer}
-        />
+        <RadialSize size={size} selectedLayer={selectedLayer} />
+        <label className="text-base text-gray-300">@</label>
+        {/* Position */}
+        <RadialPosition position={position} selectedLayer={selectedLayer} />
         {/* Repeating Button */}
         <div
-          className="ml-auto flex cursor-pointer flex-row items-center justify-end"
+          className="group relative ml-auto flex cursor-pointer flex-row items-center justify-end"
           onClick={() => {
             const el =
               document.querySelector<HTMLInputElement>('#repeating-icon')
@@ -120,13 +95,15 @@ const RadialGradient = ({
             })
           }}
         >
-          <label className="text-[10px] text-gray-300">Repeating</label>
           <ArrowsCounterClockwise
             id="repeating-icon"
             className="ml-2 text-2xl hover:scale-105 focus:scale-95 active:scale-95"
           />
+          <HoverText>Repeat</HoverText>
         </div>
       </div>
+
+      <div className="flex w-full flex-row items-center gap-4"></div>
 
       <GradientStops
         type="radial"

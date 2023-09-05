@@ -2,7 +2,7 @@ import { debounce } from '@utils'
 import { useEffect, useState } from 'react'
 import { EventHandler } from '@state/events'
 import { Popover } from '@headlessui/react'
-import { set } from 'zod'
+import { HoverText } from '@shared'
 
 const deHandler = debounce(EventHandler, 200)
 
@@ -20,13 +20,16 @@ export default function RadialPosition({
   }, [selectedLayer])
 
   return (
-    <span className="inline-flex items-center">
-      <label className="text-[10px] text-gray-300">Position</label>
+    <>
       {/* Position */}
-      <div className="flex cursor-pointer flex-row items-center justify-start gap-2">
+      <div className="flex cursor-pointer flex-row items-center justify-start">
         <span className="inline-flex flex-row items-center gap-2">
           <Popover className="relative">
-            <Popover.Button className="ml-2">{x}%</Popover.Button>
+            <span className="group relative">
+              <Popover.Button>
+                {x}%<HoverText>Position X</HoverText>
+              </Popover.Button>
+            </span>
             <Popover.Panel className="absolute z-10 rounded-md bg-[#00000099] px-4 py-2 shadow-2xl shadow-black backdrop-brightness-50">
               <input
                 id={'radial-position-x'}
@@ -63,7 +66,12 @@ export default function RadialPosition({
           </Popover>
 
           <Popover className="relative">
-            <Popover.Button className="ml-2">{y}%</Popover.Button>
+            <span className="group relative">
+              <Popover.Button>
+                {y}%<HoverText>Position Y</HoverText>
+              </Popover.Button>
+            </span>
+
             <Popover.Panel className="absolute z-10 rounded-md bg-[#00000099] px-4 py-2 shadow-2xl shadow-black backdrop-brightness-50">
               <input
                 id={'radial-position-y'}
@@ -100,6 +108,6 @@ export default function RadialPosition({
           </Popover>
         </span>
       </div>
-    </span>
+    </>
   )
 }

@@ -8,7 +8,6 @@ import RadialGradient from './RadialGradient'
 type GradientTypeProps = GradientLayerType['props']
 
 const GradientType = ({ typeProps }: { typeProps: GradientTypeProps }) => {
-  // Gradients need to have multiple opacity's, colors, and stops
   const [selectedLayer] = useSelectedLayer()
 
   switch (typeProps.type) {

@@ -21,9 +21,9 @@ const getColor = (
   }
 }
 
-const transformPosition = (position?: [number, number]) => {
-  if (!position) return 'center'
-  return position.join('% ') + '%'
+const transformSizeOrPosition = (value?: [number, number]) => {
+  if (!value) return 'center'
+  return value.join('% ') + '%'
 }
 
 const transformStop = (
@@ -37,9 +37,9 @@ const transformStop = (
 
 const GradientLayer = (layer: GradientLayerProps, displayP3?: boolean) => {
   const repeat = layer.props.repeating ? 'repeating-' : ''
+  const space = layer.props.colorSpace || 'oklab'
   if (layer.props.type === 'linear') {
     const deg = layer.props.deg || 0
-    const space = layer.props.colorSpace || 'oklab'
     const stops =
       layer.props.stops?.map(([color, opacity, stop]) => {
         return `${getColor(color, opacity, displayP3)} ${transformStop(stop)}`
@@ -49,21 +49,19 @@ const GradientLayer = (layer: GradientLayerProps, displayP3?: boolean) => {
       ', '
     )})`
   } else if (layer.props.type === 'radial') {
-    const shape = layer.props.shape || 'ellipse'
-    const size = transformStop(layer.props.size || null)
-    const position = transformPosition(layer.props.position)
+    const size = transformSizeOrPosition(layer.props.size)
+    const position = transformSizeOrPosition(layer.props.position)
     const stops =
       layer.props.stops?.map(([color, opacity, stop]) => {
         return `${getColor(color, opacity, displayP3)} ${transformStop(stop)}`
       }) || []
 
-    return `${repeat}radial-gradient(${size} ${shape} at ${position}, ${stops.join(
+    return `${repeat}radial-gradient(${size} at ${position} in ${space}, ${stops.join(
       ', '
     )})`
   } else if (layer.props.type === 'conic') {
     const deg = layer.props.deg || 0
-    const position = transformPosition(layer.props.position)
-    const space = layer.props.colorSpace || 'oklab'
+    const position = transformSizeOrPosition(layer.props.position)
     const stops =
       layer.props.stops?.map(([color, opacity, stop]) => {
         return `${getColor(color, opacity, displayP3)} ${transformStop(stop)}`
