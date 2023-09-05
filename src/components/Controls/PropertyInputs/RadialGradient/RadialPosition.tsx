@@ -1,83 +1,102 @@
-import { useSelectedLayer } from '@state/global'
 import { debounce } from '@utils'
 import { useEffect, useState } from 'react'
 import { EventHandler } from '@state/events'
+import { Popover } from '@headlessui/react'
 
 const deHandler = debounce(EventHandler, 200)
 
 export default function RadialPosition({
-  value,
+  position,
+  selectedLayer,
 }: {
-  value?: [number, number]
+  position?: [number, number]
+  selectedLayer: string
 }) {
-  const [[x, y], setXY] = useState<[number, number]>(value || [100, 100])
-  const [selectedLayer] = useSelectedLayer()
+  const [[x, y], setXY] = useState<[number, number]>(position || [100, 100])
   useEffect(() => {
-    setXY(value || [100, 100])
+    setXY(position || [100, 100])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLayer])
 
   return (
-    <>
-      <div className="flex h-10 w-full flex-row items-stretch justify-start gap-2">
-        <span className="relative flex w-full items-center">
-          <span className="absolute left-3 text-sm text-gray-300">X</span>
-          <input
-            step={10}
-            type="number"
-            value={x}
-            className="flex h-full w-full appearance-none rounded-md border-none bg-transparent p-2 px-7 
-        text-right leading-tight tracking-widest text-white ring-1 ring-inset ring-gray-300 
-        hover:ring-white active:ring-white"
-            onChange={(e) =>
-              setXY((prev) => {
-                const next: [number, number] = [Number(e.target.value), prev[1]]
-                deHandler({
-                  action: 'bkgd-update-layer',
-                  payload: {
-                    id: selectedLayer,
-                    props: {
-                      type: 'radial',
-                      position: next,
+    <span className="inline-flex items-center">
+      <label className="text-[10px] text-gray-300">Position</label>
+      {/* Position */}
+      <div className="flex cursor-pointer flex-row items-center justify-start gap-2">
+        <span className="inline-flex flex-row items-center gap-2">
+          <Popover className="relative">
+            <Popover.Button className="ml-2">{x}%</Popover.Button>
+            <Popover.Panel className="absolute z-10 rounded-md bg-[#00000099] px-4 py-2 shadow-2xl shadow-black backdrop-brightness-50">
+              <input
+                id={'radial-position-x'}
+                type="range"
+                value={x}
+                min={0}
+                max={200}
+                step={5}
+                className="
+                appearance:none m-0 w-32 cursor-pointer rounded-full transition-all 
+                [&::-webkit-slider-container]:h-2
+                [&::-webkit-slider-container]:appearance-none
+                [&::-webkit-slider-container]:rounded-full 
+                [&::-webkit-slider-container]:bg-gray-500
+                [&::-webkit-slider-container]:transition-colors
+                hover:[&::-webkit-slider-container]:bg-gray-400
+                active:[&::-webkit-slider-container]:bg-gray-50"
+                onChange={(e) => {
+                  deHandler({
+                    action: 'bkgd-update-layer',
+                    payload: {
+                      id: selectedLayer,
+                      type: 'gradient',
+                      props: {
+                        type: 'radial',
+                        position: [Number(e.target.value), y],
+                      },
                     },
-                  },
-                })
-                return next
-              })
-            }
-          />
+                  })
+                }}
+              />
+            </Popover.Panel>
+          </Popover>
 
-          <span className="absolute right-3 text-sm text-gray-300">%</span>
-        </span>
-        <span className="relative flex w-full items-center">
-          <span className="absolute left-3 text-sm text-gray-300">Y</span>
-          <input
-            step={10}
-            type="number"
-            value={y}
-            className="flex h-full w-full appearance-none rounded-md border-none bg-transparent p-2 px-7 text-right leading-tight tracking-widest text-white ring-1 ring-inset ring-gray-300 
-          hover:ring-white active:ring-white"
-            onChange={(e) => {
-              setXY((prev) => {
-                const next: [number, number] = [prev[0], Number(e.target.value)]
-                deHandler({
-                  action: 'bkgd-update-layer',
-                  payload: {
-                    id: selectedLayer,
-                    props: {
-                      type: 'radial',
-                      position: next,
+          <Popover className="relative">
+            <Popover.Button className="ml-2">{y}%</Popover.Button>
+            <Popover.Panel className="absolute z-10 rounded-md bg-[#00000099] px-4 py-2 shadow-2xl shadow-black backdrop-brightness-50">
+              <input
+                id={'radial-position-y'}
+                type="range"
+                value={y}
+                min={0}
+                max={200}
+                step={5}
+                className="
+                  appearance:none m-0 w-32 cursor-pointer rounded-full transition-all 
+                  [&::-webkit-slider-container]:h-2
+                  [&::-webkit-slider-container]:appearance-none
+                  [&::-webkit-slider-container]:rounded-full 
+                  [&::-webkit-slider-container]:bg-gray-500
+                  [&::-webkit-slider-container]:transition-colors
+                  hover:[&::-webkit-slider-container]:bg-gray-400
+                  active:[&::-webkit-slider-container]:bg-gray-50"
+                onChange={(e) => {
+                  deHandler({
+                    action: 'bkgd-update-layer',
+                    payload: {
+                      id: selectedLayer,
+                      type: 'gradient',
+                      props: {
+                        type: 'radial',
+                        position: [x, Number(e.target.value)],
+                      },
                     },
-                  },
-                })
-                return next
-              })
-            }}
-          />
-
-          <span className="absolute right-3 text-sm text-gray-300">%</span>
+                  })
+                }}
+              />
+            </Popover.Panel>
+          </Popover>
         </span>
       </div>
-    </>
+    </span>
   )
 }
