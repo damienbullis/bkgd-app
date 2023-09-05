@@ -3,7 +3,7 @@ import { EventHandler } from '@state/events'
 import { ArrowsCounterClockwise, PlusCircle } from '@phosphor-icons/react'
 import { useEffect } from 'react'
 import { Popover } from '@headlessui/react'
-import { ToggleButton } from '@shared'
+import { HoverText, ToggleButton } from '@shared'
 import { GradientLayerType } from 'src/components/Layers/LayerTypeSchema'
 import GradientStops from './GradientStops'
 
@@ -33,7 +33,7 @@ const LinearGradient = ({
   return (
     <>
       {/* Head */}
-      <div className="mb-4 flex flex-row items-center justify-start gap-2">
+      <div className="mb-2 flex flex-row items-center justify-start gap-2">
         <h4 className="-skew-x-6 bg-gradient-to-r from-pink-500 to-purple-500 to-[150%] bg-clip-text text-transparent">
           LINEAR GRADIENT
         </h4>
@@ -60,20 +60,21 @@ const LinearGradient = ({
           <PlusCircle size="2em" />
         </button>
       </div>
-      <div className="mb-2 flex w-full flex-row items-center justify-stretch gap-4">
+      <div className="flex w-full flex-row items-center justify-stretch gap-4">
         {/* Angle Slider */}
-        <div className="inline-flex items-center">
-          <label className="text-[10px] text-gray-300">Angle</label>
-          <Popover className="relative">
-            <Popover.Button className="ml-2">{deg || 360}°</Popover.Button>
-            <Popover.Panel className="absolute z-10 rounded-md bg-black px-4 py-2 shadow-2xl shadow-black">
-              <input
-                id="degrees"
-                type="range"
-                defaultValue={deg || 360}
-                min={1}
-                max={360}
-                className="
+        <Popover className="relative">
+          <span className="group relative">
+            <Popover.Button>{deg || 360}°</Popover.Button>
+            <HoverText>Angle</HoverText>
+          </span>
+          <Popover.Panel className="absolute z-10 rounded-md bg-black px-4 py-2 shadow-2xl shadow-black">
+            <input
+              id="degrees"
+              type="range"
+              defaultValue={deg || 360}
+              min={1}
+              max={360}
+              className="
                 appearance:none m-0 w-32 cursor-pointer rounded-full transition-all 
                 [&::-webkit-slider-container]:h-2
                 [&::-webkit-slider-container]:appearance-none
@@ -82,28 +83,24 @@ const LinearGradient = ({
                 [&::-webkit-slider-container]:transition-colors
                 hover:[&::-webkit-slider-container]:bg-gray-400
                 active:[&::-webkit-slider-container]:bg-gray-50"
-                onChange={(e) => {
-                  deHandler({
-                    action: 'bkgd-update-layer',
-                    payload: {
-                      id: selectedLayer,
-                      type: 'gradient',
-                      props: {
-                        type: 'linear',
-                        deg: Number(e.target.value),
-                      },
+              onChange={(e) => {
+                deHandler({
+                  action: 'bkgd-update-layer',
+                  payload: {
+                    id: selectedLayer,
+                    type: 'gradient',
+                    props: {
+                      type: 'linear',
+                      deg: Number(e.target.value),
                     },
-                  })
-                }}
-              />
-            </Popover.Panel>
-          </Popover>
-        </div>
+                  },
+                })
+              }}
+            />
+          </Popover.Panel>
+        </Popover>
         {/* Color Space Toggle */}
-        <div className="inline-flex items-center gap-2">
-          <label className="ml-auto text-[10px] text-gray-300">
-            Color Space
-          </label>
+        <div className="group relative ml-auto flex items-center">
           <ToggleButton
             onLabel="oklab"
             offLabel="oklch"
@@ -122,10 +119,11 @@ const LinearGradient = ({
               })
             }
           />
+          <HoverText>Color Space</HoverText>
         </div>
         {/* Repeating Button */}
         <div
-          className="ml-auto flex cursor-pointer flex-row items-center justify-end"
+          className="group relative cursor-pointer"
           onClick={() => {
             const el =
               document.querySelector<HTMLInputElement>('#repeating-icon')
@@ -143,11 +141,11 @@ const LinearGradient = ({
             })
           }}
         >
-          <label className="text-[10px] text-gray-300">Repeating</label>
           <ArrowsCounterClockwise
             id="repeating-icon"
             className="ml-2 text-2xl hover:scale-105 focus:scale-95 active:scale-95"
           />
+          <HoverText>Repeat</HoverText>
         </div>
       </div>
 

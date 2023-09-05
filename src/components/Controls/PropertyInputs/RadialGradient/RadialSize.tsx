@@ -13,10 +13,10 @@ export default function RadialSize({
   size?: [number, number]
   selectedLayer: string
 }) {
-  const [[x, y], setPos] = useState(size || [50, 50])
+  const [[x, y], setPos] = useState(size || [100, 100])
 
   useEffect(() => {
-    setPos(size || [50, 50])
+    setPos(size || [100, 100])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLayer])
 

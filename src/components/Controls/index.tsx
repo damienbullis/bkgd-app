@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import {
   CircleHalf,
+  ClockCountdown,
   PaintBucket,
   Record,
   SlidersHorizontal,
@@ -19,12 +20,18 @@ import { EventHandler } from '@state/events'
 type Mode = '' | 'edit'
 
 const deHandler = debounce(EventHandler, 200)
-const handler = (type: 'solid' | 'gradient' | 'noise') =>
+const handler = (
+  type: 'solid' | 'gradient' | 'noise',
+  gradientType?: 'linear' | 'radial' | 'conic'
+) =>
   deHandler({
     action: 'bkgd-add-layer',
     payload: {
       id: makeID(),
       type,
+      props: {
+        type: gradientType || 'linear',
+      },
     },
   })
 
@@ -72,11 +79,17 @@ export default function Controls() {
             <HoverText>Noise</HoverText>
           </li>
           <li className="group relative">
-            <IconButton icon={Target} onClick={() => handler('gradient')} />
+            <IconButton
+              icon={ClockCountdown}
+              onClick={() => handler('gradient', 'conic')}
+            />
             <HoverText>Conic Gradient</HoverText>
           </li>
           <li className="group relative">
-            <IconButton icon={Record} onClick={() => handler('gradient')} />
+            <IconButton
+              icon={Record}
+              onClick={() => handler('gradient', 'radial')}
+            />
             <HoverText>Radial Gradient</HoverText>
           </li>
           <li className="group relative">

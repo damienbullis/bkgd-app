@@ -18,7 +18,11 @@ type EventHandlerType<T> = T extends infer U extends EventActionEnum
   : never
 
 type EventPayload<T extends EventActionEnum> = T extends 'bkgd-add-layer'
-  ? { id: string; type: LayerEnum }
+  ? {
+      id: string
+      type: LayerEnum
+      props: { type: 'linear' | 'radial' | 'conic' }
+    }
   : T extends 'bkgd-remove-layer' | 'select-layer'
   ? { id: string }
   : T extends 'bkgd-update-layer'
@@ -277,7 +281,7 @@ const loadBkgd = (bkgd: Bkgd) => {
 }
 
 const buildLayerData = (e: EventHandlerType<'bkgd-add-layer'>) => {
-  const { id, type } = e.payload
+  const { id, type, props } = e.payload
   switch (type) {
     case 'solid': {
       return {
@@ -293,12 +297,10 @@ const buildLayerData = (e: EventHandlerType<'bkgd-add-layer'>) => {
         id,
         type: 'gradient',
         props: {
-          type: 'linear',
-          deg: 0,
-          colorSpace: 'oklab',
+          type: props.type,
           stops: [
-            [randomHex(), 100, null],
-            [randomHex(), 100, null],
+            [randomHex(), null, null],
+            [randomHex(), null, null],
           ],
         },
       } satisfies GradientLayerType

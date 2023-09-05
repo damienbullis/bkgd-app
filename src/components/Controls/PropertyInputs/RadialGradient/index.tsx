@@ -21,7 +21,12 @@ const RadialGradient = ({
     <>
       {/* Header */}
       <div className="mb-4 flex flex-row items-center justify-start gap-2">
-        <h4 className="-skew-x-6 bg-gradient-to-r from-amber-500 to-sky-500 to-[150%] bg-clip-text text-transparent">
+        <h4
+          className="-skew-x-6 bg-clip-text text-transparent"
+          style={{
+            backgroundImage: 'radial-gradient(#F472B6 50%, #7C3AED 70%)',
+          }}
+        >
           RADIAL GRADIENT
         </h4>
         <label className="ml-auto text-sm text-gray-300">
@@ -47,9 +52,16 @@ const RadialGradient = ({
           <PlusCircle size="2em" />
         </button>
       </div>
-      {/* Color Space */}
       <div className="my-2 flex w-full flex-row items-center justify-stretch gap-4">
-        <div className="group relative inline-flex items-center gap-2">
+        {/* Size */}
+        <RadialSize size={size} selectedLayer={selectedLayer} />
+        <label className="text-base text-gray-300">@</label>
+
+        {/* Position */}
+        <RadialPosition position={position} selectedLayer={selectedLayer} />
+
+        {/* Color Space */}
+        <div className="group relative ml-auto inline-flex items-center gap-2">
           <ToggleButton
             onLabel="oklab"
             offLabel="Oklch"
@@ -70,14 +82,10 @@ const RadialGradient = ({
           />
           <HoverText>Color Space</HoverText>
         </div>
-        {/* Size */}
-        <RadialSize size={size} selectedLayer={selectedLayer} />
-        <label className="text-base text-gray-300">@</label>
-        {/* Position */}
-        <RadialPosition position={position} selectedLayer={selectedLayer} />
+
         {/* Repeating Button */}
         <div
-          className="group relative ml-auto flex cursor-pointer flex-row items-center justify-end"
+          className="group relative flex cursor-pointer flex-row items-center justify-end"
           onClick={() => {
             const el =
               document.querySelector<HTMLInputElement>('#repeating-icon')
