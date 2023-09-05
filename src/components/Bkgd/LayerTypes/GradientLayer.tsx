@@ -23,7 +23,7 @@ const getColor = (
 
 const transformPosition = (position?: [number, number]) => {
   if (!position) return 'center'
-  return position.join('%, ') + '%'
+  return position.join('% ') + '%'
 }
 
 const transformStop = (
@@ -57,7 +57,7 @@ const GradientLayer = (layer: GradientLayerProps, displayP3?: boolean) => {
         return `${getColor(color, opacity, displayP3)} ${transformStop(stop)}`
       }) || []
 
-    return `${repeat}radial-gradient(${shape}${size} at ${position}, ${stops.join(
+    return `${repeat}radial-gradient(${size} ${shape} at ${position}, ${stops.join(
       ', '
     )})`
   } else if (layer.props.type === 'conic') {

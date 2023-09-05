@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Popover } from '@headlessui/react'
 import { EventHandler } from '@state/events'
 import { debounce } from '@utils'
+import { set } from 'zod'
 
 const deHandler = debounce(EventHandler, 200)
 
@@ -43,6 +44,7 @@ export default function RadialSize({
                 hover:[&::-webkit-slider-container]:bg-gray-400
                 active:[&::-webkit-slider-container]:bg-gray-50"
             onChange={(e) => {
+              setPos([Number(e.target.value), y])
               deHandler({
                 action: 'bkgd-update-layer',
                 payload: {
@@ -78,6 +80,7 @@ export default function RadialSize({
                   hover:[&::-webkit-slider-container]:bg-gray-400
                   active:[&::-webkit-slider-container]:bg-gray-50"
             onChange={(e) => {
+              setPos([x, Number(e.target.value)])
               deHandler({
                 action: 'bkgd-update-layer',
                 payload: {
