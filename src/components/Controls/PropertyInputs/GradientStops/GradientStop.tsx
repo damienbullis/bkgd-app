@@ -254,21 +254,20 @@ const GradientStop = ({
                 [&::-webkit-slider-container]:transition-colors
                 hover:[&::-webkit-slider-container]:bg-gray-400
                 active:[&::-webkit-slider-container]:bg-gray-50"
-                onChange={(e) =>
+                onChange={(e) => {
+                  allStops[index][1] = Number(e.target.value)
                   deHandler({
                     action: 'bkgd-update-layer',
                     payload: {
                       id: selectedLayer,
                       type: 'gradient',
                       props: {
-                        type: 'linear',
-                        stops: allStops.map((s, i) =>
-                          i === index ? [s[0], Number(e.target.value), s[2]] : s
-                        ),
+                        type,
+                        stops: allStops,
                       },
                     },
                   })
-                }
+                }}
               />
             </Popover.Panel>
           </Popover>
