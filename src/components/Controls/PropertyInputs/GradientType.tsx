@@ -1,7 +1,7 @@
 import { useSelectedLayer } from '@state/global'
 
 import { GradientLayerType } from '../../Layers/LayerTypeSchema'
-import ConicGradientType from './ConicGradientType'
+import ConicGradientType from './ConicGradient'
 import LinearGradient from './LinearGradient'
 import RadialGradient from './RadialGradient'
 
