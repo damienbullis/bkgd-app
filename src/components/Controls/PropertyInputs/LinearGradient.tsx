@@ -32,6 +32,34 @@ const LinearGradient = ({
   }, [selectedLayer])
   return (
     <>
+      {/* Head */}
+      <div className="mb-4 flex flex-row items-center justify-start gap-2">
+        <h4 className="-skew-x-6 bg-gradient-to-r from-pink-500 to-purple-500 to-[150%] bg-clip-text text-transparent">
+          LINEAR GRADIENT
+        </h4>
+        <label className="ml-auto text-sm text-gray-300">
+          {(stops || []).length} Stops
+        </label>
+        <button
+          className="grid place-content-center rounded-full p-1 text-base text-gray-300 transition
+        hover:text-white active:scale-95 active:text-white"
+          onClick={() =>
+            deHandler({
+              action: 'bkgd-update-layer',
+              payload: {
+                id: selectedLayer,
+                type: 'gradient',
+                props: {
+                  type: 'linear',
+                  stops: [...(stops || []), [randomHex(), null, null]],
+                },
+              },
+            })
+          }
+        >
+          <PlusCircle size="2em" />
+        </button>
+      </div>
       <div className="mb-2 flex w-full flex-row items-center justify-stretch gap-4">
         {/* Angle Slider */}
         <div className="inline-flex items-center">
@@ -123,33 +151,6 @@ const LinearGradient = ({
         </div>
       </div>
 
-      <div className="flex flex-row items-center justify-start gap-2">
-        <h4 className="-skew-x-6 bg-gradient-to-r from-pink-500 to-purple-500 to-[150%] bg-clip-text text-transparent">
-          LINEAR GRADIENT
-        </h4>
-        <label className="ml-auto text-sm text-gray-300">
-          {(stops || []).length} Stops
-        </label>
-        <button
-          className="grid place-content-center rounded-full p-1 text-base text-gray-300 transition
-        hover:text-white active:scale-95 active:text-white"
-          onClick={() =>
-            deHandler({
-              action: 'bkgd-update-layer',
-              payload: {
-                id: selectedLayer,
-                type: 'gradient',
-                props: {
-                  type: 'linear',
-                  stops: [...(stops || []), [randomHex(), null, null]],
-                },
-              },
-            })
-          }
-        >
-          <PlusCircle size="2em" />
-        </button>
-      </div>
       <GradientStops
         stops={stops || []}
         selectedLayer={selectedLayer}

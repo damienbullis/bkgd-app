@@ -14,7 +14,7 @@ const GradientStops = ({
   type: 'linear' | 'radial' | 'conic'
 }) => {
   return (
-    <div className="justify-starts flex w-full flex-col items-stretch justify-stretch">
+    <div className="justify-starts mt-5 flex w-full flex-col items-stretch justify-stretch">
       {stops.map(([color, opacity, stop], i) => (
         <GradientStop
           type={type}
