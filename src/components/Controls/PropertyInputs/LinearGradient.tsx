@@ -123,28 +123,53 @@ const LinearGradient = ({
         </div>
         {/* Repeating Button */}
         <div
-          className="group relative cursor-pointer"
-          onClick={() => {
-            const el =
-              document.querySelector<HTMLInputElement>('#repeating-icon')
-            if (el) el.classList.toggle('text-fuchsia-500')
-            deHandler({
-              action: 'bkgd-update-layer',
-              payload: {
-                id: selectedLayer,
-                type: 'gradient',
-                props: {
-                  type: 'linear',
-                  repeating: !repeating,
-                },
-              },
-            })
-          }}
+          className="group relative ml-2 inline-flex"
+          // onClick={() => {
+          //   const el =
+          //     document.querySelector<HTMLInputElement>('#repeating-icon')
+          //   if (el) el.classList.toggle('text-fuchsia-500')
+          //   deHandler({
+          //     action: 'bkgd-update-layer',
+          //     payload: {
+          //       id: selectedLayer,
+          //       type: 'gradient',
+          //       props: {
+          //         type: 'linear',
+          //         repeating: !repeating,
+          //       },
+          //     },
+          //   })
+          // }}
         >
-          <ArrowsCounterClockwise
-            id="repeating-icon"
-            className="ml-2 text-2xl hover:scale-105 focus:scale-95 active:scale-95"
-          />
+          <label className="inline-flex cursor-pointer">
+            <ArrowsCounterClockwise
+              id="repeating-icon"
+              className={`text-2xl transition-all hover:scale-105 hover:text-white focus:scale-95 active:scale-95 
+              ${repeating ? 'text-fuchsia-500' : 'text-gray-300'}`}
+            />
+            <input
+              className="peer appearance-none"
+              type="checkbox"
+              id="repeating"
+              defaultChecked={repeating}
+              onChange={(e) => {
+                const el =
+                  document.querySelector<HTMLDivElement>('#repeating-icon')
+                if (el) el.classList.toggle('text-fuchsia-500')
+                deHandler({
+                  action: 'bkgd-update-layer',
+                  payload: {
+                    id: selectedLayer,
+                    type: 'gradient',
+                    props: {
+                      type: 'linear',
+                      repeating: e.target.checked,
+                    },
+                  },
+                })
+              }}
+            />
+          </label>
           <HoverText>Repeat</HoverText>
         </div>
       </div>
