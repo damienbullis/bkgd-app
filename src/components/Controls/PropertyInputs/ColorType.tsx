@@ -80,22 +80,21 @@ export default function ColorType({
         <h4 className="-skew-x-6 text-white">SOLID COLOR</h4>
 
         {/* Opacity */}
-        <div className="ml-auto mr-4 flex min-w-[4rem] cursor-pointer flex-row items-center justify-end gap-2">
-          <span className="inline-flex flex-row items-center gap-2">
-            <Popover className="relative">
-              <Popover.Button className="ml-2">
-                <span className="group relative">
-                  {opacity ?? 100}%<HoverText>Opacity</HoverText>
-                </span>
-              </Popover.Button>
-              <Popover.Panel className="absolute z-10 rounded-md bg-[#00000099] px-4 py-2 shadow-2xl shadow-black backdrop-brightness-50">
-                <input
-                  id="opacity"
-                  type="range"
-                  defaultValue={opacity ?? 100}
-                  min={0}
-                  max={100}
-                  className="
+        <div className="ml-auto mr-4 flex min-w-[4rem] flex-row items-center justify-end gap-2">
+          <Popover className="relative">
+            <Popover.Button>
+              <span className="group relative">
+                {opacity ?? 100}%<HoverText>Opacity</HoverText>
+              </span>
+            </Popover.Button>
+            <Popover.Panel className="absolute z-10 rounded-md bg-[#00000099] px-4 py-2 shadow-2xl shadow-black backdrop-brightness-50">
+              <input
+                id="opacity"
+                type="range"
+                defaultValue={opacity ?? 100}
+                min={0}
+                max={100}
+                className="
                   appearance:none m-0 w-32 cursor-pointer rounded-full transition-all 
                   [&::-webkit-slider-container]:h-2
                   [&::-webkit-slider-container]:appearance-none
@@ -104,20 +103,19 @@ export default function ColorType({
                   [&::-webkit-slider-container]:transition-colors
                   hover:[&::-webkit-slider-container]:bg-gray-400
                   active:[&::-webkit-slider-container]:bg-gray-50"
-                  onChange={(e) => {
-                    deb({
-                      action: 'bkgd-update-layer',
-                      payload: {
-                        id: selectedLayer,
-                        type: 'solid',
-                        opacity: Number(e.target.value),
-                      },
-                    })
-                  }}
-                />
-              </Popover.Panel>
-            </Popover>
-          </span>
+                onChange={(e) => {
+                  deb({
+                    action: 'bkgd-update-layer',
+                    payload: {
+                      id: selectedLayer,
+                      type: 'solid',
+                      opacity: Number(e.target.value),
+                    },
+                  })
+                }}
+              />
+            </Popover.Panel>
+          </Popover>
         </div>
 
         <label className="text-sm text-gray-300">{label}</label>

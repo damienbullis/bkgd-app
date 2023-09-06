@@ -6,6 +6,7 @@ type ToggleButtonProps = {
   offLabel: string
   onChange: (value: boolean) => void
   defaultValue?: string
+  width?: number
 }
 
 function ToggleButton({
@@ -25,13 +26,15 @@ function ToggleButton({
       }}
       className={`${
         enabled ? 'bg-purple-700' : 'bg-pink-700'
-      } relative inline-flex h-6 w-[100px] items-center rounded-full`}
+      } relative inline-flex h-6 w-auto items-center rounded-full`}
     >
       <span className="sr-only">Enable notifications</span>
+      <span className="appearance-none p-5 uppercase opacity-0">
+        {enabled ? onLabel : offLabel}
+      </span>
       <span
-        className={`${
-          enabled ? 'translate-x-[80px]' : 'translate-x-1'
-        } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+        className={`absolute inline-block h-4 w-4 transform rounded-full bg-white transition
+        ${enabled ? `right-1` : 'left-1'}`}
       />
       <span
         className={`absolute uppercase transition ${
