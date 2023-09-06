@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { debounce, hexToHSL, hexToRGB, hslToHex, rgbToHex } from '@utils'
 import { useSelectedLayer } from '@state/global'
 import { EventHandler } from '@state/events'
-import { Range, Select } from '@shared'
+import { HoverText, Range, Select } from '@shared'
 
 import { useCapabilities } from '../../Capabilities'
 import styles from './ColorType.module.css'
 import { SolidLayerType } from '../../Layers/LayerTypeSchema'
+import { Popover } from '@headlessui/react'
 
 //#region types & utils
 
@@ -73,21 +74,67 @@ export default function ColorType({
   }, [value])
 
   return (
-    <div className={styles.wrap}>
-      <label htmlFor={label}>{label}</label>
-      <Select
-        label="color type"
-        hideLabel
-        options={[
-          { value: 'hex', label: 'HEX' },
-          { value: 'hsl', label: 'HSL' },
-          ...(hasP3
-            ? [{ value: 'display-p3', label: 'Display P3' }]
-            : [{ value: 'srgb', label: 'SRGB' }]),
-        ]}
-        value={colorType}
-        onChange={(e) => setColorType(e.target.value as ColorTypeEnum)}
-      />
+    <>
+      {/* Header */}
+      <div className="mb-4 flex flex-row items-center justify-start gap-2">
+        <h4 className="-skew-x-6 text-white">SOLID COLOR</h4>
+
+        {/* Opacity */}
+        <div className="ml-auto mr-4 flex min-w-[4rem] cursor-pointer flex-row items-center justify-end gap-2">
+          <span className="inline-flex flex-row items-center gap-2">
+            <Popover className="relative">
+              <Popover.Button className="ml-2">
+                <span className="group relative">
+                  {opacity ?? 100}%<HoverText>Opacity</HoverText>
+                </span>
+              </Popover.Button>
+              <Popover.Panel className="absolute z-10 rounded-md bg-[#00000099] px-4 py-2 shadow-2xl shadow-black backdrop-brightness-50">
+                <input
+                  id="opacity"
+                  type="range"
+                  defaultValue={opacity ?? 100}
+                  min={0}
+                  max={100}
+                  className="
+                  appearance:none m-0 w-32 cursor-pointer rounded-full transition-all 
+                  [&::-webkit-slider-container]:h-2
+                  [&::-webkit-slider-container]:appearance-none
+                  [&::-webkit-slider-container]:rounded-full 
+                  [&::-webkit-slider-container]:bg-gray-500
+                  [&::-webkit-slider-container]:transition-colors
+                  hover:[&::-webkit-slider-container]:bg-gray-400
+                  active:[&::-webkit-slider-container]:bg-gray-50"
+                  onChange={(e) => {
+                    deb({
+                      action: 'bkgd-update-layer',
+                      payload: {
+                        id: selectedLayer,
+                        type: 'solid',
+                        opacity: Number(e.target.value),
+                      },
+                    })
+                  }}
+                />
+              </Popover.Panel>
+            </Popover>
+          </span>
+        </div>
+
+        <label className="text-sm text-gray-300">{label}</label>
+        <Select
+          id=""
+          options={[
+            { value: 'hex', label: 'HEX' },
+            { value: 'hsl', label: 'HSL' },
+            ...(hasP3
+              ? [{ value: 'display-p3', label: 'Display P3' }]
+              : [{ value: 'srgb', label: 'SRGB' }]),
+          ]}
+          value={colorType}
+          onChange={(v) => setColorType(v as ColorTypeEnum)}
+        />
+      </div>
+
       <input
         ref={inputRef}
         type="color"
@@ -105,9 +152,8 @@ export default function ColorType({
             },
           })
         }}
-        className="clr"
+        className="h-20 w-full appearance-none border-none bg-transparent outline-none ring-0"
       />
-      <Range label="Opacity" id="opacity" value={opacity} />
-    </div>
+    </>
   )
 }

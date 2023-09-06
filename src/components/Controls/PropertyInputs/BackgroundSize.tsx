@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
+import { MinusSquare, PlusSquare } from '@phosphor-icons/react'
+
 import { useSelectedLayer } from '@state/global'
 import { EventHandler } from '@state/events'
-import styles from './BackgroundSize.module.css'
-import { MinusSquare, PlusSquare } from '@phosphor-icons/react'
 import { debounce } from '@utils'
 
 const deHandler = debounce(EventHandler, 200)
@@ -25,7 +25,7 @@ export default function BackgroundSize({ value }: { value?: string }) {
   }, [selectedLayer])
 
   return (
-    <div className={styles.wrap}>
+    <>
       <div className="flex h-10 w-full flex-row flex-nowrap items-stretch gap-2">
         <span className="relative flex w-full items-center">
           <span className="absolute left-3 text-sm text-gray-300">
@@ -124,6 +124,6 @@ export default function BackgroundSize({ value }: { value?: string }) {
         value={value as BackgroundSizeType}
         selectedLayer={selectedLayer}
       /> */}
-    </div>
+    </>
   )
 }

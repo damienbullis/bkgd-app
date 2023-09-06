@@ -1,294 +1,16 @@
 import { GradientLayerType } from 'src/components/Layers/LayerTypeSchema'
 // import styles from './GradientType.module.css'
-import { debounce, hslToHex, randomHex, rgbToHex } from '@utils'
+import { debounce, randomHex } from '@utils'
 import { EventHandler } from '@state/events'
-import { PlusCircle } from '@phosphor-icons/react'
+import { ArrowsCounterClockwise, PlusCircle } from '@phosphor-icons/react'
+import { Popover } from '@headlessui/react'
+import { HoverText, ToggleButton } from '@shared'
+import GradientStops from '../GradientStops'
+import ConicPosition from './ConicPosition'
 
 const deHandler = debounce(EventHandler, 200)
 
 type ConicGradientPropsType = GradientLayerType['props'] & { type: 'conic' }
-type GradientStopsType = Exclude<ConicGradientPropsType['stops'], undefined>[0]
-
-const transformColorValue = (color: GradientStopsType[0]) => {
-  if (typeof color === 'string') {
-    return color
-  } else {
-    if ('r' in color) {
-      return rgbToHex(color)
-    } else {
-      return hslToHex(color)
-    }
-  }
-}
-
-const RadialGradientStops = ({
-  stops = [],
-  selectedLayer,
-}: {
-  stops: ConicGradientPropsType['stops']
-  selectedLayer: string
-}) => {
-  return (
-    <>
-      {stops.map(([color, opacity, stop], i) => (
-        <ColorStop
-          key={i}
-          index={i}
-          color={color}
-          opacity={opacity}
-          stop={stop}
-          allStops={stops}
-          selectedLayer={selectedLayer}
-        />
-      ))}
-
-      <button
-        onClick={() =>
-          deHandler({
-            action: 'bkgd-update-layer',
-            payload: {
-              id: selectedLayer,
-              type: 'gradient',
-              props: {
-                type: 'conic',
-                stops: [...stops, [randomHex(), null, null]],
-              },
-            },
-          })
-        }
-      >
-        Add Stop
-      </button>
-    </>
-  )
-}
-
-const ColorStop = ({
-  index,
-  color,
-  opacity,
-  stop,
-  allStops,
-  selectedLayer,
-}: {
-  index: number
-  color: GradientStopsType[0]
-  opacity: GradientStopsType[1]
-  stop: GradientStopsType[2]
-  allStops: GradientStopsType[]
-  selectedLayer: string
-}) => {
-  // TODO: add in color space selector
-  return (
-    <>
-      <label>
-        Color
-        <input
-          type="color"
-          defaultValue={transformColorValue(color)}
-          onChange={(e) =>
-            deHandler({
-              action: 'bkgd-update-layer',
-              payload: {
-                id: selectedLayer,
-                type: 'gradient',
-                props: {
-                  type: 'conic',
-                  stops: allStops.map((s, i) =>
-                    i === index
-                      ? [e.target.value, s[1], s[2]]
-                      : [s[0], s[1], s[2]]
-                  ),
-                },
-              },
-            })
-          }
-        />
-      </label>
-      <label>
-        Opacity
-        <input
-          type="range"
-          defaultValue={opacity ?? 100}
-          min={0}
-          max={100}
-          onChange={(e) =>
-            deHandler({
-              action: 'bkgd-update-layer',
-              payload: {
-                id: selectedLayer,
-                type: 'gradient',
-                props: {
-                  type: 'conic',
-                  stops: allStops.map((s, i) =>
-                    i === index ? [s[0], Number(e.target.value), s[2]] : s
-                  ),
-                },
-              },
-            })
-          }
-        />
-      </label>
-      <label>
-        Stops
-        <span>
-          single
-          <input
-            type="radio"
-            name="stop"
-            value="single"
-            defaultChecked={typeof stop === 'number'}
-            onChange={() =>
-              EventHandler({
-                action: 'bkgd-update-layer',
-                payload: {
-                  id: selectedLayer,
-                  type: 'gradient',
-                  props: {
-                    type: 'conic',
-                    stops: allStops.map((s, i) =>
-                      i === index
-                        ? [
-                            s[0],
-                            s[1],
-                            Number(stop ?? (100 / allStops.length) * i),
-                          ]
-                        : s
-                    ),
-                  },
-                },
-              })
-            }
-          />
-        </span>
-        <span>
-          double
-          <input
-            type="radio"
-            name="stop"
-            value="double"
-            defaultChecked={Array.isArray(stop)}
-            onChange={() =>
-              EventHandler({
-                action: 'bkgd-update-layer',
-                payload: {
-                  id: selectedLayer,
-                  type: 'gradient',
-                  props: {
-                    type: 'conic',
-                    stops: allStops.map((s, i) =>
-                      i === index
-                        ? [s[0], s[1], [0, (100 / allStops.length) * i]]
-                        : s
-                    ),
-                  },
-                },
-              })
-            }
-          />
-        </span>
-        <br />
-        <StopInput
-          stop={stop}
-          selectedLayer={selectedLayer}
-          index={index}
-          allStops={allStops}
-        />
-      </label>
-    </>
-  )
-}
-
-const DEFAULT_STOP_PROPS = {
-  type: 'number',
-  min: -100,
-  max: 200,
-  step: 5,
-}
-
-const StopInput = ({
-  index,
-  property = 'stops',
-  stop,
-  allStops,
-  selectedLayer,
-}: {
-  index?: number
-  property?: 'size' | 'stops'
-  stop: GradientStopsType[2]
-  allStops: GradientStopsType[]
-  selectedLayer: string
-}) => {
-  if (Array.isArray(stop)) {
-    return (
-      <>
-        <input
-          {...DEFAULT_STOP_PROPS}
-          defaultValue={stop[0]}
-          onChange={(e) =>
-            deHandler({
-              action: 'bkgd-update-layer',
-              payload: {
-                id: selectedLayer,
-                type: 'gradient',
-                props: {
-                  type: 'conic',
-                  [property]: allStops.map((s, i) =>
-                    i === index
-                      ? [s[0], s[1], [Number(e.target.value), stop[1]]]
-                      : s
-                  ),
-                },
-              },
-            })
-          }
-        />
-        <input
-          {...DEFAULT_STOP_PROPS}
-          defaultValue={stop[1]}
-          onChange={(e) =>
-            deHandler({
-              action: 'bkgd-update-layer',
-              payload: {
-                id: selectedLayer,
-                type: 'gradient',
-                props: {
-                  type: 'conic',
-                  [property]: allStops.map((s, i) =>
-                    i === index
-                      ? [s[0], s[1], [stop[0], Number(e.target.value)]]
-                      : s
-                  ),
-                },
-              },
-            })
-          }
-        />
-      </>
-    )
-  }
-  return (
-    <input
-      {...DEFAULT_STOP_PROPS}
-      defaultValue={stop ?? 100}
-      onChange={(e) =>
-        deHandler({
-          action: 'bkgd-update-layer',
-          payload: {
-            id: selectedLayer,
-            type: 'gradient',
-            props: {
-              type: 'conic',
-              [property]: allStops.map((s, i) =>
-                i === index ? [s[0], s[1], Number(e.target.value)] : s
-              ),
-            },
-          },
-        })
-      }
-    />
-  )
-}
 
 const ConicGradient = ({
   typeProps,
@@ -334,77 +56,57 @@ const ConicGradient = ({
           <PlusCircle size="2em" />
         </button>
       </div>
-      <label htmlFor="deg">Deg</label>
-      <input
-        name="deg"
-        type="number"
-        defaultValue={deg || 0}
-        onChange={(e) =>
-          deHandler({
-            action: 'bkgd-update-layer',
-            payload: {
-              id: selectedLayer,
-              type: 'gradient',
-              props: {
-                type: 'conic',
-                deg: Number(e.target.value),
-              },
-            },
-          })
-        }
-      />
+      <div className="flex flex-row items-center justify-stretch gap-4">
+        {/* Angle Slider */}
+        <Popover className="relative">
+          <span className="group relative">
+            <Popover.Button>{deg || 360}°</Popover.Button>
+            <HoverText>Angle</HoverText>
+          </span>
+          <Popover.Panel className="absolute z-10 rounded-md bg-black px-4 py-2 shadow-2xl shadow-black">
+            <input
+              id="degrees"
+              type="range"
+              defaultValue={deg || 360}
+              min={1}
+              max={360}
+              className="
+                appearance:none m-0 w-32 cursor-pointer rounded-full transition-all 
+                [&::-webkit-slider-container]:h-2
+                [&::-webkit-slider-container]:appearance-none
+                [&::-webkit-slider-container]:rounded-full 
+                [&::-webkit-slider-container]:bg-gray-500
+                [&::-webkit-slider-container]:transition-colors
+                hover:[&::-webkit-slider-container]:bg-gray-400
+                active:[&::-webkit-slider-container]:bg-gray-50"
+              onChange={(e) => {
+                deHandler({
+                  action: 'bkgd-update-layer',
+                  payload: {
+                    id: selectedLayer,
+                    type: 'gradient',
+                    props: {
+                      type: 'conic',
+                      deg: Number(e.target.value),
+                    },
+                  },
+                })
+              }}
+            />
+          </Popover.Panel>
+        </Popover>
 
-      <label htmlFor="positionX">X</label>
-      <input
-        name="positionX"
-        type="number"
-        defaultValue={position?.[0] || 0}
-        onChange={(e) =>
-          deHandler({
-            action: 'bkgd-update-layer',
-            payload: {
-              id: selectedLayer,
-              type: 'gradient',
-              props: {
-                type: 'conic',
-                position: [Number(e.target.value), position?.[1] || 0],
-              },
-            },
-          })
-        }
-      />
-      <label htmlFor="positionY">
-        Y
-        <input
-          name="positionY"
-          type="number"
-          defaultValue={position?.[1] || 0}
-          onChange={(e) =>
-            deHandler({
-              action: 'bkgd-update-layer',
-              payload: {
-                id: selectedLayer,
-                type: 'gradient',
-                props: {
-                  type: 'conic',
-                  position: [position?.[0] || 0, Number(e.target.value)],
-                },
-              },
-            })
-          }
-        />
-      </label>
+        <span className="text-base text-gray-300">@</span>
 
-      <label>
-        Color Space
-        <br />
-        <span>
-          oklab
-          <input
-            type="radio"
-            name="color-space-oklab"
-            defaultChecked={colorSpace === 'oklab'}
-            onChange={() =>
+        <ConicPosition position={position} selectedLayer={selectedLayer} />
+
+        {/* Color Space Toggle */}
+        <div className="group relative ml-auto flex items-center">
+          <ToggleButton
+            onLabel="oklab"
+            offLabel="oklch"
+            defaultValue={colorSpace || 'oklab'}
+            onChange={(v) =>
               deHandler({
                 action: 'bkgd-update-layer',
                 payload: {
@@ -412,20 +114,34 @@ const ConicGradient = ({
                   type: 'gradient',
                   props: {
                     type: 'conic',
-                    colorSpace: 'oklab',
+                    colorSpace: v ? 'Oklch' : 'oklab',
                   },
                 },
               })
             }
           />
-        </span>
-        <span>
-          oklch
+          <HoverText>Color Space</HoverText>
+        </div>
+
+        {/* Repeating Button */}
+        <label className="group relative ml-2 inline-flex cursor-pointer">
+          <ArrowsCounterClockwise
+            id="repeating-icon"
+            className={`text-2xl transition-all hover:scale-105  focus:scale-95 active:scale-95 
+              ${repeating ? 'text-fuchsia-500' : 'text-gray-300'}`}
+          />
           <input
-            type="radio"
-            name="color-space-oklch"
-            defaultChecked={colorSpace === 'Oklch'}
-            onChange={() =>
+            className="peer appearance-none"
+            type="checkbox"
+            id="repeating"
+            defaultChecked={repeating}
+            onChange={(e) => {
+              const el =
+                document.querySelector<HTMLDivElement>('#repeating-icon')
+              if (el) {
+                el.classList.toggle('text-fuchsia-500')
+                el.classList.toggle('text-gray-300')
+              }
               deHandler({
                 action: 'bkgd-update-layer',
                 payload: {
@@ -433,38 +149,22 @@ const ConicGradient = ({
                   type: 'gradient',
                   props: {
                     type: 'conic',
-                    colorSpace: 'Oklch',
+                    repeating: e.target.checked,
                   },
                 },
               })
-            }
+            }}
           />
-        </span>
-      </label>
-      <label>
-        Repeating
-        <input
-          type="checkbox"
-          defaultChecked={repeating}
-          onChange={(e) =>
-            deHandler({
-              action: 'bkgd-update-layer',
-              payload: {
-                id: selectedLayer,
-                type: 'gradient',
-                props: {
-                  type: 'conic',
-                  repeating: e.target.checked,
-                },
-              },
-            })
-          }
-        />
-      </label>
-      <label>
-        Stops
-        <RadialGradientStops stops={stops} selectedLayer={selectedLayer} />
-      </label>
+          <HoverText>Repeat</HoverText>
+        </label>
+      </div>
+
+      {/* Stops */}
+      <GradientStops
+        stops={stops || []}
+        selectedLayer={selectedLayer}
+        type="conic"
+      />
     </>
   )
 }

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSelectedLayer } from '@state/global'
 
-import styles from './BackgroundPosition.module.css'
 import { EventHandler } from '@state/events'
 import { debounce, getPositionValue } from '@utils'
 
