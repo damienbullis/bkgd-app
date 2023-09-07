@@ -8,6 +8,7 @@ import { useCapabilities } from '../../Capabilities'
 import styles from './ColorType.module.css'
 import { SolidLayerType } from '../../Layers/LayerTypeSchema'
 import { Popover } from '@headlessui/react'
+import { CircleDashed } from '@phosphor-icons/react'
 
 //#region types & utils
 
@@ -76,14 +77,79 @@ export default function ColorType({
   return (
     <>
       {/* Header */}
-      <div className="mb-4 flex flex-row items-center justify-start gap-2">
-        <h4 className="-skew-x-6 text-white">SOLID COLOR</h4>
+      <div className="mb-4 flex flex-row items-center justify-start gap-4">
+        <h4 className="-skew-x-6" style={{ color: value }}>
+          SOLID COLOR
+        </h4>
+
+        <input
+          ref={inputRef}
+          type="color"
+          defaultValue={value}
+          id={label}
+          onChange={(e) => {
+            // starts as hex
+            deb({
+              action: 'bkgd-update-layer',
+              payload: {
+                id: selectedLayer,
+                props: {
+                  color: getColor(e, colorType, hasP3),
+                },
+              },
+            })
+          }}
+          className="m-0 ml-auto h-8 w-8 cursor-pointer appearance-none overflow-hidden rounded-full border-none bg-transparent p-0 outline-none ring-0 transition
+            focus-within:ring-2 focus-within:ring-white focus-within:ring-offset-2 focus-within:ring-offset-black
+            hover:ring-2 hover:ring-white hover:ring-offset-2 hover:ring-offset-black
+            focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black
+            active:ring-1 active:ring-white active:ring-offset-2 active:ring-offset-black
+            [&::-webkit-color-swatch-wrapper]:border-none
+            [&::-webkit-color-swatch-wrapper]:p-0
+            [&::-webkit-color-swatch-wrapper]:outline-none
+            [&::-webkit-color-swatch]:border-none
+            [&::-webkit-color-swatch]:outline-none"
+        />
+
+        {/* Color Type
+        <Select
+          id=""
+          options={[
+            { value: 'hex', label: 'HEX' },
+            { value: 'hsl', label: 'HSL' },
+            ...(hasP3
+              ? [{ value: 'display-p3', label: 'Display P3' }]
+              : [{ value: 'srgb', label: 'SRGB' }]),
+          ]}
+          value={colorType}
+          onChange={(v) => {
+            setColorType(v as ColorTypeEnum)
+            console.log(inputRef.current?.value)
+            deb({
+              action: 'bkgd-update-layer',
+              payload: {
+                id: selectedLayer,
+                props: {
+                  color: getColor(
+                    {
+                      target: { value: inputRef.current?.value ?? '' },
+                    } as React.ChangeEvent<HTMLInputElement>,
+                    v as ColorTypeEnum,
+                    hasP3
+                  ),
+                },
+              },
+            })
+          }}
+        />
+        */}
 
         {/* Opacity */}
-        <div className="ml-auto mr-4 flex min-w-[4rem] flex-row items-center justify-end gap-2">
+        <div className="mt-1 flex flex-row items-center justify-end gap-2">
           <Popover className="relative">
             <Popover.Button>
-              <span className="group relative">
+              <span className="group relative inline-flex cursor-pointer items-center gap-2">
+                <CircleDashed />
                 {opacity ?? 100}%<HoverText>Opacity</HoverText>
               </span>
             </Popover.Button>
@@ -95,14 +161,14 @@ export default function ColorType({
                 min={0}
                 max={100}
                 className="
-                  appearance:none m-0 w-32 cursor-pointer rounded-full transition-all 
-                  [&::-webkit-slider-container]:h-2
-                  [&::-webkit-slider-container]:appearance-none
-                  [&::-webkit-slider-container]:rounded-full 
-                  [&::-webkit-slider-container]:bg-gray-500
-                  [&::-webkit-slider-container]:transition-colors
-                  hover:[&::-webkit-slider-container]:bg-gray-400
-                  active:[&::-webkit-slider-container]:bg-gray-50"
+                appearance:none m-0 w-32 cursor-pointer rounded-full transition-all 
+                [&::-webkit-slider-container]:h-2
+                [&::-webkit-slider-container]:appearance-none
+                [&::-webkit-slider-container]:rounded-full 
+                [&::-webkit-slider-container]:bg-gray-500
+                [&::-webkit-slider-container]:transition-colors
+                hover:[&::-webkit-slider-container]:bg-gray-400
+                active:[&::-webkit-slider-container]:bg-gray-50"
                 onChange={(e) => {
                   deb({
                     action: 'bkgd-update-layer',
@@ -117,41 +183,7 @@ export default function ColorType({
             </Popover.Panel>
           </Popover>
         </div>
-
-        <label className="text-sm text-gray-300">{label}</label>
-        <Select
-          id=""
-          options={[
-            { value: 'hex', label: 'HEX' },
-            { value: 'hsl', label: 'HSL' },
-            ...(hasP3
-              ? [{ value: 'display-p3', label: 'Display P3' }]
-              : [{ value: 'srgb', label: 'SRGB' }]),
-          ]}
-          value={colorType}
-          onChange={(v) => setColorType(v as ColorTypeEnum)}
-        />
       </div>
-
-      <input
-        ref={inputRef}
-        type="color"
-        defaultValue={value}
-        id={label}
-        onChange={(e) => {
-          // starts as hex
-          deb({
-            action: 'bkgd-update-layer',
-            payload: {
-              id: selectedLayer,
-              props: {
-                color: getColor(e, colorType, hasP3),
-              },
-            },
-          })
-        }}
-        className="h-20 w-full appearance-none border-none bg-transparent outline-none ring-0"
-      />
     </>
   )
 }
