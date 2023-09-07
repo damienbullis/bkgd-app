@@ -78,9 +78,7 @@ export default function ColorType({
     <>
       {/* Header */}
       <div className="mb-4 flex flex-row items-center justify-start gap-4">
-        <h4 className="-skew-x-6" style={{ color: value }}>
-          SOLID COLOR
-        </h4>
+        <h4 className="-skew-x-6">SOLID COLOR</h4>
 
         <input
           ref={inputRef}
@@ -111,7 +109,7 @@ export default function ColorType({
             [&::-webkit-color-swatch]:outline-none"
         />
 
-        {/* Color Type
+        {/* Color Type DO I NEED THIS?
         <Select
           id=""
           options={[

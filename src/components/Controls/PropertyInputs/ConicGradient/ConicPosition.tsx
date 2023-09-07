@@ -29,21 +29,19 @@ export default function ConicPosition({
           </span>
           <Popover.Panel className="absolute z-10 rounded-md bg-[#00000099] px-4 py-2 shadow-2xl shadow-black backdrop-brightness-50">
             <input
-              id={'radial-position-x'}
               type="range"
               value={x}
               min={0}
               max={200}
               step={5}
-              className="
-      appearance:none m-0 w-32 cursor-pointer rounded-full transition-all 
-      [&::-webkit-slider-container]:h-2
-      [&::-webkit-slider-container]:appearance-none
-      [&::-webkit-slider-container]:rounded-full 
-      [&::-webkit-slider-container]:bg-gray-500
-      [&::-webkit-slider-container]:transition-colors
-      hover:[&::-webkit-slider-container]:bg-gray-400
-      active:[&::-webkit-slider-container]:bg-gray-50"
+              className="appearance:none m-0 w-32 cursor-pointer rounded-full transition-all 
+              [&::-webkit-slider-container]:h-2
+              [&::-webkit-slider-container]:appearance-none
+              [&::-webkit-slider-container]:rounded-full 
+              [&::-webkit-slider-container]:bg-gray-500
+              [&::-webkit-slider-container]:transition-colors
+              hover:[&::-webkit-slider-container]:bg-gray-400
+              active:[&::-webkit-slider-container]:bg-gray-50"
               onChange={(e) => {
                 setXY([Number(e.target.value), y])
                 deHandler({
@@ -52,7 +50,7 @@ export default function ConicPosition({
                     id: selectedLayer,
                     type: 'gradient',
                     props: {
-                      type: 'radial',
+                      type: 'conic',
                       position: [Number(e.target.value), y],
                     },
                   },
@@ -71,21 +69,20 @@ export default function ConicPosition({
 
           <Popover.Panel className="absolute z-10 rounded-md bg-[#00000099] px-4 py-2 shadow-2xl shadow-black backdrop-brightness-50">
             <input
-              id={'radial-position-y'}
+              id={'conic-position-y'}
               type="range"
               value={y}
               min={0}
               max={200}
               step={5}
-              className="
-        appearance:none m-0 w-32 cursor-pointer rounded-full transition-all 
-        [&::-webkit-slider-container]:h-2
-        [&::-webkit-slider-container]:appearance-none
-        [&::-webkit-slider-container]:rounded-full 
-        [&::-webkit-slider-container]:bg-gray-500
-        [&::-webkit-slider-container]:transition-colors
-        hover:[&::-webkit-slider-container]:bg-gray-400
-        active:[&::-webkit-slider-container]:bg-gray-50"
+              className="appearance:none m-0 w-32 cursor-pointer rounded-full transition-all 
+              [&::-webkit-slider-container]:h-2
+              [&::-webkit-slider-container]:appearance-none
+              [&::-webkit-slider-container]:rounded-full 
+              [&::-webkit-slider-container]:bg-gray-500
+              [&::-webkit-slider-container]:transition-colors
+              hover:[&::-webkit-slider-container]:bg-gray-400
+              active:[&::-webkit-slider-container]:bg-gray-50"
               onChange={(e) => {
                 setXY([x, Number(e.target.value)])
                 deHandler({
@@ -94,7 +91,7 @@ export default function ConicPosition({
                     id: selectedLayer,
                     type: 'gradient',
                     props: {
-                      type: 'radial',
+                      type: 'conic',
                       position: [x, Number(e.target.value)],
                     },
                   },

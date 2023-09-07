@@ -10,9 +10,11 @@ const LayerButtons = () => {
     <List className={styles.layers}>
       {layers.map((layer, i) => {
         if (!layer) return null
+        const layerType =
+          layer.type === 'gradient' ? layer.props.type : layer.type
         return (
           <li key={i}>
-            <LayerButton id={layer.id} type={layer.type} />
+            <LayerButton id={layer.id} type={layerType} />
           </li>
         )
       })}

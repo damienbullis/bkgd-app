@@ -1,19 +1,32 @@
-import { CircleHalf, Gradient, Palette } from '@phosphor-icons/react'
+import {
+  CircleHalf,
+  ClockCountdown,
+  Palette,
+  Record,
+  Waveform,
+} from '@phosphor-icons/react'
 import { useSelectedLayer } from '@state/global'
 import { EventHandler } from '@state/events'
 
-import { LayerEnum } from '../../../types/LayerType'
 import LayerDropdown from './LayerDropdown'
 import styles from './_.module.css'
 import { useSearch } from '@tanstack/router'
 
 const LAYER_TYPES = {
-  gradient: CircleHalf,
-  noise: Gradient,
+  linear: CircleHalf,
+  radial: Record,
+  conic: ClockCountdown,
+  noise: Waveform,
   solid: Palette,
 } as const
 
-const LayerButton = ({ id, type }: { id: string; type: LayerEnum }) => {
+const LayerButton = ({
+  id,
+  type,
+}: {
+  id: string
+  type: keyof typeof LAYER_TYPES
+}) => {
   const Icon = LAYER_TYPES[type]
   const [selectedLayer] = useSelectedLayer()
   const { layerStack = [] } = useSearch({ from: '/' })

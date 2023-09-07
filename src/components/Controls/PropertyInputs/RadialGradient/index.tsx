@@ -21,14 +21,7 @@ const RadialGradient = ({
     <>
       {/* Header */}
       <div className="mb-4 flex flex-row items-center justify-start gap-2">
-        <h4
-          className="-skew-x-6 bg-clip-text text-transparent"
-          style={{
-            backgroundImage: 'radial-gradient(#F472B6, aqua)',
-          }}
-        >
-          RADIAL GRADIENT
-        </h4>
+        <h4 className="-skew-x-6">RADIAL GRADIENT</h4>
         <label className="ml-auto text-sm text-gray-300">
           {(stops || []).length} Stops
         </label>

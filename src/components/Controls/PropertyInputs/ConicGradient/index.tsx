@@ -24,15 +24,7 @@ const ConicGradient = ({
     <>
       {/* Header */}
       <div className="mb-4 flex flex-row items-center justify-start gap-2">
-        <h4
-          className="-skew-x-6 bg-clip-text text-transparent"
-          style={{
-            backgroundImage:
-              'conic-gradient(from 0deg at right in oklch, aqua 0%, #ec4899 110%)',
-          }}
-        >
-          CONIC GRADIENT
-        </h4>
+        <h4 className="-skew-x-6">CONIC GRADIENT</h4>
         <label className="ml-auto text-sm text-gray-300">
           {(stops || []).length} Stops
         </label>

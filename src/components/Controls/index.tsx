@@ -5,7 +5,6 @@ import {
   PaintBucket,
   Record,
   SlidersHorizontal,
-  Target,
   Waveform,
 } from '@phosphor-icons/react'
 
