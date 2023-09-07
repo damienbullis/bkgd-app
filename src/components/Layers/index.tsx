@@ -46,6 +46,7 @@ const VisibilityButton = () => {
   )
 }
 
+// TODO: Fix all these styles n buttons
 export default function Layers() {
   const navigate = useNavigate()
   return (

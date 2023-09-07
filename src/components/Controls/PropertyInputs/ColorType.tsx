@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { debounce, hexToHSL, hexToRGB, hslToHex, rgbToHex } from '@utils'
 import { useSelectedLayer } from '@state/global'
 import { EventHandler } from '@state/events'
-import { HoverText, Range, Select } from '@shared'
+import { ColorInput, HoverText } from '@shared'
 
 import { useCapabilities } from '../../Capabilities'
-import styles from './ColorType.module.css'
 import { SolidLayerType } from '../../Layers/LayerTypeSchema'
 import { Popover } from '@headlessui/react'
-import { CircleDashed } from '@phosphor-icons/react'
+import { SelectionInverse } from '@phosphor-icons/react'
 
 //#region types & utils
 
@@ -61,16 +60,17 @@ export default function ColorType({
   const [selectedLayer] = useSelectedLayer()
   const caps = useCapabilities()
   const hasP3 = (caps.displayP3 as boolean) || false
+
   const [colorType, setColorType] = useState<ColorTypeEnum>('hex')
-  const inputRef = React.useRef<HTMLInputElement>(null)
 
   const value = getValue(typeProps.color, hasP3)
 
   useEffect(() => {
     // because this in an uncontrolled input
     // when selectedLayer changes, we need to update the value manually
-    if (inputRef.current) {
-      inputRef.current.value = value
+    const el = document.querySelector<HTMLInputElement>(`${label}-color`)
+    if (el) {
+      el.value = value
     }
   }, [value])
 
@@ -80,11 +80,9 @@ export default function ColorType({
       <div className="mb-4 flex flex-row items-center justify-start gap-4">
         <h4 className="-skew-x-6">SOLID COLOR</h4>
 
-        <input
-          ref={inputRef}
-          type="color"
+        <ColorInput
           defaultValue={value}
-          id={label}
+          id={label + '-color'}
           onChange={(e) => {
             // starts as hex
             deb({
@@ -97,16 +95,6 @@ export default function ColorType({
               },
             })
           }}
-          className="m-0 ml-auto h-8 w-8 cursor-pointer appearance-none overflow-hidden rounded-full border-none bg-transparent p-0 outline-none ring-0 transition
-            focus-within:ring-2 focus-within:ring-white focus-within:ring-offset-2 focus-within:ring-offset-black
-            hover:ring-2 hover:ring-white hover:ring-offset-2 hover:ring-offset-black
-            focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black
-            active:ring-1 active:ring-white active:ring-offset-2 active:ring-offset-black
-            [&::-webkit-color-swatch-wrapper]:border-none
-            [&::-webkit-color-swatch-wrapper]:p-0
-            [&::-webkit-color-swatch-wrapper]:outline-none
-            [&::-webkit-color-swatch]:border-none
-            [&::-webkit-color-swatch]:outline-none"
         />
 
         {/* Color Type DO I NEED THIS?
@@ -147,7 +135,7 @@ export default function ColorType({
           <Popover className="relative">
             <Popover.Button>
               <span className="group relative inline-flex cursor-pointer items-center gap-2">
-                <CircleDashed />
+                <SelectionInverse weight="fill" />
                 {opacity ?? 100}%<HoverText>Opacity</HoverText>
               </span>
             </Popover.Button>

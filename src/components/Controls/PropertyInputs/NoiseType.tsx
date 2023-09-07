@@ -2,10 +2,9 @@ import { useEffect, useRef } from 'react'
 import { useSelectedLayer } from '@state/global'
 import { EventHandler } from '@state/events'
 import { debounce } from '@utils'
-import { HoverText, Range, ToggleButton } from '@shared'
+import { HoverText, ToggleButton } from '@shared'
 
 import { NoiseLayerType } from '../../Layers/LayerTypeSchema'
-import styles from './NoiseType.module.css'
 import { Popover } from '@headlessui/react'
 import { SelectionInverse, Steps, WaveSine } from '@phosphor-icons/react'
 
