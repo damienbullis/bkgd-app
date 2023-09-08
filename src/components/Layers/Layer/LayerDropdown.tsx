@@ -6,7 +6,6 @@ import {
 } from '@phosphor-icons/react'
 import IconButton from '../../_shared/IconButton'
 import { EventHandler } from '@state/events'
-import styles from './_.module.css'
 import { useEffect, useState } from 'react'
 
 const checkStack = (stack: string[], id: string) => {
@@ -36,8 +35,8 @@ const LayerDropdown = ({
   stack: string[]
 }) => {
   const [menu, setMenu] = useState(false)
-  const showEllipse = isActive ? styles.active : ''
-  const showMenu = menu ? styles.active : ''
+  // const showEllipse = isActive ? styles.active : ''
+  // const showMenu = menu ? styles.active : ''
 
   const prevent =
     (fn: () => void) => (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -52,7 +51,8 @@ const LayerDropdown = ({
   const _stack = checkStack(stack, id)
   return (
     <div
-      className={styles.ellipse}
+      // className={styles.ellipse}
+      className="hidden"
       onBlur={(e) => {
         if (e.relatedTarget) return
         setMenu(false)
@@ -62,10 +62,12 @@ const LayerDropdown = ({
         icon={DotsThreeOutlineVertical}
         size="sm"
         disabled={!isActive}
-        className={showEllipse}
+        // className={showEllipse}
         onClick={prevent(() => setMenu(!menu))}
       />
-      <div className={`${styles.dropdown} ${showMenu}`}>
+      <div
+      // className={`${styles.dropdown} ${showMenu}`}
+      >
         <Hide condition={_stack.isTop}>
           <IconButton
             icon={ArrowBendLeftUp}

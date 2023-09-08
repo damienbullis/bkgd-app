@@ -9,8 +9,8 @@ import { useSelectedLayer } from '@state/global'
 import { EventHandler } from '@state/events'
 
 import LayerDropdown from './LayerDropdown'
-import styles from './_.module.css'
 import { useSearch } from '@tanstack/router'
+import { useRef } from 'react'
 
 const LAYER_TYPES = {
   linear: CircleHalf,
@@ -28,15 +28,25 @@ const LayerButton = ({
   type: keyof typeof LAYER_TYPES
 }) => {
   const Icon = LAYER_TYPES[type]
+  const layerRef = useRef<HTMLDivElement>(null)
   const [selectedLayer] = useSelectedLayer()
   const { layerStack = [] } = useSearch({ from: '/' })
   const isActive = id === selectedLayer
   return (
     <div
+      ref={layerRef}
       data-active={isActive}
+      onMouseEnter={() => {
+        layerRef.current?.classList.remove('backdrop-brightness-50')
+        layerRef.current?.classList.add('backdrop-brightness-75')
+      }}
+      onMouseLeave={() => {
+        layerRef.current?.classList.add('backdrop-brightness-50')
+        layerRef.current?.classList.remove('backdrop-brightness-75')
+      }}
       className="data=[active='true']:text-black inline-flex w-full 
-      cursor-pointer items-center justify-start gap-2 rounded-md p-2 px-4 
-      backdrop-blur-md backdrop-brightness-50 backdrop-filter  
+      cursor-pointer items-center justify-start gap-2 rounded-md p-4 py-3 
+      backdrop-blur-md backdrop-brightness-50 backdrop-filter
       data-[active='true']:bg-white data-[active='true']:text-black"
       onClick={() => EventHandler({ action: 'select-layer', payload: { id } })}
     >

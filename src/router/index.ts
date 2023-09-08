@@ -1,6 +1,7 @@
 import { RootRoute, Router } from '@tanstack/router'
 
 import { indexRoute } from './indexRoute.ts'
+import { splashRoute } from './splashRoute.ts'
 // TODO: add a route for the 404 page
 // TODO: /help
 // TODO: /about
@@ -8,7 +9,7 @@ import { indexRoute } from './indexRoute.ts'
 // TODO: /<username>/<bkgd_id> -> redirects to /<username>/[?]
 
 export const rootRoute = new RootRoute()
-const routeTree = rootRoute.addChildren([indexRoute])
+const routeTree = rootRoute.addChildren([indexRoute, splashRoute])
 
 declare module '@tanstack/router' {
   interface Register {
