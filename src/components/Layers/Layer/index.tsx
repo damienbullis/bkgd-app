@@ -33,11 +33,20 @@ const LayerButton = ({
   const isActive = id === selectedLayer
   return (
     <div
-      className={`${styles.layer} ${isActive ? styles.active : ''} md`}
+      data-active={isActive}
+      className="data=[active='true']:text-black inline-flex w-full 
+      cursor-pointer items-center justify-start gap-2 rounded-md p-2 px-4 
+      backdrop-blur-md backdrop-brightness-50 backdrop-filter  
+      data-[active='true']:bg-white data-[active='true']:text-black"
       onClick={() => EventHandler({ action: 'select-layer', payload: { id } })}
     >
-      <Icon size={'1em'} />
-      <p>{type}</p>
+      <Icon className="text-xl" />
+      <p
+        className="max-w-3/4 m-0 mx-2 text-ellipsis whitespace-nowrap uppercase"
+        style={{ fontFamily: 'var(--font-impact)' }}
+      >
+        {type}
+      </p>
       <LayerDropdown id={id} isActive={isActive} stack={layerStack} />
     </div>
   )

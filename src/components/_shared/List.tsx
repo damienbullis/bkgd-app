@@ -2,7 +2,6 @@ import { HTMLAttributes } from 'react'
 
 const List = ({
   listType = 'ul',
-  className,
   children,
   ...rest
 }: HTMLAttributes<HTMLOListElement | HTMLUListElement> & {
@@ -10,7 +9,12 @@ const List = ({
 }) => {
   const Tag = listType
   return (
-    <Tag className={(className ? className + ' ' : '') + 'clr'} {...rest}>
+    <Tag
+      {...rest}
+      className={
+        'flex items-center justify-end first:h-12 ' + rest.className || ''
+      }
+    >
       {children}
     </Tag>
   )

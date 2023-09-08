@@ -117,6 +117,7 @@ export default function Controls() {
         </ul>
         <div className="relative">
           <Panel
+            // refactor: remove styles
             className={`${styles.card} ${
               mode === 'edit' ? styles.active : styles.inactive
             }`}

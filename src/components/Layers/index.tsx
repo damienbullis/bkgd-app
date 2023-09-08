@@ -11,7 +11,6 @@ import { useVisible } from '@state/global'
 import { IconButton, List } from '@shared'
 
 import LayerButtons from './LayerButtons'
-import styles from './_.module.css'
 import { useNavigate } from '@tanstack/router'
 
 const LiButton = ({
@@ -50,7 +49,7 @@ const VisibilityButton = () => {
 export default function Layers() {
   const navigate = useNavigate()
   return (
-    <aside id="layers" className={styles.wrap}>
+    <aside id="layers">
       <List>
         <LiButton
           icon={Clipboard}
