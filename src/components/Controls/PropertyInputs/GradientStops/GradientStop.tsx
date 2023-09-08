@@ -4,12 +4,13 @@ import {
   MinusSquare,
   PaintBucket,
   PlusSquare,
+  SelectionInverse,
   Trash,
 } from '@phosphor-icons/react'
 import { EventHandler } from '@state/events'
 import { debounce, hslToHex, rgbToHex } from '@utils'
 import { Popover } from '@headlessui/react'
-import { HoverText } from '@shared'
+import { ColorInput, HoverText } from '@shared'
 import { GradientStopsType } from '.'
 
 const deHandler = debounce(EventHandler, 200)
@@ -65,36 +66,70 @@ const GradientStop = ({
   }, [selectedLayer])
   return (
     <div className="flex w-full flex-row flex-nowrap items-center justify-between gap-4 p-2 py-1">
-      <div className="flex w-auto items-center justify-start gap-2">
+      <div className="flex w-auto items-center justify-start gap-4">
         <h5>{index + 1}</h5>
-        <div className="relative flex cursor-pointer">
-          <div className="bottom pointer-events-none absolute inset-0 z-[1] flex place-content-center place-items-center">
-            <PaintBucket className="pointer-events-none text-xl" />
-          </div>
-          <input
-            id={getID(index) + 'color'}
-            className="h-8 w-8 cursor-pointer appearance-none overflow-hidden rounded-full
-            [&::-webkit-color-swatch-wrapper]:border-0
-            [&::-webkit-color-swatch-wrapper]:p-0
-            [&::-webkit-color-swatch]:border-0
-            [&::-webkit-color-swatch]:outline-0"
-            type="color"
-            defaultValue={transformColorValue(color)}
-            onChange={(e) => {
-              allStops[index][0] = e.target.value
-              deHandler({
-                action: 'bkgd-update-layer',
-                payload: {
-                  id: selectedLayer,
-                  type: 'gradient',
-                  props: {
-                    type,
-                    stops: allStops,
-                  },
+
+        <ColorInput
+          id={_id + 'color'}
+          defaultValue={transformColorValue(color)}
+          onChange={(e) => {
+            allStops[index][0] = e.target.value
+            deHandler({
+              action: 'bkgd-update-layer',
+              payload: {
+                id: selectedLayer,
+                type: 'gradient',
+                props: {
+                  type,
+                  stops: allStops,
                 },
-              })
-            }}
-          />
+              },
+            })
+          }}
+        />
+
+        {/* Opacity */}
+        <div className="flex min-w-[4rem] cursor-pointer flex-row items-stretch justify-start gap-2">
+          <Popover className="relative">
+            <Popover.Button>
+              <span className="group relative inline-flex h-full items-center gap-2">
+                <SelectionInverse weight="fill" />
+                {opacity ?? 100}%<HoverText>Opacity</HoverText>
+              </span>
+            </Popover.Button>
+            <Popover.Panel className="absolute z-10 rounded-md bg-[#00000099] px-4 py-2 shadow-2xl shadow-black backdrop-brightness-50">
+              <input
+                id={_id + 'opacity'}
+                type="range"
+                defaultValue={opacity ?? 100}
+                min={0}
+                max={100}
+                className="
+                appearance:none m-0 w-32 cursor-pointer rounded-full transition-all 
+                [&::-webkit-slider-container]:h-2
+                [&::-webkit-slider-container]:appearance-none
+                [&::-webkit-slider-container]:rounded-full 
+                [&::-webkit-slider-container]:bg-gray-500
+                [&::-webkit-slider-container]:transition-colors
+                hover:[&::-webkit-slider-container]:bg-gray-400
+                active:[&::-webkit-slider-container]:bg-gray-50"
+                onChange={(e) => {
+                  allStops[index][1] = Number(e.target.value)
+                  deHandler({
+                    action: 'bkgd-update-layer',
+                    payload: {
+                      id: selectedLayer,
+                      type: 'gradient',
+                      props: {
+                        type,
+                        stops: allStops,
+                      },
+                    },
+                  })
+                }}
+              />
+            </Popover.Panel>
+          </Popover>
         </div>
       </div>
 
@@ -102,12 +137,12 @@ const GradientStop = ({
       <div className="ml-auto flex cursor-pointer flex-row items-center justify-start gap-2">
         <span className="inline-flex flex-row items-center gap-2">
           <Popover className="relative">
-            <Popover.Button className="ml-2">
+            <Popover.Button>
               <span className="group relative">
                 {isArr ? stop[0] : stop ?? _pos}%<HoverText>Position</HoverText>
               </span>
             </Popover.Button>
-            <Popover.Panel className="absolute z-10 rounded-md bg-[#00000099] px-4 py-2 shadow-2xl shadow-black backdrop-brightness-50">
+            <Popover.Panel className="absolute left-0 top-full z-10 rounded-md bg-[#00000099] px-4 py-2 shadow-2xl shadow-black backdrop-brightness-50">
               <input
                 id={_id + 'stop-1'}
                 type="range"
@@ -229,50 +264,6 @@ const GradientStop = ({
         </span>
       </div>
 
-      {/* Opacity */}
-      <div className="flex min-w-[4rem] cursor-pointer flex-row items-center justify-end gap-2">
-        <span className="inline-flex flex-row items-center gap-2">
-          <Popover className="relative">
-            <Popover.Button className="ml-2">
-              <span className="group relative">
-                {opacity ?? 100}%<HoverText>Opacity</HoverText>
-              </span>
-            </Popover.Button>
-            <Popover.Panel className="absolute z-10 rounded-md bg-[#00000099] px-4 py-2 shadow-2xl shadow-black backdrop-brightness-50">
-              <input
-                id={_id + 'opacity'}
-                type="range"
-                defaultValue={opacity ?? 100}
-                min={0}
-                max={100}
-                className="
-                appearance:none m-0 w-32 cursor-pointer rounded-full transition-all 
-                [&::-webkit-slider-container]:h-2
-                [&::-webkit-slider-container]:appearance-none
-                [&::-webkit-slider-container]:rounded-full 
-                [&::-webkit-slider-container]:bg-gray-500
-                [&::-webkit-slider-container]:transition-colors
-                hover:[&::-webkit-slider-container]:bg-gray-400
-                active:[&::-webkit-slider-container]:bg-gray-50"
-                onChange={(e) => {
-                  allStops[index][1] = Number(e.target.value)
-                  deHandler({
-                    action: 'bkgd-update-layer',
-                    payload: {
-                      id: selectedLayer,
-                      type: 'gradient',
-                      props: {
-                        type,
-                        stops: allStops,
-                      },
-                    },
-                  })
-                }}
-              />
-            </Popover.Panel>
-          </Popover>
-        </span>
-      </div>
       <button
         className="text-sm text-gray-300 transition-transform 
         hover:text-white focus:scale-95 focus:text-white

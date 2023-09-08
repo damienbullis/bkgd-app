@@ -42,7 +42,7 @@ const NoiseType = ({
     <>
       {/* Header */}
       <div className="mb-4 flex flex-row items-center justify-start gap-2">
-        <h4 className="-skew-x-6 text-white">NOISE</h4>
+        <h4 className="-skew-x-6">NOISE</h4>
 
         {/* Noise Type */}
         <div className="group relative ml-auto inline-flex items-center gap-2">
@@ -205,7 +205,6 @@ const NoiseType = ({
                   action: 'bkgd-update-layer',
                   payload: {
                     id: selectedLayer,
-                    type: 'solid',
                     opacity: Number(e.target.value),
                   },
                 })
