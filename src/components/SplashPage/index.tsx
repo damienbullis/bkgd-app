@@ -129,7 +129,8 @@ export default function SplashPage() {
             backgrounds for your websites, apps, and more.
           </p>
           <hr />
-
+          <p>RoadMap</p>
+          <hr />
           <p className="text-center text-white">
             BKGD.APP is built with React, TypeScript, and TailwindCSS.
           </p>
@@ -140,6 +141,7 @@ export default function SplashPage() {
           <p className="text-center text-white">Caveats*</p>
           <p className="text-center text-white">Using BKGD.APP</p>
           <p className="text-center text-white">Damien + Links</p>
+          <hr className="mb-48" />
         </div>
       </div>
     </>
