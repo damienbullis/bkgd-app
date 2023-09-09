@@ -55,10 +55,38 @@ export default function SplashPage() {
           is a free, open-source tool for creating beautiful backgrounds for
           your websites, apps, and more.
         </p> */}
-        <p className="mt-4 text-4xl text-white">Build Beautiful Backgrounds.</p>
-        <p className="mt-3 text-xl text-white">
-          BKGD.APP is an online tool for creating better backgrounds for your
-          websites, apps, and more.
+        <p className="mt-4 text-4xl text-white">Build Beautiful Backgrounds</p>
+        <p className="mt-3 flex items-center gap-2 whitespace-nowrap text-xl">
+          using
+          <span className="flex items-center gap-1">
+            CSS
+            <svg
+              role="img"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="#1572B6"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>CSS3</title>
+              <path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.565-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z" />
+            </svg>
+          </span>
+          <span>&</span>
+          <span className="flex items-center gap-1">
+            HTML
+            <svg
+              width="24"
+              height="24"
+              role="img"
+              viewBox="0 0 24 24"
+              fill="#E34F26"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>HTML5</title>
+              <path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.23-2.622L5.412 4.41l.698 8.01h9.126l-.326 3.426-2.91.804-2.955-.81-.188-2.11H6.248l.33 4.171L12 19.351l5.379-1.443.744-8.157H8.531z" />
+            </svg>
+          </span>
         </p>
         {/* <p className="mt-4 text-xl text-white">
           Backgrounds for the modern web.
@@ -82,21 +110,36 @@ export default function SplashPage() {
           </span>
         </a>
         <div className="my-12 inline-grid w-3/4 grid-cols-3 items-center justify-center gap-4">
-          <div className="relative h-20 overflow-hidden rounded-lg bg-sky-500 bg-opacity-30">
+          <div className="relative h-20 overflow-hidden rounded-lg bg-sky-500 bg-opacity-30 p-8 pl-12">
             <div className="absolute bottom-0 left-0 top-0 w-2 bg-sky-500"></div>
+            <p>Create</p>
           </div>
-          <div className="relative h-20 overflow-hidden rounded-lg bg-sky-500 bg-opacity-30">
+          <div className="relative h-20 overflow-hidden rounded-lg bg-sky-500 bg-opacity-30 p-8 pl-12">
             <div className="absolute bottom-0 left-0 top-0 w-2 bg-sky-500"></div>
+            <p>Export</p>
           </div>
-          <div className="relative h-20 overflow-hidden rounded-lg bg-sky-500 bg-opacity-30">
+          <div className="relative h-20 overflow-hidden rounded-lg bg-sky-500 bg-opacity-30 p-8 pl-12">
             <div className="absolute bottom-0 left-0 top-0 w-2 bg-sky-500"></div>
+            <p>Share</p>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center gap-4">
-          <p id="about-bkgd" className="text-2xl text-white">
-            BKGD.APP is free and open-source.
+        <div className="my-8 flex max-w-screen-sm flex-col items-center justify-center gap-4">
+          <p id="about-bkgd" className="text-center text-xl text-white">
+            BKGD.APP is free and open-source tool for creating beautiful modern
+            backgrounds for your websites, apps, and more.
           </p>
-          {/* <span className="h-screen"></span> */}
+          <hr />
+
+          <p className="text-center text-white">
+            BKGD.APP is built with React, TypeScript, and TailwindCSS.
+          </p>
+          <hr />
+          <p className="text-center text-white">
+            Motivation for building BKGD.APP
+          </p>
+          <p className="text-center text-white">Caveats*</p>
+          <p className="text-center text-white">Using BKGD.APP</p>
+          <p className="text-center text-white">Damien + Links</p>
         </div>
       </div>
     </>
