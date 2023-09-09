@@ -1,6 +1,5 @@
 import { EventHandler } from '@state/events'
 import { debounce } from '@utils'
-import styles from './_.module.css'
 import { useSelectedLayer } from '@state/global'
 import { useCallback } from 'react'
 import { Listbox } from '@headlessui/react'
