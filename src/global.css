@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --font-impact: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   --font-roboto: 'Roboto', system-ui, Avenir, Helvetica, Arial, sans-serif;
