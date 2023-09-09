@@ -11,6 +11,8 @@ import { EventHandler } from '@state/events'
 import LayerDropdown from './LayerDropdown'
 import { useSearch } from '@tanstack/router'
 import { useRef } from 'react'
+import { Reorder, useDragControls } from 'framer-motion'
+import { LayerType } from '../LayerTypeSchema'
 
 const LAYER_TYPES = {
   linear: CircleHalf,
@@ -20,45 +22,45 @@ const LAYER_TYPES = {
   solid: Palette,
 } as const
 
-const LayerButton = ({
-  id,
-  type,
-}: {
-  id: string
-  type: keyof typeof LAYER_TYPES
-}) => {
-  const Icon = LAYER_TYPES[type]
+const LayerButton = ({ data }: { data: LayerType }) => {
+  const layerType = data.type === 'gradient' ? data.props.type : data.type
+  // const dragControls = useDragControls()
+  const Icon = LAYER_TYPES[layerType]
   const layerRef = useRef<HTMLDivElement>(null)
   const [selectedLayer] = useSelectedLayer()
-  const { layerStack = [] } = useSearch({ from: '/' })
-  const isActive = id === selectedLayer
+  // const { layerStack = [] } = useSearch({ from: '/' })
+  const isActive = data.id === selectedLayer
   return (
-    <div
-      ref={layerRef}
-      data-active={isActive}
-      onMouseEnter={() => {
-        layerRef.current?.classList.remove('backdrop-brightness-50')
-        layerRef.current?.classList.add('backdrop-brightness-75')
-      }}
-      onMouseLeave={() => {
-        layerRef.current?.classList.add('backdrop-brightness-50')
-        layerRef.current?.classList.remove('backdrop-brightness-75')
-      }}
-      className="data=[active='true']:text-black inline-flex w-full 
+    <Reorder.Item value={data}>
+      <div
+        ref={layerRef}
+        data-active={isActive}
+        onMouseEnter={() => {
+          layerRef.current?.classList.remove('backdrop-brightness-50')
+          layerRef.current?.classList.add('backdrop-brightness-75')
+        }}
+        onMouseLeave={() => {
+          layerRef.current?.classList.add('backdrop-brightness-50')
+          layerRef.current?.classList.remove('backdrop-brightness-75')
+        }}
+        className="data=[active='true']:text-black inline-flex w-full 
       cursor-pointer items-center justify-start gap-2 rounded-md p-4 py-3 
       backdrop-blur-md backdrop-brightness-50 backdrop-filter
       data-[active='true']:bg-white data-[active='true']:text-black"
-      onClick={() => EventHandler({ action: 'select-layer', payload: { id } })}
-    >
-      <Icon className="text-xl" />
-      <p
-        className="max-w-3/4 m-0 mx-2 text-ellipsis whitespace-nowrap uppercase"
-        style={{ fontFamily: 'var(--font-impact)' }}
+        onClick={() =>
+          EventHandler({ action: 'select-layer', payload: { id: data.id } })
+        }
       >
-        {type}
-      </p>
-      <LayerDropdown id={id} isActive={isActive} stack={layerStack} />
-    </div>
+        <Icon className="text-xl" />
+        <p
+          className="max-w-3/4 m-0 mx-2 text-ellipsis whitespace-nowrap uppercase"
+          style={{ fontFamily: 'var(--font-impact)' }}
+        >
+          {layerType}
+        </p>
+        {/* <LayerDropdown id={id} isActive={isActive} stack={layerStack} /> */}
+      </div>
+    </Reorder.Item>
   )
 }
 

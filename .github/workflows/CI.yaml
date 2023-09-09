@@ -1,4 +1,11 @@
 name: bun-types
+
+on:
+  workflow_run:
+    workflows: ['CI']
+    types:
+      - requested
+
 jobs:
   build:
     name: build-app

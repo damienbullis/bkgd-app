@@ -12,7 +12,7 @@ const textBackground: CSSProperties[] = [
     backgroundSize: '30%, 100%, auto, 100% 100%, 10%, auto, 1000%, auto',
     backgroundRepeat:
       'repeat, no-repeat, repeat, repeat, repeat, repeat, repeat, repeat',
-    mixBlendMode: 'soft-light',
+    mixBlendMode: 'hard-light',
   },
   {
     backgroundImage:
@@ -30,7 +30,7 @@ export default function SplashPage() {
   return (
     <>
       <div
-        className="fixed left-0 top-0 -z-10 h-screen w-screen scale-125 overflow-hidden blur-lg"
+        className="fixed left-0 top-0 -z-10 h-screen w-screen scale-125 overflow-hidden blur-lg brightness-75 filter"
         style={textBackground[0]}
       ></div>
       <div className="relative flex h-[80vh] w-full flex-col items-center justify-center overflow-hidden">
@@ -44,7 +44,9 @@ export default function SplashPage() {
         </div>
         <h1
           style={textBackground[0]}
-          className="ztext-[50vw] pointer-events-none relative -left-[2vw] m-0 w-full select-none bg-clip-text text-center text-[50vw] font-medium leading-[1em] tracking-[-.09em] text-transparent"
+          className="ztext-[50vw] pointer-events-none relative -left-[2vw] m-0 w-full select-none 
+          bg-clip-text text-center text-[50vw] font-medium leading-[1em] tracking-[-.09em]
+          text-transparent brightness-75 filter"
         >
           BKGD
         </h1>
@@ -125,7 +127,7 @@ export default function SplashPage() {
         </div>
         <div className="my-8 flex max-w-screen-sm flex-col items-center justify-center gap-4">
           <p id="about-bkgd" className="text-center text-xl text-white">
-            BKGD.APP is free and open-source tool for creating beautiful modern
+            BKGD.APP is free and online tool for creating beautiful modern
             backgrounds for your websites, apps, and more.
           </p>
           <hr />

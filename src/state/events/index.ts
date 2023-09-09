@@ -28,7 +28,7 @@ type EventPayload<T extends EventActionEnum> = T extends 'bkgd-add-layer'
   : T extends 'bkgd-update-layer'
   ? { id: string } & Partial<EventPayloadType>
   : T extends 'bkgd-update-stack'
-  ? { id: string; direction: 'up' | 'down' }
+  ? { id: string; direction: 'up' | 'down' } | { stack: string[] }
   : T extends 'save-bkgd' | 'load-bkgd' | 'delete-bkgd'
   ? { bkgd: Bkgd }
   : T extends 'toggle-ui' | 'copy-css' | 'download-image'
@@ -95,7 +95,6 @@ const triggerTitleUpdate = (event: EventHandlerType<BkgdEventsEnum>) => {
 }
 
 const handleMiddleware = (event: EventHandlerType<BkgdEventsEnum>) => {
-  console.group(`BKGD EVENT - (id: ${event.payload.id})`)
   try {
     triggerTitleUpdate(event)
     mwUpdateUIColors()
@@ -103,7 +102,6 @@ const handleMiddleware = (event: EventHandlerType<BkgdEventsEnum>) => {
   } catch (error) {
     console.error(error)
   }
-  console.groupEnd()
 }
 
 const handleEvent = (event: EventHandlerType<EventsEnum>) => {
@@ -244,30 +242,56 @@ const updateLayer = (event: EventHandlerType<'bkgd-update-layer'>) => {
 }
 
 const updateStack = (event: EventHandlerType<'bkgd-update-stack'>) => {
-  const search = router.state.currentLocation.search
-  const index = search.layerStack?.findIndex(
-    (id: string) => id === event.payload.id
-  )
-  if (index === -1 || index === undefined) {
-    console.error('Move Layer Error: Layer not found')
-    return
-  }
+  if ('stack' in event.payload) {
+    const search = router.state.currentLocation.search
+    if (event.payload.stack.length !== search.layerStack?.length) {
+      router.navigate({
+        to: '/',
+        search: {
+          ...search,
+          layerStack: event.payload.stack,
+        },
+      })
+      return
+    }
 
-  const nextStack = [...(search.layerStack || [])]
-  const nextLayer = nextStack.splice(index, 1)[0]
-  if (event.payload.direction === 'up') {
-    nextStack.splice(index - 1, 0, nextLayer)
+    for (let i = 0; i < event.payload.stack.length; i++) {
+      if (event.payload.stack[i] !== search.layerStack?.[i]) {
+        router.navigate({
+          to: '/',
+          search: {
+            ...search,
+            layerStack: event.payload.stack,
+          },
+        })
+        return
+      }
+    }
   } else {
-    nextStack.splice(index + 1, 0, nextLayer)
-  }
+    const _id = event.payload.id
+    const search = router.state.currentLocation.search
+    const index = search.layerStack?.findIndex((id: string) => id === _id)
+    if (index === -1 || index === undefined) {
+      console.error('Move Layer Error: Layer not found')
+      return
+    }
 
-  router.navigate({
-    to: '/',
-    search: {
-      ...search,
-      layerStack: nextStack,
-    },
-  })
+    const nextStack = [...(search.layerStack || [])]
+    const nextLayer = nextStack.splice(index, 1)[0]
+    if (event.payload.direction === 'up') {
+      nextStack.splice(index - 1, 0, nextLayer)
+    } else {
+      nextStack.splice(index + 1, 0, nextLayer)
+    }
+
+    router.navigate({
+      to: '/',
+      search: {
+        ...search,
+        layerStack: nextStack,
+      },
+    })
+  }
 }
 
 const loadBkgd = (bkgd: Bkgd) => {
