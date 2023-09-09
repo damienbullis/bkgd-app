@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, {
+  useEffect,
+  // useState
+} from 'react'
 import { debounce, hexToHSL, hexToRGB, hslToHex, rgbToHex } from '@utils'
 import { useSelectedLayer } from '@state/global'
 import { EventHandler } from '@state/events'
@@ -61,8 +64,8 @@ export default function ColorType({
   const caps = useCapabilities()
   const hasP3 = (caps.displayP3 as boolean) || false
 
-  const [colorType, setColorType] = useState<ColorTypeEnum>('hex')
-
+  // const [colorType, setColorType] = useState<ColorTypeEnum>('hex')
+  const colorType = 'hex'
   const value = getValue(typeProps.color, hasP3)
 
   useEffect(() => {

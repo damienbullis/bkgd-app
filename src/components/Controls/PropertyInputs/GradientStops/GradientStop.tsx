@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react'
 
 import {
   MinusSquare,
-  PaintBucket,
   PlusSquare,
   SelectionInverse,
   Trash,
