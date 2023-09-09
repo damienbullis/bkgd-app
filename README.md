@@ -59,19 +59,19 @@ Create beautiful modern backgrounds for your website or app.
   - [x] Move Layer
   - [x] Layer State
   - [x] Layer Type
-- [ ] Bkgd Controller
-- [ ] Layer Components
+- [x] Bkgd Controller
+- [x] Layer Components
   - [x] Solid
-  - [ ] Gradient
-  - [ ] Noise
+  - [x] Gradient
+  - [x] Noise
 - [x] Input Components
   - [x] Text
   - [x] Range Slider
   - [x] Dropdown
   - [x] Checkbox
 - [ ] Export/Save
-  - [ ] Image
-  - [ ] Code
+  - [x] Image
+  - [x] Code
   - [ ] Share
   - [ ] `Explore different ways to do this`
 - [ ] Footer

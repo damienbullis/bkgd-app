@@ -22,17 +22,18 @@ const deHandler = debounce(EventHandler, 200)
 const handler = (
   type: 'solid' | 'gradient' | 'noise',
   gradientType?: 'linear' | 'radial' | 'conic'
-) =>
+) => {
   deHandler({
     action: 'bkgd-add-layer',
     payload: {
       id: makeID(),
       type,
       props: {
-        type: gradientType || 'linear',
+        type: gradientType,
       },
     },
   })
+}
 
 const Panel = ({
   className,

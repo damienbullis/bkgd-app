@@ -22,7 +22,7 @@ const getColor = (
 }
 
 const transformSizeOrPosition = (value?: [number, number]) => {
-  if (!value) return 'center'
+  if (!value) return '50% 50%'
   return value.join('% ') + '%'
 }
 
@@ -49,6 +49,7 @@ const GradientLayer = (layer: GradientLayerProps, displayP3?: boolean) => {
       ', '
     )})`
   } else if (layer.props.type === 'radial') {
+    console.log(layer)
     const size = transformSizeOrPosition(layer.props.size)
     const position = transformSizeOrPosition(layer.props.position)
     const stops =
@@ -56,9 +57,11 @@ const GradientLayer = (layer: GradientLayerProps, displayP3?: boolean) => {
         return `${getColor(color, opacity, displayP3)} ${transformStop(stop)}`
       }) || []
 
-    return `${repeat}radial-gradient(${size} at ${position} in ${space}, ${stops.join(
+    const result = `${repeat}radial-gradient(${size} at ${position} in ${space}, ${stops.join(
       ', '
     )})`
+    console.log({ result })
+    return result
   } else if (layer.props.type === 'conic') {
     const deg = layer.props.deg || 0
     const position = transformSizeOrPosition(layer.props.position)

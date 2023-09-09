@@ -17,6 +17,7 @@ const RadialGradient = ({
   selectedLayer: string
 }) => {
   const { position, size, colorSpace, repeating, stops } = typeProps
+
   return (
     <>
       {/* Header */}

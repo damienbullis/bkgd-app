@@ -13,9 +13,9 @@ export default function RadialPosition({
   position?: [number, number]
   selectedLayer: string
 }) {
-  const [[x, y], setXY] = useState<[number, number]>(position || [100, 100])
+  const [[x, y], setXY] = useState<[number, number]>(position || [50, 50])
   useEffect(() => {
-    setXY(position || [100, 100])
+    setXY(position || [50, 50])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLayer])
 

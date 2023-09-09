@@ -21,7 +21,7 @@ type EventPayload<T extends EventActionEnum> = T extends 'bkgd-add-layer'
   ? {
       id: string
       type: LayerEnum
-      props: { type: 'linear' | 'radial' | 'conic' }
+      props: { type: 'linear' | 'radial' | 'conic' | undefined }
     }
   : T extends 'bkgd-remove-layer' | 'select-layer'
   ? { id: string }
@@ -297,7 +297,7 @@ const buildLayerData = (e: EventHandlerType<'bkgd-add-layer'>) => {
         id,
         type: 'gradient',
         props: {
-          type: props.type,
+          type: props.type || 'linear',
           stops: [
             [randomHex(), null, null],
             [randomHex(), null, null],
