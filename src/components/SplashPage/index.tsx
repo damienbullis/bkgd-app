@@ -1,5 +1,8 @@
 import { IceCream } from '@phosphor-icons/react'
-import { CSSProperties } from 'react'
+import { useMotionValue, motion, useTransform, useSpring } from 'framer-motion'
+import { CSSProperties, useEffect, useRef } from 'react'
+import debounce from '../../utils/debounce'
+import throttle from '../../utils/throttle'
 
 const textBackground: CSSProperties[] = [
   {
@@ -27,29 +30,79 @@ const textBackground: CSSProperties[] = [
 ]
 
 export default function SplashPage() {
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const bgRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleMouse = throttle((e: MouseEvent) => {
+      if (bgRef.current) {
+        const size = bgRef.current.getBoundingClientRect()
+        const wX = size.width / 2
+        const wY = size.height / 2
+        const deltaX = e.clientX - (size.left + wX)
+        const deltaY = e.clientY - (size.top + wY)
+
+        // Calculate distance using Pythagorean theorem
+        const distance = Math.sqrt(deltaX ** 2 + deltaY ** 2)
+
+        // Set a scaling factor (adjust this as needed)
+        const scaleFactor = 0.1 // Example: scaling by 10%
+
+        // Scale the deltas based on distance
+        const scaledDeltaX = deltaX * (scaleFactor * (distance / 1000))
+        const scaledDeltaY = deltaY * (scaleFactor * (distance / 1000))
+        x.set(50 - scaledDeltaX)
+        y.set(50 - scaledDeltaY)
+      }
+    }, 30)
+    window.addEventListener('mousemove', handleMouse)
+    return () => window.removeEventListener('mousemove', handleMouse)
+  }, [x, y, bgRef])
+
+  const t = useTransform(() => `${x.get()}% ${y.get()}%`)
+
   return (
     <>
+      <div className="absolute left-0 top-0 z-10 inline-flex w-full items-center justify-center p-4">
+        <a
+          href="#about-bkgd"
+          className="font-light underline decoration-transparent decoration-dashed decoration-1 underline-offset-4 transition hover:decoration-white active:scale-95"
+        >
+          What is BKGD.APP?
+        </a>
+      </div>
       <div
         className="fixed left-0 top-0 -z-10 h-screen w-screen scale-125 overflow-hidden blur-lg brightness-75 filter"
         style={textBackground[0]}
       ></div>
       <div className="relative flex h-[80vh] w-full flex-col items-center justify-center overflow-hidden">
-        <div className="absolute left-0 top-0 inline-flex w-full items-center justify-center p-4">
-          <a
-            href="#about-bkgd"
-            className="font-light underline decoration-transparent decoration-dashed decoration-1 underline-offset-4 transition hover:decoration-white active:scale-95"
-          >
-            What is BKGD.APP?
-          </a>
-        </div>
-        <h1
-          style={textBackground[0]}
-          className="ztext-[50vw] pointer-events-none relative -left-[2vw] m-0 w-full select-none 
+        <span className="relative w-full">
+          <h1
+            ref={bgRef}
+            style={textBackground[0]}
+            className="ztext-[50vw] pointer-events-none relative -left-[2vw] m-0 w-full select-none 
           bg-clip-text text-center text-[50vw] font-medium leading-[1em] tracking-[-.09em]
           text-transparent brightness-75 filter"
-        >
-          BKGD
-        </h1>
+          >
+            BKGD
+          </h1>
+          <motion.h1
+            style={{
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              letterSpacing: '-0.09em',
+              backgroundPosition: t,
+              backgroundImage:
+                'radial-gradient(rgba(255, 255, 255, .9) 0%, rgb(255, 255, 255, 0) 50%)',
+              backgroundSize: '300% 300%',
+            }}
+            className="ztext-[50vw] pointer-events-none absolute inset-0 -left-[2vw] m-0 w-full select-none bg-clip-text text-center text-[50vw] font-medium leading-[1em] tracking-[-.09em] text-transparent mix-blend-soft-light"
+          >
+            BKGD
+          </motion.h1>
+        </span>
         {/* <p className="text-md m-4 mt-2 max-w-xl text-center text-gray-50">
           <span className="text-pink-500 underline decoration-pink-500 decoration-wavy decoration-2">
             BKGD.APP{' '}
