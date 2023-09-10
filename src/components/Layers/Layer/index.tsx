@@ -8,10 +8,8 @@ import {
 import { useSelectedLayer } from '@state/global'
 import { EventHandler } from '@state/events'
 
-import LayerDropdown from './LayerDropdown'
-import { useSearch } from '@tanstack/router'
 import { useRef } from 'react'
-import { Reorder, useDragControls } from 'framer-motion'
+import { Reorder } from 'framer-motion'
 import { LayerType } from '../LayerTypeSchema'
 
 const LAYER_TYPES = {
@@ -24,11 +22,9 @@ const LAYER_TYPES = {
 
 const LayerButton = ({ data }: { data: LayerType }) => {
   const layerType = data.type === 'gradient' ? data.props.type : data.type
-  // const dragControls = useDragControls()
   const Icon = LAYER_TYPES[layerType]
   const layerRef = useRef<HTMLDivElement>(null)
   const [selectedLayer] = useSelectedLayer()
-  // const { layerStack = [] } = useSearch({ from: '/' })
   const isActive = data.id === selectedLayer
   return (
     <Reorder.Item value={data}>

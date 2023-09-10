@@ -1,11 +1,14 @@
 export type {
   BlendModeEnum,
-  GradientLayerType,
   LayerEnum,
-  LayerPropsType,
   LayerType,
+  LayerPropsType,
+  GradientLayerType,
   NoiseLayerType,
-  SharedLayerPropsSchemaType,
   SolidLayerType,
-} from './LayerType'
-export { LayerSchema } from './LayerType'
+  SharedLayerPropsSchemaType,
+} from './LayerTypes'
+export { LayerSchema } from './LayerTypes'
+
+export { bkgdSchema, bkgdsSchema } from './BkgdTypes'
+export type { Bkgd, Bkgds } from './BkgdTypes'

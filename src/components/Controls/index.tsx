@@ -3,6 +3,7 @@ import {
   CircleHalf,
   ClockCountdown,
   PaintBucket,
+  Plus,
   Record,
   SlidersHorizontal,
   Waveform,
@@ -55,6 +56,9 @@ export default function Controls() {
         <ul className="inline-grid h-12 grid-flow-col items-center gap-2">
           <li className="group relative">
             <IconButton icon={Waveform} onClick={() => handler('noise')} />
+            <span className="absolute left-0 top-0 text-base opacity-0 transition-opacity group-hover:opacity-100">
+              <Plus weight="bold" />
+            </span>
             <HoverText>Noise</HoverText>
           </li>
           <li className="group relative">
@@ -62,6 +66,9 @@ export default function Controls() {
               icon={ClockCountdown}
               onClick={() => handler('gradient', 'conic')}
             />
+            <span className="absolute left-0 top-0 text-base opacity-0 transition-opacity group-hover:opacity-100">
+              <Plus weight="bold" />
+            </span>
             <HoverText>Conic Gradient</HoverText>
           </li>
           <li className="group relative">
@@ -69,14 +76,23 @@ export default function Controls() {
               icon={Record}
               onClick={() => handler('gradient', 'radial')}
             />
+            <span className="absolute left-0 top-0 text-base opacity-0 transition-opacity group-hover:opacity-100">
+              <Plus weight="bold" />
+            </span>
             <HoverText>Radial Gradient</HoverText>
           </li>
           <li className="group relative">
             <IconButton icon={CircleHalf} onClick={() => handler('gradient')} />
+            <span className="absolute left-0 top-0 text-base opacity-0 transition-opacity group-hover:opacity-100">
+              <Plus weight="bold" />
+            </span>
             <HoverText>Linear Gradient</HoverText>
           </li>
           <li className="group relative">
             <IconButton icon={PaintBucket} onClick={() => handler('solid')} />
+            <span className="absolute left-0 top-0 text-base opacity-0 transition-opacity group-hover:opacity-100">
+              <Plus weight="bold" />
+            </span>
             <HoverText>Solid Color</HoverText>
           </li>
 
