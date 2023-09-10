@@ -54,7 +54,7 @@ export default function Controls() {
       id="controls"
       className="z-0 col-start-1 col-end-1 row-start-1 row-end-2 grid h-full w-full place-items-start justify-items-end"
     >
-      <div className="flex flex-col items-end gap-2 px-4 py-0">
+      <div className="flex flex-col items-end gap-4 px-4 py-0">
         <div className="z-10 flex items-stretch justify-center gap-2">
           <ul className="inline-grid h-12 grid-flow-col items-center gap-2 rounded-b-md px-3 backdrop-blur-md backdrop-brightness-50">
             <ControlAddButton

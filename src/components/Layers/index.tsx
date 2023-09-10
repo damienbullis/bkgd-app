@@ -91,7 +91,7 @@ export default function Layers() {
         </li>
       </ul>
 
-      <div className="relative z-0 mt-2">
+      <div className="mt-4">
         <LayerButtons />
       </div>
     </aside>

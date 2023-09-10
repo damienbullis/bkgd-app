@@ -164,21 +164,3 @@ h6 {
   line-height: 1.4;
   margin: 0.5em 0 0.25rem;
 }
-
-.sm {
-  font-size: 1rem;
-}
-
-.md {
-  font-size: calc(1rem * var(--scalar));
-}
-
-.lg {
-  font-size: calc(calc(1rem * var(--scalar)) * var(--scalar));
-}
-
-.xl {
-  font-size: calc(
-    calc(calc(1rem * var(--scalar)) * var(--scalar)) * var(--scalar)
-  );
-}
