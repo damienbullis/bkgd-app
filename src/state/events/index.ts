@@ -8,7 +8,7 @@ import {
   SolidLayerType,
 } from '../../components/Layers/LayerTypeSchema'
 import { randomHex } from '@utils'
-import { Bkgd, bkgdsSchema } from '../../components/Nav/bkgdSchemas'
+import { Bkgd, bkgdsSchema } from '../../types/bkgdSchemas'
 
 type EventHandlerType<T> = T extends infer U extends EventActionEnum
   ? {

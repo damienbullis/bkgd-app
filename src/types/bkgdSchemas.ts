@@ -1,5 +1,5 @@
 import z from 'zod'
-import { LayerSchema } from '../Layers/LayerTypeSchema'
+import { LayerSchema } from '../components/Layers/LayerTypeSchema'
 
 export const bkgdSchema = z.object({
   id: z.string(),
