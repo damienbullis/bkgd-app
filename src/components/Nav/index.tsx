@@ -4,7 +4,7 @@ import {
   PlusCircle,
   Question,
 } from '@phosphor-icons/react'
-import { Link, useSearch } from '@tanstack/router'
+import { useSearch } from '@tanstack/router'
 import { useLocalStorage } from '@state/hooks'
 import { EventHandler } from '@state/events'
 import { Button, Shine } from '@shared'
@@ -12,6 +12,7 @@ import { Show, makeID } from '@utils'
 
 import { useBkgdSelected } from './_helpers'
 import { Bkgd } from './bkgdSchemas'
+import router from '../../router'
 
 const updateClasslist = (action: keyof DOMTokenList, id: string) => {
   const bkgdBtn = document.querySelector<HTMLButtonElement>(`#bkgd_btn_${id}`)
@@ -23,10 +24,11 @@ const updateClasslist = (action: keyof DOMTokenList, id: string) => {
     }
   }
 }
-
+// Pass in the router from the app
 export default function Nav() {
   const [bkgdSelected, setBkgdSelected] = useBkgdSelected()
   const { id, layerData, layerStack } = useSearch({ from: '/' })
+
   const {
     // isSaved,
     bkgds,
@@ -81,17 +83,16 @@ export default function Nav() {
       className="z-0 col-start-3 col-end-4 row-start-1 row-end-3 inline-grid
       select-none grid-cols-[auto] grid-rows-[auto_1fr_auto] content-center"
     >
-      <Link to="/welcome">
-        <div
-          className="relative m-0 cursor-pointer bg-gradient-to-br  from-fuchsia-500 to-green-500 bg-clip-text p-4 py-0 text-center text-[2rem] tracking-tighter text-transparent  before:box-content"
-          style={{ fontFamily: 'var(--font-impact)' }}
-        >
-          BKGD
-          <span className="absolute inset-0">
-            <Shine>BKGD</Shine>
-          </span>
-        </div>
-      </Link>
+      <a
+        href={'/welcome' + router.state.currentLocation.searchStr}
+        className="relative m-0 cursor-pointer bg-gradient-to-br  from-fuchsia-500 to-green-500 bg-clip-text p-4 py-0 text-center text-[2rem] tracking-tighter text-transparent  before:box-content"
+        style={{ fontFamily: 'var(--font-impact)' }}
+      >
+        BKGD
+        <span className="absolute inset-0">
+          <Shine>BKGD</Shine>
+        </span>
+      </a>
       <ul className="inline-grid auto-rows-max items-start justify-items-center gap-2 p-4 pt-0">
         {bkgds.map((b) => (
           <li key={b.id} className="inline-grid place-content-center">

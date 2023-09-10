@@ -1,15 +1,7 @@
 import { memo } from 'react'
 import { checkBrowser } from '@utils'
 import { CapabilitiesProvider } from './components/Capabilities'
-import {
-  Bkgd,
-  Footer,
-  Layout,
-  Controls,
-  Layers,
-  Nav,
-  ErrorPage,
-} from './components'
+import { Bkgd, Footer, Controls, Layers, Nav, ErrorPage } from './components'
 import VisibilityController from './components/VisibilityController'
 import { setupKeyboardEvents } from '@state/keyEvents'
 

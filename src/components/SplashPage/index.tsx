@@ -3,6 +3,7 @@ import { Export, IceCream, PaintBrush } from '@phosphor-icons/react'
 import { useMotionValue, motion, useTransform } from 'framer-motion'
 
 import { throttle } from '@utils'
+import router from '../../router'
 
 // TODO: Split into seperate files
 
@@ -153,7 +154,7 @@ export default function SplashPage() {
       <div className="flex w-full flex-col items-center">
         {/* Start Button */}
         <a
-          href="/"
+          href={'/' + router.state.currentLocation.searchStr}
           className="group mb-12 mt-6 inline-grid w-auto grid-flow-col grid-cols-[auto_0fr] items-stretch overflow-hidden rounded-lg bg-pink-500 bg-opacity-30 text-xl uppercase transition-all hover:grid-cols-[auto_1fr]"
         >
           <p className="flex items-center p-8 text-center text-white">
