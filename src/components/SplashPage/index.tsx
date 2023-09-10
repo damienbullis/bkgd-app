@@ -1,6 +1,6 @@
 import { CSSProperties, useEffect, useRef } from 'react'
 import { Export, IceCream, PaintBrush } from '@phosphor-icons/react'
-import { useMotionValue, motion, useTransform, useSpring } from 'framer-motion'
+import { useMotionValue, motion, useTransform } from 'framer-motion'
 
 import { throttle } from '@utils'
 
@@ -111,7 +111,7 @@ export default function SplashPage() {
 
         {/* Banner - Titles */}
         <p className="mt-4 text-4xl text-white">
-          An online tool for generating backgrounds.
+          An online tool for generating backgrounds
         </p>
         <p className="mt-3 flex items-center gap-2 whitespace-nowrap text-xl">
           using
