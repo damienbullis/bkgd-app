@@ -1,14 +1,21 @@
 import {
+  ArrowSquareOut,
   ArrowsCounterClockwise,
   Clipboard,
+  Copy,
+  CopySimple,
+  Download,
   Eye,
   EyeClosed,
+  FileCss,
+  FilePng,
   FloppyDisk,
   Icon,
+  Trash,
 } from '@phosphor-icons/react'
 import { EventHandler } from '@state/events'
 import { useVisible } from '@state/global'
-import { IconButton, List } from '@shared'
+import { HoverText, IconButton, List } from '@shared'
 
 import LayerButtons from './LayerButtons'
 import { useNavigate } from '@tanstack/router'
@@ -29,20 +36,9 @@ const LiButton = ({
   )
 }
 
-const VisibilityButton = () => {
+const VisibilityButton = ({ onClick }: { onClick?: () => void }) => {
   const [hide] = useVisible()
-  return (
-    <LiButton
-      id="visibility-button"
-      icon={hide ? EyeClosed : Eye}
-      onClick={() =>
-        EventHandler({
-          action: 'toggle-ui',
-          payload: null,
-        })
-      }
-    />
-  )
+  return <IconButton icon={hide ? EyeClosed : Eye} onClick={onClick} />
 }
 
 // TODO: Fix all these styles n buttons
@@ -53,32 +49,51 @@ export default function Layers() {
       id="layers"
       className="z-0 col-start-2 col-end-3 row-start-1 row-end-3"
     >
-      <List>
-        <LiButton
-          icon={Clipboard}
+      <ul className="relative z-10 inline-grid h-12 grid-flow-col items-center rounded-b-md px-2 backdrop-blur-md backdrop-brightness-50">
+        <li
+          className="group relative"
           onClick={() =>
             EventHandler({
               action: 'copy-css',
               payload: null,
             })
           }
-        />
-        <LiButton
-          icon={FloppyDisk}
+        >
+          <IconButton icon={FileCss} />
+          <HoverText>Copy CSS</HoverText>
+        </li>
+        <li
+          className="group relative"
           onClick={() =>
             EventHandler({
               action: 'download-image',
               payload: null,
             })
           }
-        />
-        <VisibilityButton />
-        <LiButton
-          icon={ArrowsCounterClockwise}
-          onClick={() => navigate({ to: '/' })}
-        />
-      </List>
-      <LayerButtons />
+        >
+          <IconButton icon={ArrowSquareOut} />
+          <HoverText>Download</HoverText>
+        </li>
+        <li className="group relative" id="vis-button">
+          <VisibilityButton
+            onClick={() =>
+              EventHandler({
+                action: 'toggle-ui',
+                payload: null,
+              })
+            }
+          />
+          <HoverText>Toggle UI</HoverText>
+        </li>
+        <li className="group relative" onClick={() => navigate({ to: '/' })}>
+          <IconButton icon={ArrowsCounterClockwise} />
+          <HoverText>Restart</HoverText>
+        </li>
+      </ul>
+
+      <div className="relative z-0 mt-2">
+        <LayerButtons />
+      </div>
     </aside>
   )
 }
