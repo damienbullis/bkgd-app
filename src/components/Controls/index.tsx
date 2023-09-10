@@ -70,7 +70,7 @@ export default function Controls() {
   return (
     <section
       id="controls"
-      className="grid h-full w-full place-items-start justify-items-end"
+      className="z-0 col-start-1 col-end-1 row-start-1 row-end-2 grid h-full w-full place-items-start justify-items-end"
     >
       <div className="flex flex-col items-end px-4 py-0">
         <ul className="inline-grid h-12 grid-flow-col items-center gap-2">

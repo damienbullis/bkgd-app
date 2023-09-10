@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import styles from './_.module.css'
 
 export default function Footer() {
   const [open, setOpen] = useState(false)
@@ -13,10 +12,11 @@ export default function Footer() {
   return (
     <footer
       id="footer"
-      className={`${styles.wrap} ${open ? styles.active : ''}`}
+      data-active={open}
+      className="z-0 col-span-full row-start-2 row-end-3"
     >
       <p onClick={() => setOpen((prev) => !prev)}>BKGD.APP © 2023</p>
-      <section className={styles.content}>
+      <section className="hidden">
         <p>Powered by</p>
         <a href="https://github.com/damienbullis" target="_blank">
           Damien Bullis

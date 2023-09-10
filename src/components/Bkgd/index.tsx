@@ -2,7 +2,6 @@ import { CSSProperties } from 'react'
 import { useLayers } from '@state/hooks'
 
 import LayerTypeSwitch from './LayerTypeSwitch'
-import styles from './_.module.css'
 import { LayerType } from '../Layers/LayerTypeSchema'
 
 /**
@@ -39,7 +38,7 @@ export default function Bkgd() {
   return (
     <section
       id="bkgd"
-      className={styles.bkgdWrap}
+      className="relative isolate -z-10 col-span-full row-span-full overflow-hidden"
       style={buildLayerStyle(layers)}
     ></section>
   )

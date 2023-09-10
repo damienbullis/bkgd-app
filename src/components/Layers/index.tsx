@@ -49,7 +49,10 @@ const VisibilityButton = () => {
 export default function Layers() {
   const navigate = useNavigate()
   return (
-    <aside id="layers">
+    <aside
+      id="layers"
+      className="z-0 col-start-2 col-end-3 row-start-1 row-end-3"
+    >
       <List>
         <LiButton
           icon={Clipboard}

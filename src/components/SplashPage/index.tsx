@@ -4,6 +4,8 @@ import { useMotionValue, motion, useTransform } from 'framer-motion'
 
 import { throttle } from '@utils'
 
+// TODO: Split into seperate files
+
 const textBackground: CSSProperties[] = [
   {
     backgroundImage:

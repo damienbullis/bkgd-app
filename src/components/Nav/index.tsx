@@ -4,7 +4,7 @@ import {
   PlusCircle,
   Question,
 } from '@phosphor-icons/react'
-import { useSearch } from '@tanstack/router'
+import { Link, useSearch } from '@tanstack/router'
 import { useLocalStorage } from '@state/hooks'
 import { EventHandler } from '@state/events'
 import { Button, Shine } from '@shared'
@@ -77,13 +77,25 @@ export default function Nav() {
   //#endregion
 
   return (
-    <nav id="nav" className={styles.wrap}>
-      <div className={styles.logo}>
-        <Shine>BKGD</Shine>
-      </div>
-      <ul className="clr">
+    <nav
+      id="nav"
+      className="z-0 col-start-3 col-end-4 row-start-1 row-end-3 inline-grid
+      select-none grid-cols-[auto] grid-rows-[auto_1fr_auto] content-center"
+    >
+      <Link to="/welcome">
+        <div
+          className="relative m-0 cursor-pointer bg-gradient-to-br  from-fuchsia-500 to-green-500 bg-clip-text p-4 py-0 text-center text-[2rem] tracking-tighter text-transparent  before:box-content"
+          style={{ fontFamily: 'var(--font-impact)' }}
+        >
+          BKGD
+          <span className="absolute inset-0">
+            <Shine>BKGD</Shine>
+          </span>
+        </div>
+      </Link>
+      <ul className="inline-grid auto-rows-max items-start justify-items-center gap-2 p-4 pt-0">
         {bkgds.map((b) => (
-          <li key={b.id} className="clr">
+          <li key={b.id} className="inline-grid place-content-center">
             <Button
               id={`bkgd_btn_${b.id}`}
               title={b.id}
@@ -119,8 +131,8 @@ export default function Nav() {
           </li>
         </Show>
       </ul>
-      <ul className="clr">
-        <li className="clr">
+      <ul className="inline-grid auto-rows-max items-start justify-items-center gap-2 p-4 pt-0">
+        <li className="inline-grid place-content-center">
           <Button disabled title="Help">
             <Question size={32} />
           </Button>
