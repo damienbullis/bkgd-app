@@ -11,7 +11,7 @@ import { Button, Shine } from '@shared'
 import { Show, makeID } from '@utils'
 
 import { useBkgdSelected } from './_helpers'
-import { Bkgd } from '../../types/bkgdSchemas'
+import { Bkgd } from '../../types/BkgdTypes'
 import router from '../../router'
 
 const updateClasslist = (action: keyof DOMTokenList, id: string) => {

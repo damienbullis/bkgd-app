@@ -1,5 +1,5 @@
 import { useBkgdsCount } from '@state/global'
-import { Bkgds, bkgdsSchema } from '../../types/bkgdSchemas'
+import { Bkgds, bkgdsSchema } from '../../types/BkgdTypes'
 import { useEffect, useMemo, useState } from 'react'
 
 const getInitialState = (): Bkgds => {
