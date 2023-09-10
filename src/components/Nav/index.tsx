@@ -12,15 +12,14 @@ import { Show, makeID } from '@utils'
 
 import { useBkgdSelected } from './_helpers'
 import { Bkgd } from './bkgdSchemas'
-import styles from './_.module.css'
 
 const updateClasslist = (action: keyof DOMTokenList, id: string) => {
   const bkgdBtn = document.querySelector<HTMLButtonElement>(`#bkgd_btn_${id}`)
   if (bkgdBtn) {
     if (action === 'add') {
-      bkgdBtn.classList.add(styles.selected)
+      bkgdBtn.setAttribute('aria-selected', 'true')
     } else {
-      bkgdBtn.classList.remove(styles.selected)
+      bkgdBtn.removeAttribute('aria-selected')
     }
   }
 }
@@ -99,6 +98,7 @@ export default function Nav() {
             <Button
               id={`bkgd_btn_${b.id}`}
               title={b.id}
+              className="aria-selected:bg-white"
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
@@ -108,7 +108,7 @@ export default function Nav() {
               <ImageSquare size={32} />
               <Show show={bkgdSelected === b.id}>
                 <div
-                  className={styles.delete}
+                  className="flex items-center justify-center"
                   onClick={(e) => {
                     e.stopPropagation()
                     EventHandler({
