@@ -44,9 +44,9 @@ const LayerButton = ({ data }: { data: LayerType }) => {
           layerRef.current?.classList.remove('backdrop-brightness-75')
         }}
         className="data=[active='true']:text-black inline-flex w-full 
-      cursor-pointer items-center justify-start gap-2 rounded-md p-4 py-3 
-      backdrop-blur-md backdrop-brightness-50 backdrop-filter
-      data-[active='true']:bg-white data-[active='true']:text-black"
+        cursor-pointer items-center justify-start gap-2 rounded-md p-4 py-3 
+        backdrop-blur-md backdrop-brightness-50 backdrop-filter
+        data-[active='true']:bg-white data-[active='true']:text-black"
         onClick={() =>
           EventHandler({ action: 'select-layer', payload: { id: data.id } })
         }
@@ -58,7 +58,6 @@ const LayerButton = ({ data }: { data: LayerType }) => {
         >
           {layerType}
         </p>
-        {/* <LayerDropdown id={id} isActive={isActive} stack={layerStack} /> */}
       </div>
     </Reorder.Item>
   )
