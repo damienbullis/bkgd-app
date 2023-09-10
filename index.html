@@ -2,13 +2,85 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- TODO: Replace the icon -->
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
         BKGD.APP
     </title>
+    
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "CreativeWork",
+        "name": "BKGD.APP",
+        "description": "Build beautiful backgrounds using BKGD.APP.",
+        "author": {
+          "@type": "Person",
+          "name": "Damien Bullis"
+        },
+        "keywords": "background, generator, builder, designer, online, background generator, background builder, background designer, website background, background maker, gradient, noise, color, css, html, css3, css 3, html 5, html5, svg",
+        "url": "https://bkgd.app",
+        "image": "https://bkgd.app/assets/images/bkgdapp.png",
+        "publisher": {
+          "@type": "Organization",
+          "name": "BKGD.APP",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://bkgd.app/assets/images/bkgdapp.png"
+          }
+        }
+      }
+    </script>
+  
+
+    <meta name="author" content="Damien Bullis" />
+    <meta name="keywords" content="background,generator,builder,designer,online,background generator,background builder,background designer,website background,background maker,gradient,noise,color,css,html,css3,css 3,html 5,html5,svg" />
+    <meta name="description" content="Build beautiful backgrounds using BKGD.APP." />
+    <meta property="og:title" content="BKGD.APP" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://bkgd.app" />
+    <meta property="og:image" content="https://bkgd.app/assets/images/bkgdapp.png" />
+    <meta property="og:description" content="BKGD.APP" />
+    <meta property="og:site_name" content="BKGD.APP" />
+    <meta property="og:locale" content="en_US" />
+    
+    <meta name="application-name" content="BKGD.APP" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- TODO: Do I care about this one? -->
+    <meta property="fb:app_id" content="bkgdapp" />
+
+    <!-- FEATURE: Add twitter card support
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@bkgdapp" />
+    <meta name="twitter:creator" content="@bkgdapp" />
+    <meta name="twitter:title" content="BKGD.APP" />
+    <meta name="twitter:description" content="BKGD.APP" />
+    <meta name="twitter:image" content="https://bkgd.app/assets/images/bkgdapp.png" /> 
+    -->
+    <!-- FEATURE: Add Mobile App Support
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="BKGD.APP" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/assets/images/bkgdapp.png" />
+    <meta name="msapplication-config" content="/assets/images/bkgdapp.png" />
+    <link rel="apple-touch-icon" href="/assets/images/bkgdapp.png" />
+    <link rel="mask-icon" href="/assets/images/bkgdapp.png" color="#ffffff" />
+    -->
+    <!-- FEATURE: Add manifest.json support
+      <link rel="manifest" href="/manifest.json" />
+     -->
+
+
   </head>
   <body>
+    <div style="display: none;">
+      <h1>BKGD.APP</h1>
+      <h3>An online tool for generating backgrounds using CSS3 & HTML5</h3>
+      <!-- Fill in additional content for SEO -->
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
