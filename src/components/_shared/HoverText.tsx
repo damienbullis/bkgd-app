@@ -1,7 +1,7 @@
 const HoverText = ({ children }: { children: string }) => {
   return (
     <p
-      className="pointer-events-none absolute left-1/2 top-full z-10
+      className="pointer-events-none absolute left-1/2 top-full z-50
       mt-2 -translate-x-1/2 -translate-y-full scale-50 select-none 
       whitespace-nowrap rounded-lg bg-black bg-opacity-80 px-3 py-1 text-center text-xs 
       font-semibold uppercase text-white opacity-0 transition-all

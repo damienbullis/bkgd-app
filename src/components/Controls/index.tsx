@@ -8,13 +8,12 @@ import {
   Waveform,
 } from '@phosphor-icons/react'
 
-import { useSelectedLayer } from '@state/global'
-import { HoverText, IconButton } from '@shared'
-
-import styles from './_.module.css'
-import LayerProperties from './LayerProperties'
 import { debounce, makeID } from '@utils'
+import { HoverText, IconButton } from '@shared'
+import { useSelectedLayer } from '@state/global'
 import { EventHandler } from '@state/events'
+
+import LayerProperties from './LayerProperties'
 
 type Mode = '' | 'edit'
 
@@ -33,26 +32,6 @@ const handler = (
       },
     },
   })
-}
-
-const Panel = ({
-  className,
-  children,
-}: {
-  className: string
-  children: React.ReactNode
-}) => {
-  return (
-    <div
-      className={
-        `absolute left-0 top-0 -translate-x-full rounded-lg p-4 
-        opacity-0 shadow-xl backdrop-blur-3xl backdrop-brightness-50
-        ` + className
-      }
-    >
-      {children}
-    </div>
-  )
 }
 
 export default function Controls() {
@@ -103,12 +82,8 @@ export default function Controls() {
 
           <li className="group relative">
             <IconButton
-              className="transition-all 
-              disabled:cursor-not-allowed disabled:opacity-50
-              data-[active='true']:drop-shadow-[0_0_10px_rgba(255,255,255,1)]"
               disabled={selectedLayer === ''}
               icon={SlidersHorizontal}
-              data-active={mode === 'edit'}
               onClick={() => setMode((prev) => (prev === 'edit' ? '' : 'edit'))}
             />
             <HoverText>
@@ -116,15 +91,13 @@ export default function Controls() {
             </HoverText>
           </li>
         </ul>
-        <div className="relative">
-          <Panel
-            // refactor: remove styles
-            className={`${styles.card} ${
-              mode === 'edit' ? styles.active : styles.inactive
-            }`}
-          >
-            <LayerProperties />
-          </Panel>
+
+        <div
+          aria-selected={mode === 'edit'}
+          className="-translate-x-full rounded-lg p-4 
+            opacity-0 shadow-xl backdrop-blur-3xl backdrop-brightness-50 transition-all duration-200 aria-selected:translate-x-0 aria-selected:opacity-100"
+        >
+          <LayerProperties />
         </div>
       </div>
     </section>

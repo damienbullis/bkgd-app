@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Reorder } from 'framer-motion'
 
 import { useLayers } from '@state/hooks'
@@ -13,6 +13,10 @@ const deHandler = debounce(EventHandler, 200)
 const LayerButtons = () => {
   const { layers } = useLayers()
   const [vLayers, setVLayers] = useState(layers)
+
+  useEffect(() => {
+    setVLayers(layers)
+  }, [layers])
 
   return (
     <Reorder.Group

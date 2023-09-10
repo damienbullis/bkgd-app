@@ -15,9 +15,9 @@ const App = memo(function () {
         <CapabilitiesProvider>
           <Bkgd />
           <Footer />
-          <Controls />
           <Layers />
           <Nav />
+          <Controls />
         </CapabilitiesProvider>
       </main>
     )
