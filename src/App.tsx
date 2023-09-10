@@ -1,16 +1,17 @@
 import { memo } from 'react'
 import { checkBrowser } from '@utils'
 import { CapabilitiesProvider } from './components/Capabilities'
-import { Bkgd, Footer, Layout, Controls, Layers, Nav } from './components'
+import {
+  Bkgd,
+  Footer,
+  Layout,
+  Controls,
+  Layers,
+  Nav,
+  ErrorPage,
+} from './components'
 import VisibilityController from './components/VisibilityController'
 import { setupKeyboardEvents } from '@state/keyEvents'
-
-const ErrorPage = ({ e }: { e: Error }) => (
-  <>
-    {/* TODO: Add a better error page for future */}
-    <h1>{e.message}</h1>
-  </>
-)
 
 const App = memo(function () {
   try {
@@ -26,14 +27,6 @@ const App = memo(function () {
           <Layers />
           <Nav />
         </CapabilitiesProvider>
-
-        {/* 
-          Absolute Layers
-    
-          Help Layer
-          Spotlight Layer
-          Splash Layer
-        */}
       </Layout>
     )
   } catch (e) {
