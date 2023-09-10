@@ -1,8 +1,8 @@
-import { IceCream } from '@phosphor-icons/react'
-import { useMotionValue, motion, useTransform, useSpring } from 'framer-motion'
 import { CSSProperties, useEffect, useRef } from 'react'
-import debounce from '../../utils/debounce'
-import throttle from '../../utils/throttle'
+import { Export, IceCream, PaintBrush } from '@phosphor-icons/react'
+import { useMotionValue, motion, useTransform, useSpring } from 'framer-motion'
+
+import { throttle } from '@utils'
 
 const textBackground: CSSProperties[] = [
   {
@@ -64,6 +64,7 @@ export default function SplashPage() {
 
   return (
     <>
+      {/* Header */}
       <div className="absolute left-0 top-0 z-10 inline-flex w-full items-center justify-center p-4">
         <a
           href="#about-bkgd"
@@ -72,18 +73,22 @@ export default function SplashPage() {
           What is BKGD.APP?
         </a>
       </div>
+
+      {/* Background */}
       <div
         className="fixed left-0 top-0 -z-10 h-screen w-screen scale-125 overflow-hidden blur-lg brightness-75 filter"
         style={textBackground[0]}
-      ></div>
-      <div className="relative flex h-[80vh] w-full flex-col items-center justify-center overflow-hidden">
+      />
+
+      {/* Banner */}
+      <div className="relative flex h-[80vh] w-full flex-col items-center justify-center">
         <span className="relative w-full">
           <h1
             ref={bgRef}
             style={textBackground[0]}
-            className="ztext-[50vw] pointer-events-none relative -left-[2vw] m-0 w-full select-none 
-          bg-clip-text text-center text-[50vw] font-medium leading-[1em] tracking-[-.09em]
-          text-transparent brightness-75 filter"
+            className="pointer-events-none relative -left-[2vw] m-0 w-full select-none bg-clip-text 
+            text-center text-[50vw] font-medium leading-[1em] tracking-[-.09em] text-transparent
+            brightness-75 filter xl:text-[40vw]"
           >
             BKGD
           </h1>
@@ -98,19 +103,16 @@ export default function SplashPage() {
                 'radial-gradient(rgba(255, 255, 255, .9) 0%, rgb(255, 255, 255, 0) 50%)',
               backgroundSize: '300% 300%',
             }}
-            className="ztext-[50vw] pointer-events-none absolute inset-0 -left-[2vw] m-0 w-full select-none bg-clip-text text-center text-[50vw] font-medium leading-[1em] tracking-[-.09em] text-transparent mix-blend-soft-light"
+            className="pointer-events-none absolute inset-0 -left-[2vw] m-0 w-full select-none bg-clip-text text-center text-[50vw] font-medium leading-[1em] tracking-[-.09em] text-transparent mix-blend-soft-light xl:text-[40vw]"
           >
             BKGD
           </motion.h1>
         </span>
-        {/* <p className="text-md m-4 mt-2 max-w-xl text-center text-gray-50">
-          <span className="text-pink-500 underline decoration-pink-500 decoration-wavy decoration-2">
-            BKGD.APP{' '}
-          </span>
-          is a free, open-source tool for creating beautiful backgrounds for
-          your websites, apps, and more.
-        </p> */}
-        <p className="mt-4 text-4xl text-white">Build Beautiful Backgrounds</p>
+
+        {/* Banner - Titles */}
+        <p className="mt-4 text-4xl text-white">
+          An online tool for generating backgrounds.
+        </p>
         <p className="mt-3 flex items-center gap-2 whitespace-nowrap text-xl">
           using
           <span className="flex items-center gap-1">
@@ -143,15 +145,14 @@ export default function SplashPage() {
             </svg>
           </span>
         </p>
-        {/* <p className="mt-4 text-xl text-white">
-          Backgrounds for the modern web.
-        </p> */}
       </div>
+
+      {/* Content */}
       <div className="flex w-full flex-col items-center">
+        {/* Start Button */}
         <a
-          // TODO: Turn back into a link component at some point
           href="/"
-          className="group mb-12 mt-6 inline-grid w-auto grid-flow-col grid-cols-[auto_0fr] items-stretch overflow-hidden rounded-lg bg-pink-500 bg-opacity-10 text-xl uppercase transition-all hover:grid-cols-[auto_1fr]"
+          className="group mb-12 mt-6 inline-grid w-auto grid-flow-col grid-cols-[auto_0fr] items-stretch overflow-hidden rounded-lg bg-pink-500 bg-opacity-30 text-xl uppercase transition-all hover:grid-cols-[auto_1fr]"
         >
           <p className="flex items-center p-8 text-center text-white">
             <span className="mr-2">start</span>
@@ -164,39 +165,119 @@ export default function SplashPage() {
             />
           </span>
         </a>
-        <div className="my-12 inline-grid w-3/4 grid-cols-3 items-center justify-center gap-4">
-          <div className="relative h-20 overflow-hidden rounded-lg bg-sky-500 bg-opacity-30 p-8 pl-12">
-            <div className="absolute bottom-0 left-0 top-0 w-2 bg-sky-500"></div>
-            <p>Create</p>
-          </div>
-          <div className="relative h-20 overflow-hidden rounded-lg bg-sky-500 bg-opacity-30 p-8 pl-12">
-            <div className="absolute bottom-0 left-0 top-0 w-2 bg-sky-500"></div>
-            <p>Export</p>
-          </div>
-          <div className="relative h-20 overflow-hidden rounded-lg bg-sky-500 bg-opacity-30 p-8 pl-12">
-            <div className="absolute bottom-0 left-0 top-0 w-2 bg-sky-500"></div>
-            <p>Share</p>
+
+        {/* Highlights & Features */}
+        <div
+          id="about-bkgd"
+          className="flex w-full justify-center bg-gradient-to-b from-transparent to-gray-950 pb-12 bg-blend-overlay"
+        >
+          <div className="my-12 inline-grid w-3/4 grid-cols-3 items-start justify-center gap-4">
+            <div
+              className="relative mt-0 flex flex-col overflow-hidden 
+            rounded-lg bg-gray-900 bg-opacity-30 p-8 pl-12"
+            >
+              <div className="absolute bottom-0 left-0 top-0 w-2 bg-green-500"></div>
+
+              <p className="flex flex-row items-center gap-4 text-xl">
+                <span className="text-2xl">
+                  <PaintBrush weight="duotone" />
+                </span>
+                Create
+              </p>
+              <hr className="my-8 opacity-20" />
+              <ul className="flex list-disc flex-col gap-2 font-light">
+                <li className="text-gray-300">
+                  <span className="text-lg text-white">
+                    Gradients, Noise, Solid Colors
+                  </span>
+                </li>
+                <li className="text-gray-300">
+                  <span className="text-lg text-white">
+                    Simple & Intuitive UI
+                  </span>
+                </li>
+                <li className="text-gray-300">
+                  <span className="text-lg text-white">
+                    Leverage Modern CSS3 & HTML5
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div className="col-span-2"></div>
+            <div></div>
+            <div
+              className="relative flex flex-col overflow-hidden 
+            rounded-lg bg-gray-900 bg-opacity-30 p-8 pl-12"
+            >
+              <div className="absolute bottom-0 left-0 top-0 w-2 bg-amber-500"></div>
+
+              <p className="flex flex-row items-center gap-4 text-xl">
+                <span className="text-2xl">
+                  <Export weight="duotone" />
+                </span>
+                Export
+              </p>
+              <hr className="my-8 opacity-20" />
+
+              <ul className="flex list-disc flex-col gap-2 font-light">
+                <li className="text-gray-300">
+                  <span className="text-lg text-white">
+                    Copy CSS to Clipboard
+                  </span>
+                </li>
+                <li className="text-gray-300">
+                  <span className="text-lg text-white">Download Image**</span>
+                </li>
+              </ul>
+              <hr className="my-8 opacity-0" />
+
+              <p className="text-sm text-slate-300">
+                ** Image download only available through Chrome dev toolss
+              </p>
+            </div>
+            <div></div>
+            <div className="col-span-2"></div>
+            <div
+              className="relative mt-0 flex flex-col overflow-hidden 
+            rounded-lg bg-sky-500 bg-opacity-30 p-8 pl-12"
+            >
+              <div className="absolute bottom-0 left-0 top-0 w-2 bg-sky-500"></div>
+              <p>Share</p>
+            </div>
           </div>
         </div>
-        <div className="my-8 flex max-w-screen-sm flex-col items-center justify-center gap-4">
-          <p id="about-bkgd" className="text-center text-xl text-white">
-            BKGD.APP is free and online tool for creating beautiful modern
-            backgrounds for your websites, apps, and more.
-          </p>
-          <hr />
-          <p>RoadMap</p>
-          <hr />
-          <p className="text-center text-white">
-            BKGD.APP is built with React, TypeScript, and TailwindCSS.
-          </p>
-          <hr />
-          <p className="text-center text-white">
-            Motivation for building BKGD.APP
-          </p>
-          <p className="text-center text-white">Caveats*</p>
-          <p className="text-center text-white">Using BKGD.APP</p>
-          <p className="text-center text-white">Damien + Links</p>
-          <hr className="mb-48" />
+
+        {/* About & Misc */}
+        <div className="flex w-full justify-center bg-gray-950 py-12">
+          <div className="flex w-3/4 flex-col items-center">
+            <h3 className="mr-auto">Motivation</h3>
+            <p className="mb-4 mr-auto w-1/2">
+              Some little section of text Some little section of text Some
+              little section of text Some little section of text Some little
+              section of text Some little section of text Some little section of
+              text Some little section of text
+            </p>
+            <div className="my-8 flex max-w-screen-sm flex-col items-center justify-center gap-4">
+              <p className="text-center text-xl text-white">
+                BKGD.APP is free and online tool for creating beautiful modern
+                backgrounds for your websites, apps, and more.
+              </p>
+              <hr />
+              <p>RoadMap</p>
+              <hr />
+              <p className="text-center text-white">
+                BKGD.APP is built with React, TypeScript, and TailwindCSS.
+              </p>
+              <hr />
+              <p className="text-center text-white">
+                Motivation for building BKGD.APP
+              </p>
+              <p className="text-center text-white">Caveats*</p>
+              <p className="text-center text-white">Using BKGD.APP</p>
+              <p className="text-center text-white">Damien + Links</p>
+              <hr className="mb-48" />
+            </div>
+          </div>
         </div>
       </div>
     </>
