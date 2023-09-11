@@ -4,6 +4,7 @@ import {
   ArrowsOutSimple,
   Bug,
   Command,
+  FileCss,
   GitBranch,
   Question,
 } from '@phosphor-icons/react'
@@ -57,11 +58,11 @@ export default function HelpMenu() {
         <Transition
           className="absolute bottom-full right-0 z-10 mb-2 rounded-lg filter backdrop-blur-md backdrop-brightness-50"
           enter="transition duration-100 ease-out"
-          enterFrom="transform scale-95 opacity-0 translate-y-full"
-          enterTo="transform scale-100 opacity-100 translate-y-0"
+          enterFrom="transform scale-95 opacity-0 translate-x-full"
+          enterTo="transform scale-100 opacity-100 translate-x-0"
           leave="transition duration-75 ease-out"
-          leaveFrom="transform scale-100 opacity-100 translate-y-0"
-          leaveTo="transform scale-95 opacity-0 translate-y-full"
+          leaveFrom="transform scale-100 opacity-100 translate-x-0"
+          leaveTo="transform scale-95 opacity-0 translate-x-full"
         >
           <Menu.Items className="py-3">
             <Menu.Item>
@@ -77,6 +78,16 @@ export default function HelpMenu() {
                 <SubMenu />
               </div>
             </Menu.Item>
+            <Menu.Item disabled>
+              <p className="inline-flex min-w-[10rem] max-w-[16rem] flex-nowrap p-1 px-4 text-sm font-normal decoration-white ui-active:bg-slate-200 ui-active:text-slate-950 ui-disabled:line-through ui-not-disabled:cursor-pointer">
+                Copy Format
+                <span className="ml-auto text-lg">
+                  <FileCss />
+                </span>
+              </p>
+            </Menu.Item>
+            <p className="my-2 mt-3 h-[1px] w-full bg-white bg-opacity-20"></p>
+            <p className="mb-2 px-4 text-xs font-light uppercase">Links</p>
             <Menu.Item>
               <a
                 href="https://github.com/damienbullis/bkgd-app/issues"
@@ -88,14 +99,13 @@ export default function HelpMenu() {
                 </span>
               </a>
             </Menu.Item>
-            <p className="my-2 mt-3 h-[1px] w-full bg-white bg-opacity-20"></p>
             <Menu.Item>
               <a
                 href="https://github.com/damienbullis/bkgd-app"
                 target="_blank"
                 className="inline-flex min-w-[10rem] max-w-[16rem] cursor-pointer flex-nowrap p-1 px-4 text-sm font-normal ui-active:bg-slate-200 ui-active:text-slate-950"
               >
-                Gitub
+                Gitub Repo
                 <span className="ml-auto text-lg">
                   <GitBranch />
                 </span>

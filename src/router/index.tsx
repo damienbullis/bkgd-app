@@ -1,7 +1,8 @@
 import { RootRoute, Router } from '@tanstack/router'
 
-import { indexRoute } from './indexRoute.ts'
+import { indexRoute } from './indexRoute.tsx'
 import { splashRoute } from './splashRoute.ts'
+import ErrorPage from '../components/ErrorPage.tsx'
 
 export const rootRoute = new RootRoute({
   beforeLoad: ({ router }) => {
@@ -14,6 +15,7 @@ export const rootRoute = new RootRoute({
       })
     }
   },
+  errorComponent: ({ error }) => <ErrorPage e={error} />,
 })
 const routeTree = rootRoute.addChildren([indexRoute, splashRoute])
 

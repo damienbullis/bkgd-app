@@ -1,4 +1,4 @@
-export default function ErrorPages({ e }: { e: Error }) {
+export default function ErrorPage({ e }: { e: Error }) {
   return (
     <>
       <h1>{e.message}</h1>

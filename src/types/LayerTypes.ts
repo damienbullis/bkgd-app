@@ -127,45 +127,8 @@ type SharedLayerPropsSchemaType = z.infer<typeof SharedLayerPropsSchema>
 
 const LayerSchema = z.object({
   id: z.string().optional(),
-  layerStack: z
-    .array(z.string())
-    .catch((err) => {
-      console.warn(err.error.issues)
-      return []
-    })
-    .default([]),
-  layerData: z
-    .array(LayerTypeSchema)
-    .catch(({ error, input }) => {
-      // REFACTOR: This is a temp solution to sanitize the data
-      console.log('LayerData Error', { input, error })
-      let layer: Record<string, unknown> | undefined
-      for (const { path } of error.issues) {
-        const [, layerIndex, ...props] = path
-        layer = input[layerIndex as number]
-
-        if (layer) {
-          let drill = layer
-          for (const prop of props as string[]) {
-            console.log('LayerData Error', { prop, drill })
-
-            if (prop === 'props') {
-              drill = drill[prop] as Record<string, unknown>
-            }
-
-            if (prop === 'color') {
-              const next = layer as SolidLayerType
-              next.props = {
-                color: '#000000',
-              }
-            }
-          }
-        }
-      }
-      console.log('LayerData Error', { input })
-      return input
-    })
-    .default([]),
+  layerStack: z.array(z.string()).default([]),
+  layerData: z.array(LayerTypeSchema).default([]),
 })
 
 type LayerEnum = 'solid' | 'gradient' | 'noise'
