@@ -6,9 +6,13 @@ import ErrorPage from '../components/ErrorPage.tsx'
 
 export const rootRoute = new RootRoute({
   beforeLoad: ({ router }) => {
-    const checkPath = router.state.latestLocation.pathname === indexRoute.path
+    const checkPath = router.state.currentLocation.pathname === indexRoute.path
     const returningUser = localStorage.getItem('visited') === 'true'
-    if (checkPath && !returningUser) {
+    if (
+      checkPath &&
+      !returningUser &&
+      !router.state.currentLocation.searchStr
+    ) {
       localStorage.setItem('visited', 'true')
       router.navigate({
         to: splashRoute.path,

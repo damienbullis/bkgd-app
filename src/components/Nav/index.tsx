@@ -90,7 +90,7 @@ export default function Nav() {
     >
       <a
         href={'/welcome' + router.state.currentLocation.searchStr}
-        className="relative m-0 cursor-pointer bg-gradient-to-br  from-fuchsia-500 to-green-500 bg-clip-text p-4 py-0 text-center text-[2rem] tracking-tighter text-transparent  before:box-content"
+        className="relative m-0 cursor-pointer overflow-hidden  bg-gradient-to-br from-fuchsia-500 to-green-500 bg-clip-text p-4 py-0 text-center text-[2rem] tracking-tighter text-transparent transition-transform before:box-content hover:scale-105 active:scale-100"
         style={{ fontFamily: 'var(--font-impact)' }}
       >
         BKGD
@@ -98,13 +98,14 @@ export default function Nav() {
           <Shine>BKGD</Shine>
         </span>
       </a>
-      <ul className="inline-grid auto-rows-max items-start justify-items-center gap-2 p-4 pt-0">
+      <ul className="mt-4 inline-grid auto-rows-max items-start justify-items-center gap-2 p-4 pt-0">
         {bkgds.map((b) => (
           <li key={b.id} className="inline-grid place-content-center">
             <Button
               id={`bkgd_btn_${b.id}`}
               title={b.id}
-              className="aria-selected:bg-white"
+              aria-selected={bkgdSelected === b.id}
+              className="rounded-lg p-2 filter backdrop-blur-md backdrop-brightness-50 hover:backdrop-brightness-75"
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
@@ -130,8 +131,12 @@ export default function Nav() {
           </li>
         ))}
         <Show show={layerStack.length > 0}>
-          <li className="clr">
-            <Button title="Save" onClick={() => saveHandler()}>
+          <li className="inline-grid place-content-center">
+            <Button
+              title="Save"
+              onClick={() => saveHandler()}
+              className="rounded-lg p-2 filter backdrop-blur-md backdrop-brightness-50 hover:backdrop-brightness-75"
+            >
               <PlusCircle size={32} />
             </Button>
           </li>

@@ -47,16 +47,16 @@ const SubMenu = () => {
 
 export default function HelpMenu() {
   return (
-    <div className="relative mx-auto flex py-4">
+    <div className="relative mx-auto flex py-2 pb-4">
       <Menu>
         <Menu.Button
           as="div"
-          className="rounded-md filter backdrop-blur-md backdrop-brightness-50"
+          className="rounded-md filter backdrop-blur-md backdrop-brightness-50 hover:backdrop-brightness-75"
         >
           <IconButton icon={Question} />
         </Menu.Button>
         <Transition
-          className="absolute bottom-full right-0 z-10 mb-2 rounded-lg filter backdrop-blur-md backdrop-brightness-50"
+          className="absolute bottom-full right-0 z-10 mb-0 rounded-lg filter backdrop-blur-md backdrop-brightness-50"
           enter="transition duration-100 ease-out"
           enterFrom="transform scale-95 opacity-0 translate-x-full"
           enterTo="transform scale-100 opacity-100 translate-x-0"
