@@ -10,7 +10,7 @@ const App = memo(function () {
     setupKeyboardEvents(document)
     checkBrowser()
     return (
-      <main className="relative grid h-screen grid-cols-[1fr_auto_auto] grid-rows-[1fr_auto]">
+      <main className="relative grid h-screen grid-cols-[1fr_auto_auto] grid-rows-[1fr_auto] overflow-hidden">
         <VisibilityController />
         <CapabilitiesProvider>
           <Bkgd />

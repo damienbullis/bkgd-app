@@ -1,4 +1,7 @@
 import {
+  ArrowsOutSimple,
+  Bug,
+  GitBranch,
   ImageSquare,
   MinusCircle,
   PlusCircle,
@@ -7,12 +10,14 @@ import {
 import { useSearch } from '@tanstack/router'
 import { useLocalStorage } from '@state/hooks'
 import { EventHandler } from '@state/events'
-import { Button, Shine } from '@shared'
+import { Button, IconButton, Shine } from '@shared'
 import { Show, makeID } from '@utils'
+import { Bkgd } from '@types'
 
 import { useBkgdSelected } from './_helpers'
-import { Bkgd } from '../../types/BkgdTypes'
 import router from '../../router'
+import { Menu, Transition } from '@headlessui/react'
+import HelpMenu from './HelpMenu'
 
 const updateClasslist = (action: keyof DOMTokenList, id: string) => {
   const bkgdBtn = document.querySelector<HTMLButtonElement>(`#bkgd_btn_${id}`)
@@ -80,7 +85,7 @@ export default function Nav() {
   return (
     <nav
       id="nav"
-      className="z-0 col-start-3 col-end-4 row-start-1 row-end-3 inline-grid
+      className="z-0 col-start-3 col-end-4 row-start-1 row-end-3 inline-grid max-h-full
       select-none grid-cols-[auto] grid-rows-[auto_1fr_auto] content-center"
     >
       <a
@@ -132,13 +137,7 @@ export default function Nav() {
           </li>
         </Show>
       </ul>
-      <ul className="inline-grid auto-rows-max items-start justify-items-center gap-2 p-4 pt-0">
-        <li className="inline-grid place-content-center">
-          <Button disabled title="Help">
-            <Question size={32} />
-          </Button>
-        </li>
-      </ul>
+      <HelpMenu />
     </nav>
   )
 }
