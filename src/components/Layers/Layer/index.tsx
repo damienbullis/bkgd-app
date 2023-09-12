@@ -3,6 +3,7 @@ import {
   ClockCountdown,
   Palette,
   Record,
+  TrashSimple,
   Waveform,
 } from '@phosphor-icons/react'
 import { useSelectedLayer } from '@state/global'
@@ -39,7 +40,7 @@ const LayerButton = ({ data }: { data: LayerType }) => {
           layerRef.current?.classList.add('backdrop-brightness-50')
           layerRef.current?.classList.remove('backdrop-brightness-75')
         }}
-        className="data=[active='true']:text-black inline-flex w-full 
+        className="data=[active='true']:text-black group inline-flex w-full 
         cursor-pointer items-center justify-start gap-2 rounded-md p-4 py-3 
         backdrop-blur-md backdrop-brightness-50 backdrop-filter
         data-[active='true']:bg-white data-[active='true']:text-black"
@@ -54,6 +55,13 @@ const LayerButton = ({ data }: { data: LayerType }) => {
         >
           {layerType}
         </p>
+        <TrashSimple
+          onClick={(e) => {
+            e.stopPropagation()
+            console.info({ e }, 'trash clicked')
+          }}
+          className="ml-auto select-none text-xl opacity-0 transition-opacity group-hover:select-auto group-hover:opacity-100"
+        />
       </div>
     </Reorder.Item>
   )

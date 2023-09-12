@@ -1,6 +1,5 @@
+import { IconButton, HoverText } from '@shared'
 import { Icon, Plus } from '@phosphor-icons/react'
-import HoverText from '../_shared/HoverText'
-import IconButton from '../_shared/IconButton'
 
 type Props = {
   icon: Icon

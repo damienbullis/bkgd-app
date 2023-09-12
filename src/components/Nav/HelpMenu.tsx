@@ -79,7 +79,7 @@ export default function HelpMenu() {
               </div>
             </Menu.Item>
             <Menu.Item disabled>
-              <p className="inline-flex min-w-[10rem] max-w-[16rem] flex-nowrap p-1 px-4 text-sm font-normal decoration-white ui-active:bg-slate-200 ui-active:text-slate-950 ui-disabled:line-through ui-not-disabled:cursor-pointer">
+              <p className="inline-flex min-w-[10rem] max-w-[16rem] cursor-not-allowed flex-nowrap p-1 px-4 text-sm font-normal decoration-white ui-active:bg-slate-200 ui-active:text-slate-950 ui-disabled:line-through ui-not-disabled:cursor-pointer">
                 Copy Format
                 <span className="ml-auto text-lg">
                   <FileCss />
