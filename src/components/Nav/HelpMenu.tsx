@@ -8,6 +8,7 @@ import {
   GitBranch,
   Question,
 } from '@phosphor-icons/react'
+import { useModal } from '../_shared/Modal'
 
 const SubMenu = () => {
   return (
@@ -46,6 +47,7 @@ const SubMenu = () => {
 }
 
 export default function HelpMenu() {
+  const [, setIsOpen] = useModal()
   return (
     <div className="relative mx-auto flex py-2 pb-4">
       <Menu>
@@ -66,12 +68,14 @@ export default function HelpMenu() {
         >
           <Menu.Items className="py-3">
             <Menu.Item>
-              <p className="inline-flex min-w-[10rem] max-w-[16rem] cursor-pointer flex-nowrap p-1 px-4 text-sm font-normal ui-active:bg-slate-200 ui-active:text-slate-950">
-                Shortcuts
-                <span className="ml-auto text-lg">
-                  <Command />
-                </span>
-              </p>
+              <button onClick={() => setIsOpen(true)}>
+                <p className="inline-flex min-w-[10rem] max-w-[16rem] cursor-pointer flex-nowrap p-1 px-4 text-sm font-normal ui-active:bg-slate-200 ui-active:text-slate-950">
+                  Shortcuts
+                  <span className="ml-auto text-lg">
+                    <Command />
+                  </span>
+                </p>
+              </button>
             </Menu.Item>
             <Menu.Item>
               <div className="relative">

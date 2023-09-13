@@ -9,7 +9,6 @@ import {
 import { useSelectedLayer } from '@state/global'
 import { EventHandler } from '@state/events'
 
-import { useRef } from 'react'
 import { Reorder } from 'framer-motion'
 import { LayerType } from '../LayerTypeSchema'
 

@@ -91,8 +91,8 @@ export default function Layers() {
                   </span>
                 </Menu.Item>
                 <Menu.Item>
-                  <span className="group relative" onClick={handleShare}>
-                    <IconButton icon={Export} />
+                  <span className="group relative">
+                    <IconButton icon={Export} disabled onClick={handleShare} />
                     <HoverText>Share</HoverText>
                   </span>
                 </Menu.Item>

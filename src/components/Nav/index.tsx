@@ -10,7 +10,7 @@ import {
 import { useSearch } from '@tanstack/router'
 import { useLocalStorage } from '@state/hooks'
 import { EventHandler } from '@state/events'
-import { Button, IconButton, Shine } from '@shared'
+import { Button, IconButton, ModalProvider, Shine } from '@shared'
 import { Show, makeID } from '@utils'
 import { Bkgd } from '@types'
 
@@ -18,6 +18,7 @@ import { useBkgdSelected } from './_helpers'
 import router from '../../router'
 import { Menu, Transition } from '@headlessui/react'
 import HelpMenu from './HelpMenu'
+import ShortcutModal from './ShortcutModal'
 
 const updateClasslist = (action: keyof DOMTokenList, id: string) => {
   const bkgdBtn = document.querySelector<HTMLButtonElement>(`#bkgd_btn_${id}`)
@@ -142,7 +143,10 @@ export default function Nav() {
           </li>
         </Show>
       </ul>
-      <HelpMenu />
+      <ModalProvider>
+        <ShortcutModal />
+        <HelpMenu />
+      </ModalProvider>
     </nav>
   )
 }
