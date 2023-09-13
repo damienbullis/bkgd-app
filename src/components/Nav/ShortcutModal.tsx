@@ -86,7 +86,12 @@ export default function ShortcutModal() {
                   className="inline-flex w-full items-center gap-2 text-lg font-medium uppercase leading-6 text-gray-100"
                 >
                   Shortcuts
-                  <button className="ml-auto text-2xl text-gray-100 hover:text-white">
+                  <span className="ml-0 text-lg"></span>
+                  <Shortcut label="" value="P" modifiers={['Cntl']} />
+                  <button
+                    className="ml-auto text-2xl text-gray-100 hover:text-white"
+                    onClick={close}
+                  >
                     <XCircle />
                   </button>
                 </Dialog.Title>

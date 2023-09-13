@@ -19,6 +19,7 @@ import router from '../../router'
 import { Menu, Transition } from '@headlessui/react'
 import HelpMenu from './HelpMenu'
 import ShortcutModal from './ShortcutModal'
+import NavButton from './NavButton'
 
 const updateClasslist = (action: keyof DOMTokenList, id: string) => {
   const bkgdBtn = document.querySelector<HTMLButtonElement>(`#bkgd_btn_${id}`)
@@ -101,35 +102,12 @@ export default function Nav() {
       </a>
       <ul className="mt-4 inline-grid auto-rows-max items-start justify-items-center gap-2 p-4 pt-0">
         {bkgds.map((b) => (
-          <li key={b.id} className="inline-grid place-content-center">
-            <Button
-              id={`bkgd_btn_${b.id}`}
-              title={b.id}
-              aria-selected={bkgdSelected === b.id}
-              className="rounded-lg p-2 filter backdrop-blur-md backdrop-brightness-50 hover:backdrop-brightness-75"
-              onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                bkgdHandler(b)
-              }}
-            >
-              <ImageSquare size={32} />
-              <Show show={bkgdSelected === b.id}>
-                <div
-                  className="flex items-center justify-center"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    EventHandler({
-                      action: 'delete-bkgd',
-                      payload: { bkgd: b },
-                    })
-                  }}
-                >
-                  <MinusCircle size={32} />
-                </div>
-              </Show>
-            </Button>
-          </li>
+          <NavButton
+            key={b.id}
+            bkgd={b}
+            bkgdHandler={bkgdHandler}
+            bkgdSelected={bkgdSelected}
+          />
         ))}
         <Show show={layerStack.length > 0}>
           <li className="inline-grid place-content-center">
