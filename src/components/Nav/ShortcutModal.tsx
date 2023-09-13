@@ -1,6 +1,55 @@
 import { Dialog, Transition } from '@headlessui/react'
+import { Command, X, XCircle } from '@phosphor-icons/react'
 import { useModal } from '@shared'
 import { Fragment } from 'react'
+// import { useCapabilities } from '../Capabilities'
+
+type ModifiersEnum = 'Cntl' | 'Shift' | 'Alt'
+
+const buildModifiers = (modifiers?: (ModifiersEnum | 'Cmd')[]) => {
+  return modifiers?.map((m) => {
+    switch (m) {
+      case 'Cntl':
+        return '⌃ '
+      case 'Cmd':
+        return '⌘ '
+      case 'Shift':
+        return '⇧ '
+      case 'Alt':
+        return '⌥ '
+      default:
+        return ''
+    }
+  })
+}
+
+const Shortcut = ({
+  label,
+  value,
+  modifiers,
+}: {
+  label: string
+  value: string
+  modifiers?: ModifiersEnum[]
+}) => {
+  // check if OS is a Mac
+  const isMac = window.navigator.platform.includes('Mac')
+  // const capabilities = useCapabilities()
+  const controlKey = isMac ? 'Cmd' : 'Cntl'
+  const modifierKeys =
+    modifiers?.map((m) => (m === 'Cntl' ? controlKey : m)) || []
+
+  return (
+    <p className="-mx-2 inline-flex items-center gap-2 rounded-md p-2 py-1 text-sm font-light hover:bg-white hover:bg-opacity-20">
+      {label}
+      <span className="ml-auto inline-flex items-center gap-2 font-normal">
+        {(modifierKeys?.length
+          ? buildModifiers(modifierKeys)?.join(' + ')
+          : '') + value}
+      </span>
+    </p>
+  )
+}
 
 export default function ShortcutModal() {
   const [isOpen, setIsOpen] = useModal()
@@ -10,7 +59,7 @@ export default function ShortcutModal() {
       <Dialog as="div" open={isOpen} onClose={close} className="relative z-10">
         <Transition.Child
           as={Fragment}
-          enter="ease-out duration-300"
+          enter="ease-out duration-200"
           enterFrom="opacity-0"
           enterTo="opacity-100"
           leave="ease-in duration-200"
@@ -24,7 +73,7 @@ export default function ShortcutModal() {
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
-              enter="ease-out duration-300"
+              enter="ease-out duration-200"
               enterFrom="opacity-0 scale-[2]"
               enterTo="opacity-100 scale-100"
               leave="ease-in duration-200"
@@ -33,26 +82,25 @@ export default function ShortcutModal() {
             >
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-lg p-6 text-left align-middle shadow-xl filter backdrop-blur-md backdrop-brightness-50 transition-all">
                 <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium uppercase leading-6 text-gray-100"
+                  as="div"
+                  className="inline-flex w-full items-center gap-2 text-lg font-medium uppercase leading-6 text-gray-100"
                 >
                   Shortcuts
-                </Dialog.Title>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Your payment has been successfully submitted. We've sent you
-                    an email with all of the details of your order.
-                  </p>
-                </div>
-
-                <div className="mt-4">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={close}
-                  >
-                    Got it, thanks!
+                  <button className="ml-auto text-2xl text-gray-100 hover:text-white">
+                    <XCircle />
                   </button>
+                </Dialog.Title>
+                <div className="mt-4 grid auto-rows-auto grid-cols-2 gap-4 gap-y-0">
+                  <Shortcut label="Edit" value={'E'} />
+                  <Shortcut label="Noise" value={'N'} />
+                  <Shortcut label="Conic" value={'C'} />
+                  <Shortcut label="Radial" value={'R'} />
+                  <Shortcut label="Linear" value={'L'} />
+                  <Shortcut label="Solid" value={'S'} />
+                </div>
+                <div className="mt-2 grid auto-rows-auto grid-cols-2 gap-4 gap-y-0 border-t border-gray-100 border-opacity-10 pt-2">
+                  <Shortcut label="Copy" value={'C'} modifiers={['Cntl']} />
+                  <Shortcut label="Paste" value={'V'} modifiers={['Cntl']} />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

@@ -14,10 +14,10 @@ const App = memo(function () {
         <VisibilityController />
         <CapabilitiesProvider>
           <Bkgd />
-          <Footer />
           <Layers />
-          <Nav />
           <Controls />
+          <Footer />
+          <Nav />
         </CapabilitiesProvider>
       </main>
     )
