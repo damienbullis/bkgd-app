@@ -1,44 +1,19 @@
 import {
-  ArrowSquareOut,
-  ArrowsCounterClockwise,
-  Clipboard,
-  Copy,
-  CopySimple,
   DotsThreeOutlineVertical,
-  DotsThreeVertical,
   Download,
   Export,
   Eye,
   EyeClosed,
   FileCss,
-  FilePng,
-  FloppyDisk,
-  Icon,
-  Trash,
+  FileX,
 } from '@phosphor-icons/react'
 import { EventHandler } from '@state/events'
 import { useVisible } from '@state/global'
-import { HoverText, IconButton, List } from '@shared'
+import { HoverText, IconButton } from '@shared'
 
 import LayerButtons from './LayerButtons'
 import { useNavigate } from '@tanstack/router'
 import { Menu, Transition } from '@headlessui/react'
-
-const LiButton = ({
-  icon,
-  id,
-  onClick,
-}: {
-  icon: Icon
-  id?: string
-  onClick: React.MouseEventHandler<HTMLButtonElement>
-}) => {
-  return (
-    <li id={id}>
-      <IconButton icon={icon} onClick={onClick} />
-    </li>
-  )
-}
 
 const VisibilityButton = ({ onClick }: { onClick?: () => void }) => {
   const [hide] = useVisible()
@@ -48,6 +23,18 @@ const VisibilityButton = ({ onClick }: { onClick?: () => void }) => {
 // TODO: Fix all these styles n buttons
 export default function Layers() {
   const navigate = useNavigate()
+  const handleShare = () => {
+    const searchStr = window.location.search
+
+    if (searchStr) {
+      const encoder = new TextEncoder()
+      const compressed = encoder.encode(searchStr)
+      const g = window.btoa(String.fromCharCode(...compressed))
+
+      console.log({ g, compressed })
+    }
+  }
+
   return (
     <aside
       id="layers"
@@ -104,22 +91,18 @@ export default function Layers() {
                   </span>
                 </Menu.Item>
                 <Menu.Item>
-                  <span
-                    className="group relative"
-                    // onClick={() =>
-                    //   EventHandler({
-                    //     action: 'download-image',
-                    //     payload: null,
-                    //   })
-                    // }
-                  >
-                    <IconButton icon={Export} disabled />
+                  <span className="group relative" onClick={handleShare}>
+                    <IconButton icon={Export} />
                     <HoverText>Share</HoverText>
                   </span>
                 </Menu.Item>
               </Menu.Items>
             </Transition>
           </Menu>
+        </li>
+        <li className="group relative" onClick={() => navigate({ to: '/' })}>
+          <IconButton icon={FileX} />
+          <HoverText>Clear</HoverText>
         </li>
         <li className="group relative" id="vis-button">
           <VisibilityButton
@@ -131,10 +114,6 @@ export default function Layers() {
             }
           />
           <HoverText>Toggle UI</HoverText>
-        </li>
-        <li className="group relative" onClick={() => navigate({ to: '/' })}>
-          <IconButton icon={ArrowsCounterClockwise} />
-          <HoverText>Restart</HoverText>
         </li>
       </ul>
 

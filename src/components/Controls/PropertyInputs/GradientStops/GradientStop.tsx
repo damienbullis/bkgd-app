@@ -5,6 +5,7 @@ import {
   PlusSquare,
   SelectionInverse,
   Trash,
+  X,
 } from '@phosphor-icons/react'
 import { EventHandler } from '@state/events'
 import { debounce, hslToHex, rgbToHex } from '@utils'
@@ -281,7 +282,7 @@ const GradientStop = ({
           })
         }}
       >
-        <Trash size={'1.5em'} />
+        <X size={'1.5em'} />
       </button>
     </div>
   )

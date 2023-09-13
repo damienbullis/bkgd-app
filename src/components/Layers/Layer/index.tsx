@@ -24,25 +24,15 @@ const LAYER_TYPES = {
 const LayerButton = ({ data }: { data: LayerType }) => {
   const layerType = data.type === 'gradient' ? data.props.type : data.type
   const Icon = LAYER_TYPES[layerType]
-  const layerRef = useRef<HTMLDivElement>(null)
   const [selectedLayer] = useSelectedLayer()
-  const isActive = data.id === selectedLayer
+
   return (
     <Reorder.Item value={data}>
       <div
-        ref={layerRef}
-        data-active={isActive}
-        onMouseEnter={() => {
-          layerRef.current?.classList.remove('backdrop-brightness-50')
-          layerRef.current?.classList.add('backdrop-brightness-75')
-        }}
-        onMouseLeave={() => {
-          layerRef.current?.classList.add('backdrop-brightness-50')
-          layerRef.current?.classList.remove('backdrop-brightness-75')
-        }}
-        className="data=[active='true']:text-black group inline-flex w-full 
-        cursor-pointer items-center justify-start gap-2 rounded-md p-4 py-3 
-        backdrop-blur-md backdrop-brightness-50 backdrop-filter
+        data-active={data.id === selectedLayer}
+        className="data=[active='true']:text-black group inline-flex w-full cursor-pointer 
+        items-center justify-start gap-2 rounded-md p-4 py-3 backdrop-blur-md 
+        backdrop-brightness-50 backdrop-filter hover:backdrop-brightness-75
         data-[active='true']:bg-white data-[active='true']:text-black"
         onClick={() =>
           EventHandler({ action: 'select-layer', payload: { id: data.id } })
