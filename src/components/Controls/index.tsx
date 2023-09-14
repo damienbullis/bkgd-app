@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import {
   CircleHalf,
   ClockCountdown,
@@ -15,6 +15,7 @@ import { EventHandler } from '@state/events'
 import LayerProperties from './LayerProperties'
 import ControlButton from './ControlButton'
 import ControlAddButton from './ControlAddButton'
+import { KeyEventsContext } from '@state/keyEvents'
 
 type Mode = '' | 'edit'
 
@@ -38,6 +39,25 @@ const handler = (
 export default function Controls() {
   const [mode, setMode] = useState<Mode>('')
   const [selectedLayer] = useSelectedLayer()
+  const keys = useContext(KeyEventsContext)
+
+  useEffect(() => {
+    const unsub = keys.subscribe((e) => {
+      if (
+        !e.altKey &&
+        !e.shiftKey &&
+        !e.ctrlKey &&
+        selectedLayer &&
+        e.key === 'e'
+      ) {
+        setMode((prev) => (prev === 'edit' ? '' : 'edit'))
+      }
+    })
+
+    return () => {
+      unsub()
+    }
+  }, [keys, selectedLayer])
 
   useEffect(() => {
     if (selectedLayer) {

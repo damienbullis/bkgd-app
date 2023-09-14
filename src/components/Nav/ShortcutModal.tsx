@@ -1,7 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { XCircle } from '@phosphor-icons/react'
 import { useModal } from '@shared'
-import { Fragment } from 'react'
+import { KeyEventsContext } from '@state/keyEvents'
+import { Fragment, useContext, useEffect } from 'react'
 // import { useCapabilities } from '../Capabilities'
 
 type ModifiersEnum = 'Cntl' | 'Shift' | 'Alt'
@@ -54,6 +55,21 @@ const Shortcut = ({
 export default function ShortcutModal() {
   const [isOpen, setIsOpen] = useModal()
   const close = () => setIsOpen(false)
+  const keys = useContext(KeyEventsContext)
+
+  useEffect(() => {
+    // set up subscriptions
+    const unSub = keys.subscribe((e) => {
+      if (e.ctrlKey && e.key === 'p') {
+        console.log('ctrl+p')
+        setIsOpen((prev) => !prev)
+      }
+    })
+    return () => {
+      // tear down subscriptions
+      unSub()
+    }
+  }, [keys, setIsOpen])
   return (
     <Transition show={isOpen} as={Fragment}>
       <Dialog as="div" open={isOpen} onClose={close} className="relative z-10">

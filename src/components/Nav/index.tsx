@@ -11,6 +11,8 @@ import router from '../../router'
 import HelpMenu from './HelpMenu'
 import ShortcutModal from './ShortcutModal'
 import NavButton from './NavButton'
+import { useContext, useEffect } from 'react'
+import { KeyEventsContext } from '@state/keyEvents'
 
 const updateClasslist = (action: keyof DOMTokenList, id: string) => {
   const bkgdBtn = document.querySelector<HTMLButtonElement>(`#bkgd_btn_${id}`)

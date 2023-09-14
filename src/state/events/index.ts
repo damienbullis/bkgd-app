@@ -6,7 +6,7 @@ import {
   LayerType,
   NoiseLayerType,
   SolidLayerType,
-} from '../../components/Layers/LayerTypeSchema'
+} from '@types'
 import { randomHex } from '@utils'
 import { Bkgd, bkgdsSchema } from '../../types/BkgdTypes'
 
