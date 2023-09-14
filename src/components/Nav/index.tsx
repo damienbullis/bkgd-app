@@ -1,22 +1,13 @@
-import {
-  ArrowsOutSimple,
-  Bug,
-  GitBranch,
-  ImageSquare,
-  MinusCircle,
-  PlusCircle,
-  Question,
-} from '@phosphor-icons/react'
+import { PlusCircle } from '@phosphor-icons/react'
 import { useSearch } from '@tanstack/router'
 import { useLocalStorage } from '@state/hooks'
 import { EventHandler } from '@state/events'
-import { Button, IconButton, ModalProvider, Shine } from '@shared'
+import { Button, ModalProvider, Shine } from '@shared'
 import { Show, makeID } from '@utils'
 import { Bkgd } from '@types'
 
 import { useBkgdSelected } from './_helpers'
 import router from '../../router'
-import { Menu, Transition } from '@headlessui/react'
 import HelpMenu from './HelpMenu'
 import ShortcutModal from './ShortcutModal'
 import NavButton from './NavButton'
@@ -78,7 +69,7 @@ export default function Nav() {
       } else {
         updateClasslist('add', `#bkgd_btn_${bkgd.id}`)
         // Set the selected bkgd
-        return bkgd.id
+        return bkgd.id || ''
       }
     })
   }

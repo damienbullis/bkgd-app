@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Command, X, XCircle } from '@phosphor-icons/react'
+import { XCircle } from '@phosphor-icons/react'
 import { useModal } from '@shared'
 import { Fragment } from 'react'
 // import { useCapabilities } from '../Capabilities'

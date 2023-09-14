@@ -4,7 +4,6 @@ import {
   MinusSquare,
   PlusSquare,
   SelectionInverse,
-  Trash,
   X,
 } from '@phosphor-icons/react'
 import { EventHandler } from '@state/events'

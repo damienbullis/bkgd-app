@@ -9,7 +9,11 @@ export {
 } from './colorHelpers'
 export { default as calcAverageColor } from './calcAverageColor'
 export { default as checkBrowser } from './checkBrowser'
+
+// Bkgd Layer Utils
 export { default as buildLayerStyle } from './buildLayerStyle'
+export { default as LayerTypeSwitch } from './layerTypeSwitch'
+export { GradientLayer, NoiseLayer, SolidLayer } from './LayerTypes'
 
 export function makeID() {
   return Math.random().toString(36).substring(2, 7)

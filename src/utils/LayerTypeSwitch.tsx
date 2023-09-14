@@ -1,14 +1,10 @@
-import { LayerType } from '../components/Layers/LayerTypeSchema'
-import {
-  NoiseLayer,
-  SolidLayer,
-  GradientLayer,
-} from '../components/Bkgd/LayerTypes'
+import { LayerType } from '@types'
+import { NoiseLayer, SolidLayer, GradientLayer } from '.'
 
 /**
  * This returns background images styles for a single layer
  */
-const LayerTypeSwitch = (layer: LayerType, displayP3?: boolean) => {
+export default function LayerTypeSwitch(layer: LayerType, displayP3?: boolean) {
   switch (layer.type) {
     case 'solid':
       return SolidLayer(layer, displayP3)
@@ -22,5 +18,3 @@ const LayerTypeSwitch = (layer: LayerType, displayP3?: boolean) => {
     }
   }
 }
-
-export default LayerTypeSwitch

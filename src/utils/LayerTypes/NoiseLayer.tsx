@@ -1,7 +1,4 @@
-import {
-  NoiseLayerType,
-  SharedLayerPropsSchemaType,
-} from '../../Layers/LayerTypeSchema'
+import { NoiseLayerType, SharedLayerPropsSchemaType } from '@types'
 
 const NoiseLayer = (layer: NoiseLayerType & SharedLayerPropsSchemaType) => {
   const { type, frequency, octaves, stitch } = layer.props

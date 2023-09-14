@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react'
 import {
   CircleHalf,
   ClockCountdown,
-  Control,
   PaintBucket,
-  Plus,
   Record,
   SlidersHorizontal,
   Waveform,

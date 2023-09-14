@@ -1,7 +1,4 @@
-import {
-  SharedLayerPropsSchemaType,
-  SolidLayerType,
-} from '../../Layers/LayerTypeSchema'
+import { SharedLayerPropsSchemaType, SolidLayerType } from '@types'
 
 const getColor = (
   color:
