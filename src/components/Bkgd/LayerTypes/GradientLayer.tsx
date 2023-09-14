@@ -1,5 +1,5 @@
 import { GradientLayerType, SharedLayerPropsSchemaType } from '@types'
-import { hexToRGB } from '../colorHelpers'
+import { hexToRGB } from '@utils'
 
 type GradientLayerProps = GradientLayerType & SharedLayerPropsSchemaType
 

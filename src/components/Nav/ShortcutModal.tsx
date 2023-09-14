@@ -44,7 +44,7 @@ const Shortcut = ({
       {label}
       <span className="ml-auto inline-flex items-center gap-2 font-normal">
         {(modifierKeys?.length
-          ? buildModifiers(modifierKeys)?.join(' + ')
+          ? buildModifiers(modifierKeys)?.join(' + ') + ' + '
           : '') + value}
       </span>
     </p>

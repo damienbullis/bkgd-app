@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react'
-import { LayerType } from '../types/LayerTypes'
-import { LayerTypeSwitch } from '.'
+import { LayerType } from '@types'
+import layerTypeSwitch from './layerTypeSwitch'
 
 /**
  * Build the CSS from the layer properties
@@ -19,7 +19,7 @@ export default function buildLayerStyle(layers: LayerType[]) {
   for (const layer of layers) {
     const end = i === layers.length - 1 ? '' : ', '
 
-    bkgdStyle.backgroundImage += LayerTypeSwitch(layer) + end
+    bkgdStyle.backgroundImage += layerTypeSwitch(layer) + end
     bkgdStyle.backgroundBlendMode += (layer.blendMode || 'normal') + end
     bkgdStyle.backgroundPosition += (layer.backgroundPosition || '0% 0%') + end
     bkgdStyle.backgroundSize += (layer.backgroundSize || 'auto') + end

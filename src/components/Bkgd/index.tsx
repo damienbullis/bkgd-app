@@ -1,5 +1,5 @@
 import { useLayers } from '@state/hooks'
-import { buildLayerStyle } from '@utils'
+import buildLayerStyle from './buildLayerStyle'
 
 export default function Bkgd() {
   const { layers } = useLayers()

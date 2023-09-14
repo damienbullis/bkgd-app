@@ -4,8 +4,7 @@ import { Button } from '@shared'
 import { Show } from '@utils'
 import { Bkgd } from '@types'
 
-// TODO: Add suspense and a lazy load for the bkgds to get loaded from localstorage
-
+// TODO: update the delete button styles and location
 const NavButton = ({
   bkgd,
   bkgdSelected,
@@ -18,10 +17,10 @@ const NavButton = ({
   return (
     <li className="inline-grid place-content-center">
       <Button
-        id={`bkgdkgd_bkgdtn_${bkgd.id}`}
+        id={`bkgd_btn_${bkgd.id}`}
         title={bkgd.id}
         aria-selected={bkgdSelected === bkgd.id}
-        className="bkgdackdrop-bkgdlur-md bkgdackdrop-bkgdrightness-50 hover:bkgdackdrop-bkgdrightness-75 rounded-lg p-2 filter"
+        className="rounded-lg p-2 filter backdrop-blur-md backdrop-brightness-50 hover:backdrop-brightness-75"
         onClick={(e) => {
           e.preventDefault()
           e.stopPropagation()

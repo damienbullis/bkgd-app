@@ -1,7 +1,7 @@
 import { useSelectedLayer } from '@state/global'
 import { useSearch } from '@tanstack/router'
 import { useMemo } from 'react'
-import { LayerType } from '../../components/Layers/LayerTypeSchema'
+import { LayerType } from '@types'
 
 function useLayers() {
   const [selectedLayer, setSelectedLayer] = useSelectedLayer()

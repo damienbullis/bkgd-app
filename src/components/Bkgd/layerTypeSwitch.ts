@@ -1,10 +1,10 @@
 import { LayerType } from '@types'
-import { NoiseLayer, SolidLayer, GradientLayer } from '.'
+import { NoiseLayer, SolidLayer, GradientLayer } from './LayerTypes'
 
 /**
  * This returns background images styles for a single layer
  */
-export default function LayerTypeSwitch(layer: LayerType, displayP3?: boolean) {
+export default function layerTypeSwitch(layer: LayerType, displayP3?: boolean) {
   switch (layer.type) {
     case 'solid':
       return SolidLayer(layer, displayP3)
