@@ -9,6 +9,7 @@ export {
 } from './colorHelpers'
 export { default as calcAverageColor } from './calcAverageColor'
 export { default as checkBrowser } from './checkBrowser'
+export { default as buildLayerStyle } from './buildLayerStyle'
 
 export function makeID() {
   return Math.random().toString(36).substring(2, 7)

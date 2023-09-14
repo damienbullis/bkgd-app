@@ -1,5 +1,9 @@
-import { LayerType } from '../Layers/LayerTypeSchema'
-import { NoiseLayer, SolidLayer, GradientLayer } from './LayerTypes'
+import { LayerType } from '../components/Layers/LayerTypeSchema'
+import {
+  NoiseLayer,
+  SolidLayer,
+  GradientLayer,
+} from '../components/Bkgd/LayerTypes'
 
 /**
  * This returns background images styles for a single layer
