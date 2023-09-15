@@ -410,7 +410,12 @@ const storageAction = (action: 'save' | 'delete', bkgd: Bkgd) => {
   const bkgds = bkgdsSchema.parse(JSON.parse(storage))
   let nextBkgds: Bkgd[] = []
   if (action === 'save') {
-    nextBkgds = [...bkgds, bkgd]
+    const bkgdExists = bkgds.findIndex((b) => b.id === bkgd.id)
+    if (bkgdExists !== -1) {
+      nextBkgds[bkgdExists] = bkgd
+    } else {
+      nextBkgds = [...bkgds, bkgd]
+    }
   } else if (action === 'delete') {
     nextBkgds = bkgds.filter((b) => b.id !== bkgd.id)
   }

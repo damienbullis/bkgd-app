@@ -44,26 +44,22 @@ export default function Nav() {
   }
 
   const bkgdHandler = (bkgd: Bkgd) => {
-    if (bkgd.id === id) {
-      console.log('saving an existing bkgd')
-      saveHandler(id)
-    } else {
-      setBkgdSelected((prevID) => {
-        // If bkgd is selected, load it
-        if (prevID === bkgd.id) {
-          EventHandler({
-            action: 'load-bkgd',
-            payload: { bkgd },
-          })
+    setBkgdSelected((prevID) => {
+      // If bkgd is selected, load it
+      if (prevID === bkgd.id) {
+        // load the selected bkgd
+        EventHandler({
+          action: 'load-bkgd',
+          payload: { bkgd },
+        })
 
-          // Reset the selected bkgd
-          return ''
-        } else {
-          // Set the selected bkgd
-          return bkgd.id || ''
-        }
-      })
-    }
+        // Reset the selected bkgd
+        return ''
+      } else {
+        // Set the selected bkgd
+        return bkgd.id || ''
+      }
+    })
   }
   //#endregion
 
