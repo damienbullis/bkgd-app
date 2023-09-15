@@ -1,15 +1,15 @@
 import { ImageSquare, MinusCircle } from '@phosphor-icons/react'
 import { EventHandler } from '@state/events'
 import { Button } from '@shared'
-import { Show } from '@utils'
 import { Bkgd } from '@types'
 
-// TODO: update the delete button styles and location
 const NavButton = ({
+  id,
   bkgd,
   bkgdSelected,
   bkgdHandler,
 }: {
+  id: string
   bkgd: Bkgd
   bkgdSelected: string
   bkgdHandler: (b: Bkgd) => void
@@ -17,10 +17,9 @@ const NavButton = ({
   return (
     <li className="inline-grid place-content-center">
       <Button
-        id={`bkgd_btn_${bkgd.id}`}
         title={bkgd.id}
-        aria-selected={bkgdSelected === bkgd.id}
-        className="rounded-lg p-2 filter backdrop-blur-md backdrop-brightness-50 hover:backdrop-brightness-75"
+        aria-selected={bkgdSelected === bkgd.id || id === bkgd.id}
+        className="group relative rounded-lg p-2 filter backdrop-blur-md backdrop-brightness-50 hover:backdrop-brightness-75"
         onClick={(e) => {
           e.preventDefault()
           e.stopPropagation()
@@ -28,20 +27,18 @@ const NavButton = ({
         }}
       >
         <ImageSquare size={32} />
-        <Show show={bkgdSelected === bkgd.id}>
-          <div
-            className="flex items-center justify-center"
-            onClick={(e) => {
-              e.stopPropagation()
-              EventHandler({
-                action: 'delete-bkgd',
-                payload: { bkgd },
-              })
-            }}
-          >
-            <MinusCircle size={32} />
-          </div>
-        </Show>
+        <div
+          className="absolute -right-2 -top-2 flex h-6 w-6 scale-50 cursor-pointer items-center justify-center rounded-full bg-gray-900 bg-opacity-70 text-xl text-white opacity-0 transition-all hover:bg-red-600 active:bg-red-700 group-aria-selected:scale-100 group-aria-selected:opacity-100"
+          onClick={(e) => {
+            e.stopPropagation()
+            EventHandler({
+              action: 'delete-bkgd',
+              payload: { bkgd },
+            })
+          }}
+        >
+          <MinusCircle />
+        </div>
       </Button>
     </li>
   )

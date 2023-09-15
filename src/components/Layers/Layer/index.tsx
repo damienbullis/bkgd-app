@@ -10,7 +10,7 @@ import { useSelectedLayer } from '@state/global'
 import { EventHandler } from '@state/events'
 
 import { Reorder } from 'framer-motion'
-import { LayerType } from '../LayerTypeSchema'
+import { LayerType } from '@types'
 
 const LAYER_TYPES = {
   linear: CircleHalf,
@@ -29,9 +29,9 @@ const LayerButton = ({ data }: { data: LayerType }) => {
     <Reorder.Item value={data}>
       <div
         data-active={data.id === selectedLayer}
-        className="data=[active='true']:text-black group inline-flex w-full cursor-pointer 
-        items-center justify-start gap-2 rounded-md p-4 py-3 backdrop-blur-md 
-        backdrop-brightness-50 backdrop-filter hover:backdrop-brightness-75
+        className="group inline-flex w-full cursor-grab items-center 
+        justify-start gap-2 rounded-md p-4 py-3 backdrop-blur-md backdrop-brightness-50 
+        backdrop-filter hover:backdrop-brightness-75 active:cursor-grabbing
         data-[active='true']:bg-white data-[active='true']:text-black"
         onClick={() =>
           EventHandler({ action: 'select-layer', payload: { id: data.id } })

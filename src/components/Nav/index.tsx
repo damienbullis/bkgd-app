@@ -11,19 +11,7 @@ import router from '../../router'
 import HelpMenu from './HelpMenu'
 import ShortcutModal from './ShortcutModal'
 import NavButton from './NavButton'
-import { useContext, useEffect } from 'react'
-import { KeyEventsContext } from '@state/keyEvents'
 
-const updateClasslist = (action: keyof DOMTokenList, id: string) => {
-  const bkgdBtn = document.querySelector<HTMLButtonElement>(`#bkgd_btn_${id}`)
-  if (bkgdBtn) {
-    if (action === 'add') {
-      bkgdBtn.setAttribute('aria-selected', 'true')
-    } else {
-      bkgdBtn.removeAttribute('aria-selected')
-    }
-  }
-}
 // Pass in the router from the app
 export default function Nav() {
   const [bkgdSelected, setBkgdSelected] = useBkgdSelected()
@@ -56,24 +44,26 @@ export default function Nav() {
   }
 
   const bkgdHandler = (bkgd: Bkgd) => {
-    setBkgdSelected((prevID) => {
-      // If bkgd is selected, load it
-      if (prevID === bkgd.id) {
-        updateClasslist('remove', `#bkgd_btn_${prevID}`)
+    if (bkgd.id === id) {
+      console.log('saving an existing bkgd')
+      saveHandler(id)
+    } else {
+      setBkgdSelected((prevID) => {
+        // If bkgd is selected, load it
+        if (prevID === bkgd.id) {
+          EventHandler({
+            action: 'load-bkgd',
+            payload: { bkgd },
+          })
 
-        EventHandler({
-          action: 'load-bkgd',
-          payload: { bkgd },
-        })
-
-        // Reset the selected bkgd
-        return ''
-      } else {
-        updateClasslist('add', `#bkgd_btn_${bkgd.id}`)
-        // Set the selected bkgd
-        return bkgd.id || ''
-      }
-    })
+          // Reset the selected bkgd
+          return ''
+        } else {
+          // Set the selected bkgd
+          return bkgd.id || ''
+        }
+      })
+    }
   }
   //#endregion
 
@@ -85,8 +75,7 @@ export default function Nav() {
     >
       <a
         href={'/welcome' + router.state.currentLocation.searchStr}
-        className="relative m-0 cursor-pointer overflow-hidden  bg-gradient-to-br from-fuchsia-500 to-green-500 bg-clip-text p-4 py-0 text-center text-[2rem] tracking-tighter text-transparent transition-transform before:box-content hover:scale-105 active:scale-100"
-        style={{ fontFamily: 'var(--font-impact)' }}
+        className="bkgd-impact relative m-0 cursor-pointer overflow-hidden  bg-gradient-to-br from-fuchsia-500 to-green-500 bg-clip-text p-4 py-0 text-center text-[2rem] tracking-tighter text-transparent transition-transform before:box-content hover:scale-105 active:scale-100"
       >
         BKGD
         <span className="absolute inset-0">
@@ -96,6 +85,7 @@ export default function Nav() {
       <ul className="mt-4 inline-grid auto-rows-max items-start justify-items-center gap-2 p-4 pt-0">
         {bkgds.map((b) => (
           <NavButton
+            id={id || ''}
             key={b.id}
             bkgd={b}
             bkgdHandler={bkgdHandler}

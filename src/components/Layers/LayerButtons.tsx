@@ -5,7 +5,7 @@ import { useLayers } from '@state/hooks'
 import { EventHandler } from '@state/events'
 
 import debounce from '../../utils/debounce'
-import { LayerType } from './LayerTypeSchema'
+import { LayerType } from '@types'
 import LayerButton from './Layer'
 
 const deHandler = debounce(EventHandler, 200)
