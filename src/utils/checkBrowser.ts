@@ -2,7 +2,6 @@
 export default function checkBrowser() {
   // Get the user-agent string
   const userAgentString = navigator.userAgent
-
   // Detect Chrome
   let chromeAgent = userAgentString.indexOf('Chrome') > -1
 
@@ -18,8 +17,5 @@ export default function checkBrowser() {
   // Discard Chrome since it also matches Opera
   if (chromeAgent && operaAgent) chromeAgent = false
 
-  // TODO: do we care about this?
-  // if we are doing serverless screenshots,
-  // we might not need to care about this
   if (!chromeAgent) throw new Error('Chrome is required')
 }

@@ -67,7 +67,7 @@ export default function Nav() {
     <nav
       id="nav"
       className="z-0 col-start-3 col-end-4 row-start-1 row-end-3 inline-grid max-h-full
-      select-none grid-cols-[auto] grid-rows-[auto_1fr_auto] content-center"
+      max-w-full select-none grid-cols-[auto] grid-rows-[auto_1fr_auto] content-center"
     >
       <a
         href={'/welcome' + router.state.currentLocation.searchStr}

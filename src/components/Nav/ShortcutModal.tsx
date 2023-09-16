@@ -85,7 +85,7 @@ export default function ShortcutModal() {
           <div className="fixed inset-0 bg-gray-950 bg-opacity-20" />
         </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto">
+        <div className="fixed inset-0 overflow-hidden">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
