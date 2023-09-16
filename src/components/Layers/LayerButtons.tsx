@@ -3,16 +3,19 @@ import { Reorder } from 'framer-motion'
 
 import { useLayers } from '@state/hooks'
 import { EventHandler } from '@state/events'
-
-import debounce from '../../utils/debounce'
 import { LayerType } from '@types'
+import { debounce } from '@utils'
+
 import LayerButton from './Layer'
+// import { KeyEventsContext } from '@state/keyEvents'
 
 const deHandler = debounce(EventHandler, 200)
 
 const LayerButtons = () => {
   const { layers } = useLayers()
   const [vLayers, setVLayers] = useState(layers)
+
+  // const keys = useContext(KeyEventsContext)
 
   useEffect(() => {
     setVLayers(layers)

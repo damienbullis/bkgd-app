@@ -19,6 +19,10 @@ class KeyboardEvents {
     this.setupKeyboardEvents()
   }
 
+  public getState() {
+    return this.state
+  }
+
   public subscribe(callback: (d: KeyEventsState) => void) {
     this.subscribers.push(callback)
     return this.unsubscribe.bind(this, callback)

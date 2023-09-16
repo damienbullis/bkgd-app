@@ -47,9 +47,12 @@ const LayerButton = ({ data }: { data: LayerType }) => {
         <TrashSimple
           onClick={(e) => {
             e.stopPropagation()
-            console.info({ e }, 'trash clicked')
+            EventHandler({
+              action: 'bkgd-remove-layer',
+              payload: { id: data.id },
+            })
           }}
-          className="ml-auto select-none text-xl opacity-0 transition-opacity group-hover:select-auto group-hover:opacity-100"
+          className="ml-auto cursor-pointer select-none text-xl opacity-0 transition-opacity group-hover:select-auto group-hover:opacity-100"
         />
       </div>
     </Reorder.Item>
