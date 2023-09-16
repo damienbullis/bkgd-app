@@ -26,7 +26,7 @@ function ToggleButton({
       }}
       className={`${
         enabled ? 'bg-gray-200 text-gray-950' : 'bg-white text-gray-900'
-      } relative inline-flex h-6 w-auto items-center rounded-full`}
+      } relative inline-flex h-6 w-auto items-center rounded-full text-sm`}
     >
       <span className="sr-only">Enable notifications</span>
       <span className="appearance-none p-5 uppercase opacity-0">
@@ -37,7 +37,7 @@ function ToggleButton({
         ${enabled ? `right-1 bg-gray-950` : 'left-1 bg-gray-900'}`}
       />
       <span
-        className={`absolute top-[1px] uppercase transition ${
+        className={`absolute uppercase transition ${
           enabled ? 'left-2 translate-x-1' : 'right-2 -translate-x-1'
         }`}
       >

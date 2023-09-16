@@ -34,8 +34,10 @@ export default function Footer() {
         className="group-data-[active='true']:opactiy-100 my-2 flex flex-row
         justify-center gap-4 overflow-hidden text-white transition-opacity duration-500 group-data-[active='false']:opacity-0"
       >
-        <p>{`v ${import.meta.env.VITE_BKGD_VERSION}`}</p>
-        <p>Powered By</p>
+        <p className="font-light">
+          {`v (${import.meta.env.VITE_BKGD_VERSION}) `}
+          <span className="ml-4">Powered By</span>
+        </p>
         <a href="https://react.dev/" target="_blank" className="text-sm">
           <svg
             className="h-4 w-4 fill-white transition hover:scale-110"
