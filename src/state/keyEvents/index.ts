@@ -42,36 +42,32 @@ class KeyboardEvents {
 
   private setupKeyboardEvents() {
     document.addEventListener('keydown', (event) => {
-      if (event.altKey) {
-        this.state.altKey = true
-      } else if (event.ctrlKey) {
-        this.state.ctrlKey = true
-      } else if (event.metaKey) {
-        this.state.ctrlKey = true
-      } else if (event.shiftKey) {
-        this.state.shiftKey = true
+      if (event.key.length === 1) {
+        this.state.key = event.key
+      } else {
+        if (event.key === 'Control') this.state.ctrlKey = true
+        if (event.key === 'Meta') this.state.ctrlKey = true
+        if (event.key === 'Alt') this.state.altKey = true
+        if (event.key === 'Shift') this.state.shiftKey = true
       }
-      this.state.key = event.key
+
       this.publish()
     })
 
     document.addEventListener('keyup', (event) => {
-      if (event.altKey) {
-        this.state.altKey = false
-      } else if (event.ctrlKey) {
-        this.state.ctrlKey = false
-      } else if (event.metaKey) {
-        this.state.ctrlKey = false
-      } else if (event.shiftKey) {
-        this.state.shiftKey = false
+      if (event.key.length === 1) {
+        this.state.key = ''
+      } else {
+        if (event.key === 'Control') this.state.ctrlKey = false
+        if (event.key === 'Meta') this.state.ctrlKey = false
+        if (event.key === 'Alt') this.state.altKey = false
+        if (event.key === 'Shift') this.state.shiftKey = false
       }
-      this.state.key = ''
+
       this.publish()
     })
   }
 }
 
 const KeyEventsContext = createContext<KeyboardEvents>(new KeyboardEvents())
-const KeyEventsProvider = KeyEventsContext.Provider
-
-export { KeyEventsContext, KeyEventsProvider, KeyboardEvents }
+export { KeyboardEvents, KeyEventsContext }

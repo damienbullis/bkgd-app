@@ -3,7 +3,7 @@ import { checkBrowser } from '@utils'
 import { CapabilitiesProvider } from './components/Capabilities'
 import { Bkgd, Footer, Controls, Layers, Nav, ErrorPage } from './components'
 import VisibilityController from './components/VisibilityController'
-import { KeyEventsProvider, KeyboardEvents } from '@state/keyEvents'
+import KeysProvider from '@state/keyEvents/KeysProvider'
 
 const App = memo(function () {
   try {
@@ -12,13 +12,13 @@ const App = memo(function () {
       <main className="relative grid h-screen grid-cols-[1fr_auto_auto] grid-rows-[1fr_auto] overflow-hidden">
         <VisibilityController />
         <CapabilitiesProvider>
-          <KeyEventsProvider value={new KeyboardEvents()}>
+          <KeysProvider>
             <Bkgd />
             <Layers />
             <Controls />
             <Footer />
             <Nav />
-          </KeyEventsProvider>
+          </KeysProvider>
         </CapabilitiesProvider>
       </main>
     )
