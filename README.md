@@ -26,22 +26,7 @@ Create beautiful modern backgrounds for your website or app.
 ## ROADMAP
 
 - [ ] Finish `readme.md`
-- [x] Using these libraries
-  - [x] Framer Motion`**`
-  - [x] Tanstack Router
-  - [x] React
-  - [x] Zod
-  - [x] Vite
-  - [ ] Vitest
-  - [ ] Others???
-- [x] Scaffold App
-  - [x] Add noise
-  - [x] Add background
-  - [x] Add gradient
-  - [x] Add controls
 - [ ] Deploy to `vercel`
-
-> `**` Not sure if we want to continue to use? seems like a lot of overhead for what we are doing plus bundle size is large.
 
 <br>
 
@@ -50,7 +35,7 @@ Create beautiful modern backgrounds for your website or app.
 - [x] Nav
 - [x] State
   - [x] Global State
-  - [ ] LocalStorage/SessionStorage State
+  - [x] LocalStorage/SessionStorage State
   - [x] Transient State
   - [x] URL State
 - [x] Layers
@@ -69,20 +54,19 @@ Create beautiful modern backgrounds for your website or app.
   - [x] Range Slider
   - [x] Dropdown
   - [x] Checkbox
-- [ ] Export/Save
+- [x] Export/Save
   - [x] Image
   - [x] Code
-  - [ ] Share
-  - [ ] `Explore different ways to do this`
-- [ ] Footer
-- [ ] Banner
-- [ ] Spotlight
-- [ ] Help
+- [x] Footer
+- [x] Banner
+- [x] Help
 
 ### Additional Layer Types\*\*\*
 
 > Do we want to add these?
 
 - [ ] Text
+- [ ] Image
+- [ ] SVG filters
 - [ ] Patterns
 - [ ] Shaders\*
