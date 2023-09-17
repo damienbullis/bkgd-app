@@ -1,7 +1,7 @@
 import { RootRoute, Router } from '@tanstack/router'
 
 import { indexRoute } from './indexRoute.tsx'
-import { splashRoute } from './splashRoute.ts'
+import { welcomeRoute } from './welcomeRoute.ts'
 import ErrorPage from '../components/ErrorPage.tsx'
 
 export const rootRoute = new RootRoute({
@@ -15,13 +15,13 @@ export const rootRoute = new RootRoute({
     ) {
       localStorage.setItem('visited', 'true')
       router.navigate({
-        to: splashRoute.path,
+        to: welcomeRoute.path,
       })
     }
   },
   errorComponent: ({ error }) => <ErrorPage e={error} />,
 })
-const routeTree = rootRoute.addChildren([indexRoute, splashRoute])
+const routeTree = rootRoute.addChildren([indexRoute, welcomeRoute])
 
 declare module '@tanstack/router' {
   interface Register {

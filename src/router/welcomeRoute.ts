@@ -1,9 +1,9 @@
 import { Route } from '@tanstack/router'
 import { rootRoute } from '.'
-import SplashPage from '../components/SplashPage'
+import WelcomePage from '../components/Welcome'
 
-export const splashRoute = new Route({
+export const welcomeRoute = new Route({
   getParentRoute: () => rootRoute,
-  component: SplashPage,
+  component: WelcomePage,
   path: '/welcome',
 })
