@@ -43,14 +43,25 @@ export default function Controls() {
 
   useEffect(() => {
     const unsub = keys.subscribe((e) => {
-      if (
-        !e.altKey &&
-        !e.shiftKey &&
-        !e.ctrlKey &&
-        selectedLayer &&
-        e.key === 'e'
-      ) {
-        setMode((prev) => (prev === 'edit' ? '' : 'edit'))
+      if (!e.altKey && !e.shiftKey && !e.ctrlKey) {
+        if (selectedLayer && e.key === 'e') {
+          setMode((prev) => (prev === 'edit' ? '' : 'edit'))
+        } else if (e.key === 'n') {
+          // Noise
+          handler('noise')
+        } else if (e.key === 'r') {
+          // Radial Gradient
+          handler('gradient', 'radial')
+        } else if (e.key === 's') {
+          // Solid
+          handler('solid')
+        } else if (e.key === 'c') {
+          // Conic Gradient
+          handler('gradient', 'conic')
+        } else if (e.key === 'l') {
+          // Linear Gradient
+          handler('gradient', 'linear')
+        }
       }
     })
 

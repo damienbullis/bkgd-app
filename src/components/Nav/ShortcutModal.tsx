@@ -113,6 +113,9 @@ export default function ShortcutModal() {
                 </Dialog.Title>
                 <div className="mt-4 grid auto-rows-auto grid-cols-2 gap-4 gap-y-0">
                   <Shortcut label="Edit" value={'E'} />
+                  <Shortcut label="Toggle UI" value={'T'} />
+                </div>
+                <div className="mt-2 grid auto-rows-auto grid-cols-2 gap-4 gap-y-0 border-t border-gray-100 border-opacity-10 pt-2">
                   <Shortcut label="Noise" value={'N'} />
                   <Shortcut label="Conic" value={'C'} />
                   <Shortcut label="Radial" value={'R'} />

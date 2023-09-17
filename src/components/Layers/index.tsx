@@ -2,25 +2,18 @@ import {
   DotsThreeOutlineVertical,
   Download,
   Export,
-  Eye,
-  EyeClosed,
   FileCss,
   FileX,
 } from '@phosphor-icons/react'
-import { EventHandler } from '@state/events'
-import { useVisible } from '@state/global'
-import { HoverText, IconButton } from '@shared'
-
-import LayerButtons from './LayerButtons'
 import { useNavigate } from '@tanstack/router'
 import { Menu, Transition } from '@headlessui/react'
 
-const VisibilityButton = ({ onClick }: { onClick?: () => void }) => {
-  const [hide] = useVisible()
-  return <IconButton icon={hide ? EyeClosed : Eye} onClick={onClick} />
-}
+import { HoverText, IconButton } from '@shared'
+import { EventHandler } from '@state/events'
 
-// TODO: Fix all these styles n buttons
+import LayerButtons from './LayerButtons'
+import VisibilityButton from './VisButton'
+
 export default function Layers() {
   const navigate = useNavigate()
   const handleShare = () => {
@@ -113,7 +106,7 @@ export default function Layers() {
               })
             }
           />
-          <HoverText>Toggle UI</HoverText>
+          <HoverText>Toggle UI (T)</HoverText>
         </li>
       </ul>
 
