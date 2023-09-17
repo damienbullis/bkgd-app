@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { XCircle } from '@phosphor-icons/react'
+import { HandGrabbing, XCircle } from '@phosphor-icons/react'
 import { useModal } from '@shared'
 import { KeyEventsContext } from '@state/keyEvents'
 import { Fragment, useContext, useEffect } from 'react'
@@ -112,6 +112,16 @@ export default function ShortcutModal() {
                   </button>
                 </Dialog.Title>
                 <div className="mt-4 grid auto-rows-auto grid-cols-2 gap-4 gap-y-0">
+                  <p className="col-span-2 inline-flex w-full items-center text-sm font-light">
+                    Duplicate Layer
+                    <span className="ml-auto inline-flex items-center gap-1">
+                      While dragging{' '}
+                      <HandGrabbing className="translate-y-[-2px] text-xl" />
+                      <b className="text-lg leading-3">{' + ⌘'}</b>
+                    </span>
+                  </p>
+                </div>
+                <div className="mt-2 grid auto-rows-auto grid-cols-2 gap-4 gap-y-0 border-t border-gray-100 border-opacity-10 pt-2">
                   <Shortcut label="Edit" value={'E'} />
                   <Shortcut label="Toggle UI" value={'T'} />
                 </div>
