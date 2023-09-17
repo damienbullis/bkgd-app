@@ -28,9 +28,6 @@ jobs:
 
       - name: Capture and Comment Coverage
         run: |
-          coverage_output=$(bun test --coverage)
-          echo "$coverage_output" > coverage_output.txt
-          gh pr comment https://github.com/$GITHUB_REPOSITORY/pull/$PR_NUMBER --body "$(cat coverage_output.txt)"
-
+          echo "$(bun test --coverage)" | gh pr comment https://github.com/$GITHUB_REPOSITORY/pull/$PR_NUMBER --edit-last --body-file -
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
