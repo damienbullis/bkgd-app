@@ -1,5 +1,11 @@
 name: Setup Bun
 
+on:
+  pull_request: 
+    types:
+      - opened
+      - synchronize
+
 jobs:
   setup:
     name: setup bun & install dependencies
