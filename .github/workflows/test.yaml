@@ -1,0 +1,33 @@
+name: Test & Comment Test Coverage on PR
+
+on:
+  pull_request: 
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Shared Setup
+        uses: ./github/workflows/setup.yaml
+
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Tests with Coverage
+        run: bun run test --coverage
+
+      - name: Set up GitHub CLI
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Capture and Comment Coverage
+        run: |
+          coverage_output=$(bun run test --coverage)
+          echo "$coverage_output" | gh pr comment https://github.com/$GITHUB_REPOSITORY/pull/$PR_NUMBER --body -
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
