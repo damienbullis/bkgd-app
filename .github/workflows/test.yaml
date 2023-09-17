@@ -1,16 +1,14 @@
-name: Test & Comment Test Coverage on PR
+name: Test & Lint & Format
 
 on:
   pull_request:
     types:
       - opened
       - synchronize
-permissions:
-  pull-requests: write
 
 jobs:
-  test:
-    name: Run Tests with Coverage & Comment on PR
+  setup:
+    name: Setup Bun
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -20,20 +18,16 @@ jobs:
       - name: Install dependencies
         run: bun install
 
+  test:
+    needs: setup
+    name: Run Tests with Coverage
+    runs-on: ubuntu-latest
+    steps:
       - name: Run Tests with Coverage
-        run: bun test
+        run: bun test --coverage
 
-      - name: Set up GitHub CLI
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+      - name: Run Linting & Style Checks
+        run: bun run lint
 
-      - name: Capture Coverage
-        run: |
-          coverage_output=$(bun test --coverage)
-          echo "$coverage_output" > coverage.txt
-
-      - name: Comment Coverage
-        run: |
-          cat coverage.txt && 
-          gh pr comment ${{ github.event.pull_request.number }} --body "$(cat coverage.txt)"
-        env:
-          PR_NUMBER: ${{ github.event.pull_request.number }}
+      - name: Run Formatter
+        run: bun run format
