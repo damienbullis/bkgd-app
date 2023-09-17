@@ -26,9 +26,13 @@ jobs:
       - name: Set up GitHub CLI
         run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
 
-      - name: Capture and Comment Coverage
+      - name: Capture Coverage
         run: |
           coverage_output=$(bun test --coverage)
-          echo "$coverage_output" | gh pr comment https://github.com/$GITHUB_REPOSITORY/pull/$PR_NUMBER --edit-last --body-file -
+          echo "$coverage_output" > coverage.txt
+
+      - name: Comment Coverage
+        run: |
+          gh pr comment https://github.com/$GITHUB_REPOSITORY/pull/$PR_NUMBER --edit-last --body-file coverage.txt
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
