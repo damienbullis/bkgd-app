@@ -4,9 +4,7 @@ import { useRouter } from '@tanstack/router'
 
 export default function KeysProvider({ children }: { children: ReactNode }) {
   const router = useRouter()
-
   const keys = useRef(new KeyboardEvents())
-  // Some actions will be handled here,
 
   useEffect(() => {
     const unsub = keys.current.subscribe((e) => {

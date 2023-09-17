@@ -64,7 +64,7 @@ export default function Layers() {
               <Menu.Items className="p-1 py-3">
                 <Menu.Item>
                   <span
-                    className="group relative z-30"
+                    className="group relative"
                     onClick={() =>
                       EventHandler({
                         action: 'copy-css',

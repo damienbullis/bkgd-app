@@ -27,6 +27,8 @@ type EventPayload<T extends EventActionEnum> = T extends 'bkgd-add-layer'
   ? { id: string }
   : T extends 'bkgd-update-layer'
   ? { id: string } & Partial<EventPayloadType>
+  : T extends 'bkgd-dupe-layer'
+  ? { id: string } & EventPayloadType
   : T extends 'bkgd-update-stack'
   ? { id: string; direction: 'up' | 'down' } | { stack: string[] }
   : T extends 'save-bkgd' | 'load-bkgd' | 'delete-bkgd'
@@ -41,6 +43,7 @@ type EventPayloadType = LayerPropsType<LayerEnum>
 type EventActionEnum = BkgdEventsEnum | EventsEnum
 type BkgdEventsEnum =
   | 'bkgd-add-layer'
+  | 'bkgd-dupe-layer'
   | 'bkgd-remove-layer'
   | 'bkgd-update-layer'
   | 'bkgd-update-stack'
@@ -67,6 +70,7 @@ export function EventHandler(event: EventHandlerType<EventActionEnum>) {
 function getActionTitle(action: BkgdEventsEnum) {
   switch (action) {
     case 'bkgd-add-layer':
+    case 'bkgd-dupe-layer':
       return 'Add Layer'
     case 'bkgd-remove-layer':
       return 'Remove Layer'
@@ -368,6 +372,29 @@ const addLayer = (event: EventHandlerType<'bkgd-add-layer'>): void => {
     },
   })
 }
+const dupeLayer = (event: EventHandlerType<'bkgd-dupe-layer'>): void => {
+  const { id } = event.payload
+  console.info('Duplicating Layer ' + id)
+
+  const store = getStore<string>(1)
+  const search = router.state.currentLocation.search
+  const layerStack = search.layerStack || []
+  const layerData = search.layerData || []
+  const copyId = id + '-copy'
+  const currIndex = layerStack.findIndex((layerId) => layerId === id)
+  store.set(copyId) // Set the selected layer to the new layer
+  layerStack.splice(currIndex + 1, 0, copyId)
+  layerData.push({ ...event.payload, id: copyId } as LayerType)
+  router.navigate({
+    to: '/',
+    search: {
+      ...search,
+      layerStack,
+      layerData,
+    },
+  })
+}
+
 //#endregion
 
 //#region Event Control Switches
@@ -377,6 +404,10 @@ const updateBkgdState = (event: EventHandlerType<BkgdEventsEnum>): void => {
   switch (event.action) {
     case 'bkgd-add-layer': {
       addLayer(event)
+      break
+    }
+    case 'bkgd-dupe-layer': {
+      dupeLayer(event)
       break
     }
     case 'bkgd-remove-layer': {

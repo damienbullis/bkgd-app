@@ -11,6 +11,7 @@ import { EventHandler } from '@state/events'
 
 import { Reorder } from 'framer-motion'
 import { LayerType } from '@types'
+import { KeyboardEvents } from '@state/keyEvents'
 
 const LAYER_TYPES = {
   linear: CircleHalf,
@@ -20,18 +21,49 @@ const LAYER_TYPES = {
   solid: Palette,
 } as const
 
-const LayerButton = ({ data }: { data: LayerType }) => {
+const LayerButton = ({
+  data,
+  keys,
+}: {
+  data: LayerType
+  keys: KeyboardEvents
+}) => {
   const layerType = data.type === 'gradient' ? data.props.type : data.type
   const Icon = LAYER_TYPES[layerType]
   const [selectedLayer] = useSelectedLayer()
 
   return (
-    <Reorder.Item value={data}>
+    <Reorder.Item
+      value={data}
+      onDrag={() => {
+        if (keys.getState().ctrlKey) {
+          const el = document.querySelector(`#layer-${data.id}`)
+          if (el) {
+            el.setAttribute('data-dragging', 'true')
+          }
+        }
+      }}
+      onDragEnd={() => {
+        if (keys.getState().ctrlKey) {
+          EventHandler({
+            action: 'bkgd-dupe-layer',
+            payload: data,
+          })
+        }
+        const el = document.querySelector(`#layer-${data.id}`)
+        if (el) {
+          el.setAttribute('data-dragging', 'false')
+        }
+      }}
+    >
       <div
+        id={`layer-${data.id}`}
+        data-dragging="false"
         data-active={data.id === selectedLayer}
         className="group inline-flex w-full cursor-grab items-center 
         justify-start gap-2 rounded-md p-4 py-3 backdrop-blur-md backdrop-brightness-50 
-        backdrop-filter hover:backdrop-brightness-75 active:cursor-grabbing
+        backdrop-filter hover:backdrop-brightness-75 active:cursor-grabbing 
+        data-[dragging='true']:cursor-copy
         data-[active='true']:bg-white data-[active='true']:text-black"
         onClick={() =>
           EventHandler({ action: 'select-layer', payload: { id: data.id } })

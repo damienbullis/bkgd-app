@@ -109,7 +109,7 @@ export default function HelpMenu() {
                 target="_blank"
                 className="inline-flex min-w-[10rem] max-w-[16rem] cursor-pointer flex-nowrap p-1 px-4 text-sm font-normal ui-active:bg-slate-200 ui-active:text-slate-950"
               >
-                Gitub Repo
+                Github Repo
                 <span className="ml-auto text-lg">
                   <GitBranch />
                 </span>
