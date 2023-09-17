@@ -8,12 +8,11 @@ on:
 
 jobs:
   setup:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Shared Setup
-        uses: ./github/workflows/setup.yaml
+    name: setup bun & install dependencies
+    uses: ./.gtihub/workflows/setup.yaml
 
-  test:
+  test: 
+    name: Run Tests with Coverage & Comment on PR
     needs: setup
     runs-on: ubuntu-latest
     steps:
