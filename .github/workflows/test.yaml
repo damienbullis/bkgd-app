@@ -9,7 +9,7 @@ on:
 jobs:
   setup:
     name: setup bun & install dependencies
-    uses: ./.gtihub/workflows/setup.yaml
+    uses: ./.gtihub/workflows/setup.yaml@main
 
   test: 
     name: Run Tests with Coverage & Comment on PR
