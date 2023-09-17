@@ -33,6 +33,7 @@ jobs:
 
       - name: Comment Coverage
         run: |
-          gh pr comment https://github.com/$GITHUB_REPOSITORY/pull/$PR_NUMBER --edit-last --body-file coverage.txt
+          cat coverage.txt && 
+          gh pr comment ${{ github.event.pull_request.number }} --body "$(cat coverage.txt)"
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
