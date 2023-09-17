@@ -7,8 +7,8 @@ on:
       - synchronize
 
 jobs:
-  setup:
-    name: setup bun & install dependencies
+  test: 
+    name: Run Tests with Coverage & Comment on PR
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -17,12 +17,7 @@ jobs:
         uses: oven-sh/setup-bun@v1
       - name: Install dependencies
         run: bun install
-
-  test: 
-    name: Run Tests with Coverage & Comment on PR
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
+        
       - name: Run Tests with Coverage
         run: bun test --coverage
 
