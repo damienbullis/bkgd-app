@@ -7,7 +7,6 @@ export default function Footer() {
     <footer
       id="footer"
       data-active={open}
-      // style={{ transitionTimingFunction: 'var(--transition-timing)' }}
       className="grid-row group z-0 col-span-full row-start-2 row-end-3 inline-grid
       text-center text-xs text-teal-400 transition-all duration-500 data-[active='false']:grid-rows-[auto_0fr] data-[active='true']:grid-rows-[auto_1fr]"
     >

@@ -3,59 +3,15 @@ import { HandGrabbing, XCircle } from '@phosphor-icons/react'
 import { useModal } from '@shared'
 import { KeyEventsContext } from '@state/keyEvents'
 import { Fragment, useContext, useEffect } from 'react'
+import Shortcut from './Shortcut'
 // import { useCapabilities } from '../Capabilities'
-
-type ModifiersEnum = 'Cntl' | 'Shift' | 'Alt'
-
-const buildModifiers = (modifiers?: (ModifiersEnum | 'Cmd')[]) => {
-  return modifiers?.map((m) => {
-    switch (m) {
-      case 'Cntl':
-        return '⌃ '
-      case 'Cmd':
-        return '⌘ '
-      case 'Shift':
-        return '⇧ '
-      case 'Alt':
-        return '⌥ '
-      default:
-        return ''
-    }
-  })
-}
-
-const Shortcut = ({
-  label,
-  value,
-  modifiers,
-}: {
-  label: string
-  value: string
-  modifiers?: ModifiersEnum[]
-}) => {
-  // check if OS is a Mac
-  const isMac = window.navigator.platform.includes('Mac')
-  // const capabilities = useCapabilities()
-  const controlKey = isMac ? 'Cmd' : 'Cntl'
-  const modifierKeys =
-    modifiers?.map((m) => (m === 'Cntl' ? controlKey : m)) || []
-
-  return (
-    <p className="-mx-2 inline-flex items-center gap-2 rounded-md p-2 py-1 text-sm font-light hover:bg-white hover:bg-opacity-20">
-      {label}
-      <span className="ml-auto inline-flex items-center gap-2 font-normal">
-        {(modifierKeys?.length
-          ? buildModifiers(modifierKeys)?.join(' + ') + ' + '
-          : '') + value}
-      </span>
-    </p>
-  )
-}
 
 export default function ShortcutModal() {
   const [isOpen, setIsOpen] = useModal()
   const close = () => setIsOpen(false)
   const keys = useContext(KeyEventsContext)
+
+  const isMac = window.navigator.platform.includes('Mac')
 
   useEffect(() => {
     // set up subscriptions
@@ -111,13 +67,15 @@ export default function ShortcutModal() {
                     <XCircle />
                   </button>
                 </Dialog.Title>
-                <div className="mt-4 grid auto-rows-auto grid-cols-2 gap-4 gap-y-0">
+                <div className="mt-6 grid auto-rows-auto grid-cols-2 gap-4 gap-y-0">
                   <p className="col-span-2 inline-flex w-full items-center text-sm font-light">
                     Duplicate Layer
                     <span className="ml-auto inline-flex items-center gap-1">
                       While dragging{' '}
                       <HandGrabbing className="translate-y-[-2px] text-xl" />
-                      <b className="text-lg leading-3">{' + ⌘'}</b>
+                      <b>
+                        {' + '} {isMac ? '⌘' : '⌃'}
+                      </b>
                     </span>
                   </p>
                 </div>
