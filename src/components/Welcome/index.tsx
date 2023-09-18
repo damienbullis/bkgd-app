@@ -1,19 +1,39 @@
-import { Export, IceCream, PaintBrush, Spinner } from '@phosphor-icons/react'
+import {
+  Export,
+  IceCream,
+  InstagramLogo,
+  LinkedinLogo,
+  PaintBrush,
+  Spinner,
+} from '@phosphor-icons/react'
 import { Suspense, lazy } from 'react'
+import Icons from '../_shared/Icons'
 
 const Banner = lazy(() => import('./Banner'))
+
+const smoothScroll = () => {
+  const target = document.querySelector('#about-bkgd')
+  if (target) {
+    const currentPos = window.scrollY
+    const dist = target.getBoundingClientRect().top - currentPos
+    window.scrollTo({
+      top: dist,
+      behavior: 'smooth',
+    })
+  }
+}
 
 export default function WelcomePage() {
   return (
     <>
       {/* Header */}
       <div className="absolute left-0 top-0 z-10 inline-flex w-full items-center justify-center p-4">
-        <a
-          href="#about-bkgd"
+        <button
+          onClick={smoothScroll}
           className="font-light underline decoration-transparent decoration-dashed decoration-1 underline-offset-4 transition hover:decoration-white active:scale-95"
         >
           What is BKGD.APP?
-        </a>
+        </button>
       </div>
       <Suspense
         fallback={
@@ -125,34 +145,171 @@ export default function WelcomePage() {
         </div>
 
         {/* About & Misc */}
-        <div className="flex w-full justify-center bg-gray-950 py-12">
+        <div className="flex w-full justify-center overflow-hidden bg-gray-950 pb-12 ">
           <div className="flex w-3/4 flex-col items-center">
-            <h3 className="mr-auto">Motivation</h3>
-            <p className="mb-4 mr-auto w-1/2">
-              Some little section of text Some little section of text Some
-              little section of text Some little section of text Some little
-              section of text Some little section of text Some little section of
-              text Some little section of text
+            <div className="mb-20 max-w-3xl">
+              <h3 className=" -translate-x-8 -skew-x-6 text-white text-opacity-40">
+                Motivation
+              </h3>
+              <div className="border-l-2 border-white border-opacity-30 p-3 px-8">
+                <p className="mb-4 mr-auto">
+                  While working on some different projects, I was tired of just
+                  using a solid color or some sort of subtle gradient for my
+                  backgrounds. I wanted something better.
+                </p>
+                <p className="mb-4 mr-auto">
+                  At the same time I was reading up on a lot of CSS Level 3 & 4
+                  specifications, and I thought it would be fun to build a tool
+                  that used some of these new features.
+                </p>
+                <p className="mb-4 mr-auto">
+                  Taking inspiration from tools like Photoshop, I wanted to
+                  leverage the power of the browser <i>(Chrome atleast)</i>,
+                  CSS, and HTML to create a simple and intuitive tool for
+                  designing backgrounds.
+                </p>
+              </div>
+            </div>
+            <div className="mb-20 flex w-full flex-row items-start justify-center gap-4">
+              <div className="mt-12 rounded-md bg-white bg-opacity-10">
+                <ol className="list-inside list-decimal p-8 text-left text-base">
+                  <li className="mb-1">Keep it simple</li>
+                  <li className="mb-1">Export as code or image</li>
+                  <li className="mb-1">Save backgrounds for later</li>
+                  <li className="mb-1">
+                    Use URL State:
+                    <ul className="mb-2 ml-8 list-disc text-sm">
+                      <li className="mb-1">Leverage browser history</li>
+                      <li className="mb-1">Sharing</li>
+                      <li className="mb-1">Persisting state</li>
+                    </ul>
+                  </li>
+                  <li className="mb-1">Learn new technologies</li>
+                  <li className="mb-1">Portfolio</li>
+                </ol>
+              </div>
+              <div className="ml-4">
+                <h3 className="-skew-x-6 text-white text-opacity-40">Goals</h3>
+                <div className="mb-8 ml-auto inline-flex translate-x-8 flex-col border-l-2 border-white border-opacity-30 p-3 px-8">
+                  <p className="mb-4 ml-auto w-auto whitespace-nowrap">
+                    When I set out to build BKGD.APP, I had a few goals in
+                    mind...
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mx-auto mb-20 max-w-3xl">
+              <h3 className="w-auto -translate-x-8 -skew-x-6 text-white text-opacity-40">
+                About Me
+              </h3>
+              <div className="border-l-2 border-white border-opacity-30 p-3 px-8">
+                <p className="mb-4">Hi I'm Damien.</p>
+                <p className="mb-4">
+                  I am a Senior Software Engineer, and I have been working in
+                  web development for going on a decade now.
+                </p>
+                <p className="mb-4">
+                  Making BKGD.APP was a lot of fun, and I hope you enjoy using
+                  it!
+                </p>
+              </div>
+              <div className="flex flex-row justify-center gap-2">
+                <a className="cursor-pointer p-2 text-4xl transition-colors hover:text-pink-300 active:text-pink-500">
+                  <InstagramLogo weight="duotone" />
+                </a>
+                <a className="cursor-pointer p-2 text-4xl transition-colors hover:text-pink-500 active:text-pink-300">
+                  <LinkedinLogo weight="duotone" />
+                </a>
+              </div>
+            </div>
+
+            <div className="mb-20 flex w-full flex-row items-center justify-center gap-4">
+              <div className="grid auto-rows-auto grid-cols-3 place-content-center place-items-center gap-4 py-8 pt-12">
+                <a
+                  className="h-10 w-10 rounded-md fill-white p-2 text-2xl transition-all hover:scale-110 hover:bg-white hover:bg-opacity-10"
+                  href="https://react.dev/"
+                  target="_blank"
+                >
+                  <Icons.react />
+                </a>
+                <a
+                  href="https://www.typescriptlang.org/"
+                  target="_blank"
+                  className="h-10 w-10 rounded-md fill-white p-2 text-2xl transition-all hover:scale-110 hover:bg-white hover:bg-opacity-10"
+                >
+                  <Icons.typescript />
+                </a>
+                <a
+                  href="https://tailwindcss.com/"
+                  target="_blank"
+                  className="h-10 w-10 rounded-md fill-white p-2 text-2xl transition-all hover:scale-110 hover:bg-white hover:bg-opacity-10"
+                >
+                  <Icons.tailwind />
+                </a>
+                <a
+                  href="https://www.framer.com/"
+                  target="_blank"
+                  className="h-10 w-10 rounded-md fill-white p-2 text-2xl transition-all hover:scale-110 hover:bg-white hover:bg-opacity-10"
+                >
+                  <Icons.framer />
+                </a>
+                <a
+                  href="https://vitejs.dev/"
+                  target="_blank"
+                  className="h-10 w-10 rounded-md fill-white p-2 text-2xl transition-all hover:scale-110 hover:bg-white hover:bg-opacity-10"
+                >
+                  <Icons.vite />
+                </a>
+                <a
+                  href="https://bun.sh/"
+                  target="_blank"
+                  className="h-10 w-10 rounded-md fill-white p-2 text-2xl transition-all hover:scale-110 hover:bg-white hover:bg-opacity-10"
+                >
+                  <Icons.bun />
+                </a>
+                <a
+                  href="https://github.com/"
+                  target="_blank"
+                  className="h-10 w-10 rounded-md fill-white p-2 text-2xl transition-all hover:scale-110 hover:bg-white hover:bg-opacity-10"
+                >
+                  <Icons.github />
+                </a>
+                <a
+                  href="https://tanstack.com/router/v1"
+                  target="_blank"
+                  className="h-10 rounded-md p-2 text-xl transition hover:scale-110 hover:bg-white hover:bg-opacity-10"
+                >
+                  TanStack
+                </a>
+              </div>
+              <div className="ml-8">
+                <h3 className="-skew-x-6 text-white text-opacity-40">
+                  Special Thanks
+                </h3>
+                <p className="mb-8 ml-auto inline-flex w-auto translate-x-8 flex-col whitespace-nowrap border-l-2 border-white border-opacity-30 p-3 px-8">
+                  These libraries were used to build BKGD.APP
+                </p>
+              </div>
+            </div>
+            <br />
+            <p className="inline-flex gap-20">
+              <span>*</span>
+              <span>*</span>
+              <span>*</span>
             </p>
-            <div className="my-8 flex max-w-screen-sm flex-col items-center justify-center gap-4">
-              <p className="text-center text-xl text-white">
-                BKGD.APP is free and online tool for creating beautiful modern
-                backgrounds for your websites, apps, and more.
+            <br />
+            <div className="mx-auto mt-20 max-w-xl text-white text-opacity-80">
+              <h4 className="mb-2">Caveats</h4>
+              <p className="mb-4 font-light">
+                BKGD.APP is still in development, and there are a few things to
+                be aware of...
               </p>
-              <hr />
-              <p>RoadMap</p>
-              <hr />
-              <p className="text-center text-white">
-                BKGD.APP is built with React, TypeScript, and TailwindCSS.
-              </p>
-              <hr />
-              <p className="text-center text-white">
-                Motivation for building BKGD.APP
-              </p>
-              <p className="text-center text-white">Caveats*</p>
-              <p className="text-center text-white">Using BKGD.APP</p>
-              <p className="text-center text-white">Damien + Links</p>
-              <hr className="mb-48" />
+              <ul className="mx-auto max-w-md list-inside list-disc text-sm">
+                <li>Designed for Chrome</li>
+                <li>Designed for Desktop</li>
+                <li>Image export process is pretty jank, and very manual.</li>
+              </ul>
             </div>
           </div>
         </div>
