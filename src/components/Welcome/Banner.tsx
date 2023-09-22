@@ -75,7 +75,7 @@ export default function Banner() {
         </span>
 
         {/* Banner - Titles */}
-        <p className="mt-4 text-4xl text-white">
+        <p className="mt-4 text-center text-4xl text-white">
           An online tool for generating backgrounds
         </p>
         <p className="mt-3 flex items-center gap-2 whitespace-nowrap text-xl">

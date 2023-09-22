@@ -1,13 +1,19 @@
 import {
+  CopySimple,
   Export,
+  Flask,
   IceCream,
+  ImagesSquare,
   InstagramLogo,
   LinkedinLogo,
   PaintBrush,
+  Share,
   Spinner,
+  Stack,
 } from '@phosphor-icons/react'
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import Icons from '../_shared/Icons'
+import throttle from '../../utils/throttle'
 
 const Banner = lazy(() => import('./Banner'))
 
@@ -23,7 +29,45 @@ const smoothScroll = () => {
   }
 }
 
+function isElementVisible(el: HTMLElement) {
+  const rect = el.getBoundingClientRect()
+  console.log({ rect })
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <=
+      (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  )
+}
+
+const handleScroll = throttle((el: HTMLElement, handler: () => void) => {
+  if (isElementVisible(el)) {
+    el.dataset.show = 'true'
+    window.removeEventListener('scroll', handler) // Remove the listener once triggered
+  }
+}, 100)
+
+function useScrollListener(id: string) {
+  useEffect(() => {
+    const element = document.querySelector<HTMLElement>(id)
+    if (!element) return
+
+    const handler = () => handleScroll(element, handler)
+
+    window.addEventListener('scroll', handler)
+
+    return () => window.removeEventListener('scroll', handler)
+  }, [id])
+
+  return
+}
+
 export default function WelcomePage() {
+  useScrollListener('#createRef')
+  useScrollListener('#exportRef')
+  useScrollListener('#shareRef')
+
   return (
     <>
       {/* Header */}
@@ -68,47 +112,68 @@ export default function WelcomePage() {
           id="about-bkgd"
           className="flex w-full justify-center bg-gradient-to-b from-transparent to-gray-950 pb-12 bg-blend-overlay"
         >
-          <div className="my-12 inline-grid w-3/4 grid-cols-3 items-start justify-center gap-4">
+          <div className="mx-8 my-12 inline-grid w-full auto-cols-fr items-start justify-center gap-4 md:grid-cols-2 lg:grid-cols-3 xl:mx-0 xl:w-3/4">
             <div
               className="relative mt-0 flex flex-col overflow-hidden 
             rounded-lg bg-gray-900 bg-opacity-30 p-8 pl-12"
             >
               <div className="absolute bottom-0 left-0 top-0 w-2 bg-green-500"></div>
 
-              <p className="flex flex-row items-center gap-4 text-xl">
+              <p className="flex flex-row items-center gap-4 text-2xl">
                 <span className="text-2xl">
                   <PaintBrush weight="duotone" />
                 </span>
                 Create
               </p>
-              <hr className="my-8 opacity-20" />
-              <ul className="flex list-disc flex-col gap-2 font-light">
-                <li className="text-gray-300">
-                  <span className="text-lg text-white">
-                    Gradients, Noise, Solid Colors
-                  </span>
-                </li>
-                <li className="text-gray-300">
-                  <span className="text-lg text-white">
-                    Simple & Intuitive UI
-                  </span>
-                </li>
-                <li className="text-gray-300">
-                  <span className="text-lg text-white">
-                    Leverage Modern CSS3 & HTML5
-                  </span>
-                </li>
-              </ul>
+              <hr className="mb-4 mt-8 opacity-20" />
+              <p className="text-xl font-light">
+                Start designing your <b>BKGD</b> by{' '}
+                <u className="decoration-pink-500 decoration-wavy underline-offset-4">
+                  stacking
+                </u>{' '}
+                layers, and adjusting properties.
+              </p>
             </div>
-            <div className="col-span-2"></div>
-            <div></div>
             <div
-              className="relative flex flex-col overflow-hidden 
-            rounded-lg bg-gray-900 bg-opacity-30 p-8 pl-12"
+              id="createRef"
+              data-show={false}
+              className="group row-span-1 flex h-full flex-wrap items-stretch justify-stretch p-4 max-md:hidden lg:col-span-2"
+            >
+              <div className="inline-flex w-full -translate-y-full items-center justify-center gap-4 transition-all group-data-[show='true']:translate-y-0 lg:w-1/2">
+                <Stack weight="duotone" className="text-5xl xl:text-7xl" />
+                <p className="bkgd-impact text-2xl uppercase xl:text-3xl">
+                  Add Layers
+                </p>
+              </div>
+              <div className="inline-flex w-full items-center justify-center gap-4 lg:w-1/2">
+                <Flask weight="duotone" className="text-5xl xl:text-7xl" />
+                <p className="bkgd-impact text-2xl uppercase xl:text-3xl">
+                  Tweak Design
+                </p>
+              </div>
+            </div>
+            <div className="relative row-span-1 flex h-full flex-wrap items-stretch justify-stretch p-4 max-md:hidden lg:col-span-1">
+              <div className="absolute left-full top-0 flex h-full items-center lg:hidden">
+                <p>or</p>
+              </div>
+              <div
+                id="exportRef"
+                data-show={false}
+                className="mx-auto flex w-full flex-col items-center justify-center gap-4 py-8 transition-transform hover:scale-110"
+              >
+                <CopySimple weight="duotone" className="text-5xl xl:text-7xl" />
+                <p className="bkgd-impact text-2xl uppercase xl:text-3xl">
+                  Copy
+                </p>
+              </div>
+            </div>
+            <div
+              className="relative flex flex-col overflow-hidden rounded-lg
+            bg-gray-900 bg-opacity-30 p-8 pl-12 max-lg:hidden max-md:flex"
             >
               <div className="absolute bottom-0 left-0 top-0 w-2 bg-amber-500"></div>
 
-              <p className="flex flex-row items-center gap-4 text-xl">
+              <p className="flex flex-row items-center gap-4 text-2xl">
                 <span className="text-2xl">
                   <Export weight="duotone" />
                 </span>
@@ -116,30 +181,71 @@ export default function WelcomePage() {
               </p>
               <hr className="my-8 opacity-20" />
 
-              <ul className="flex list-disc flex-col gap-2 font-light">
+              <ul className="flex list-inside list-disc flex-col gap-2 font-light">
                 <li className="text-gray-300">
-                  <span className="text-lg text-white">
+                  <span className="text-xl text-white">
                     Copy CSS to Clipboard
                   </span>
                 </li>
                 <li className="text-gray-300">
-                  <span className="text-lg text-white">Download Image**</span>
+                  <span className="text-xl text-white">Download Image</span>
                 </li>
               </ul>
-              <hr className="my-8 opacity-0" />
+              <hr className="my-4 opacity-0" />
 
-              <p className="text-sm text-slate-300">
-                ** Image download only available through Chrome dev toolss
+              <p className="text-base text-slate-300">
+                Currently image downloading is only available through Chrome dev
+                tools, using screenshot node capture.
               </p>
             </div>
-            <div></div>
-            <div className="col-span-2"></div>
+            <div
+              id="exportRef2"
+              data-show={false}
+              className="row-span-1 flex h-full flex-wrap items-stretch justify-stretch p-4 max-md:hidden lg:col-span-1"
+            >
+              <div className="mx-auto flex w-full flex-col items-center justify-center gap-4 py-20 transition-transform hover:scale-110">
+                <ImagesSquare
+                  weight="duotone"
+                  className="text-5xl xl:text-7xl"
+                />
+                <p className="bkgd-impact text-2xl uppercase xl:text-3xl">
+                  Download
+                </p>
+              </div>
+            </div>
+            <div
+              id="shareRef"
+              data-show={false}
+              className="col-span-2 h-full max-lg:col-span-1 max-md:hidden"
+            >
+              <div
+                className="ml-auto flex h-full w-1/2 items-center justify-center 
+              gap-4 max-lg:ml-auto max-lg:w-full"
+              >
+                <Share weight="duotone" className="text-5xl xl:text-7xl" />
+                <p className="bkgd-impact text-2xl uppercase xl:text-3xl">
+                  Share
+                </p>
+              </div>
+            </div>
+
             <div
               className="relative mt-0 flex flex-col overflow-hidden 
-            rounded-lg bg-sky-500 bg-opacity-30 p-8 pl-12"
+              rounded-lg bg-gray-900 bg-opacity-30 p-8 pl-12"
             >
               <div className="absolute bottom-0 left-0 top-0 w-2 bg-sky-500"></div>
-              <p>Share</p>
+
+              <p className="flex flex-row items-center gap-4 text-2xl">
+                <span className="text-2xl">
+                  <Export weight="duotone" />
+                </span>
+                Export
+              </p>
+              <hr className="my-8 opacity-20" />
+
+              <p className="text-xl font-light">
+                With URL state you can bookmark ⭐ or share with a friend 🔗
+              </p>
             </div>
           </div>
         </div>
@@ -148,19 +254,20 @@ export default function WelcomePage() {
         <div className="flex w-full justify-center overflow-hidden bg-gray-950 pb-12 ">
           <div className="flex w-3/4 flex-col items-center">
             <div className="mb-20 max-w-3xl">
-              <h3 className=" -translate-x-8 -skew-x-6 text-white text-opacity-40">
+              <h3 className="-translate-x-8 -skew-x-6 text-white text-opacity-40">
                 Motivation
               </h3>
               <div className="border-l-2 border-white border-opacity-30 p-3 px-8">
                 <p className="mb-4 mr-auto">
                   While working on some different projects, I was tired of just
                   using a solid color or some sort of subtle gradient for my
-                  backgrounds. I wanted something better.
+                  backgrounds. Or going through the hassle of creating some sort
+                  of image.
                 </p>
                 <p className="mb-4 mr-auto">
                   At the same time I was reading up on a lot of CSS Level 3 & 4
                   specifications, and I thought it would be fun to build a tool
-                  that used some of these new features.
+                  that used some of those features.
                 </p>
                 <p className="mb-4 mr-auto">
                   Taking inspiration from tools like Photoshop, I wanted to
@@ -168,11 +275,15 @@ export default function WelcomePage() {
                   CSS, and HTML to create a simple and intuitive tool for
                   designing backgrounds.
                 </p>
+                <p className="mb-4 mr-auto">
+                  I wanted something better, easier to use, and designed with
+                  the web in mind.
+                </p>
               </div>
             </div>
-            <div className="mb-20 flex w-full flex-row items-start justify-center gap-4">
-              <div className="mt-12 rounded-md bg-white bg-opacity-10">
-                <ol className="list-inside list-decimal p-8 text-left text-base">
+            <div className="mb-20 flex w-full flex-row items-start justify-center gap-4 max-md:flex-col-reverse">
+              <div className="mt-4 w-full rounded-md bg-white bg-opacity-10 max-md:mx-auto">
+                <ol className="mx-auto list-inside list-decimal p-8 text-left text-base">
                   <li className="mb-1">Keep it simple</li>
                   <li className="mb-1">Export as code or image</li>
                   <li className="mb-1">Save backgrounds for later</li>
@@ -188,9 +299,11 @@ export default function WelcomePage() {
                   <li className="mb-1">Portfolio</li>
                 </ol>
               </div>
-              <div className="ml-4">
-                <h3 className="-skew-x-6 text-white text-opacity-40">Goals</h3>
-                <div className="mb-8 ml-auto inline-flex translate-x-8 flex-col border-l-2 border-white border-opacity-30 p-3 px-8">
+              <div className="ml-4 max-md:ml-0">
+                <h3 className="-translate-x-8 -skew-x-6 text-white text-opacity-40">
+                  Goals
+                </h3>
+                <div className="border-l-2 border-white border-opacity-30 p-3 px-8">
                   <p className="mb-4 ml-auto w-auto whitespace-nowrap">
                     When I set out to build BKGD.APP, I had a few goals in
                     mind...
@@ -210,22 +323,30 @@ export default function WelcomePage() {
                   web development for going on a decade now.
                 </p>
                 <p className="mb-4">
-                  Making BKGD.APP was a lot of fun, and I hope you enjoy using
-                  it!
+                  Presentation is part of design. I love to create, and I love
+                  to learn. I was really excited to use this project as an
+                  opportunity to learn some new technologies, and to work on
+                  something more creative in nature than my day job.
                 </p>
               </div>
               <div className="flex flex-row justify-center gap-2">
-                <a className="cursor-pointer p-2 text-4xl transition-colors hover:text-pink-300 active:text-pink-500">
+                <a
+                  href="https://www.instagram.com/damienbullis/"
+                  className="cursor-pointer p-2 text-4xl transition-colors hover:text-pink-500 active:text-pink-300"
+                >
                   <InstagramLogo weight="duotone" />
                 </a>
-                <a className="cursor-pointer p-2 text-4xl transition-colors hover:text-pink-500 active:text-pink-300">
+                <a
+                  href="https://www.linkedin.com/in/damienbullis/"
+                  className="cursor-pointer p-2 text-4xl transition-colors hover:text-pink-500 active:text-pink-300"
+                >
                   <LinkedinLogo weight="duotone" />
                 </a>
               </div>
             </div>
 
-            <div className="mb-20 flex w-full flex-row items-center justify-center gap-4">
-              <div className="grid auto-rows-auto grid-cols-3 place-content-center place-items-center gap-4 py-8 pt-12">
+            <div className="mb-20 flex w-full flex-row items-center justify-center gap-4 max-md:flex-col-reverse">
+              <div className="grid auto-rows-auto grid-cols-3 place-content-center place-items-center gap-4 py-8 pt-12 max-md:pt-4">
                 <a
                   className="h-10 w-10 rounded-md fill-white p-2 text-2xl transition-all hover:scale-110 hover:bg-white hover:bg-opacity-10"
                   href="https://react.dev/"
@@ -283,12 +404,13 @@ export default function WelcomePage() {
                   TanStack
                 </a>
               </div>
-              <div className="ml-8">
-                <h3 className="-skew-x-6 text-white text-opacity-40">
+              <div className="w-full">
+                <h3 className="-translate-x-8 -skew-x-6 text-white text-opacity-40">
                   Special Thanks
                 </h3>
-                <p className="mb-8 ml-auto inline-flex w-auto translate-x-8 flex-col whitespace-nowrap border-l-2 border-white border-opacity-30 p-3 px-8">
-                  These libraries were used to build BKGD.APP
+                <p className="mb-8 border-l-2 border-white border-opacity-30 p-3 px-8">
+                  These tools were used to build BKGD.APP
+                  <br /> ❤️ ❤️ ❤️
                 </p>
               </div>
             </div>
