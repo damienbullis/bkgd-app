@@ -11,7 +11,7 @@ import {
   Spinner,
   Stack,
 } from '@phosphor-icons/react'
-import { Suspense, lazy, useEffect, useState } from 'react'
+import { Suspense, lazy, useEffect } from 'react'
 import Icons from '../_shared/Icons'
 import throttle from '../../utils/throttle'
 

@@ -1,7 +1,7 @@
 {
   "name": "bkgd-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "bunx --bun vite",
@@ -23,6 +23,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.26.2",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
