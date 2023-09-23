@@ -1,5 +1,11 @@
 # bkgd-app
 
+## 0.9.3
+
+### Patch Changes
+
+- 4a8ebcb: add vercel config
+
 ## 0.9.2
 
 ### Patch Changes
