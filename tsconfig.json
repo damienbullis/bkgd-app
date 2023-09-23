@@ -24,6 +24,7 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "react": ["node_modules/@types/react"],
       "@shared": ["./src/components/_shared"],
       "@state/*": ["./src/state/*"],
       "@types": ["./src/types"],
