@@ -1,5 +1,11 @@
 # bkgd-app
 
+## 0.9.1
+
+### Patch Changes
+
+- chore bump version
+
 ## 0.2.0
 
 ### Minor Changes
