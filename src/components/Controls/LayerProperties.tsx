@@ -2,7 +2,6 @@ import { useMemo } from 'react'
 import { Select } from '@shared'
 import { useLayers } from '@state/hooks'
 
-import { LayerType } from '../Layers/LayerTypeSchema'
 import BackgroundPosition from './PropertyInputs/BackgroundPosition'
 import BackgroundSize from './PropertyInputs/BackgroundSize'
 import ColorType from './PropertyInputs/ColorType'
@@ -11,6 +10,7 @@ import NoiseType from './PropertyInputs/NoiseType'
 import GradientType from './PropertyInputs/GradientType'
 import { ArrowsOut, FrameCorners, Repeat, Unite } from '@phosphor-icons/react'
 import { Tab } from '@headlessui/react'
+import { LayerType } from '@types'
 
 const blendModesOptions = [
   'normal',

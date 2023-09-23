@@ -22,6 +22,7 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
+    "baseUrl": ".",
     "paths": {
       "@shared": ["./src/components/_shared"],
       "@state/*": ["./src/state/*"],

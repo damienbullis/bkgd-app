@@ -1,4 +1,4 @@
-import { GradientLayerType } from 'src/components/Layers/LayerTypeSchema'
+import { GradientLayerType } from '@types'
 // import styles from './GradientType.module.css'
 import { debounce, randomHex } from '@utils'
 import { EventHandler } from '@state/events'

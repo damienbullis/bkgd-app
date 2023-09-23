@@ -8,7 +8,7 @@ import { EventHandler } from '@state/events'
 import { ColorInput, HoverText } from '@shared'
 
 import { useCapabilities } from '../../Capabilities'
-import { SolidLayerType } from '../../Layers/LayerTypeSchema'
+import { SolidLayerType } from '@types'
 import { Popover } from '@headlessui/react'
 import { SelectionInverse } from '@phosphor-icons/react'
 

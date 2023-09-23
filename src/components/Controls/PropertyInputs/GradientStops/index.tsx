@@ -1,4 +1,4 @@
-import { GradientLayerType } from 'src/components/Layers/LayerTypeSchema'
+import { GradientLayerType } from '@types'
 import GradientStop from './GradientStop'
 
 type GradientLayerPropsType = GradientLayerType['props']

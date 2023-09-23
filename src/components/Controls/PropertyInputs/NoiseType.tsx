@@ -4,7 +4,7 @@ import { EventHandler } from '@state/events'
 import { debounce } from '@utils'
 import { HoverText, ToggleButton } from '@shared'
 
-import { NoiseLayerType } from '../../Layers/LayerTypeSchema'
+import { NoiseLayerType } from '@types'
 import { Popover } from '@headlessui/react'
 import { SelectionInverse, Steps, WaveSine } from '@phosphor-icons/react'
 

@@ -4,7 +4,7 @@ import { ArrowsCounterClockwise, PlusCircle } from '@phosphor-icons/react'
 import { useEffect } from 'react'
 import { Popover } from '@headlessui/react'
 import { HoverText, ToggleButton } from '@shared'
-import { GradientLayerType } from 'src/components/Layers/LayerTypeSchema'
+import { GradientLayerType } from '@types'
 import GradientStops from './GradientStops'
 
 const deHandler = debounce(EventHandler, 200)
