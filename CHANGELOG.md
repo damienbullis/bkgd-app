@@ -1,5 +1,12 @@
 # bkgd-app
 
+## 0.9.2
+
+### Patch Changes
+
+- 51debf0: removing bunx --bun from build script
+- 88a19c7: fixing build & types for deploy
+
 ## 0.9.1
 
 ### Patch Changes
