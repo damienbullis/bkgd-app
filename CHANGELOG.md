@@ -1,5 +1,12 @@
 # bkgd-app
 
+## 0.9.3
+
+### Patch Changes
+
+- b0f7652: testing changeset on dev branch
+- 4a8ebcb: add vercel config
+
 ## 0.9.2
 
 ### Patch Changes
