@@ -319,14 +319,15 @@ export default function WelcomePage() {
               <div className="border-l-2 border-white border-opacity-30 p-3 px-8">
                 <p className="mb-4">Hi I'm Damien.</p>
                 <p className="mb-4">
-                  I am a Senior Software Engineer, and I have been working in
-                  web development for going on a decade now.
+                  I work as a Senior Software Engineer, and I have been in web
+                  development for going on a decade now.
                 </p>
                 <p className="mb-4">
                   Presentation is part of design. I love to create, and I love
                   to learn. I was really excited to use this project as an
-                  opportunity to learn some new technologies, and to work on
-                  something more creative in nature than my day job.
+                  opportunity to learn some new technologies, level up some of
+                  my weaker skills, and to work on something more creative in
+                  nature.
                 </p>
               </div>
               <div className="flex flex-row justify-center gap-2">
