@@ -1,7 +1,7 @@
 {
   "name": "bkgd-app",
   "private": true,
-  "version": "0.9.3",
+  "version": "0.9.4",
   "type": "module",
   "scripts": {
     "dev": "VITE_BKGD_VERSION=DEV bunx --bun vite",
