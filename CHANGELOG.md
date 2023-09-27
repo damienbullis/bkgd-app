@@ -1,5 +1,12 @@
 # bkgd-app
 
+## 0.9.4
+
+### Patch Changes
+
+- 712343d: adds favicon svg to index
+- c5782a5: fix scripts to track app version at build-time
+
 ## 0.9.3
 
 ### Patch Changes
