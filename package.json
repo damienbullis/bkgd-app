@@ -1,16 +1,15 @@
 {
   "name": "bkgd-app",
   "private": true,
-  "version": "0.9.3",
+  "version": "0.9.4",
   "type": "module",
   "scripts": {
-    "dev": "bunx --bun vite",
-    "version": "bun run projectVersion.ts",
-    "build": "tsc && bun vite build",
+    "dev": "VITE_BKGD_VERSION=DEV bunx --bun vite",
+    "build": "tsc && VITE_BKGD_VERSION=$(grep -m1 -o '\"version\": \"[^\"]*' package.json | cut -d'\"' -f4) bun vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
-    "preview": "bunx --bun vite preview"
+    "preview": "VITE_BKGD_VERSION=$(grep -m1 -o '\"version\": \"[^\"]*' package.json | cut -d'\"' -f4) bunx --bun vite preview"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
