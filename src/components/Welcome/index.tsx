@@ -14,6 +14,7 @@ import {
 import { Suspense, lazy, useEffect } from 'react'
 import Icons from '../_shared/Icons'
 import throttle from '../../utils/throttle'
+import bodhiLogo from '../../assets/bodhi.svg'
 
 const Banner = lazy(() => import('./Banner'))
 
@@ -281,8 +282,8 @@ export default function WelcomePage() {
                 </p>
               </div>
             </div>
-            <div className="mb-20 flex w-full flex-row items-start justify-center gap-4 max-md:flex-col-reverse">
-              <div className="mt-4 w-full rounded-md bg-white bg-opacity-10 max-md:mx-auto">
+            <div className="mb-20 flex w-full max-w-3xl flex-row gap-12 max-lg:flex-col-reverse">
+              <div className="mt-4 w-max rounded-md bg-white bg-opacity-10 max-lg:mx-auto">
                 <ol className="mx-auto list-inside list-decimal p-8 text-left text-base">
                   <li className="mb-1">Keep it simple</li>
                   <li className="mb-1">Export as code or image</li>
@@ -299,12 +300,12 @@ export default function WelcomePage() {
                   <li className="mb-1">Portfolio</li>
                 </ol>
               </div>
-              <div className="ml-4 max-md:ml-0">
+              <div className="ml-4 w-auto max-lg:ml-0 max-lg:w-full">
                 <h3 className="-translate-x-8 -skew-x-6 text-white text-opacity-40">
                   Goals
                 </h3>
                 <div className="border-l-2 border-white border-opacity-30 p-3 px-8">
-                  <p className="mb-4 ml-auto w-auto whitespace-nowrap">
+                  <p className="mb-4 ml-auto w-auto">
                     When I set out to build BKGD.APP, I had a few goals in
                     mind...
                   </p>
@@ -346,8 +347,15 @@ export default function WelcomePage() {
               </div>
             </div>
 
-            <div className="mb-20 flex w-full flex-row items-center justify-center gap-4 max-md:flex-col-reverse">
-              <div className="grid auto-rows-auto grid-cols-3 place-content-center place-items-center gap-4 py-8 pt-12 max-md:pt-4">
+            <div className="mb-20 flex w-full flex-row items-center justify-center gap-12 max-lg:flex-col-reverse max-lg:gap-0">
+              <div className="grid w-1/2 auto-rows-auto grid-cols-3 place-content-center place-items-center gap-4 py-8 pt-12 max-lg:w-full max-md:pt-4">
+                <a
+                  className="h-10 w-10 rounded-md fill-white p-2 text-2xl transition-all hover:scale-110 hover:bg-white hover:bg-opacity-10"
+                  href="https://bodhi.digital/"
+                  target="_blank"
+                >
+                  <img src={bodhiLogo} className="" />
+                </a>
                 <a
                   className="h-10 w-10 rounded-md fill-white p-2 text-2xl transition-all hover:scale-110 hover:bg-white hover:bg-opacity-10"
                   href="https://react.dev/"
@@ -405,7 +413,7 @@ export default function WelcomePage() {
                   TanStack
                 </a>
               </div>
-              <div className="w-full">
+              <div className="max-lg:w-full">
                 <h3 className="-translate-x-8 -skew-x-6 text-white text-opacity-40">
                   Special Thanks
                 </h3>
