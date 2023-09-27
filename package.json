@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "VITE_BKGD_VERSION=DEV bunx --bun vite",
-    "build": "tsc && VITE_BKGD_VERSION=$(grep -m1 -o '\"version\": \"[^\"]*' package.json | cut -d'\"' -f4) bunx --bun vite dev",
+    "build": "tsc && VITE_BKGD_VERSION=$(grep -m1 -o '\"version\": \"[^\"]*' package.json | cut -d'\"' -f4) bun vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
