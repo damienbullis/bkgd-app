@@ -2,7 +2,8 @@ import { RootRoute, Router } from '@tanstack/router'
 
 import { indexRoute } from './indexRoute.tsx'
 import { welcomeRoute } from './welcomeRoute.ts'
-import ErrorPage from '../components/ErrorPage.tsx'
+import { ErrorPage } from '../components'
+import { checkBrowser } from '@utils'
 
 export const rootRoute = new RootRoute({
   beforeLoad: ({ router }) => {
@@ -13,13 +14,14 @@ export const rootRoute = new RootRoute({
       !returningUser &&
       !router.state.currentLocation.searchStr
     ) {
+      checkBrowser()
       localStorage.setItem('visited', 'true')
       router.navigate({
         to: welcomeRoute.path,
       })
     }
   },
-  errorComponent: ({ error }) => <ErrorPage e={error} />,
+  errorComponent: ErrorPage,
 })
 const routeTree = rootRoute.addChildren([indexRoute, welcomeRoute])
 

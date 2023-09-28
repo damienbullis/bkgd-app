@@ -283,7 +283,7 @@ export default function WelcomePage() {
               </div>
             </div>
             <div className="mb-20 flex w-full max-w-3xl flex-row gap-12 max-lg:flex-col-reverse">
-              <div className="mt-4 w-max rounded-md bg-white bg-opacity-10 max-lg:mx-auto">
+              <div className="mt-4 w-1/2 rounded-md bg-white bg-opacity-10 max-lg:mx-auto max-md:w-max">
                 <ol className="mx-auto list-inside list-decimal p-8 text-left text-base">
                   <li className="mb-1">Keep it simple</li>
                   <li className="mb-1">Export as code or image</li>
