@@ -1,5 +1,11 @@
 # bkgd-app
 
+## 0.9.5
+
+### Patch Changes
+
+- e80ff71: Fixes responsive styles
+
 ## 0.9.4
 
 ### Patch Changes
