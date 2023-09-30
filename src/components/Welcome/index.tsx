@@ -8,15 +8,13 @@ import {
   LinkedinLogo,
   PaintBrush,
   Share,
-  Spinner,
   Stack,
 } from '@phosphor-icons/react'
-import { Suspense, lazy, useEffect } from 'react'
+import { useEffect } from 'react'
 import Icons from '../_shared/Icons'
 import throttle from '../../utils/throttle'
 import bodhiLogo from '../../assets/bodhi.svg'
-
-const Banner = lazy(() => import('./Banner'))
+import Banner from './Banner'
 
 const smoothScroll = () => {
   const target = document.querySelector('#about-bkgd')
@@ -80,15 +78,7 @@ export default function WelcomePage() {
           What is BKGD.APP?
         </button>
       </div>
-      <Suspense
-        fallback={
-          <div className="grid h-[80vh] w-full place-items-center">
-            <Spinner className="animate-spin text-4xl" />
-          </div>
-        }
-      >
-        <Banner />
-      </Suspense>
+      <Banner />
 
       {/* Content */}
       <div className="flex w-full flex-col items-center">
@@ -253,7 +243,7 @@ export default function WelcomePage() {
 
         {/* About & Misc */}
         <div className="flex w-full justify-center overflow-hidden bg-gray-950 pb-12 ">
-          <div className="flex w-3/4 flex-col items-center">
+          <div className="flex w-3/4 flex-col items-center max-sm:w-4/5">
             <div className="mb-20 max-w-3xl">
               <h3 className="-translate-x-8 -skew-x-6 text-white text-opacity-40">
                 Motivation
@@ -324,12 +314,16 @@ export default function WelcomePage() {
                   development for going on a decade now.
                 </p>
                 <p className="mb-4">
-                  Presentation is part of design. I love to create, and I love
-                  to learn. I was really excited to use this project as an
-                  opportunity to learn some new technologies, level up some of
-                  my weaker skills, and to work on something more creative in
-                  nature.
+                  I believe presentation is part of design, and for me that
+                  takes the form of making things look & feel right on the
+                  frontend.
                 </p>
+                <p className="mb-4">
+                  I really enjoyed using this project as an opportunity to
+                  learn, level up some of my weaker skills, and to work on
+                  something more artist & creative in nature.
+                </p>
+                <p className="mb-4">...As opposed to my day job...</p>
               </div>
               <div className="flex flex-row justify-center gap-2">
                 <a
