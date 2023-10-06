@@ -53,7 +53,7 @@ export default function Banner() {
             style={bkgdStyles[0]}
             className="pointer-events-none relative -left-[2vw] m-0 w-full select-none bg-clip-text 
     text-center text-[50vw] font-medium leading-[1em] tracking-[-.09em] text-transparent
-    brightness-75 filter xl:text-[40vw]"
+    brightness-75 filter xl:text-[40vw] 2xl:text-[30vw] 2xl:leading-[.9em]"
           >
             BKGD
           </h1>
@@ -68,7 +68,7 @@ export default function Banner() {
                 'radial-gradient(rgba(255, 255, 255, .9) 0%, rgb(255, 255, 255, 0) 50%)',
               backgroundSize: '300% 300%',
             }}
-            className="pointer-events-none absolute inset-0 -left-[2vw] m-0 w-full select-none bg-clip-text text-center text-[50vw] font-medium leading-[1em] tracking-[-.09em] text-transparent mix-blend-soft-light xl:text-[40vw]"
+            className="pointer-events-none absolute inset-0 -left-[2vw] m-0 w-full select-none bg-clip-text text-center text-[50vw] font-medium leading-[1em] tracking-[-.09em] text-transparent mix-blend-soft-light xl:text-[40vw] 2xl:text-[30vw] 2xl:leading-[.9em]"
           >
             BKGD
           </motion.h1>

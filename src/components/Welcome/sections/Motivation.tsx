@@ -11,9 +11,9 @@ export default function Motivation() {
           going through the hassle of creating some sort of image.
         </p>
         <p className="mb-4 mr-auto">
-          At the same time I was reading up on a lot of CSS Level 3 & 4
-          specifications, and I thought it would be fun to build a tool that
-          used some of those features.
+          At the same time I was reading up on a lot of CSS Specifications Color
+          Level 3 & 4, and I thought it would be fun to build a tool that used
+          some of those features.
         </p>
         <p className="mb-4 mr-auto">
           Taking inspiration from tools like Photoshop, I wanted to leverage the
