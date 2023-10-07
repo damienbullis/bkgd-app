@@ -1,12 +1,16 @@
+![Banner](src/assets/bkgdapp.png)
+
+---
+
+---
+
+---
+
+<br>
+
 # BKGD
 
-Create beautiful modern backgrounds for your website or app.
-
----
-
----
-
----
+> Create beautiful backgrounds for your website or app.
 
 <br>
 
@@ -25,48 +29,33 @@ Create beautiful modern backgrounds for your website or app.
 
 ## ROADMAP
 
-- [ ] Finish `readme.md`
-- [ ] Deploy to `vercel`
+> For a more in depth view on, checkout the full [BKGD Roadmap](https://github.com/users/damienbullis/projects/1)
+
+### V 1
+
+- [x] Deploy to Vercel
+- [x] Basic UI
+- [x] Basic Functionality
+
+### V 1++
+
+- [ ] Future Layer Types
+  - [ ] Text
+  - [ ] Image
+  - [ ] SVG filters
+  - [ ] Patterns
+  - [ ] Shaders\*
+- [ ] Better Export/Download
 
 <br>
 
-## TODOs
+## Issues / Feature Requests
 
-- [x] Nav
-- [x] State
-  - [x] Global State
-  - [x] LocalStorage/SessionStorage State
-  - [x] Transient State
-  - [x] URL State
-- [x] Layers
-  - [x] Add Layer
-  - [x] Remove Layer
-  - [x] Move Layer
-  - [x] Layer State
-  - [x] Layer Type
-- [x] Bkgd Controller
-- [x] Layer Components
-  - [x] Solid
-  - [x] Gradient
-  - [x] Noise
-- [x] Input Components
-  - [x] Text
-  - [x] Range Slider
-  - [x] Dropdown
-  - [x] Checkbox
-- [x] Export/Save
-  - [x] Image
-  - [x] Code
-- [x] Footer
-- [x] Banner
-- [x] Help
+> Having issues? Please let me know by [creating an issue](https://github.com/damienbullis/bkgd-app/issues/new)!
 
-### Additional Layer Types\*\*\*
+### Known Issues
 
-> Do we want to add these?
-
-- [ ] Text
-- [ ] Image
-- [ ] SVG filters
-- [ ] Patterns
-- [ ] Shaders\*
+- Built for Chrome, degraded experience in other browsers.
+- Export Image is not great.
+- Not built for mobile.
+- Not built for loading times/size.

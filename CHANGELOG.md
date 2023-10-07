@@ -1,5 +1,11 @@
 # bkgd-app
 
+## 0.9.7
+
+### Patch Changes
+
+- d839f44: adds png, updates index.html seo, and updates readme.md
+
 ## 0.9.6
 
 ### Patch Changes
