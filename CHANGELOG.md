@@ -1,5 +1,12 @@
 # bkgd-app
 
+## 0.9.6
+
+### Patch Changes
+
+- 78bcc22: adds analytics
+- 8f7a8dc: add scroll animations to highlights
+
 ## 0.9.5
 
 ### Patch Changes
