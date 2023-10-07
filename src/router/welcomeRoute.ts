@@ -1,9 +1,11 @@
-import { Route } from '@tanstack/router'
+import { Route, lazy } from '@tanstack/router'
+import { ErrorPage, Pending } from '../components'
 import { rootRoute } from '.'
-import WelcomePage from '../components/Welcome'
 
 export const welcomeRoute = new Route({
   getParentRoute: () => rootRoute,
-  component: WelcomePage,
   path: '/welcome',
+  component: lazy(() => import('../components/Welcome')),
+  pendingComponent: Pending,
+  errorComponent: ErrorPage,
 })

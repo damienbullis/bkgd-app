@@ -1,8 +1,9 @@
 import { Route } from '@tanstack/router'
-import { ErrorPage } from '../components/index.ts'
-import { rootRoute } from '.'
-import App from '../App.tsx'
+
+import { ErrorPage, Pending } from '../components'
 import { LayerSchema } from '@types'
+import { rootRoute } from '.'
+import App from '../App'
 
 export const indexRoute = new Route({
   getParentRoute: () => rootRoute,
@@ -20,6 +21,7 @@ export const indexRoute = new Route({
       }
     }
   },
-  errorComponent: ({ error }) => <ErrorPage e={error} />,
+  errorComponent: ErrorPage,
+  pendingComponent: Pending,
   component: App,
 })
