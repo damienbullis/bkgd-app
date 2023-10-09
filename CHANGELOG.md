@@ -1,5 +1,11 @@
 # bkgd-app
 
+## 0.9.8
+
+### Patch Changes
+
+- 56c06c2: adds browserlist & removes chrome check
+
 ## 0.9.7
 
 ### Patch Changes

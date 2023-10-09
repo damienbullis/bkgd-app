@@ -1,7 +1,7 @@
 {
   "name": "bkgd-app",
   "private": true,
-  "version": "0.9.7",
+  "version": "0.9.8",
   "type": "module",
   "scripts": {
     "dev": "VITE_BKGD_VERSION=$(bun run version) bunx --bun vite",
@@ -42,5 +42,8 @@
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2",
     "vite": "^4.3.9"
-  }
+  },
+  "browserslist": [
+    "defaults"
+  ]
 }
