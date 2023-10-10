@@ -5,7 +5,7 @@ import { welcomeRoute } from './welcomeRoute.ts'
 import { ErrorPage } from '../components'
 
 export const rootRoute = new RootRoute({
-  beforeLoad: ({ router }) => {
+  beforeLoad: async ({ router }) => {
     const checkPath = router.state.currentLocation.pathname === indexRoute.path
     const returningUser = localStorage.getItem('visited') === 'true'
     if (
@@ -14,7 +14,7 @@ export const rootRoute = new RootRoute({
       !router.state.currentLocation.searchStr
     ) {
       localStorage.setItem('visited', 'true')
-      router.navigate({
+      await router.navigate({
         to: welcomeRoute.path,
       })
     }

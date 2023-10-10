@@ -3,25 +3,30 @@ import { InstagramLogo, LinkedinLogo } from '@phosphor-icons/react'
 export default function AboutMe() {
   return (
     <div className="mx-auto mb-20 max-w-3xl">
-      <h3 className="w-auto -translate-x-8 -skew-x-6 text-white text-opacity-40">
+      <h3 className="w-auto -translate-x-8 -skew-x-6 text-white text-opacity-40 max-md:-translate-x-0">
         About Me
       </h3>
       <div className="border-l-2 border-white border-opacity-30 p-3 px-8">
         <p className="mb-4">Hi I'm Damien.</p>
         <p className="mb-4">
-          I work as a Senior Software Engineer, and I have been in web
-          development for going on a decade now.
+          I work as a Senior Software Engineer, and while I have been in web
+          development for going on a decade now. I actually spent the majority
+          of my life creating some form of art. Whether that was illustration,
+          painting, game design, sound engineering, music production,
+          cinematography, or writing.
         </p>
         <p className="mb-4">
-          I believe presentation is part of design, and for me that takes the
-          form of making things look & feel right on the frontend.
+          When I was 25 I sort of fell into web development, and while it
+          started as just a job, I eventually realized how to much art and
+          creativity there was in software development. Once that clicked for
+          me, I really started to enjoy my work on a much deeper level, and
+          really focus on improving my craft.
         </p>
         <p className="mb-4">
-          I really enjoyed using this project as an opportunity to learn, level
-          up some of my weaker skills, and to work on something more artist &
-          creative in nature.
+          Presentation is part of design, and I wanted to create a tool that
+          would help me create better designs, faster. I hope you enjoy using
+          BKGD.APP as much as I enjoyed building it.
         </p>
-        <p className="mb-4">...As opposed to my day job...</p>
       </div>
       <div className="flex flex-row justify-center gap-2">
         <a

@@ -2,12 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Impact';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('Impact.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Impact Fallback';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Arial');
+  ascent-override: 109.57%;
+  descent-override: 22.91%;
+  line-gap-override: 0%;
+  size-adjust: 92.06%;
+}
+
 html {
+  /* font-family: 'Impact', 'Impact Fallback'; */
   scroll-behavior: smooth;
 }
 
 :root {
-  --font-impact: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  --font-impact: 'Impact', 'Impact Fallback';
   --font-roboto: 'Roboto', system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-family: var(--font-roboto);

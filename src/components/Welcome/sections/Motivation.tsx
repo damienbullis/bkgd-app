@@ -1,7 +1,7 @@
 export default function Motivation() {
   return (
     <div className="mb-20 max-w-3xl">
-      <h3 className="-translate-x-8 -skew-x-6 text-white text-opacity-40">
+      <h3 className="-translate-x-8 -skew-x-6 text-white text-opacity-40 max-md:-translate-x-0">
         Motivation
       </h3>
       <div className="border-l-2 border-white border-opacity-30 p-3 px-8">

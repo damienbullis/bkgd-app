@@ -19,7 +19,7 @@ export default function Goals() {
         </ol>
       </div>
       <div className="ml-4 w-auto max-lg:ml-0 max-lg:w-full">
-        <h3 className="-translate-x-8 -skew-x-6 text-white text-opacity-40">
+        <h3 className="-translate-x-8 -skew-x-6 text-white text-opacity-40 max-md:-translate-x-0">
           Goals
         </h3>
         <div className="border-l-2 border-white border-opacity-30 p-3 px-8">

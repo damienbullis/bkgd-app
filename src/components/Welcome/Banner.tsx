@@ -75,7 +75,7 @@ export default function Banner() {
         </span>
 
         {/* Banner - Titles */}
-        <p className="mt-4 text-center text-4xl text-white">
+        <p className="mx-4 mt-4 text-center text-4xl text-white">
           An online tool for generating backgrounds
         </p>
         <p className="mt-3 flex items-center gap-2 whitespace-nowrap text-xl">
@@ -87,7 +87,7 @@ export default function Banner() {
               width="24"
               height="24"
               viewBox="0 0 24 24"
-              fill="#1572B6"
+              fill="#fff"
               xmlns="http://www.w3.org/2000/svg"
             >
               <title>CSS3</title>
@@ -102,7 +102,7 @@ export default function Banner() {
               height="24"
               role="img"
               viewBox="0 0 24 24"
-              fill="#E34F26"
+              fill="#fff"
               xmlns="http://www.w3.org/2000/svg"
             >
               <title>HTML5</title>
