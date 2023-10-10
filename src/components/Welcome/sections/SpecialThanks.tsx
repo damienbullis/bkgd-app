@@ -70,7 +70,7 @@ export default function SpecialThanks() {
         </a>
       </div>
       <div className="max-lg:w-full">
-        <h3 className="-translate-x-8 -skew-x-6 text-white text-opacity-40">
+        <h3 className="-translate-x-8 -skew-x-6 text-white text-opacity-40 max-md:-translate-x-0">
           Special Thanks
         </h3>
         <p className="mb-8 border-l-2 border-white border-opacity-30 p-3 px-8">

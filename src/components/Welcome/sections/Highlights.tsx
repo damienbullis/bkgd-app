@@ -174,7 +174,7 @@ export default function Highlights() {
         <div
           id="exportRefTarget2"
           data-show="false"
-          className="pointer-events-none mx-auto flex w-full translate-x-full flex-col items-center justify-center gap-4 py-8 opacity-0 transition-all delay-500 duration-1000 hover:scale-110 data-[show=true]:translate-x-0 data-[show=true]:opacity-100"
+          className="pointer-events-none mx-auto flex w-full translate-x-full flex-col items-center justify-center gap-4 py-8 opacity-0 transition-all delay-500 duration-1000 hover:scale-110 data-[show=true]:translate-x-0 data-[show=true]:opacity-100 max-md:hidden"
         >
           <div className="mx-auto flex w-full flex-col items-center justify-center gap-4 py-20 transition-transform hover:scale-110">
             <ImagesSquare weight="duotone" className="text-5xl xl:text-7xl" />
