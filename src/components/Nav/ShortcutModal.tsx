@@ -17,7 +17,6 @@ export default function ShortcutModal() {
     // set up subscriptions
     const unSub = keys.subscribe((e) => {
       if (e.ctrlKey && e.key === 'p') {
-        console.log('ctrl+p')
         setIsOpen((prev) => !prev)
       }
     })
