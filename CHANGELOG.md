@@ -1,5 +1,12 @@
 # bkgd-app
 
+## 0.9.10
+
+### Patch Changes
+
+- e78cb8c: minor clean up & font fixes
+- 679770b: another attempt to fix fonts & router
+
 ## 0.9.9
 
 ### Patch Changes

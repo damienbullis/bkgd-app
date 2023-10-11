@@ -13,7 +13,7 @@ export const indexRoute = new Route({
       const res = LayerSchema.parse(search)
       return res
     } catch (e) {
-      console.warn(e)
+      console.warn('invalid search', e)
       window.location.replace(new URL(window.location.href).origin)
       return {
         layerData: [],

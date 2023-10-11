@@ -5,7 +5,7 @@ import { useDeferredValue } from 'react'
 export default function Bkgd() {
   const { layers } = useLayers()
   const deferredLayers = useDeferredValue(layers)
-  console.log('layers', deferredLayers)
+  // console.log('layers', deferredLayers)
   return (
     <section
       id="bkgd"
