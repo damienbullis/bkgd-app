@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
 @font-face {
   font-family: 'Impact';
   font-style: normal;
@@ -9,7 +12,6 @@
   font-display: swap;
   src: url('Impact.ttf') format('truetype');
 }
-
 @font-face {
   font-family: 'Impact Fallback';
   font-style: normal;
@@ -19,11 +21,6 @@
   descent-override: 22.91%;
   line-gap-override: 0%;
   size-adjust: 92.06%;
-}
-
-html {
-  /* font-family: 'Impact', 'Impact Fallback'; */
-  scroll-behavior: smooth;
 }
 
 :root {
