@@ -10,17 +10,17 @@ export default function AboutMe() {
         <p className="mb-4">Hi I'm Damien.</p>
         <p className="mb-4">
           I work as a Senior Software Engineer, and while I have been in web
-          development for going on a decade now. I actually spent the majority
+          development for going on a decade now, I actually spent the majority
           of my life creating some form of art. Whether that was illustration,
           painting, game design, sound engineering, music production,
           cinematography, or writing.
         </p>
         <p className="mb-4">
           When I was 25 I sort of fell into web development, and while it
-          started as just a job, I eventually realized how to much art and
-          creativity there was in software development. Once that clicked for
-          me, I really started to enjoy my work on a much deeper level, and
-          really focus on improving my craft.
+          started as just a job, I eventually realized how much art and
+          creativity there is in software development. Once that clicked for me,
+          I really started to enjoy my work on a much deeper level, and really
+          focus on improving my craft.
         </p>
         <p className="mb-4">
           Presentation is part of design, and I wanted to create a tool that
