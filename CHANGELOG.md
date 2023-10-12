@@ -1,5 +1,12 @@
 # bkgd-app
 
+## 0.9.11
+
+### Patch Changes
+
+- 06ee1c6: another try on fonts
+- 4b566c2: fix about me text
+
 ## 0.9.10
 
 ### Patch Changes
