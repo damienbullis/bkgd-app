@@ -5,23 +5,6 @@
 html {
   scroll-behavior: smooth;
 }
-@font-face {
-  font-family: 'Impact';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(Impact.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Impact Fallback';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Arial');
-  ascent-override: 109.57%;
-  descent-override: 22.91%;
-  line-gap-override: 0%;
-  size-adjust: 92.06%;
-}
 
 :root {
   --font-impact: 'Impact', 'Impact Fallback';
