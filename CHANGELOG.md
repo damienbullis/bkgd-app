@@ -1,5 +1,11 @@
 # bkgd-app
 
+## 0.9.12
+
+### Patch Changes
+
+- c27ac53: another attempt to get fonts working
+
 ## 0.9.11
 
 ### Patch Changes
