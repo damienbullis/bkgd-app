@@ -3,6 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- <link
+      rel="preload"
+      href="Impact.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BKGD.APP</title>
 
@@ -68,7 +75,25 @@
     <!-- FEATURE: Add manifest.json support
       <link rel="manifest" href="/manifest.json" />
      -->
-
+    <style>
+      @font-face {
+        font-family: 'Impact';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('/Impact.ttf') format('ttf');
+      }
+      @font-face {
+        font-family: 'Impact Fallback';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Arial');
+        ascent-override: 109.57%;
+        descent-override: 22.91%;
+        line-gap-override: 0%;
+        size-adjust: 92.06%;
+      }
+    </style>
     <script>
       window.va =
         window.va ||
