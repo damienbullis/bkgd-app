@@ -1,4 +1,4 @@
-![Banner](src/assets/bkgdapp.png)
+![Banner](src/public/bkgdapp.png)
 
 ---
 
