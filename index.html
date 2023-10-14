@@ -10,6 +10,25 @@
       type="font/ttf"
       crossorigin
     />
+    <style>
+      @font-face {
+        font-family: 'Impact';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(../Impact.ttf) format('truetype');
+      }
+      @font-face {
+        font-family: 'Impact Fallback';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Arial');
+        ascent-override: 109.57%;
+        descent-override: 22.91%;
+        line-gap-override: 0%;
+        size-adjust: 92.06%;
+      }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BKGD.APP</title>
 
@@ -44,12 +63,12 @@
     />
     <meta
       name="description"
-      content="Build beautiful backgrounds using BKGD.APP"
+      content="Design beautiful backgrounds using BKGD.APP"
     />
     <meta property="og:title" content="BKGD.APP" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://bkgd.app" />
-    <meta property="og:image" content="https://bkgd.app/assets/bkgdapp.png" />
+    <meta property="og:image" content="https://bkgd.app/bkgdapp.png" />
     <meta
       property="og:description"
       content="Build beautiful backgrounds using BKGD.APP"
@@ -70,11 +89,12 @@
       name="twitter:description"
       content="Build beautiful backgrounds using BKGD.APP"
     />
-    <meta name="twitter:image" content="https://bkgd.app/assets/bkgdapp.png" />
+    <meta name="twitter:image" content="https://bkgd.app/bkgdapp.png" />
 
     <!-- FEATURE: Add manifest.json support
       <link rel="manifest" href="/manifest.json" />
      -->
+
     <script>
       window.va =
         window.va ||

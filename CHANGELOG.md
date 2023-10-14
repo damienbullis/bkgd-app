@@ -1,5 +1,11 @@
 # bkgd-app
 
+## 0.9.15
+
+### Patch Changes
+
+- fc43ba1: more attempts to fix fonts and assets
+
 ## 0.9.14
 
 ### Patch Changes
