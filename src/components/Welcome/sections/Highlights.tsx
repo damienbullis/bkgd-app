@@ -12,7 +12,6 @@ import { useEffect } from 'react'
 
 function isElementVisible(el: HTMLElement, offset: number) {
   const rect = el.getBoundingClientRect()
-  console.log({ rect })
   return (
     rect.top >= 0 &&
     rect.left >= 0 &&
@@ -83,9 +82,9 @@ export default function Highlights() {
   useScrollListener(
     '#exportRefSrc',
     ['#exportRefTarget', '#exportRefTarget2'],
-    200
+    0
   )
-  useScrollListener('#shareRef', undefined, 200)
+  useScrollListener('#shareRef', undefined, 100)
 
   return (
     <div
@@ -208,12 +207,12 @@ export default function Highlights() {
             <span className="text-2xl">
               <Export weight="duotone" />
             </span>
-            Export
+            Share
           </p>
           <hr className="my-8 opacity-20" />
 
           <p className="text-xl font-light">
-            With URL state you can easily bookmark ⭐ or share 🔗 your designs.
+            With URL state you can easily bookmark ⭐ or link 🔗 your designs.
           </p>
         </div>
       </div>
