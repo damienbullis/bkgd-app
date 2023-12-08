@@ -1,5 +1,11 @@
 # bkgd-app
 
+## 0.9.16
+
+### Patch Changes
+
+- 0e045db: Adds some additional files for SEO, and fixes typo on welcome page
+
 ## 0.9.15
 
 ### Patch Changes
