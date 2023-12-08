@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "VITE_BKGD_VERSION=$(bun run version) bunx --bun vite",
     "version": "grep -m1 -o '\"version\": \"[^\"]*' package.json | cut -d'\"' -f4",
-    "build": "tsc && VITE_BKGD_VERSION=$(bun run version) bun vite build",
-    "build:local": "tsc && VITE_BKGD_VERSION=$(bun run version) bunx --bun vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "build": "VITE_BKGD_VERSION=$(bun run version) bun vite build",
+    "build:local": "VITE_BKGD_VERSION=$(bun run version) bunx --bun vite build",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 && tsc --noEmit",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
     "preview": "VITE_BKGD_VERSION=$(bun run version) bunx --bun vite preview"
