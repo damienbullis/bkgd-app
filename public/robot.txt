@@ -1,0 +1,9 @@
+User-agent: *  # Applies to all robots
+# Allow crawling of the public section
+Allow: /  
+
+# Set crawl delay for all robots to 10 seconds
+Crawl-delay: 10
+
+# Sitemap declaration to specify the location of your sitemap
+Sitemap: https://bkgd.app/sitemap.xml
